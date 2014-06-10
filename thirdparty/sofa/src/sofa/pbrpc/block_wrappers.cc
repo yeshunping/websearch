@@ -22,7 +22,7 @@ using google::protobuf::io::CodedOutputStream;
 #include <sofa/pbrpc/lz4.h>
 
 #if HAVE_SNAPPY
-#include <snappy.h>
+#include <thirdparty/snappy/snappy.h>
 #endif
 
 namespace sofa {
@@ -32,7 +32,7 @@ const size_t BLOCKSIZE = 64 * 1024;
 
 BlockCompressionInputStream::BlockCompressionInputStream(
     ZeroCopyInputStream* sub_stream)
-    : _output_buffer(NULL), _output_buffer_size(0), _sub_stream(NULL), _backed_up_bytes(0), 
+    : _output_buffer(NULL), _output_buffer_size(0), _sub_stream(NULL), _backed_up_bytes(0),
       _byte_count(0) {
     _raw_stream = sub_stream;
     _sub_stream = new CodedInputStream(_raw_stream);
@@ -72,7 +72,7 @@ bool BlockCompressionInputStream::Next(const void** data, int* size) {
         _byte_count += *size;
         return true;
     }
-    
+
     uint32_t compressed_size = 0;
     if (!_sub_stream->ReadVarint32(&compressed_size) || compressed_size > 2*BLOCKSIZE) {
         return false;
@@ -89,7 +89,7 @@ bool BlockCompressionInputStream::Next(const void** data, int* size) {
 
     // TODO: probably call this only every Limit/BLOCKSIZE
     if (_sub_stream->BytesUntilLimit() < 1024*1024) reset_input_stream();
-    
+
     (*data) = _output_buffer;
     (*size) = _output_buffer_size;
     _byte_count += *size;
@@ -108,7 +108,7 @@ BlockCompressionOutputStream::~BlockCompressionOutputStream() {
         // The buffer is not empty, there is stuff yet to be written.
         // This is necessary because we can't call virtual functions from any
         // destructor. Often this results in a pure virtual function call.
-        // Call BlockCompressionOutputStream::Flush() before destroying 
+        // Call BlockCompressionOutputStream::Flush() before destroying
         // this object.
         SCHECK(false);
         // Flush();
@@ -128,13 +128,13 @@ bool BlockCompressionOutputStream::Flush()
 {
     size_t size = BLOCKSIZE - _backed_up_bytes;
     if (!_input_buffer || size == 0) return true;
-    
+
     size_t compressed_size = 0;
     char * compressed_data = new char[MaxCompressedLength(size)];
     compressed_size = RawCompress(_input_buffer, size, compressed_data);
 
     SCHECK_LE(compressed_size, 2*BLOCKSIZE);
-    
+
     uint32_t compressed_size_32 = static_cast<uint32_t>(compressed_size);
     _sub_stream->WriteVarint32(compressed_size_32);
     _sub_stream->WriteRaw(compressed_data, compressed_size_32);
@@ -173,7 +173,7 @@ void SnappyInputStream::RawUncompress(char* input_buffer, uint32_t compressed_si
     bool success = ::snappy::GetUncompressedLength(
         input_buffer, compressed_size, &uncompressed_size);
     SCHECK(success);
-    
+
     if (uncompressed_size > _output_buffer_size) {
         delete[] _output_buffer;
         _output_buffer_size = uncompressed_size;
@@ -181,7 +181,7 @@ void SnappyInputStream::RawUncompress(char* input_buffer, uint32_t compressed_si
     }
     success = ::snappy::RawUncompress(input_buffer, compressed_size,
         _output_buffer);
-    SCHECK(success);    
+    SCHECK(success);
 }
 
 
