@@ -1,0 +1,609 @@
+Blade: Entering directory `/data2/shunping/newcrawler'
+Blade(info): ccache found
+Blade(info): loading BUILDs...
+Blade(info): loading done.
+Blade(info): analyzing dependency graph...
+Blade(info): analyzing done.
+Blade(info): generating build rules...
+Blade(info): CPP=cpp
+Blade(info): CC=gcc
+Blade(info): CXX=g++
+Blade(info): LD=g++
+Blade(info): generating done.
+Blade(info): tunes the parallel jobs number(-j N) to be 8
+[?1034hscons: Reading SConscript files ...
+scons: done reading SConscript files.
+scons: Building targets ...
+scons: building associated VariantDir targets: .bladeout/64opt
+Compiling thirdparty/curl-7.28.0/lib/amigaos.c
+Compiling thirdparty/curl-7.28.0/lib/asyn-ares.c
+Compiling thirdparty/curl-7.28.0/lib/asyn-thread.c
+In file included from thirdparty/curl-7.28.0/lib/setup.h:649,
+                 from thirdparty/curl-7.28.0/lib/amigaos.c:23:
+thirdparty/curl-7.28.0/lib/setup_once.h:92: error: redefinition of 'struct timeval'
+thirdparty/curl-7.28.0/lib/setup_once.h:157: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'Missing_definition_of_macro_sread'
+Compiling thirdparty/curl-7.28.0/lib/axtls.c
+Compiling thirdparty/curl-7.28.0/lib/base64.c
+Compiling thirdparty/curl-7.28.0/lib/connect.c
+In file included from thirdparty/curl-7.28.0/lib/setup.h:649,
+                 from thirdparty/curl-7.28.0/lib/asyn-ares.c:23:
+thirdparty/curl-7.28.0/lib/setup_once.h:92: error: redefinition of 'struct timeval'
+thirdparty/curl-7.28.0/lib/setup_once.h:157: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'Missing_definition_of_macro_sread'
+Compiling thirdparty/curl-7.28.0/lib/content_encoding.c
+scons: *** [.bladeout/64opt/thirdparty/curl-7.28.0/curl.objs/lib/amigaos.c.o] Error 1
+Compiling thirdparty/curl-7.28.0/lib/cookie.c
+scons: *** [.bladeout/64opt/thirdparty/curl-7.28.0/curl.objs/lib/asyn-ares.c.o] Error 1
+In file included from thirdparty/curl-7.28.0/lib/setup.h:649,
+                 from thirdparty/curl-7.28.0/lib/axtls.c:29:
+thirdparty/curl-7.28.0/lib/setup_once.h:92: error: redefinition of 'struct timeval'
+thirdparty/curl-7.28.0/lib/setup_once.h:157: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'Missing_definition_of_macro_sread'
+scons: *** [.bladeout/64opt/thirdparty/curl-7.28.0/curl.objs/lib/axtls.c.o] Error 1
+In file included from thirdparty/curl-7.28.0/lib/setup.h:649,
+                 from thirdparty/curl-7.28.0/lib/asyn-thread.c:23:
+thirdparty/curl-7.28.0/lib/setup_once.h:92: error: redefinition of 'struct timeval'
+thirdparty/curl-7.28.0/lib/setup_once.h:157: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'Missing_definition_of_macro_sread'
+In file included from thirdparty/curl-7.28.0/lib/urldata.h:69,
+                 from thirdparty/curl-7.28.0/lib/asyn-thread.c:66:
+thirdparty/curl-7.28.0/lib/cookie.h:36: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/cookie.h:52: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/cookie.h:79: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/cookie.h:83: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/cookie.h:84: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/cookie.h:98: error: expected declaration specifiers or '...' before 'bool'
+In file included from thirdparty/curl-7.28.0/lib/urldata.h:70,
+                 from thirdparty/curl-7.28.0/lib/asyn-thread.c:66:
+thirdparty/curl-7.28.0/lib/formdata.h:53: error: expected specifier-qualifier-list before 'bool'
+In file included from thirdparty/curl-7.28.0/lib/urldata.h:166,
+                 from thirdparty/curl-7.28.0/lib/asyn-thread.c:66:
+thirdparty/curl-7.28.0/lib/hostip.h:106: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'Curl_ipvalid'
+thirdparty/curl-7.28.0/lib/hostip.h:150: error: expected declaration specifiers or '...' before 'bool'
+In file included from thirdparty/curl-7.28.0/lib/imap.h:25,
+                 from thirdparty/curl-7.28.0/lib/urldata.h:170,
+                 from thirdparty/curl-7.28.0/lib/asyn-thread.c:66:
+thirdparty/curl-7.28.0/lib/pingpong.h:47: error: expected specifier-qualifier-list before 'bool'
+In file included from thirdparty/curl-7.28.0/lib/urldata.h:170,
+                 from thirdparty/curl-7.28.0/lib/asyn-thread.c:66:
+thirdparty/curl-7.28.0/lib/imap.h:52: error: expected specifier-qualifier-list before 'bool'
+In file included from thirdparty/curl-7.28.0/lib/urldata.h:172,
+                 from thirdparty/curl-7.28.0/lib/asyn-thread.c:66:
+thirdparty/curl-7.28.0/lib/smtp.h:67: error: expected specifier-qualifier-list before 'bool'
+In file included from thirdparty/curl-7.28.0/lib/urldata.h:173,
+                 from thirdparty/curl-7.28.0/lib/asyn-thread.c:66:
+thirdparty/curl-7.28.0/lib/ftp.h:132: error: expected specifier-qualifier-list before 'bool'
+In file included from thirdparty/curl-7.28.0/lib/urldata.h:176,
+                 from thirdparty/curl-7.28.0/lib/asyn-thread.c:66:
+thirdparty/curl-7.28.0/lib/http.h:33: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'Curl_compareheader'
+thirdparty/curl-7.28.0/lib/http.h:67: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/http.h:68: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/http.h:69: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/http.h:148: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/http.h:168: error: expected declaration specifiers or '...' before 'bool'
+In file included from thirdparty/curl-7.28.0/lib/urldata.h:177,
+                 from thirdparty/curl-7.28.0/lib/asyn-thread.c:66:
+thirdparty/curl-7.28.0/lib/rtsp.h:29: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'Curl_rtsp_connisdead'
+In file included from thirdparty/curl-7.28.0/lib/asyn-thread.c:66:
+thirdparty/curl-7.28.0/lib/urldata.h:267: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:349: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:375: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:446: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:554: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:555: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:593: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:682: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:697: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:700: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:701: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:733: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:738: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:790: error: expected specifier-qualifier-list before 'curl_closesocket_callback'
+thirdparty/curl-7.28.0/lib/urldata.h:1030: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:1070: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:1142: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:1184: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:1317: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:1417: error: expected specifier-qualifier-list before 'bool'
+In file included from thirdparty/curl-7.28.0/lib/asyn-thread.c:72:
+thirdparty/curl-7.28.0/lib/url.h:38: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/url.h:38: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/url.h:39: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/url.h:40: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/url.h:41: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/url.h:42: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/url.h:43: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/url.h:44: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/url.h:45: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/url.h:47: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/url.h:65: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'Curl_isPipeliningEnabled'
+In file included from thirdparty/curl-7.28.0/lib/asyn-thread.c:73:
+thirdparty/curl-7.28.0/lib/multiif.h:30: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'Curl_multi_canPipeline'
+scons: *** [.bladeout/64opt/thirdparty/curl-7.28.0/curl.objs/lib/asyn-thread.c.o] Error 1
+In file included from thirdparty/curl-7.28.0/lib/setup.h:649,
+                 from thirdparty/curl-7.28.0/lib/base64.c:25:
+thirdparty/curl-7.28.0/lib/setup_once.h:92: error: redefinition of 'struct timeval'
+thirdparty/curl-7.28.0/lib/setup_once.h:157: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'Missing_definition_of_macro_sread'
+In file included from thirdparty/curl-7.28.0/lib/urldata.h:69,
+                 from thirdparty/curl-7.28.0/lib/base64.c:30:
+thirdparty/curl-7.28.0/lib/cookie.h:36: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/cookie.h:52: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/cookie.h:79: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/cookie.h:83: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/cookie.h:84: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/cookie.h:98: error: expected declaration specifiers or '...' before 'bool'
+In file included from thirdparty/curl-7.28.0/lib/urldata.h:70,
+                 from thirdparty/curl-7.28.0/lib/base64.c:30:
+thirdparty/curl-7.28.0/lib/formdata.h:53: error: expected specifier-qualifier-list before 'bool'
+In file included from thirdparty/curl-7.28.0/lib/urldata.h:166,
+                 from thirdparty/curl-7.28.0/lib/base64.c:30:
+thirdparty/curl-7.28.0/lib/hostip.h:106: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'Curl_ipvalid'
+thirdparty/curl-7.28.0/lib/hostip.h:150: error: expected declaration specifiers or '...' before 'bool'
+In file included from thirdparty/curl-7.28.0/lib/imap.h:25,
+                 from thirdparty/curl-7.28.0/lib/urldata.h:170,
+                 from thirdparty/curl-7.28.0/lib/base64.c:30:
+thirdparty/curl-7.28.0/lib/pingpong.h:47: error: expected specifier-qualifier-list before 'bool'
+In file included from thirdparty/curl-7.28.0/lib/urldata.h:170,
+                 from thirdparty/curl-7.28.0/lib/base64.c:30:
+thirdparty/curl-7.28.0/lib/imap.h:52: error: expected specifier-qualifier-list before 'bool'
+In file included from thirdparty/curl-7.28.0/lib/urldata.h:172,
+                 from thirdparty/curl-7.28.0/lib/base64.c:30:
+thirdparty/curl-7.28.0/lib/smtp.h:67: error: expected specifier-qualifier-list before 'bool'
+In file included from thirdparty/curl-7.28.0/lib/urldata.h:173,
+                 from thirdparty/curl-7.28.0/lib/base64.c:30:
+thirdparty/curl-7.28.0/lib/ftp.h:132: error: expected specifier-qualifier-list before 'bool'
+In file included from thirdparty/curl-7.28.0/lib/urldata.h:176,
+                 from thirdparty/curl-7.28.0/lib/base64.c:30:
+thirdparty/curl-7.28.0/lib/http.h:33: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'Curl_compareheader'
+thirdparty/curl-7.28.0/lib/http.h:67: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/http.h:68: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/http.h:69: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/http.h:148: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/http.h:168: error: expected declaration specifiers or '...' before 'bool'
+In file included from thirdparty/curl-7.28.0/lib/urldata.h:177,
+                 from thirdparty/curl-7.28.0/lib/base64.c:30:
+thirdparty/curl-7.28.0/lib/rtsp.h:29: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'Curl_rtsp_connisdead'
+In file included from thirdparty/curl-7.28.0/lib/base64.c:30:
+thirdparty/curl-7.28.0/lib/urldata.h:267: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:349: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:375: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:446: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:554: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:555: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:593: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:682: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:697: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:700: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:701: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:733: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:738: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:790: error: expected specifier-qualifier-list before 'curl_closesocket_callback'
+thirdparty/curl-7.28.0/lib/urldata.h:1030: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:1070: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:1142: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:1184: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:1317: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:1417: error: expected specifier-qualifier-list before 'bool'
+scons: *** [.bladeout/64opt/thirdparty/curl-7.28.0/curl.objs/lib/base64.c.o] Error 1
+In file included from thirdparty/curl-7.28.0/lib/setup.h:649,
+                 from thirdparty/curl-7.28.0/lib/content_encoding.c:23:
+thirdparty/curl-7.28.0/lib/setup_once.h:92: error: redefinition of 'struct timeval'
+thirdparty/curl-7.28.0/lib/setup_once.h:157: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'Missing_definition_of_macro_sread'
+scons: *** [.bladeout/64opt/thirdparty/curl-7.28.0/curl.objs/lib/content_encoding.c.o] Error 1
+In file included from thirdparty/curl-7.28.0/lib/setup.h:649,
+                 from thirdparty/curl-7.28.0/lib/connect.c:23:
+thirdparty/curl-7.28.0/lib/setup_once.h:92: error: redefinition of 'struct timeval'
+thirdparty/curl-7.28.0/lib/setup_once.h:157: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'Missing_definition_of_macro_sread'
+In file included from thirdparty/curl-7.28.0/lib/urldata.h:69,
+                 from thirdparty/curl-7.28.0/lib/connect.c:68:
+thirdparty/curl-7.28.0/lib/cookie.h:36: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/cookie.h:52: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/cookie.h:79: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/cookie.h:83: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/cookie.h:84: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/cookie.h:98: error: expected declaration specifiers or '...' before 'bool'
+In file included from thirdparty/curl-7.28.0/lib/urldata.h:70,
+                 from thirdparty/curl-7.28.0/lib/connect.c:68:
+thirdparty/curl-7.28.0/lib/formdata.h:53: error: expected specifier-qualifier-list before 'bool'
+In file included from thirdparty/curl-7.28.0/lib/urldata.h:166,
+                 from thirdparty/curl-7.28.0/lib/connect.c:68:
+thirdparty/curl-7.28.0/lib/hostip.h:106: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'Curl_ipvalid'
+thirdparty/curl-7.28.0/lib/hostip.h:150: error: expected declaration specifiers or '...' before 'bool'
+In file included from thirdparty/curl-7.28.0/lib/imap.h:25,
+                 from thirdparty/curl-7.28.0/lib/urldata.h:170,
+                 from thirdparty/curl-7.28.0/lib/connect.c:68:
+thirdparty/curl-7.28.0/lib/pingpong.h:47: error: expected specifier-qualifier-list before 'bool'
+In file included from thirdparty/curl-7.28.0/lib/urldata.h:170,
+                 from thirdparty/curl-7.28.0/lib/connect.c:68:
+thirdparty/curl-7.28.0/lib/imap.h:52: error: expected specifier-qualifier-list before 'bool'
+In file included from thirdparty/curl-7.28.0/lib/urldata.h:172,
+                 from thirdparty/curl-7.28.0/lib/connect.c:68:
+thirdparty/curl-7.28.0/lib/smtp.h:67: error: expected specifier-qualifier-list before 'bool'
+In file included from thirdparty/curl-7.28.0/lib/urldata.h:173,
+                 from thirdparty/curl-7.28.0/lib/connect.c:68:
+thirdparty/curl-7.28.0/lib/ftp.h:132: error: expected specifier-qualifier-list before 'bool'
+In file included from thirdparty/curl-7.28.0/lib/urldata.h:176,
+                 from thirdparty/curl-7.28.0/lib/connect.c:68:
+thirdparty/curl-7.28.0/lib/http.h:33: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'Curl_compareheader'
+thirdparty/curl-7.28.0/lib/http.h:67: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/http.h:68: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/http.h:69: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/http.h:148: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/http.h:168: error: expected declaration specifiers or '...' before 'bool'
+In file included from thirdparty/curl-7.28.0/lib/urldata.h:177,
+                 from thirdparty/curl-7.28.0/lib/connect.c:68:
+thirdparty/curl-7.28.0/lib/rtsp.h:29: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'Curl_rtsp_connisdead'
+In file included from thirdparty/curl-7.28.0/lib/connect.c:68:
+thirdparty/curl-7.28.0/lib/urldata.h:267: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:349: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:375: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:446: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:554: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:555: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:593: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:682: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:697: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:700: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:701: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:733: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:738: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:790: error: expected specifier-qualifier-list before 'curl_closesocket_callback'
+thirdparty/curl-7.28.0/lib/urldata.h:1030: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:1070: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:1142: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:1184: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:1317: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:1417: error: expected specifier-qualifier-list before 'bool'
+In file included from thirdparty/curl-7.28.0/lib/connect.c:70:
+thirdparty/curl-7.28.0/lib/if2ip.h:26: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'Curl_if_is_interface_name'
+In file included from thirdparty/curl-7.28.0/lib/connect.h:27,
+                 from thirdparty/curl-7.28.0/lib/connect.c:72:
+thirdparty/curl-7.28.0/lib/sockaddr.h:30: error: field 'sa_in' has incomplete type
+In file included from thirdparty/curl-7.28.0/lib/connect.c:72:
+thirdparty/curl-7.28.0/lib/connect.h:31: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/connect.h:38: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/connect.h:44: error: expected declaration specifiers or '...' before 'bool'
+In file included from thirdparty/curl-7.28.0/lib/connect.c:75:
+thirdparty/curl-7.28.0/lib/url.h:38: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/url.h:38: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/url.h:39: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/url.h:40: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/url.h:41: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/url.h:42: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/url.h:43: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/url.h:44: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/url.h:45: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/url.h:47: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/url.h:65: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'Curl_isPipeliningEnabled'
+In file included from thirdparty/curl-7.28.0/lib/connect.c:76:
+thirdparty/curl-7.28.0/lib/multiif.h:30: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'Curl_multi_canPipeline'
+In file included from thirdparty/curl-7.28.0/lib/connect.c:80:
+thirdparty/curl-7.28.0/lib/sslgen.h:30: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'Curl_ssl_config_matches'
+thirdparty/curl-7.28.0/lib/sslgen.h:32: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'Curl_clone_ssl_config'
+thirdparty/curl-7.28.0/lib/connect.c:92: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'verifyconnect'
+thirdparty/curl-7.28.0/lib/connect.c: In function 'tcpkeepalive':
+thirdparty/curl-7.28.0/lib/connect.c:105: error: 'struct UserDefined' has no member named 'tcp_keepalive'
+thirdparty/curl-7.28.0/lib/connect.c: At top level:
+thirdparty/curl-7.28.0/lib/connect.c:137: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/connect.c:155: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/connect.c: In function 'Curl_timeleft':
+thirdparty/curl-7.28.0/lib/connect.c:158: error: 'duringconnect' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/connect.c:158: error: (Each undeclared identifier is reported only once
+thirdparty/curl-7.28.0/lib/connect.c:158: error: for each function it appears in.)
+thirdparty/curl-7.28.0/lib/connect.c:163: error: 'struct UserDefined' has no member named 'timeout'
+thirdparty/curl-7.28.0/lib/connect.c:165: error: 'struct UserDefined' has no member named 'connecttimeout'
+thirdparty/curl-7.28.0/lib/connect.c:170: error: 'struct UserDefined' has no member named 'timeout'
+thirdparty/curl-7.28.0/lib/connect.c:173: error: 'struct UserDefined' has no member named 'connecttimeout'
+thirdparty/curl-7.28.0/lib/connect.c:176: error: 'struct UserDefined' has no member named 'timeout'
+thirdparty/curl-7.28.0/lib/connect.c:176: error: 'struct UserDefined' has no member named 'connecttimeout'
+thirdparty/curl-7.28.0/lib/connect.c:177: error: 'struct UserDefined' has no member named 'timeout'
+thirdparty/curl-7.28.0/lib/connect.c:179: error: 'struct UserDefined' has no member named 'connecttimeout'
+thirdparty/curl-7.28.0/lib/connect.c:197: error: 'struct Progress' has no member named 't_startsingle'
+thirdparty/curl-7.28.0/lib/connect.c: In function 'bindlocal':
+thirdparty/curl-7.28.0/lib/connect.c:273: error: 'struct UserDefined' has no member named 'localport'
+thirdparty/curl-7.28.0/lib/connect.c:276: error: 'struct UserDefined' has no member named 'localportrange'
+thirdparty/curl-7.28.0/lib/connect.c:277: error: 'struct UserDefined' has no member named 'str'
+thirdparty/curl-7.28.0/lib/connect.c:281: error: expected ';' before 'is_interface'
+thirdparty/curl-7.28.0/lib/connect.c:282: error: expected ';' before 'is_host'
+thirdparty/curl-7.28.0/lib/connect.c:298: error: 'is_interface' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/connect.c:298: error: 'bool_true' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/connect.c:302: error: 'is_host' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/connect.c:331: error: 'errno' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/connect.c:349: error: 'struct connectdata' has no member named 'ip_version'
+thirdparty/curl-7.28.0/lib/connect.c:353: error: 'struct connectdata' has no member named 'ip_version'
+thirdparty/curl-7.28.0/lib/connect.c:362: error: 'struct connectdata' has no member named 'ip_version'
+thirdparty/curl-7.28.0/lib/connect.c:394: error: dereferencing pointer to incomplete type
+thirdparty/curl-7.28.0/lib/connect.c:395: error: dereferencing pointer to incomplete type
+thirdparty/curl-7.28.0/lib/connect.c:396: error: dereferencing pointer to incomplete type
+thirdparty/curl-7.28.0/lib/connect.c:397: error: invalid application of 'sizeof' to incomplete type 'struct sockaddr_in' 
+thirdparty/curl-7.28.0/lib/connect.c:417: error: dereferencing pointer to incomplete type
+thirdparty/curl-7.28.0/lib/connect.c:418: error: dereferencing pointer to incomplete type
+thirdparty/curl-7.28.0/lib/connect.c:419: error: invalid application of 'sizeof' to incomplete type 'struct sockaddr_in' 
+thirdparty/curl-7.28.0/lib/connect.c:430: error: 'struct UrlState' has no member named 'os_errno'
+thirdparty/curl-7.28.0/lib/connect.c:436: error: 'struct connectdata' has no member named 'bits'
+thirdparty/curl-7.28.0/lib/connect.c:445: error: dereferencing pointer to incomplete type
+thirdparty/curl-7.28.0/lib/connect.c:455: error: 'struct UrlState' has no member named 'os_errno'
+thirdparty/curl-7.28.0/lib/connect.c: At top level:
+thirdparty/curl-7.28.0/lib/connect.c:465: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'verifyconnect'
+thirdparty/curl-7.28.0/lib/connect.c:533: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/connect.c: In function 'trynextip':
+thirdparty/curl-7.28.0/lib/connect.c:542: error: 'struct connectdata' has no member named 'sock'
+thirdparty/curl-7.28.0/lib/connect.c:543: error: 'struct connectdata' has no member named 'sock'
+thirdparty/curl-7.28.0/lib/connect.c:544: error: 'connected' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/connect.c:544: error: 'bool_false' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/connect.c:552: error: 'struct connectdata' has no member named 'ip_addr'
+thirdparty/curl-7.28.0/lib/connect.c:555: error: too many arguments to function 'singleipconnect'
+thirdparty/curl-7.28.0/lib/connect.c:560: error: 'struct connectdata' has no member named 'sock'
+thirdparty/curl-7.28.0/lib/connect.c:561: error: 'struct connectdata' has no member named 'ip_addr'
+thirdparty/curl-7.28.0/lib/connect.c: In function 'Curl_persistconninfo':
+thirdparty/curl-7.28.0/lib/connect.c:575: error: 'struct PureInfo' has no member named 'conn_primary_ip'
+thirdparty/curl-7.28.0/lib/connect.c:575: error: 'struct connectdata' has no member named 'primary_ip'
+thirdparty/curl-7.28.0/lib/connect.c:576: error: 'struct PureInfo' has no member named 'conn_local_ip'
+thirdparty/curl-7.28.0/lib/connect.c:576: error: 'struct connectdata' has no member named 'local_ip'
+thirdparty/curl-7.28.0/lib/connect.c:577: error: 'struct PureInfo' has no member named 'conn_primary_port'
+thirdparty/curl-7.28.0/lib/connect.c:577: error: 'struct connectdata' has no member named 'primary_port'
+thirdparty/curl-7.28.0/lib/connect.c:578: error: 'struct PureInfo' has no member named 'conn_local_port'
+thirdparty/curl-7.28.0/lib/connect.c:578: error: 'struct connectdata' has no member named 'local_port'
+thirdparty/curl-7.28.0/lib/connect.c: At top level:
+thirdparty/curl-7.28.0/lib/connect.c:582: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'getaddressinfo'
+thirdparty/curl-7.28.0/lib/connect.c: In function 'Curl_updateconninfo':
+thirdparty/curl-7.28.0/lib/connect.c:642: error: 'struct connectdata' has no member named 'bits'
+thirdparty/curl-7.28.0/lib/connect.c:646: error: 'errno' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/connect.c:661: error: 'struct connectdata' has no member named 'primary_ip'
+thirdparty/curl-7.28.0/lib/connect.c:661: error: 'struct connectdata' has no member named 'primary_port'
+thirdparty/curl-7.28.0/lib/connect.c:669: error: 'struct connectdata' has no member named 'local_ip'
+thirdparty/curl-7.28.0/lib/connect.c:669: error: 'struct connectdata' has no member named 'local_port'
+thirdparty/curl-7.28.0/lib/connect.c: At top level:
+thirdparty/curl-7.28.0/lib/connect.c:689: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/connect.c: In function 'Curl_is_connected':
+thirdparty/curl-7.28.0/lib/connect.c:694: error: 'struct connectdata' has no member named 'sock'
+thirdparty/curl-7.28.0/lib/connect.c:701: error: 'connected' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/connect.c:701: error: 'bool_false' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/connect.c:703: error: 'struct connectdata' has no member named 'bits'
+thirdparty/curl-7.28.0/lib/connect.c:705: error: 'bool_true' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/connect.c:712: error: too many arguments to function 'Curl_timeleft'
+thirdparty/curl-7.28.0/lib/connect.c:723: error: 'struct connectdata' has no member named 'connecttime'
+thirdparty/curl-7.28.0/lib/connect.c:723: error: 'struct connectdata' has no member named 'timeoutms_per_addr'
+thirdparty/curl-7.28.0/lib/connect.c:725: error: 'struct connectdata' has no member named 'timeoutms_per_addr'
+thirdparty/curl-7.28.0/lib/connect.c:742: error: 'struct connectdata' has no member named 'bits'
+thirdparty/curl-7.28.0/lib/connect.c:768: error: 'struct UrlState' has no member named 'os_errno'
+thirdparty/curl-7.28.0/lib/connect.c:769: error: 'errno' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/connect.c:773: error: 'struct connectdata' has no member named 'timeoutms_per_addr'
+thirdparty/curl-7.28.0/lib/connect.c:773: error: 'struct connectdata' has no member named 'ip_addr'
+thirdparty/curl-7.28.0/lib/connect.c:775: error: too many arguments to function 'trynextip'
+thirdparty/curl-7.28.0/lib/connect.c:779: error: 'struct UrlState' has no member named 'os_errno'
+thirdparty/curl-7.28.0/lib/connect.c:781: error: 'struct connectdata' has no member named 'host'
+thirdparty/curl-7.28.0/lib/connect.c:781: error: 'struct connectdata' has no member named 'port'
+thirdparty/curl-7.28.0/lib/connect.c: At top level:
+thirdparty/curl-7.28.0/lib/connect.c:878: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/connect.c: In function 'singleipconnect':
+thirdparty/curl-7.28.0/lib/connect.c:883: error: expected ';' before 'isconnected'
+thirdparty/curl-7.28.0/lib/connect.c:889: error: 'connected' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/connect.c:889: error: 'bool_false' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/connect.c:900: error: 'struct connectdata' has no member named 'primary_ip'
+thirdparty/curl-7.28.0/lib/connect.c:900: error: 'struct connectdata' has no member named 'primary_port'
+thirdparty/curl-7.28.0/lib/connect.c:902: error: 'errno' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/connect.c:908: error: 'struct connectdata' has no member named 'ip_addr_str'
+thirdparty/curl-7.28.0/lib/connect.c:908: error: 'struct connectdata' has no member named 'primary_ip'
+thirdparty/curl-7.28.0/lib/connect.c:909: error: 'struct connectdata' has no member named 'ip_addr_str'
+thirdparty/curl-7.28.0/lib/connect.c:913: error: 'struct UserDefined' has no member named 'tcp_nodelay'
+thirdparty/curl-7.28.0/lib/connect.c:920: error: 'struct UserDefined' has no member named 'tcp_keepalive'
+thirdparty/curl-7.28.0/lib/connect.c:923: error: 'struct UserDefined' has no member named 'fsockopt'
+thirdparty/curl-7.28.0/lib/connect.c:925: error: 'struct UserDefined' has no member named 'fsockopt'
+thirdparty/curl-7.28.0/lib/connect.c:925: error: 'struct UserDefined' has no member named 'sockopt_client'
+thirdparty/curl-7.28.0/lib/connect.c:929: error: 'CURL_SOCKOPT_ALREADY_CONNECTED' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/connect.c:930: error: 'isconnected' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/connect.c:930: error: 'bool_true' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/connect.c:948: error: 'struct connectdata' has no member named 'socktype'
+thirdparty/curl-7.28.0/lib/connect.c:952: error: 'struct connectdata' has no member named 'connecttime'
+thirdparty/curl-7.28.0/lib/connect.c:953: error: 'struct connectdata' has no member named 'num_addr'
+thirdparty/curl-7.28.0/lib/connect.c:954: error: 'struct connectdata' has no member named 'timeoutms_per_addr'
+thirdparty/curl-7.28.0/lib/connect.c:961: error: 'EINPROGRESS' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/connect.c:962: error: 'EWOULDBLOCK' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/connect.c:981: error: 'struct connectdata' has no member named 'ip_addr_str'
+thirdparty/curl-7.28.0/lib/connect.c:982: error: 'struct UrlState' has no member named 'os_errno'
+thirdparty/curl-7.28.0/lib/connect.c:1014: error: 'struct UrlState' has no member named 'os_errno'
+thirdparty/curl-7.28.0/lib/connect.c: At top level:
+thirdparty/curl-7.28.0/lib/connect.c:1034: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/connect.c: In function 'Curl_connecthost':
+thirdparty/curl-7.28.0/lib/connect.c:1050: error: 'connected' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/connect.c:1050: error: 'bool_false' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/connect.c:1053: error: 'bool_true' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/connect.c:1053: error: too many arguments to function 'Curl_timeleft'
+thirdparty/curl-7.28.0/lib/connect.c:1061: error: 'struct connectdata' has no member named 'num_addr'
+thirdparty/curl-7.28.0/lib/connect.c:1076: error: 'struct connectdata' has no member named 'timeoutms_per_addr'
+thirdparty/curl-7.28.0/lib/connect.c:1083: error: 'struct connectdata' has no member named 'timeoutms_per_addr'
+thirdparty/curl-7.28.0/lib/connect.c:1083: error: too many arguments to function 'singleipconnect'
+thirdparty/curl-7.28.0/lib/connect.c:1114: error: 'struct PureInfo' has no member named 'numconnects'
+thirdparty/curl-7.28.0/lib/connect.c: In function 'Curl_getconnectinfo':
+thirdparty/curl-7.28.0/lib/connect.c:1139: error: 'struct connectdata' has no member named 'sock'
+thirdparty/curl-7.28.0/lib/connect.c:1142: error: 'struct connectdata' has no member named 'ssl'
+thirdparty/curl-7.28.0/lib/connect.c:1152: error: 'RECV_TYPE_ARG1' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/connect.c:1152: error: expected ')' before 'c'
+thirdparty/curl-7.28.0/lib/connect.c:1153: error: too few arguments to function 'recv'
+thirdparty/curl-7.28.0/lib/connect.c: In function 'Curl_closesocket':
+thirdparty/curl-7.28.0/lib/connect.c:1173: error: 'struct connectdata' has no member named 'fclosesocket'
+thirdparty/curl-7.28.0/lib/connect.c:1174: error: 'struct connectdata' has no member named 'sock'
+thirdparty/curl-7.28.0/lib/connect.c:1175: error: 'struct connectdata' has no member named 'sock_accepted'
+thirdparty/curl-7.28.0/lib/connect.c:1179: error: 'struct connectdata' has no member named 'sock_accepted'
+thirdparty/curl-7.28.0/lib/connect.c:1179: error: 'bool_false' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/connect.c:1181: error: 'struct connectdata' has no member named 'fclosesocket'
+thirdparty/curl-7.28.0/lib/connect.c:1181: error: 'struct connectdata' has no member named 'closesocket_client'
+thirdparty/curl-7.28.0/lib/connect.c: In function 'Curl_socket':
+thirdparty/curl-7.28.0/lib/connect.c:1216: error: 'struct connectdata' has no member named 'socktype'
+thirdparty/curl-7.28.0/lib/connect.c:1217: error: 'struct connectdata' has no member named 'socktype'
+thirdparty/curl-7.28.0/lib/connect.c:1217: error: 'IPPROTO_UDP' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/connect.c:1224: error: 'struct UserDefined' has no member named 'fopensocket'
+thirdparty/curl-7.28.0/lib/connect.c:1234: error: 'struct UserDefined' has no member named 'fopensocket'
+thirdparty/curl-7.28.0/lib/connect.c:1234: error: 'struct UserDefined' has no member named 'opensocket_client'
+scons: *** [.bladeout/64opt/thirdparty/curl-7.28.0/curl.objs/lib/connect.c.o] Error 1
+In file included from thirdparty/curl-7.28.0/lib/setup.h:649,
+                 from thirdparty/curl-7.28.0/lib/cookie.c:80:
+thirdparty/curl-7.28.0/lib/setup_once.h:92: error: redefinition of 'struct timeval'
+thirdparty/curl-7.28.0/lib/setup_once.h:157: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'Missing_definition_of_macro_sread'
+In file included from thirdparty/curl-7.28.0/lib/urldata.h:69,
+                 from thirdparty/curl-7.28.0/lib/cookie.c:87:
+thirdparty/curl-7.28.0/lib/cookie.h:36: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/cookie.h:52: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/cookie.h:79: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/cookie.h:83: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/cookie.h:84: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/cookie.h:98: error: expected declaration specifiers or '...' before 'bool'
+In file included from thirdparty/curl-7.28.0/lib/urldata.h:70,
+                 from thirdparty/curl-7.28.0/lib/cookie.c:87:
+thirdparty/curl-7.28.0/lib/formdata.h:53: error: expected specifier-qualifier-list before 'bool'
+In file included from thirdparty/curl-7.28.0/lib/urldata.h:166,
+                 from thirdparty/curl-7.28.0/lib/cookie.c:87:
+thirdparty/curl-7.28.0/lib/hostip.h:106: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'Curl_ipvalid'
+thirdparty/curl-7.28.0/lib/hostip.h:150: error: expected declaration specifiers or '...' before 'bool'
+In file included from thirdparty/curl-7.28.0/lib/imap.h:25,
+                 from thirdparty/curl-7.28.0/lib/urldata.h:170,
+                 from thirdparty/curl-7.28.0/lib/cookie.c:87:
+thirdparty/curl-7.28.0/lib/pingpong.h:47: error: expected specifier-qualifier-list before 'bool'
+In file included from thirdparty/curl-7.28.0/lib/urldata.h:170,
+                 from thirdparty/curl-7.28.0/lib/cookie.c:87:
+thirdparty/curl-7.28.0/lib/imap.h:52: error: expected specifier-qualifier-list before 'bool'
+In file included from thirdparty/curl-7.28.0/lib/urldata.h:172,
+                 from thirdparty/curl-7.28.0/lib/cookie.c:87:
+thirdparty/curl-7.28.0/lib/smtp.h:67: error: expected specifier-qualifier-list before 'bool'
+In file included from thirdparty/curl-7.28.0/lib/urldata.h:173,
+                 from thirdparty/curl-7.28.0/lib/cookie.c:87:
+thirdparty/curl-7.28.0/lib/ftp.h:132: error: expected specifier-qualifier-list before 'bool'
+In file included from thirdparty/curl-7.28.0/lib/urldata.h:176,
+                 from thirdparty/curl-7.28.0/lib/cookie.c:87:
+thirdparty/curl-7.28.0/lib/http.h:33: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'Curl_compareheader'
+thirdparty/curl-7.28.0/lib/http.h:67: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/http.h:68: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/http.h:69: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/http.h:148: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/http.h:168: error: expected declaration specifiers or '...' before 'bool'
+In file included from thirdparty/curl-7.28.0/lib/urldata.h:177,
+                 from thirdparty/curl-7.28.0/lib/cookie.c:87:
+thirdparty/curl-7.28.0/lib/rtsp.h:29: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'Curl_rtsp_connisdead'
+In file included from thirdparty/curl-7.28.0/lib/cookie.c:87:
+thirdparty/curl-7.28.0/lib/urldata.h:267: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:349: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:375: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:446: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:554: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:555: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:593: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:682: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:697: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:700: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:701: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:733: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:738: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:790: error: expected specifier-qualifier-list before 'curl_closesocket_callback'
+thirdparty/curl-7.28.0/lib/urldata.h:1030: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:1070: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:1142: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:1184: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:1317: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/urldata.h:1417: error: expected specifier-qualifier-list before 'bool'
+thirdparty/curl-7.28.0/lib/cookie.c: In function 'freecookie':
+thirdparty/curl-7.28.0/lib/cookie.c:113: error: 'struct Cookie' has no member named 'maxage'
+thirdparty/curl-7.28.0/lib/cookie.c:114: error: 'struct Cookie' has no member named 'maxage'
+thirdparty/curl-7.28.0/lib/cookie.c:115: error: 'struct Cookie' has no member named 'version'
+thirdparty/curl-7.28.0/lib/cookie.c:116: error: 'struct Cookie' has no member named 'version'
+thirdparty/curl-7.28.0/lib/cookie.c: At top level:
+thirdparty/curl-7.28.0/lib/cookie.c:121: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'tailmatch'
+thirdparty/curl-7.28.0/lib/cookie.c: In function 'Curl_cookie_loadfiles':
+thirdparty/curl-7.28.0/lib/cookie.c:137: error: 'struct DynamicStatic' has no member named 'cookielist'
+thirdparty/curl-7.28.0/lib/cookie.c:144: error: 'struct UserDefined' has no member named 'cookiesession'
+thirdparty/curl-7.28.0/lib/cookie.c:144: error: too many arguments to function 'Curl_cookie_init'
+thirdparty/curl-7.28.0/lib/cookie.c:147: error: 'struct DynamicStatic' has no member named 'cookielist'
+thirdparty/curl-7.28.0/lib/cookie.c:148: error: 'struct DynamicStatic' has no member named 'cookielist'
+thirdparty/curl-7.28.0/lib/cookie.c: At top level:
+thirdparty/curl-7.28.0/lib/cookie.c:182: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/cookie.c: In function 'Curl_cookie_add':
+thirdparty/curl-7.28.0/lib/cookie.c:194: error: expected ';' before 'replace_old'
+thirdparty/curl-7.28.0/lib/cookie.c:195: error: expected ';' before 'badcookie'
+thirdparty/curl-7.28.0/lib/cookie.c:206: error: 'httpheader' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/cookie.c:206: error: (Each undeclared identifier is reported only once
+thirdparty/curl-7.28.0/lib/cookie.c:206: error: for each function it appears in.)
+thirdparty/curl-7.28.0/lib/cookie.c:234: error: expected ';' before 'done'
+thirdparty/curl-7.28.0/lib/cookie.c:235: error: expected ';' before 'sep'
+thirdparty/curl-7.28.0/lib/cookie.c:244: error: 'sep' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/cookie.c:244: error: 'bool_true' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/cookie.c:244: error: 'bool_false' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/cookie.c:260: error: 'done' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/cookie.c:262: error: 'struct Cookie' has no member named 'secure'
+thirdparty/curl-7.28.0/lib/cookie.c:264: error: 'struct Cookie' has no member named 'httponly'
+thirdparty/curl-7.28.0/lib/cookie.c:274: error: 'badcookie' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/cookie.c:332: error: 'struct Cookie' has no member named 'tailmatch'
+thirdparty/curl-7.28.0/lib/cookie.c:346: error: 'struct Cookie' has no member named 'version'
+thirdparty/curl-7.28.0/lib/cookie.c:347: error: 'struct Cookie' has no member named 'version'
+thirdparty/curl-7.28.0/lib/cookie.c:362: error: 'struct Cookie' has no member named 'maxage'
+thirdparty/curl-7.28.0/lib/cookie.c:363: error: 'struct Cookie' has no member named 'maxage'
+thirdparty/curl-7.28.0/lib/cookie.c:368: error: 'struct Cookie' has no member named 'maxage'
+thirdparty/curl-7.28.0/lib/cookie.c:368: error: 'struct Cookie' has no member named 'maxage'
+thirdparty/curl-7.28.0/lib/cookie.c:368: error: 'struct Cookie' has no member named 'maxage'
+thirdparty/curl-7.28.0/lib/cookie.c:483: error: 'struct Cookie' has no member named 'httponly'
+thirdparty/curl-7.28.0/lib/cookie.c:530: error: 'struct Cookie' has no member named 'tailmatch'
+thirdparty/curl-7.28.0/lib/cookie.c:550: error: 'struct Cookie' has no member named 'secure'
+thirdparty/curl-7.28.0/lib/cookie.c:587: error: 'struct CookieInfo' has no member named 'running'
+thirdparty/curl-7.28.0/lib/cookie.c:588: error: 'struct CookieInfo' has no member named 'newsession'
+thirdparty/curl-7.28.0/lib/cookie.c:594: error: 'struct Cookie' has no member named 'livecookie'
+thirdparty/curl-7.28.0/lib/cookie.c:594: error: 'struct CookieInfo' has no member named 'running'
+thirdparty/curl-7.28.0/lib/cookie.c:601: error: 'replace_old' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/cookie.c:631: error: 'struct Cookie' has no member named 'livecookie'
+thirdparty/curl-7.28.0/lib/cookie.c:631: error: 'struct Cookie' has no member named 'livecookie'
+thirdparty/curl-7.28.0/lib/cookie.c:656: error: 'struct Cookie' has no member named 'version'
+thirdparty/curl-7.28.0/lib/cookie.c:657: error: 'struct Cookie' has no member named 'version'
+thirdparty/curl-7.28.0/lib/cookie.c:658: error: 'struct Cookie' has no member named 'maxage'
+thirdparty/curl-7.28.0/lib/cookie.c:659: error: 'struct Cookie' has no member named 'maxage'
+thirdparty/curl-7.28.0/lib/cookie.c:679: error: 'struct CookieInfo' has no member named 'running'
+thirdparty/curl-7.28.0/lib/cookie.c:694: error: 'struct CookieInfo' has no member named 'numcookies'
+thirdparty/curl-7.28.0/lib/cookie.c: At top level:
+thirdparty/curl-7.28.0/lib/cookie.c:711: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/cookie.c: In function 'Curl_cookie_init':
+thirdparty/curl-7.28.0/lib/cookie.c:715: error: expected ';' before 'fromfile'
+thirdparty/curl-7.28.0/lib/cookie.c:728: error: 'struct CookieInfo' has no member named 'running'
+thirdparty/curl-7.28.0/lib/cookie.c:728: error: 'bool_false' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/cookie.c:732: error: 'fromfile' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/cookie.c:741: error: 'struct CookieInfo' has no member named 'newsession'
+thirdparty/curl-7.28.0/lib/cookie.c:741: error: 'newsession' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/cookie.c:745: error: expected ';' before 'headerline'
+thirdparty/curl-7.28.0/lib/cookie.c:753: error: 'headerline' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/cookie.c:753: error: 'bool_true' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/cookie.c:762: error: too many arguments to function 'Curl_cookie_add'
+thirdparty/curl-7.28.0/lib/cookie.c:770: error: 'struct CookieInfo' has no member named 'running'
+thirdparty/curl-7.28.0/lib/cookie.c: At top level:
+thirdparty/curl-7.28.0/lib/cookie.c:801: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/cookie.c: In function 'Curl_cookie_getlist':
+thirdparty/curl-7.28.0/lib/cookie.c:819: error: 'struct Cookie' has no member named 'secure'
+thirdparty/curl-7.28.0/lib/cookie.c:819: error: 'secure' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/cookie.c:819: error: 'bool_true' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/cookie.c:823: error: 'struct Cookie' has no member named 'tailmatch'
+thirdparty/curl-7.28.0/lib/cookie.c:824: error: 'struct Cookie' has no member named 'tailmatch'
+thirdparty/curl-7.28.0/lib/cookie.c: In function 'Curl_cookie_clearall':
+thirdparty/curl-7.28.0/lib/cookie.c:911: error: 'bool_true' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/cookie.c:911: error: too many arguments to function 'Curl_cookie_freelist'
+thirdparty/curl-7.28.0/lib/cookie.c:913: error: 'struct CookieInfo' has no member named 'numcookies'
+thirdparty/curl-7.28.0/lib/cookie.c: At top level:
+thirdparty/curl-7.28.0/lib/cookie.c:928: error: expected declaration specifiers or '...' before 'bool'
+thirdparty/curl-7.28.0/lib/cookie.c: In function 'Curl_cookie_freelist':
+thirdparty/curl-7.28.0/lib/cookie.c:934: error: 'cookiestoo' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/cookie.c: In function 'Curl_cookie_clearsess':
+thirdparty/curl-7.28.0/lib/cookie.c:973: error: 'struct CookieInfo' has no member named 'numcookies'
+thirdparty/curl-7.28.0/lib/cookie.c: In function 'get_netscape_format':
+thirdparty/curl-7.28.0/lib/cookie.c:1025: error: 'const struct Cookie' has no member named 'httponly'
+thirdparty/curl-7.28.0/lib/cookie.c:1028: error: 'const struct Cookie' has no member named 'tailmatch'
+thirdparty/curl-7.28.0/lib/cookie.c:1030: error: 'const struct Cookie' has no member named 'tailmatch'
+thirdparty/curl-7.28.0/lib/cookie.c:1032: error: 'const struct Cookie' has no member named 'secure'
+thirdparty/curl-7.28.0/lib/cookie.c: In function 'cookie_output':
+thirdparty/curl-7.28.0/lib/cookie.c:1050: error: expected ';' before 'use_stdout'
+thirdparty/curl-7.28.0/lib/cookie.c:1052: error: 'struct CookieInfo' has no member named 'numcookies'
+thirdparty/curl-7.28.0/lib/cookie.c:1060: error: 'use_stdout' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/cookie.c:1060: error: 'bool_true' undeclared (first use in this function)
+thirdparty/curl-7.28.0/lib/cookie.c: In function 'Curl_cookie_list':
+thirdparty/curl-7.28.0/lib/cookie.c:1105: error: 'struct CookieInfo' has no member named 'numcookies'
+thirdparty/curl-7.28.0/lib/cookie.c: In function 'Curl_flush_cookies':
+thirdparty/curl-7.28.0/lib/cookie.c:1132: error: 'struct UserDefined' has no member named 'str'
+thirdparty/curl-7.28.0/lib/cookie.c:1133: error: 'struct DynamicStatic' has no member named 'cookielist'
+thirdparty/curl-7.28.0/lib/cookie.c:1143: error: 'struct UserDefined' has no member named 'str'
+thirdparty/curl-7.28.0/lib/cookie.c:1145: error: 'struct UserDefined' has no member named 'str'
+thirdparty/curl-7.28.0/lib/cookie.c:1148: error: 'struct DynamicStatic' has no member named 'cookielist'
+thirdparty/curl-7.28.0/lib/cookie.c:1151: error: 'struct DynamicStatic' has no member named 'cookielist'
+thirdparty/curl-7.28.0/lib/cookie.c:1152: error: 'struct DynamicStatic' has no member named 'cookielist'
+scons: *** [.bladeout/64opt/thirdparty/curl-7.28.0/curl.objs/lib/cookie.c.o] Error 1
+scons: building terminated because of errors.
+Blade(error): building failure
