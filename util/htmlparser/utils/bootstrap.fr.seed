@@ -1,0 +1,13 @@
+isBootstrap=0
+p_bootstrap=0.55
+ft_threshold=0.01
+isClassic=0
+min_freq_to_discret=10
+hidden_num=10
+min_ft_freq=20
+min_cond_p=0.001
+positive_weight=1
+negative_weight=1
+posive_freq=0
+freq=0
+raw_ft_num=0
