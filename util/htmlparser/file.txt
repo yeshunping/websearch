@@ -1,4 +1,3 @@
-.
 ./ahtmlparser
 ./ahtmlparser/easou_ahtml_area.h
 ./ahtmlparser/easou_ahtml_dtd.h
