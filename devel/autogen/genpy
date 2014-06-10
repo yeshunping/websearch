@@ -1,0 +1,48 @@
+#!/bin/bash --norc
+#
+# Generate a boilerplate Python source file to stdout
+#
+
+usage() {
+cat <<EOF
+
+Usage: `basename $0` python-filename
+
+EOF
+  exit 1
+}
+
+# Parse positional arguments
+if [ $# -ne 1 ]; then
+  usage
+fi
+
+filename="$1"
+
+if [ "${filename%.py}" = "$filename" ]; then
+  echo "$filename doesn't end with .py"
+  exit 1
+fi
+
+modulename=`basename ${filename%.py}`
+
+scriptdir=`dirname $0`
+
+$scriptdir/gboilerplate -c -s /usr/bin/python2.6
+cat <<EOF
+
+"""One-line documentation for $modulename module.
+
+A detailed description of $modulename.
+"""
+
+__author__ = '$($scriptdir/gboilerplate -a | sed "s;';\\\\';g")'
+
+
+def main(argv):
+  pass
+
+
+if __name__ == '__main__':
+  main()
+EOF

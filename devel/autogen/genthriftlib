@@ -1,0 +1,8 @@
+#!/bin/bash --norc
+
+echo "thrift_library(name = '')"
+echo "               srcs = ["
+echo "                      ],"
+echo "               deps = ["
+echo "                      ],"
+echo "              )"

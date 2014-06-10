@@ -1,0 +1,33 @@
+#!/usr/bin/python
+#
+
+"""Generate boilerplate for c++ unittest file.
+
+"""
+
+__author__ = 'yeshunping@gmail.com'
+
+import datetime
+import os
+import re
+import sys
+from author_info import GetAuthorInfo
+
+def GetIncludeFile(filename):
+  abs_name = os.path.join(os.getcwd(), filename)
+  regexp = re.compile(r'^(/.*/code/)(.*)_(reg|unit|)test.cc$')
+  match = re.search(regexp, abs_name)
+  assert match != None, 'Should run under websearch!'
+
+  return match.group(2) + '.h'
+
+def main(argv):
+  print '// Copyright %d. All Rights Reserved.' % (
+      datetime.date.today().year)
+  print '// Author: %s\n' % GetAuthorInfo()
+  print '#include "%s"' % GetIncludeFile(argv[1])
+  print '#include "thirdparty/gtest/gtest.h"'
+
+
+if __name__ == '__main__':
+  main(sys.argv)

@@ -1,0 +1,81 @@
+#!/usr/bin/env python
+#
+
+"""Print a copyright statement and an author line.
+
+Options:
+
+ -c                Output the copyright statement only (with comment prefix)
+ -a                Output the author info only (without comment prefix)
+ -C comment_prefix Prefix each comment line with the given string.
+ -s interpreter    Put a she-bang line at the top with the given interpreter,
+                   and prefix each comment line with '#'.
+ -i                Include $Id$ tag (with comment prefix).
+"""
+
+__author__ = 'yeshunping@gmail.com'
+
+import datetime
+import getopt
+import getpass
+import os
+import sys
+from author_info import GetAuthorInfo
+
+def Usage():
+  sys.stderr.write(__doc__)
+  sys.exit(2)
+
+
+def main(argv):
+
+  try:
+    opts, args = getopt.getopt(argv[1:], 'caC:s:i', ['help'])
+  except getopt.GetoptError:
+    Usage()
+  if args:
+    Usage()
+
+  shebang = None
+  copyright_only = False
+  author_only = False
+  comment_prefix = '//'
+  idtag = False
+
+  for opt, arg in opts:
+    if opt in ('-h', '--help'):
+      Usage()
+    elif opt == '-c':
+      copyright_only = True
+    elif opt == '-a':
+      author_only = True
+    elif opt == '-C':
+      comment_prefix = arg
+    elif opt == '-s':
+      shebang = arg
+      comment_prefix = '#'
+    elif opt == '-i':
+      idtag = True
+    else:
+      assert False, 'unhandled flag %s' % repr(opt)
+
+  if author_only:
+    print GetAuthorInfo()
+    return
+
+  if shebang:
+    print '#!' + shebang
+    print comment_prefix
+
+  if idtag:
+    print comment_prefix, '$Id$'
+
+  print '%s Copyright %d. All Rights Reserved.' % (
+      comment_prefix, datetime.date.today().year)
+
+  if not copyright_only:
+    print '%s Author: %s' % (comment_prefix, GetAuthorInfo())
+
+
+if __name__ == '__main__':
+  main(sys.argv)
