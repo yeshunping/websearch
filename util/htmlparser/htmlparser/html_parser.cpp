@@ -7,12 +7,12 @@
 
 #include <assert.h>
 #include <string.h>
-#include "easou_html_pool.h"
-#include "easou_html_node.h"
-#include "easou_html_tokenizer.h"
-#include "easou_html_constructor.h"
-#include "easou_html_operate.h"
-#include "easou_html_parser.h"
+#include "html_pool.h"
+#include "html_node.h"
+#include "html_tokenizer.h"
+#include "html_constructor.h"
+#include "html_operate.h"
+#include "html_parser.h"
 
 SLAB_DEFINE(stack, stack_item_t);
 SLAB_DEFINE(foster, foster_item_t);
@@ -104,7 +104,7 @@ struct html_parser_t* html_parser_create()
 }
 
 /**
- * @brief ´ÓparserÖÐ»ñÈ¡ÄÚ´æ
+ * @brief ä»Žparserä¸­èŽ·å–å†…å­˜
  **/
 void* html_parser_palloc(struct html_parser_t *parser, size_t size)
 {
@@ -112,7 +112,7 @@ void* html_parser_palloc(struct html_parser_t *parser, size_t size)
 }
 
 /**
- * @brief ´ÓtreeÖÐ»ñÈ¡ÄÚ´æ£¬Êµ¼ÊÉÏ»¹ÊÇ²ÅÄÜ¹»parserÉÏ»ñÈ¡
+ * @brief ä»Žtreeä¸­èŽ·å–å†…å­˜ï¼Œå®žé™…ä¸Šè¿˜æ˜¯æ‰èƒ½å¤Ÿparserä¸ŠèŽ·å–
  **/
 void* html_tree_palloc(html_tree_t *tree, size_t len)
 {
@@ -123,7 +123,7 @@ void* html_tree_palloc(html_tree_t *tree, size_t len)
 }
 
 /**
- * @brief ´ÓtreeÖÐ»ñÈ¡ÄÚ´æ£¬Í¬Ê±½øÐÐ³õÊ¼»¯£¬Êµ¼ÊÉÏ»¹ÊÇ²ÅÄÜ¹»parserÉÏ»ñÈ¡
+ * @brief ä»Žtreeä¸­èŽ·å–å†…å­˜ï¼ŒåŒæ—¶è¿›è¡Œåˆå§‹åŒ–ï¼Œå®žé™…ä¸Šè¿˜æ˜¯æ‰èƒ½å¤Ÿparserä¸ŠèŽ·å–
  */
 char* html_tree_strndup(html_tree_t *tree, const char *text, size_t len)
 {
@@ -201,7 +201,7 @@ void html_parser_set_script_parsing(struct html_parser_t *parser, int enable)
 }
 
 /**
- * @brief ½«htmlÍøÒ³½âÎö³ÉdomÊ÷
+ * @brief å°†htmlç½‘é¡µè§£æžæˆdomæ ‘
  **/
 int html_parse(struct html_parser_t *parser, html_tree_t *tree, const char *page, size_t size, int ignore_space)
 {
@@ -214,10 +214,10 @@ int html_parse(struct html_parser_t *parser, html_tree_t *tree, const char *page
 		return -1;
 	}
 	parser->hp_tree = tree;
-	// shuangwei modify 20120405 ÐÞ¸Ä¸´Î»Ë³Ðò¼°¸´Î»º¯Êý
-//    /*ÉèÖÃÍøÒ³Ô´´úÂë¶ÁÈ¡Æ÷*/
+	// shuangwei modify 20120405 ä¿®æ”¹å¤ä½é¡ºåºåŠå¤ä½å‡½æ•°
+//    /*è®¾ç½®ç½‘é¡µæºä»£ç è¯»å–å™¨*/
 //    html_tokenizer_reset(parser->hp_tokenizer, page, size);
-//    /*ÉèÖÃ·ÖÎö²ßÂÔ*/
+//    /*è®¾ç½®åˆ†æžç­–ç•¥*/
 //    if (html_parser_reset(parser) != 0) {
 //        return -1;
 //    }
@@ -275,7 +275,7 @@ static int html_parser_reset_all(struct html_parser_t *parser)
 	struct stack_item_t *item = NULL;
 	assert(parser);
 	/* reset state variable */
-	//parserµÄpool²»¶ÏÉêÇëÄÚ´æÐèÒª¸´Î»
+	//parserçš„poolä¸æ–­ç”³è¯·å†…å­˜éœ€è¦å¤ä½
 	if (parser->hp_pool)
 	{
 		mem_pool_reset(parser->hp_pool);

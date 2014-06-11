@@ -10,25 +10,25 @@
 
 #include <stddef.h>
 #include "queue.h"
-#include "easou_html_pool.h"
-#include "easou_html_dtd.h"
+#include "html_pool.h"
+#include "html_dtd.h"
 
 #define VISIT_ERROR -1
 #define VISIT_NORMAL 1
 #define VISIT_FINISH 2
 #define VISIT_SKIP_CHILD 3
 
-#define	MAX_TITLE_SIZE         1024            //titleµÄ×î´ó³¤¶È
-#define	MAX_PAGE_SIZE          128000          //Ò³ÃæµÄ×î´ó³¤¶È
-#define	MAX_CONTENT_SIZE       128000          //contentµÄ×î´ó³¤¶È
-#define MAX_LINK_NUM           300             //Ò³ÃæÖĞlinkµÄ×î´óÊıÁ¿
-#define MAX_URL_SIZE           1024            //URLµÄ×î´ó³¤¶È
+#define	MAX_TITLE_SIZE         1024            //titleçš„æœ€å¤§é•¿åº¦
+#define	MAX_PAGE_SIZE          128000          //é¡µé¢çš„æœ€å¤§é•¿åº¦
+#define	MAX_CONTENT_SIZE       128000          //contentçš„æœ€å¤§é•¿åº¦
+#define MAX_LINK_NUM           300             //é¡µé¢ä¸­linkçš„æœ€å¤§æ•°é‡
+#define MAX_URL_SIZE           1024            //URLçš„æœ€å¤§é•¿åº¦
 #define UL_MAX_URL_LEN 2048
 #define UL_MAX_TEXT_LEN 1024
 #define UL_MAX_PAGE_LEN 128*1024
 #define MAX_ANNOTATION_LEN (64 * 1024)
-#define MAX_START_TAG_NAME_LEN 16  /* ¿ªÊ¼±êÇ©µÄ×î´ó³¤¶È */
-#define MAX_END_TAG_NAME_LEN 32    /* ½áÊø±êÇ©µÄ×î´ó³¤¶È */
+#define MAX_START_TAG_NAME_LEN 16  /* å¼€å§‹æ ‡ç­¾çš„æœ€å¤§é•¿åº¦ */
+#define MAX_END_TAG_NAME_LEN 32    /* ç»“æŸæ ‡ç­¾çš„æœ€å¤§é•¿åº¦ */
 
 #define POOLSZ 128*1024
 
@@ -49,7 +49,7 @@
 #define IS_DOMTREE_FORM_TAG(x)	((x)&(0x1<<5))
 #define IS_DOMTREE_IMG_TAG(x)	((x)&(0x1<<6))
 /**
- * ÎÄµµÀàĞÍ¶¨Òå
+ * æ–‡æ¡£ç±»å‹å®šä¹‰
  */
 enum html_doctype
 {
@@ -88,54 +88,54 @@ struct _html_tree_t;
  **/
 typedef struct _html_attribute_t
 {
-	html_attr_type_t type; /**< ÊôĞÔÀàĞÍ */
-	char *value; /**< ÊôĞÔÖµ */
-	int valuelength; //ÊôĞÔÖµ³¤¶È
-	const char *name; /**< ÊôĞÔÃû³Æ */
-	struct _html_attribute_t *next; /**< ÏÂÒ»¸öÊôĞÔ */
+	html_attr_type_t type; /**< å±æ€§ç±»å‹ */
+	char *value; /**< å±æ€§å€¼ */
+	int valuelength; //å±æ€§å€¼é•¿åº¦
+	const char *name; /**< å±æ€§åç§° */
+	struct _html_attribute_t *next; /**< ä¸‹ä¸€ä¸ªå±æ€§ */
 } html_attribute_t;
 
 typedef struct _html_node_t;
 
 /**
- * @brief HTML±êÇ©µÄ³éÏó
+ * @brief HTMLæ ‡ç­¾çš„æŠ½è±¡
  **/
 typedef struct _html_tag_t
 {
 	_html_node_t* html_node;
-	const char *tag_name; /* ±êÇ©Ãû³Æ */
-	char *text; /* ±êÇ©ÔÚÔ´´úÂëÖĞµÄ±íÊ¾ */
-	int textlength; //½ÚµãµÄtext³¤¶È
-	html_attribute_t *attribute; /* ÊôĞÔÁĞ±í */
+	const char *tag_name; /* æ ‡ç­¾åç§° */
+	char *text; /* æ ‡ç­¾åœ¨æºä»£ç ä¸­çš„è¡¨ç¤º */
+	int textlength; //èŠ‚ç‚¹çš„texté•¿åº¦
+	html_attribute_t *attribute; /* å±æ€§åˆ—è¡¨ */
 	html_attribute_t *attr_class;
 	html_attribute_t *attr_id;
-	int tag_code; /* ±êÇ©±àÂë */
-	int page_offset; /* ±êÇ©ÔÚÒ³ÃæÖĞµÄÆ«ÒÆÁ¿,¶ÔÓÚscriptÉú³ÉµÄTAG,Æ«ÒÆÁ¿Îª-1 */
-	int nodelength; //½ÚµãÔ´Âë³¤¶È
-	html_tag_type_t tag_type :16; /* ±êÇ©Ãû³Æ */
-	unsigned is_close_tag :1; /* ÊÇ·ñÊÇ½áÊø±êÇ© */
-	unsigned is_self_closed :1; /* ÊÇ·ñÊÇ×Ô½áÊø±êÇ© */
+	int tag_code; /* æ ‡ç­¾ç¼–ç  */
+	int page_offset; /* æ ‡ç­¾åœ¨é¡µé¢ä¸­çš„åç§»é‡,å¯¹äºscriptç”Ÿæˆçš„TAG,åç§»é‡ä¸º-1 */
+	int nodelength; //èŠ‚ç‚¹æºç é•¿åº¦
+	html_tag_type_t tag_type :16; /* æ ‡ç­¾åç§° */
+	unsigned is_close_tag :1; /* æ˜¯å¦æ˜¯ç»“æŸæ ‡ç­¾ */
+	unsigned is_self_closed :1; /* æ˜¯å¦æ˜¯è‡ªç»“æŸæ ‡ç­¾ */
 } html_tag_t;
 
 /**
- * @brief HTML½ÚµãµÄ³éÏó
+ * @brief HTMLèŠ‚ç‚¹çš„æŠ½è±¡
  **/
 typedef struct _html_node_t
 {
 	html_tag_t html_tag;
-	struct _html_tree_t *owner; /* ÓµÓĞÕß */
-	struct _html_node_t *parent; /* ¸¸½Úµã */
-	struct _html_node_t *next; /* ÏÂÒ»¸ö½Úµã */
-	struct _html_node_t *prev; /* Ç°Ò»¸ö½Úµã*/
-	struct _html_node_t *child; /* µÚÒ»¸ö¶ù×Ó½Úµã */
-	struct _html_node_t *last_child; /* ×îºóÒ»¸ö¶ù×Ó½Úµã */
-	unsigned int subnodetype; //±êÊ¾¸Ã½ÚµãµÄºóÒá½ÚµãµÄtype£¬×îºóÒ»Î»ÊÇ·ñº¬ÓĞP£¬ÓÒ±ß2ÊÇ·ñº¬ÓĞDIV£¬ÓÒ±ß3ÊÇ·ñº¬ÓĞH1-H6,ÓÒ±ß4Î»ÊÇ·ñº¬ÓĞtable;ÓÒ5ÊÇ·ñº¬ÓĞul»òol;ÓÒ6ÊÇ·ñº¬ÓĞform,ÓÒ7 IMG
-	unsigned int childnodetype; //±êÊ¾¸Ã½ÚµãµÄ¶ù×Ó½ÚµãµÄtype£¬×îºóÒ»Î»ÊÇ·ñº¬ÓĞP£¬ÓÒ±ß2ÊÇ·ñº¬ÓĞDIV£¬ÓÒ±ß3ÊÇ·ñº¬ÓĞH1-H6,ÓÒ±ß4Î»ÊÇ·ñº¬ÓĞtable;ÓÒ5ÊÇ·ñº¬ÓĞul»òol;ÓÒ6ÊÇ·ñº¬ÓĞform,ÓÒ7 IMG
-	void *user_ptr;//ÓÃ»§×Ô¶¨ÒåÖ¸Õë£¬¿ÉÒÔÖ¸Ïò×Ô¼ºĞèÒªµÄ½á¹¹
+	struct _html_tree_t *owner; /* æ‹¥æœ‰è€… */
+	struct _html_node_t *parent; /* çˆ¶èŠ‚ç‚¹ */
+	struct _html_node_t *next; /* ä¸‹ä¸€ä¸ªèŠ‚ç‚¹ */
+	struct _html_node_t *prev; /* å‰ä¸€ä¸ªèŠ‚ç‚¹*/
+	struct _html_node_t *child; /* ç¬¬ä¸€ä¸ªå„¿å­èŠ‚ç‚¹ */
+	struct _html_node_t *last_child; /* æœ€åä¸€ä¸ªå„¿å­èŠ‚ç‚¹ */
+	unsigned int subnodetype; //æ ‡ç¤ºè¯¥èŠ‚ç‚¹çš„åè£”èŠ‚ç‚¹çš„typeï¼Œæœ€åä¸€ä½æ˜¯å¦å«æœ‰Pï¼Œå³è¾¹2æ˜¯å¦å«æœ‰DIVï¼Œå³è¾¹3æ˜¯å¦å«æœ‰H1-H6,å³è¾¹4ä½æ˜¯å¦å«æœ‰table;å³5æ˜¯å¦å«æœ‰ulæˆ–ol;å³6æ˜¯å¦å«æœ‰form,å³7 IMG
+	unsigned int childnodetype; //æ ‡ç¤ºè¯¥èŠ‚ç‚¹çš„å„¿å­èŠ‚ç‚¹çš„typeï¼Œæœ€åä¸€ä½æ˜¯å¦å«æœ‰Pï¼Œå³è¾¹2æ˜¯å¦å«æœ‰DIVï¼Œå³è¾¹3æ˜¯å¦å«æœ‰H1-H6,å³è¾¹4ä½æ˜¯å¦å«æœ‰table;å³5æ˜¯å¦å«æœ‰ulæˆ–ol;å³6æ˜¯å¦å«æœ‰form,å³7 IMG
+	void *user_ptr;//ç”¨æˆ·è‡ªå®šä¹‰æŒ‡é’ˆï¼Œå¯ä»¥æŒ‡å‘è‡ªå·±éœ€è¦çš„ç»“æ„
 } html_node_t;
 
 /**
- * @brief html½ÚµãµÄÁĞ±í
+ * @brief htmlèŠ‚ç‚¹çš„åˆ—è¡¨
  * @author sue
  * @date 2013-06-19
  */
@@ -147,29 +147,29 @@ typedef struct _html_node_list_t
 } html_node_list_t;
 
 /**
- * @brief ¹ØĞÄtagµÄÀàĞÍ.
+ * @brief å…³å¿ƒtagçš„ç±»å‹.
  */
 typedef enum
 {
-	HTML_NORMAL_TAG, /**< Òª½âÎöµÄtag */
-	HTML_IGNORE_TAG /**< ÒªºöÂÔµÄtag, ÕâÖÖÀàĞÍtag°üÎ§ÄÚµÄËùÓĞÄÚÈİºöÂÔ(¾¡¹ÜÆäÖĞ¿ÉÄÜ°üº¬Òª½âÎöµÄtag), ÀıÈç×¢ÊÍ±êÇ©¾ÍÊÇÒ»Àı*/
+	HTML_NORMAL_TAG, /**< è¦è§£æçš„tag */
+	HTML_IGNORE_TAG /**< è¦å¿½ç•¥çš„tag, è¿™ç§ç±»å‹tagåŒ…å›´å†…çš„æ‰€æœ‰å†…å®¹å¿½ç•¥(å°½ç®¡å…¶ä¸­å¯èƒ½åŒ…å«è¦è§£æçš„tag), ä¾‹å¦‚æ³¨é‡Šæ ‡ç­¾å°±æ˜¯ä¸€ä¾‹*/
 } html_tag_config_type_t;
 
 /**
- * @brief ¹ØĞÄµÄtagÉèÖÃ.
+ * @brief å…³å¿ƒçš„tagè®¾ç½®.
  */
 typedef struct
 {
-	char start_tag_name[MAX_START_TAG_NAME_LEN]; /**< Èç"<link","<!--" */
-	char end_tag_name[MAX_END_TAG_NAME_LEN]; /**< Èç"</link>", "-->".¶à¸ö½áÊø·ûÒÔ|·Ö¸ô£¬ Èç"</iframe>|/>" */
-	html_tag_config_type_t tag_type; /**< ÕâÏîÅäÖÃµÄÀàĞÍ,ÊÇÒª½âÎö»¹ÊÇÒªÈ«²¿È¥µô */
+	char start_tag_name[MAX_START_TAG_NAME_LEN]; /**< å¦‚"<link","<!--" */
+	char end_tag_name[MAX_END_TAG_NAME_LEN]; /**< å¦‚"</link>", "-->".å¤šä¸ªç»“æŸç¬¦ä»¥|åˆ†éš”ï¼Œ å¦‚"</iframe>|/>" */
+	html_tag_config_type_t tag_type; /**< è¿™é¡¹é…ç½®çš„ç±»å‹,æ˜¯è¦è§£æè¿˜æ˜¯è¦å…¨éƒ¨å»æ‰ */
 } html_interest_tag_t;
 
 typedef struct _html_tree_debug_info_t
 {
-	//¼ÇÂ¼¹Ø±Õµ±Ç°½ÚµãµÄ×æÏÈµÄÈİ´í²ßÂÔµÄ´¥·¢Çé¿ö
+	//è®°å½•å…³é—­å½“å‰èŠ‚ç‚¹çš„ç¥–å…ˆçš„å®¹é”™ç­–ç•¥çš„è§¦å‘æƒ…å†µ
 	int close_tag_err[HTML_TREE_TAG_TYPE_NUM][HTML_TREE_TAG_TYPE_NUM];
-	//¼ÇÂ¼¸¸×Ó¹ØÏµÈİ´í²ßÂÔµÄ´¥·¢Çé¿ö
+	//è®°å½•çˆ¶å­å…³ç³»å®¹é”™ç­–ç•¥çš„è§¦å‘æƒ…å†µ
 	int child_parent_err[HTML_TREE_TAG_TYPE_NUM][HTML_TREE_TAG_TYPE_NUM];
 	int tag_count[HTML_TREE_TAG_TYPE_NUM];
 	int cte_count;
@@ -180,7 +180,7 @@ typedef struct _html_tree_debug_info_t
 } html_tree_debug_info_t;
 
 /**
- *¶ÔdomÊ÷µÄ³éÏó£¬ÆäÖĞ°üº¬ÁËÁËdomÊ÷´î½¨¹ı³ÌÖĞµÄÒ»Ğ©ÌØÊâ×Ö¶Î
+ *å¯¹domæ ‘çš„æŠ½è±¡ï¼Œå…¶ä¸­åŒ…å«äº†äº†domæ ‘æ­å»ºè¿‡ç¨‹ä¸­çš„ä¸€äº›ç‰¹æ®Šå­—æ®µ
  **/
 typedef struct _html_tree_t
 {
@@ -188,28 +188,28 @@ typedef struct _html_tree_t
 	html_node_t *html; // HTML <html> node
 	html_node_t *head; // HTML <head> node
 	html_node_t *body; // HTML <body> node
-	html_doctype doctype; /**< ÎÄµµÀàĞÍ */
-	unsigned int treeAttr; //domÊ÷¾ßÓĞµÄÊôĞÔ£¬×îºóÒ»Î»±íÊ¾ÊÇ·ñº¬ÓĞdiv½Úµã£»2Î»ÊÇ·ñ´æÔÚp½Úµã£»3Î»ÊÇ·ñ´æÔÚ±êÌâ½ÚµãH1-H6£»×î¸ßÎ»±íÊ¾ÊÇ·ñ±êÊ¾½ÚµãµÄ×ÓËï½ÚµãÀàĞÍ
+	html_doctype doctype; /**< æ–‡æ¡£ç±»å‹ */
+	unsigned int treeAttr; //domæ ‘å…·æœ‰çš„å±æ€§ï¼Œæœ€åä¸€ä½è¡¨ç¤ºæ˜¯å¦å«æœ‰divèŠ‚ç‚¹ï¼›2ä½æ˜¯å¦å­˜åœ¨pèŠ‚ç‚¹ï¼›3ä½æ˜¯å¦å­˜åœ¨æ ‡é¢˜èŠ‚ç‚¹H1-H6ï¼›æœ€é«˜ä½è¡¨ç¤ºæ˜¯å¦æ ‡ç¤ºèŠ‚ç‚¹çš„å­å­™èŠ‚ç‚¹ç±»å‹
 } html_tree_t;
 
 struct _html_tokenizer_t;
 typedef int (*token_state_t)(struct _html_tokenizer_t*, html_tree_t*);
 
-/*htmlÔ´´úÂë¶ÁÈ¡Æ÷*/
+/*htmlæºä»£ç è¯»å–å™¨*/
 typedef struct _html_tokenizer_t
 {
-	const char *ht_source; /*ÍøÒ³Ô´Âë*/
-	const char *ht_begin; /*ÍøÒ³codeÖĞ¿ªÊ¼±éÀúÊ±µÄÎ»ÖÃ*/
-	const char *ht_current; /*µ±Ç°ÕıÔÚ±éÀúµÄÎ»ÖÃ*/
-	const char *ht_end; /*ÍøÒ³codeµÄ½áÊøÎ»ÖÃ*/
-	token_state_t ht_state; /*ÓÎ±êµÄÒ»¸ö×´¿öº¯ÊıÖ¸Õë*/
-	html_node_t *ht_node; /*É¨Ãè³öÀ´µÄnodeµÄÖ¸Õë*/
-	html_attribute_t *ht_attr; /*µ±Ç°ÕıÔÚÉ¨ÃèµÄattributeµÄÖ¸Õë*/
-	html_node_t *ht_opening; /*µ±Ç°ÕıÔÚµÈ´ı¹Ø±ÕµÄnode*/
+	const char *ht_source; /*ç½‘é¡µæºç */
+	const char *ht_begin; /*ç½‘é¡µcodeä¸­å¼€å§‹éå†æ—¶çš„ä½ç½®*/
+	const char *ht_current; /*å½“å‰æ­£åœ¨éå†çš„ä½ç½®*/
+	const char *ht_end; /*ç½‘é¡µcodeçš„ç»“æŸä½ç½®*/
+	token_state_t ht_state; /*æ¸¸æ ‡çš„ä¸€ä¸ªçŠ¶å†µå‡½æ•°æŒ‡é’ˆ*/
+	html_node_t *ht_node; /*æ‰«æå‡ºæ¥çš„nodeçš„æŒ‡é’ˆ*/
+	html_attribute_t *ht_attr; /*å½“å‰æ­£åœ¨æ‰«æçš„attributeçš„æŒ‡é’ˆ*/
+	html_node_t *ht_opening; /*å½“å‰æ­£åœ¨ç­‰å¾…å…³é—­çš„node*/
 } html_tokenizer_t;
 
 /**
- * @brief ÓÃÓÚ×°ÔØµ±Ç°µÈ´ı¹Ø±ÕµÄ½ÚµãµÄÕ»ºÍÕ»½Úµã
+ * @brief ç”¨äºè£…è½½å½“å‰ç­‰å¾…å…³é—­çš„èŠ‚ç‚¹çš„æ ˆå’Œæ ˆèŠ‚ç‚¹
  **/
 struct stack_item_t
 {
@@ -236,31 +236,31 @@ typedef int (*state_handler_t)(struct html_parser_t*, html_node_t*);
  **/
 struct html_parser_t
 {
-	struct mem_pool_t *hp_pool; //parser¶ÔÓ¦µÄÄÚ´æ³Ø
-	html_tree_t *hp_tree; //µ±Ç°ÕıÔÚ±»½âÎöµÄÊ÷
-	html_tokenizer_t *hp_tokenizer; //µ±Ç°µÄÍøÒ³Ô´´úÂë¶ÁÈ¡Æ÷
-	html_tokenizer_t *hp_nest_tokenizer; //±¸ÓÃµÄ
-	struct html_stack_t *hp_stack; //ÓÃÓÚÉú³É¸¸×Ó¹ØÏµµÄÕ»
+	struct mem_pool_t *hp_pool; //parserå¯¹åº”çš„å†…å­˜æ± 
+	html_tree_t *hp_tree; //å½“å‰æ­£åœ¨è¢«è§£æçš„æ ‘
+	html_tokenizer_t *hp_tokenizer; //å½“å‰çš„ç½‘é¡µæºä»£ç è¯»å–å™¨
+	html_tokenizer_t *hp_nest_tokenizer; //å¤‡ç”¨çš„
+	struct html_stack_t *hp_stack; //ç”¨äºç”Ÿæˆçˆ¶å­å…³ç³»çš„æ ˆ
 	struct html_stack_t *hp_foster_stack;
 	struct html_stack_t *hp_actfmt_list;
 	struct html_foster_t *hp_foster;
-	html_node_t *hp_html; //html±êÇ©»òÕßwml±êÇ©
-	html_node_t *hp_body; //body±êÇ©»òÕßcard±êÇ©
-	html_node_t *hp_form; //form±êÇ©
-	char *hp_document_write; //¶¯Ì¬Éú³ÉµÄÍøÒ³´úÂë£¬Ö÷ÒªÔÚjs½âÎöÊ±»áÓÃµ½
-	state_handler_t hp_handler; //µ±Ç°Èİ´í²ßÂÔ
-	state_handler_t hp_last_handler; //±¸ÓÃhandler
+	html_node_t *hp_html; //htmlæ ‡ç­¾æˆ–è€…wmlæ ‡ç­¾
+	html_node_t *hp_body; //bodyæ ‡ç­¾æˆ–è€…cardæ ‡ç­¾
+	html_node_t *hp_form; //formæ ‡ç­¾
+	char *hp_document_write; //åŠ¨æ€ç”Ÿæˆçš„ç½‘é¡µä»£ç ï¼Œä¸»è¦åœ¨jsè§£ææ—¶ä¼šç”¨åˆ°
+	state_handler_t hp_handler; //å½“å‰å®¹é”™ç­–ç•¥
+	state_handler_t hp_last_handler; //å¤‡ç”¨handler
 	struct slab_t *hp_stack_slab;
 	struct slab_t *hp_foster_slab;
-	unsigned hp_use_nest_tokenizer :1; //ÊÇ·ñÆôÓÃnest  tokenizer
-	unsigned hp_ignore_space :1; //ÊÇ·ñºöÂÔ¿Õ¸ñ
-	unsigned hp_xml_compatible :1; //ÊÇ·ñ¼æÈİxmlÎÄ¼ş
-	unsigned hp_wml_compatible :1; //ÊÇ·ñ¼æÈİwmlÎÄ¼ş
-	unsigned hp_script_parsing :1; //ÊÇ·ñ¶Ôscript½øĞĞ·ÖÎö
+	unsigned hp_use_nest_tokenizer :1; //æ˜¯å¦å¯ç”¨nest  tokenizer
+	unsigned hp_ignore_space :1; //æ˜¯å¦å¿½ç•¥ç©ºæ ¼
+	unsigned hp_xml_compatible :1; //æ˜¯å¦å…¼å®¹xmlæ–‡ä»¶
+	unsigned hp_wml_compatible :1; //æ˜¯å¦å…¼å®¹wmlæ–‡ä»¶
+	unsigned hp_script_parsing :1; //æ˜¯å¦å¯¹scriptè¿›è¡Œåˆ†æ
 };
 
 /**
- * @brief html domÊ÷µÄÊµÏÖ»·¾³
+ * @brief html domæ ‘çš„å®ç°ç¯å¢ƒ
  **/
 struct html_tree_impl_t
 {

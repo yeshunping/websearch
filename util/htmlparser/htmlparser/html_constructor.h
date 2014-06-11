@@ -1,8 +1,8 @@
 #ifndef __EASOU_HTML_CONSTRUCTOR_H_
 #define __EASOU_HTML_CONSTRUCTOR_H_
 
-#include "easou_html_parser.h"
-#include "easou_html_dom.h"
+#include "html_parser.h"
+#include "html_dom.h"
 
 int on_initial(struct html_parser_t*, html_node_t*);
 int on_before_html(struct html_parser_t*, html_node_t*);

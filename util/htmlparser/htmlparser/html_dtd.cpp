@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <string.h>
-#include "easou_html_dtd.h"
+#include "html_dtd.h"
 #include<stdio.h>
 #define MAX_HTML_LABEL_LEN 128
 #define LATIN_CHARACTERS_COUNT 26
@@ -543,7 +543,6 @@ const char* get_attr_name(html_attr_type_t type)
 	}
 }
 
-//shuangwei add 2012-04-23 鐢ㄤ簬寮�鍙戜汉鍛樿皟璇�
 int g_EASOU_DEBUG = 0;
 FILE * g_logfile = 0;
 char * g_debugbuf = NULL;

@@ -1,8 +1,8 @@
 
 #include <string.h>
-#include "easou_html_dom.h"
-#include "easou_html_script.h"
-#include "easou_string.h"
+#include "html_dom.h"
+#include "html_script.h"
+#include "util/htmlparser/utils/string_util.h"
 
 #define MAX_SCRIPT_TOKEN_LEN 256
 

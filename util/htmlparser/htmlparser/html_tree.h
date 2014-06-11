@@ -8,7 +8,7 @@
 #ifndef EASOU_HTML_TREE_H_
 #define EASOU_HTML_TREE_H_
 
-#include "easou_html_dom.h"
+#include "html_dom.h"
 
 struct printDomS
 {
@@ -18,37 +18,37 @@ struct printDomS
 };
 
 /**
- * @brief ³õÊ¼»¯domÊ÷
+ * @brief åˆå§‹åŒ–domæ ‘
  **/
 html_tree_t *html_tree_create(int max_page_len);
 
 /**
- * @brief Çå¿ÕdomÊ÷
+ * @brief æ¸…ç©ºdomæ ‘
  void html_tree_clean(html_tree_t *html_tree);
  **/
 
 /**
- * @brief Ïú»ÙdomÊ÷
+ * @brief é”€æ¯domæ ‘
  **/
 void html_tree_del(html_tree_t *html_tree);
 
 /**
- * @brief ÉèÖÃÊÇ·ñ½âÎöjs
+ * @brief è®¾ç½®æ˜¯å¦è§£æžjs
  **/
 void html_tree_set_script_parsing(html_tree_t *tree, int enable);
 
 /**
- * @brief ÅÐ¶ÏÊÇ·ñ½âÎöjs
+ * @brief åˆ¤æ–­æ˜¯å¦è§£æžjs
  **/
 int html_tree_is_script_parsing(html_tree_t *tree);
 
 /**
- * @brief ½«htmlÍøÒ³½âÎö³ÉdomÊ÷
- * @param [in/out] html_tree   : html_tree_t*	domÊ÷½á¹¹
- * @param [in] page   : char*	Ò³ÃæÔ´´úÂë
- * @param [in] page_len   : int	Ò³ÃæÔ´´úÂëµÄ³¤¶È
+ * @brief å°†htmlç½‘é¡µè§£æžæˆdomæ ‘
+ * @param [in/out] html_tree   : html_tree_t*	domæ ‘ç»“æž„
+ * @param [in] page   : char*	é¡µé¢æºä»£ç 
+ * @param [in] page_len   : int	é¡µé¢æºä»£ç çš„é•¿åº¦
  * @return  int
- * @retval  0:½âÎöÊ§°Ü;1:½âÎö³É¹¦.
+ * @retval  0:è§£æžå¤±è´¥;1:è§£æžæˆåŠŸ.
  * @author xunwu
  * @date 2011/08/02
  **/
@@ -65,52 +65,52 @@ typedef int (*start_visit_t)(html_tag_t* html_tag, void* result, int flag);
 typedef int (*finish_visit_t)(html_tag_t* html_tag, void* result);
 
 /**
- * @brief ±éÀúdomÊ÷
- * @param html_tree :½¨Á¢ºÃµÄdomÊ÷
- * @param start_visit,º¯ÊýÖ¸Õë£¬ÓÃÓÚÉî¶È±éÀúdomÊ÷£¬½øÈëÊ±Ê¹ÓÃ
- * @param finish_visit,º¯ÊýÖ¸Õë£¬ÓÃÓÚÉî¶È±éÀúdomÊ÷£¬·ÃÎÊ½Úµã¼°Æä×ÓÊ÷Íê³ÉÊ±Ê¹ÓÃ
+ * @brief éåŽ†domæ ‘
+ * @param html_tree :å»ºç«‹å¥½çš„domæ ‘
+ * @param start_visit,å‡½æ•°æŒ‡é’ˆï¼Œç”¨äºŽæ·±åº¦éåŽ†domæ ‘ï¼Œè¿›å…¥æ—¶ä½¿ç”¨
+ * @param finish_visit,å‡½æ•°æŒ‡é’ˆï¼Œç”¨äºŽæ·±åº¦éåŽ†domæ ‘ï¼Œè®¿é—®èŠ‚ç‚¹åŠå…¶å­æ ‘å®Œæˆæ—¶ä½¿ç”¨
  **/
 int html_tree_visit(html_tree_t *html_tree, start_visit_t start_visit, finish_visit_t finish_visit, void *result, int flag);
 
 /**
- * @brief ±éÀú½Úµã
- *  @param node :½¨Á¢ºÃµÄdomÊ÷µÄ½Úµã
- * @param start_visit,º¯ÊýÖ¸Õë£¬ÓÃÓÚÉî¶È±éÀúdomÊ÷£¬½øÈëÊ±Ê¹ÓÃ
- * @param finish_visit,º¯ÊýÖ¸Õë£¬ÓÃÓÚÉî¶È±éÀúdomÊ÷£¬·ÃÎÊ½Úµã¼°Æä×ÓÊ÷Íê³ÉÊ±Ê¹ÓÃ
+ * @brief éåŽ†èŠ‚ç‚¹
+ *  @param node :å»ºç«‹å¥½çš„domæ ‘çš„èŠ‚ç‚¹
+ * @param start_visit,å‡½æ•°æŒ‡é’ˆï¼Œç”¨äºŽæ·±åº¦éåŽ†domæ ‘ï¼Œè¿›å…¥æ—¶ä½¿ç”¨
+ * @param finish_visit,å‡½æ•°æŒ‡é’ˆï¼Œç”¨äºŽæ·±åº¦éåŽ†domæ ‘ï¼Œè®¿é—®èŠ‚ç‚¹åŠå…¶å­æ ‘å®Œæˆæ—¶ä½¿ç”¨
  **/
 int html_node_visit(html_node_t *node, start_visit_t start_visit, finish_visit_t finish_visit, void *result, int flag);
 
 /**
- * @brief ÖØÖÃÊ÷,²»ÊÍ·Å¿Õ¼ä
+ * @brief é‡ç½®æ ‘,ä¸é‡Šæ”¾ç©ºé—´
  **/
 int html_tree_reset_no_destroy(struct html_tree_impl_t *self);
 
 /**
- * ´òÓ¡½Úµã¼°ÆäÊôÐÔ
+ * æ‰“å°èŠ‚ç‚¹åŠå…¶å±žæ€§
  */
 void printNode(html_node_t *html_node);
 
 /**
- * ¸ù¾ÝÊ÷È·¶¨ÎÄµµÀàÐÍ
+ * æ ¹æ®æ ‘ç¡®å®šæ–‡æ¡£ç±»åž‹
  * @param:
- * html_tree, [in], ½âÎöºÃµÄhtmlÊ÷
- * url, [in], URLµØÖ·
+ * html_tree, [in], è§£æžå¥½çš„htmlæ ‘
+ * url, [in], URLåœ°å€
  * @return:
- * 0, ³É¹¦£»-1£¬Ê§°Ü
+ * 0, æˆåŠŸï¼›-1ï¼Œå¤±è´¥
  */
 int determine_doctype(html_tree_t *html_tree, const char* url);
 
 /**
- * ´òÓ¡½Úµã¼°ÆäÊôÐÔ
+ * æ‰“å°èŠ‚ç‚¹åŠå…¶å±žæ€§
  */
 void printTree(html_tree_t *html_tree);
 
 void PrintNode(html_node_t *html_node, int level);
 
 /**
- * ±ê×¢domÊ÷µÄÃ¿¸ö½Úµãº¬ÓÐµÄ×Ó½ÚµãÀàÐÍ
- * html_tree£ºin
- * ½á¹û£º-1£º²ÎÊý´íÎó£»0£º³É¹¦£»>0:ÆäËû´íÎó
+ * æ ‡æ³¨domæ ‘çš„æ¯ä¸ªèŠ‚ç‚¹å«æœ‰çš„å­èŠ‚ç‚¹ç±»åž‹
+ * html_treeï¼šin
+ * ç»“æžœï¼š-1ï¼šå‚æ•°é”™è¯¯ï¼›0ï¼šæˆåŠŸï¼›>0:å…¶ä»–é”™è¯¯
  *
  */
 int markDomTreeSubType(html_tree_t *html_tree);

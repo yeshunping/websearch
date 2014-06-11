@@ -8,10 +8,10 @@
  *      Author: sandy
  */
 
-#include "easou_html_doctype.h"
-#include "easou_html_tree.h"
-#include "easou_html_dom.h"
-#include "log.h"
+#include "html_doctype.h"
+#include "html_tree.h"
+#include "html_dom.h"
+#include "util/htmlparser/utils/log.h"
 
 #include <string.h>
 

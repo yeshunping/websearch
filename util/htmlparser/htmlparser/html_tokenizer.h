@@ -11,7 +11,7 @@
 #define EASOU_HTML_TOKENIZER_H_
 
 #include <stddef.h>
-#include "easou_html_dom.h"
+#include "html_dom.h"
 
 /**
  * @brief Create HTML Tokenizer

@@ -12,9 +12,9 @@
 #include <stdint.h>
 #include <string.h>
 #include <stdio.h>
-#include "easou_html_pool.h"
-#include "easou_html_dom.h"
-#include "debuginfo.h"
+#include "html_pool.h"
+#include "html_dom.h"
+#include "util/htmlparser/utils/debuginfo.h"
 
 /**
  * @brief create block for pool

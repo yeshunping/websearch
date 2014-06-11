@@ -8,10 +8,10 @@
 #ifndef EASOU_HTML_EXTRACTOR_H_
 #define EASOU_HTML_EXTRACTOR_H_
 
-#include "easou_html_tree.h"
+#include "html_tree.h"
 
 /**
- * @brief linkµÄ³éÏó
+ * @brief linkçš„æŠ½è±¡
  **/
 typedef struct _link_t
 {
@@ -20,17 +20,17 @@ typedef struct _link_t
 } link_t;
 
 /**
- * @brief ÌáÈ¡±êÌâtagtitle
+ * @brief æå–æ ‡é¢˜tagtitle
  **/
 int html_tree_extract_title(html_tree_t *html_tree, char* title, int size);
 
 /**
- * @brief ÌáÈ¡ÕªÒª
+ * @brief æå–æ‘˜è¦
  **/
 int html_tree_extract_abstract(html_tree_t *tree, char *abstract, int size, int merge = 1);
 
 /**
- * @brief ÌáÈ¡Á´½Ó
+ * @brief æå–é“¾æ¥
  * @return the number of links extracted
  **/
 int html_tree_extract_link(html_tree_t *html_tree, char* baseUrl, link_t* link, int& num);
@@ -38,20 +38,20 @@ int html_tree_extract_link(html_tree_t *html_tree, char* baseUrl, link_t* link, 
 int html_tree_extract_link(html_node_list_t* list, char* baseUrl, link_t* link, int& num);
 
 /**
- * @brief ÌáÈ¡ÕªÒª
+ * @brief æå–æ‘˜è¦
  **/
 int html_tree_extract_keywords(html_tree_t *tree, char *keywords, int size, int merge = 1);
 
 /**
- * @brief ÌáÈ¡cssÁ´½Ó
+ * @brief æå–cssé“¾æ¥
  **/
 int html_tree_extract_csslink(html_tree_t *html_tree, const char* baseUrl, link_t* link, int& num);
 
 /**
- * @brief ÌáÈ¡Ä³Ò»½Úµã¼°ÆäÏÂµÄÄÚÈİ
+ * @brief æå–æŸä¸€èŠ‚ç‚¹åŠå…¶ä¸‹çš„å†…å®¹
  **/
 int html_node_extract_content(html_node_t *html_node, char* content, int size);
 int html_combine_url(char *result_url, const char *src, char *base_domain, char *base_path, char *base_port);
-//»ñÈ¡Ò³ÃæÄÚbase tagËùÖ¸¶¨µÄURL
+//è·å–é¡µé¢å†…base tagæ‰€æŒ‡å®šçš„URL
 int get_base_url(char *base_url, html_tree_t *html_tree);
 #endif /* EASOU_HTML_EXTRACTOR_H_ */

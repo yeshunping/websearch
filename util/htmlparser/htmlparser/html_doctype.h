@@ -10,7 +10,7 @@
 #ifndef EASOU_HTML_DOCTYPE_H_
 #define EASOU_HTML_DOCTYPE_H_
 
-#include "easou_html_dom.h"
+#include "html_dom.h"
 
 /**
  * 根据树确定文档类型

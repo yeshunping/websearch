@@ -12,9 +12,9 @@
 #include <stdarg.h>
 #include <string.h>
 #include <ctype.h>
-#include "easou_html_dom.h"
-#include "easou_html_attr.h"
-#include "easou_debug.h"
+#include "html_dom.h"
+#include "html_attr.h"
+#include "util/htmlparser/utils/debug.h"
 
 #define EASOU_ATTR "easou_mask"
 

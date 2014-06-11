@@ -3,7 +3,7 @@
  * @author xunwu
  * @date 2011/08/02
  * @version 1.0
- * @brief htmlÔ´´úÂë¶ÁÈ¡Æ÷
+ * @brief htmlæºä»£ç è¯»å–å™¨
  *
  **/
 
@@ -12,35 +12,35 @@
 #include <ctype.h>
 #include <string.h>
 #include "queue.h"
-#include "easou_html_pool.h"
-#include "easou_html_dtd.h"
-#include "easou_html_dom.h"
-#include "easou_html_attr.h"
-#include "easou_html_node.h"
-#include "easou_html_tokenizer.h"
-#include "easou_string.h"
+#include "html_pool.h"
+#include "html_dtd.h"
+#include "html_dom.h"
+#include "html_attr.h"
+#include "html_node.h"
+#include "html_tokenizer.h"
+#include "util/htmlparser/utils/string_util.h"
 
 #define SCANNER_ASSERT() \
     assert(tk); \
     assert(doc);
 
-/**¹«¹²²Ù×÷£¬assert£¬È¡µ±Ç°×Ö·û*/
+/**å…¬å…±æ“ä½œï¼Œassertï¼Œå–å½“å‰å­—ç¬¦*/
 #define SCANNER_COMMON(ch) \
     int (ch) = '\0'; \
     SCANNER_ASSERT() \
     (ch) = (tk)->ht_current[0];
 
 /**
- * @brief ÅĞ¶ÏÊÇ·ñÊÇ¿Õ¸ñ·û
+ * @brief åˆ¤æ–­æ˜¯å¦æ˜¯ç©ºæ ¼ç¬¦
  **/
 #define IS_WS(ch) (g_whitespace_map[(unsigned char)(ch)])
 /**
- * @brief ÅĞ¶ÏÊÇ·ñÊÇÀ­¶¡×Ö·û
+ * @brief åˆ¤æ–­æ˜¯å¦æ˜¯æ‹‰ä¸å­—ç¬¦
  **/
 #define IS_LATIN(ch) (g_latin_map[(unsigned char)(ch)])
 
 /**
- *	@brief Éú³ÉÒ»¸ö×¢ÊÍ½Úµã
+ *	@brief ç”Ÿæˆä¸€ä¸ªæ³¨é‡ŠèŠ‚ç‚¹
  */
 static int emit_comment(html_tokenizer_t *tk, html_tree_t *doc, const char *end)
 {
@@ -70,7 +70,7 @@ static int emit_comment(html_tokenizer_t *tk, html_tree_t *doc, const char *end)
 }
 
 /**
- *	@brief Éú³ÉÒ»¸ödoctype½Úµã
+ *	@brief ç”Ÿæˆä¸€ä¸ªdoctypeèŠ‚ç‚¹
  */
 static int emit_doctype(html_tokenizer_t *tk, html_tree_t *doc, const char *end)
 {
@@ -100,7 +100,7 @@ static int emit_doctype(html_tokenizer_t *tk, html_tree_t *doc, const char *end)
 }
 
 /**
- *	@brief Éú³ÉÒ»¸ötext½Úµã
+ *	@brief ç”Ÿæˆä¸€ä¸ªtextèŠ‚ç‚¹
  */
 static int emit_text(html_tokenizer_t *tk, html_tree_t *doc, const char *end)
 {
@@ -145,7 +145,7 @@ static int emit_text(html_tokenizer_t *tk, html_tree_t *doc, const char *end)
 }
 
 /**
- *	@brief Ìî³äÊôĞÔµÄname
+ *	@brief å¡«å……å±æ€§çš„name
  */
 static int fill_attr_name(html_tokenizer_t *tk, html_tree_t *doc, const char *end)
 {
@@ -181,7 +181,7 @@ static int fill_attr_name(html_tokenizer_t *tk, html_tree_t *doc, const char *en
 }
 
 /**
- *	@brief Ìî³äÊôĞÔµÄvalue
+ *	@brief å¡«å……å±æ€§çš„value
  */
 static int fill_attr_value(html_tokenizer_t *tk, html_tree_t *doc, const char *end)
 {
@@ -201,7 +201,7 @@ static int fill_attr_value(html_tokenizer_t *tk, html_tree_t *doc, const char *e
 }
 
 /**
- *	@brief ÔÚ×Ö·û´®ÖĞÕÒµ½µÚÒ»¸öÄ¿±ê×Ö·û£¬Èç¹ûÕÒ²»µ½£¬Ö±ÖÁµ½´ï×Ö·û´®Ä©Î²»òÕßbegin==0
+ *	@brief åœ¨å­—ç¬¦ä¸²ä¸­æ‰¾åˆ°ç¬¬ä¸€ä¸ªç›®æ ‡å­—ç¬¦ï¼Œå¦‚æœæ‰¾ä¸åˆ°ï¼Œç›´è‡³åˆ°è¾¾å­—ç¬¦ä¸²æœ«å°¾æˆ–è€…begin==0
  */
 static inline const char* strchr_range(const char *begin, const char *end, int ch)
 {
@@ -217,7 +217,7 @@ static inline const char* strchr_range(const char *begin, const char *end, int c
 }
 
 /**
- *	@brief Ìø¹ı¿Õ°×·û£¬Èç¹ûÕÒ²»µ½¿Õ°×·û£¬Ö±ÖÁµ½´ï×Ö·û´®Ä©Î²»òÕßbegin==0
+ *	@brief è·³è¿‡ç©ºç™½ç¬¦ï¼Œå¦‚æœæ‰¾ä¸åˆ°ç©ºç™½ç¬¦ï¼Œç›´è‡³åˆ°è¾¾å­—ç¬¦ä¸²æœ«å°¾æˆ–è€…begin==0
  */
 static inline const char* skip_ws(const char *src, const char *end)
 {
@@ -233,7 +233,7 @@ static inline const char* skip_ws(const char *src, const char *end)
 }
 
 /**
- *	@brief Ìø¹ı×Ö·û£¬Ö±ÖÁÓöµ½ÌØ¶¨×Ö·û£¬Èç¹ûÕÒ²»µ½¿Õ°×·û£¬Ö±ÖÁµ½´ï×Ö·û´®Ä©Î²»òÕßbegin==0
+ *	@brief è·³è¿‡å­—ç¬¦ï¼Œç›´è‡³é‡åˆ°ç‰¹å®šå­—ç¬¦ï¼Œå¦‚æœæ‰¾ä¸åˆ°ç©ºç™½ç¬¦ï¼Œç›´è‡³åˆ°è¾¾å­—ç¬¦ä¸²æœ«å°¾æˆ–è€…begin==0
  */
 static inline const char* skip_to(const char *src, const char *end, char *map)
 {
@@ -248,7 +248,7 @@ static inline const char* skip_to(const char *src, const char *end, char *map)
 	return end;
 }
 
-/**tokenizer±éÀúÍøÒ³Ô´ÎÄ¼şµÄ¼¸ÖÖ×´Ì¬ */
+/**tokenizeréå†ç½‘é¡µæºæ–‡ä»¶çš„å‡ ç§çŠ¶æ€ */
 static int scan_tag_open(html_tokenizer_t* tk, html_tree_t* doc);
 static int scan_data(html_tokenizer_t* tk, html_tree_t* doc);
 static int scan_bogus_comment(html_tokenizer_t* tk, html_tree_t* doc);
@@ -265,7 +265,7 @@ static int scan_end_tag_open(html_tokenizer_t* tk, html_tree_t* doc);
 static int scan_markup_decl_open(html_tokenizer_t* tk, html_tree_t* doc);
 
 /**
- * @brief HTML Tokenizer ±éÀúµ½¿ÉÄÜÊÇ±êÇ©µÄÎ»ÖÃ£¬³Ô½øÒ»¸ö'<'
+ * @brief HTML Tokenizer éå†åˆ°å¯èƒ½æ˜¯æ ‡ç­¾çš„ä½ç½®ï¼Œåƒè¿›ä¸€ä¸ª'<'
  **/
 static int scan_tag_open(html_tokenizer_t* tk, html_tree_t* doc)
 {
@@ -277,18 +277,18 @@ static int scan_tag_open(html_tokenizer_t* tk, html_tree_t* doc)
 	}
 	switch (ch)
 	{
-	case '!': /**×¢ÊÍ£¿Doc£¿*/
+	case '!': /**æ³¨é‡Šï¼ŸDocï¼Ÿ*/
 		tk->ht_current++;
 		return scan_markup_decl_open(tk, doc);
-	case '/': /**½áÊø±êÇ©*/
+	case '/': /**ç»“æŸæ ‡ç­¾*/
 		tk->ht_current++;
 		return scan_end_tag_open(tk, doc);
-	case '?': /**Ò»°ãÊÇ<?xml>£¬Ò²¿ÉÒÔÈÏ×÷ÊÇ¡°¼Ù×¢ÊÍ¡±*/
+	case '?': /**ä¸€èˆ¬æ˜¯<?xml>ï¼Œä¹Ÿå¯ä»¥è®¤ä½œæ˜¯â€œå‡æ³¨é‡Šâ€*/
 		return scan_bogus_comment(tk, doc);
 	default:
 		if (IS_LATIN(ch))
-		{ /**À­¶¡×Ö·û*/
-			/**µ±Ç°×Ö·ûÀëÍøÒ³¿ªÊ¼µÄ¾àÀë´óÓÚ1£¬¼´µÚÒ»¸ö'<'Ö®Ç°»¹ÓĞ×Ö·û£¬ĞèÒªÉú³Étext node*/
+		{ /**æ‹‰ä¸å­—ç¬¦*/
+			/**å½“å‰å­—ç¬¦ç¦»ç½‘é¡µå¼€å§‹çš„è·ç¦»å¤§äº1ï¼Œå³ç¬¬ä¸€ä¸ª'<'ä¹‹å‰è¿˜æœ‰å­—ç¬¦ï¼Œéœ€è¦ç”Ÿæˆtext node*/
 			if (tk->ht_current - tk->ht_begin > 1)
 			{
 				if (emit_text(tk, doc, tk->ht_current - 1) != 0)
@@ -298,7 +298,7 @@ static int scan_tag_open(html_tokenizer_t* tk, html_tree_t* doc)
 				tk->ht_state = scan_tag_open;
 				return 0;
 			}
-			/**´´½¨Ò»¸ö½Úµã*/
+			/**åˆ›å»ºä¸€ä¸ªèŠ‚ç‚¹*/
 			tk->ht_node = html_tree_create_element_by_tag(doc, TAG_UNKNOWN);
 			if (tk->ht_node == NULL)
 			{
@@ -307,11 +307,11 @@ static int scan_tag_open(html_tokenizer_t* tk, html_tree_t* doc)
 			tk->ht_node->html_tag.page_offset = tk->ht_current - 1 - tk->ht_source;
 			tk->ht_node->html_tag.tag_name = (char*) tk->ht_current;
 			tk->ht_current++;
-			/**¿ªÊ¼±éÀú±êÇ©µÄname*/
+			/**å¼€å§‹éå†æ ‡ç­¾çš„name*/
 			return scan_tag_name(tk, doc);
 		}
 		else
-		{/**²»ÊÇÉÏÊö¼¸ÖÖ×Ö·û£¬Ö±½Ó½«Ö®Ç°µÄ'<'µ±×÷ÆÕÍ¨×Ö·ûÀ´´¦Àí£¨¿Õ¸ñÔÚ´Ë´¦ÒàÊÇÈç´Ë´¦Àí£©*/
+		{/**ä¸æ˜¯ä¸Šè¿°å‡ ç§å­—ç¬¦ï¼Œç›´æ¥å°†ä¹‹å‰çš„'<'å½“ä½œæ™®é€šå­—ç¬¦æ¥å¤„ç†ï¼ˆç©ºæ ¼åœ¨æ­¤å¤„äº¦æ˜¯å¦‚æ­¤å¤„ç†ï¼‰*/
 			tk->ht_state = scan_data;
 			return scan_data(tk, doc);
 		}
@@ -319,42 +319,42 @@ static int scan_tag_open(html_tokenizer_t* tk, html_tree_t* doc)
 }
 
 /**
- * @brief HTML Tokenizer ±éÀúÍøÒ³µÄ¿ªÊ¼×´Ì¬£¬Ò²ÊÇÊä³öÒ»¸ö½ÚµãºóµÄÄ¬ÈÏ×´Ì¬
+ * @brief HTML Tokenizer éå†ç½‘é¡µçš„å¼€å§‹çŠ¶æ€ï¼Œä¹Ÿæ˜¯è¾“å‡ºä¸€ä¸ªèŠ‚ç‚¹åçš„é»˜è®¤çŠ¶æ€
  **/
 static int scan_data(html_tokenizer_t* tk, html_tree_t* doc)
 {
 	const char *ch = NULL;
 	assert(tk);
 	assert(doc);
-	/**ÕÒµ½µÚÒ»¸ö'<'*/
+	/**æ‰¾åˆ°ç¬¬ä¸€ä¸ª'<'*/
 	ch = strchr_range(tk->ht_current, tk->ht_end, '<');
-	/**·µ»ØµÄÊÇ½áÊøÖ¸Õë*/
+	/**è¿”å›çš„æ˜¯ç»“æŸæŒ‡é’ˆ*/
 	if (ch == tk->ht_end)
 	{
-		/**µ±Ç°½ÚµãºÍ½áÊø½ÚµãÖ®¼ä»¹ÓĞ×Ö·û£¬¿ÉÒÔ×é³ÉÒ»¸ötext½Úµã*/
+		/**å½“å‰èŠ‚ç‚¹å’Œç»“æŸèŠ‚ç‚¹ä¹‹é—´è¿˜æœ‰å­—ç¬¦ï¼Œå¯ä»¥ç»„æˆä¸€ä¸ªtextèŠ‚ç‚¹*/
 		if (tk->ht_end - tk->ht_current > 0)
 		{
 			if (emit_text(tk, doc, tk->ht_end) != 0)
 			{
 				return -1;
 			}
-			/**µ±Ç°±éÀúµ½½áÊøµã*/
+			/**å½“å‰éå†åˆ°ç»“æŸç‚¹*/
 			tk->ht_current = tk->ht_end;
 			return 0;
 		}
-		/**µ±Ç°½ÚµãºÍ½áÊø½ÚµãÖØºÏÁË£¬³öÏÖ¸ÃÇé¿öÒ»°ãÊÇ¿ÕÍøÒ³Ôì³ÉµÄ*/
+		/**å½“å‰èŠ‚ç‚¹å’Œç»“æŸèŠ‚ç‚¹é‡åˆäº†ï¼Œå‡ºç°è¯¥æƒ…å†µä¸€èˆ¬æ˜¯ç©ºç½‘é¡µé€ æˆçš„*/
 		return 1;
 	}
 	else
 	{
-		/**µ±Ç°±éÀúµãÖ¸ÏòÏÂÒ»¸ö×Ö·û£¬²¢ÇÒ×ªµ½ÏÂÒ»¸ö×´Ì¬£ºÕÒµ½Ò»¸ö¿ÉÄÜÊÇ±êÇ©µÄµã*/
+		/**å½“å‰éå†ç‚¹æŒ‡å‘ä¸‹ä¸€ä¸ªå­—ç¬¦ï¼Œå¹¶ä¸”è½¬åˆ°ä¸‹ä¸€ä¸ªçŠ¶æ€ï¼šæ‰¾åˆ°ä¸€ä¸ªå¯èƒ½æ˜¯æ ‡ç­¾çš„ç‚¹*/
 		tk->ht_current = ch + 1;
 		return scan_tag_open(tk, doc);
 	}
 }
 
 /**
- * @brief HTML Tokenizer ±éÀú¼Ù×¢ÊÍµÄ×´Ì¬ '<!' or '<?' µ«ÊÇµÃµ±×÷×¢ÊÍÀ´´¦Àí
+ * @brief HTML Tokenizer éå†å‡æ³¨é‡Šçš„çŠ¶æ€ '<!' or '<?' ä½†æ˜¯å¾—å½“ä½œæ³¨é‡Šæ¥å¤„ç†
  **/
 static int scan_bogus_comment(html_tokenizer_t* tk, html_tree_t* doc)
 {
@@ -385,7 +385,7 @@ static int scan_bogus_comment(html_tokenizer_t* tk, html_tree_t* doc)
  * Find this tag, emit #text and return DATA state.
  */
 /**
- * @brief HTML Tokenizer Scanner rcdata  Ïàµ±ÓÚ×Ô¶¨Òå±êÇ©
+ * @brief HTML Tokenizer Scanner rcdata  ç›¸å½“äºè‡ªå®šä¹‰æ ‡ç­¾
  **/
 static int scan_rcdata(html_tokenizer_t* tk, html_tree_t* doc)
 {
@@ -414,7 +414,7 @@ static int scan_rcdata(html_tokenizer_t* tk, html_tree_t* doc)
 		}
 		if (tk->ht_end - ch > len + 2 && ch[1] == '/')
 		{
-			/**ÕÒµ½ÕıÔÚµÈ´ı¹Ø±ÕµÄ±êÇ©µÄÆ¥Åä±êÇ©*/
+			/**æ‰¾åˆ°æ­£åœ¨ç­‰å¾…å…³é—­çš„æ ‡ç­¾çš„åŒ¹é…æ ‡ç­¾*/
 			if (strncasecmp(ch + 2, tk->ht_opening->html_tag.tag_name, len) == 0)
 			{
 				tk->ht_current = ch; /* record the text end boundary */
@@ -466,7 +466,7 @@ static int scan_rcdata(html_tokenizer_t* tk, html_tree_t* doc)
 }
 
 /**
- * @brief HTML Tokenizer É¨Ãèµ½doctype½Úµã
+ * @brief HTML Tokenizer æ‰«æåˆ°doctypeèŠ‚ç‚¹
  **/
 static int scan_doctype(html_tokenizer_t* tk, html_tree_t* doc)
 {
@@ -495,7 +495,7 @@ static int scan_doctype(html_tokenizer_t* tk, html_tree_t* doc)
  * or to the end of input stream
  */
 /**
- * @brief HTML TokenizerÉ¨Ãèµ½×¢ÊÍµÄ×´Ì¬ <!--comment-->, -->' ¿ÉÒÔÊÇ '--!>' or '-- >
+ * @brief HTML Tokenizeræ‰«æåˆ°æ³¨é‡Šçš„çŠ¶æ€ <!--comment-->, -->' å¯ä»¥æ˜¯ '--!>' or '-- >
  **/
 static int scan_comment(html_tokenizer_t* tk, html_tree_t* doc)
 {
@@ -598,7 +598,7 @@ static int scan_comment(html_tokenizer_t* tk, html_tree_t* doc)
 }
 
 /**
- * @brief HTML Tokenizer É¨Ãèµ½×Ô¹Ø±Õ±êÇ©µÄ½áÎ²´¦
+ * @brief HTML Tokenizer æ‰«æåˆ°è‡ªå…³é—­æ ‡ç­¾çš„ç»“å°¾å¤„
  **/
 static int scan_self_closing_start_tag(html_tokenizer_t* tk, html_tree_t* doc)
 {
@@ -607,7 +607,7 @@ static int scan_self_closing_start_tag(html_tokenizer_t* tk, html_tree_t* doc)
 	{
 		return 1;
 	}
-	/**Ö»ÓĞ"/>"×éºÏ²ÅÄÜÅĞ¶¨´¦ÓÚ×Ô¹Ø±Õ±êÇ©ÖĞ*/
+	/**åªæœ‰"/>"ç»„åˆæ‰èƒ½åˆ¤å®šå¤„äºè‡ªå…³é—­æ ‡ç­¾ä¸­*/
 	if (ch == '>')
 	{
 		assert(tk->ht_node);
@@ -622,13 +622,13 @@ static int scan_self_closing_start_tag(html_tokenizer_t* tk, html_tree_t* doc)
 		return 0;
 	}
 	else
-	{/**·ñÔò½øÈëµÈ´ıattributeµÄ×´Ì¬*/
+	{/**å¦åˆ™è¿›å…¥ç­‰å¾…attributeçš„çŠ¶æ€*/
 		return scan_before_attribute_name(tk, doc);
 	}
 }
 
 /**
- * @brief HTML Tokenizer ±éÀúµ½ÊôĞÔµÄvalue´¦
+ * @brief HTML Tokenizer éå†åˆ°å±æ€§çš„valueå¤„
  **/
 static int scan_attribute_value(html_tokenizer_t* tk, html_tree_t* doc)
 {
@@ -637,14 +637,14 @@ static int scan_attribute_value(html_tokenizer_t* tk, html_tree_t* doc)
 	SCANNER_ASSERT();
 
 	tk->ht_current = skip_ws(tk->ht_current, tk->ht_end);
-	/**ÍòÄê²»±äµÄ¶¨ÂÉ£¬µ½Ä©Î²ÁË¾Í½áÊø*/
+	/**ä¸‡å¹´ä¸å˜çš„å®šå¾‹ï¼Œåˆ°æœ«å°¾äº†å°±ç»“æŸ*/
 	if (tk->ht_current == tk->ht_end)
 	{
 		return 1;
 	}
 
 	chr = tk->ht_current[0];
-	/**Èç¹ûÊÇÒıºÅ£¬ÔòÖ±½ÓÌøµ½¶Ô³Æ·ûºÅ³ö*/
+	/**å¦‚æœæ˜¯å¼•å·ï¼Œåˆ™ç›´æ¥è·³åˆ°å¯¹ç§°ç¬¦å·å‡º*/
 	if (chr == '"' || chr == '\'')
 	{
 		//shuangwei modify,skip the " or ' in the value
@@ -667,7 +667,7 @@ static int scan_attribute_value(html_tokenizer_t* tk, html_tree_t* doc)
 //		//shuangwei modify,skip the " or ' in the value
 		assert(tk->ht_attr);
 		tk->ht_attr->value = (char*) tk->ht_current + 1;
-		/**Ìî³äÊôĞÔµÄvalue*/
+		/**å¡«å……å±æ€§çš„value*/
 		if (fill_attr_value(tk, doc, ch) != 0)
 		{
 			return -1;
@@ -796,14 +796,14 @@ static int scan_after_attribute_name(html_tokenizer_t* tk, html_tree_t* doc)
 }
 
 /**
- * @brief HTML Tokenizer É¨ÃèattributeµÄnameµÄ×´Ì¬
+ * @brief HTML Tokenizer æ‰«æattributeçš„nameçš„çŠ¶æ€
  **/
 static int scan_attribute_name(html_tokenizer_t* tk, html_tree_t* doc)
 {
 	const char *ch = NULL;
 	char chr = '\0';
 	SCANNER_ASSERT();
-	/**µ½  whitespace / = > Í£Ö¹*/
+	/**åˆ°  whitespace / = > åœæ­¢*/
 	ch = skip_to(tk->ht_current, tk->ht_end, g_attribute_name_map);
 	if (ch == tk->ht_end)
 	{
@@ -811,7 +811,7 @@ static int scan_attribute_name(html_tokenizer_t* tk, html_tree_t* doc)
 	}
 	else
 	{
-		/**ÍêÉÆattributeµÄÃû³Æ*/
+		/**å®Œå–„attributeçš„åç§°*/
 		assert(tk->ht_attr);
 		if (fill_attr_name(tk, doc, ch) != 0)
 		{
@@ -820,15 +820,15 @@ static int scan_attribute_name(html_tokenizer_t* tk, html_tree_t* doc)
 		tk->ht_current = ch + 1;
 		chr = ch[0];
 		if (IS_WS(chr))
-		{ /**¿Õ¸ñ£¬Ö»ÄÜËµÃ÷ÊôĞÔÃû³Æ±éÀúÍê±Ï*/
+		{ /**ç©ºæ ¼ï¼Œåªèƒ½è¯´æ˜å±æ€§åç§°éå†å®Œæ¯•*/
 			return scan_after_attribute_name(tk, doc);
 		}
 		else if (chr == '=')
-		{ /**'='ËµÃ÷ÊÇattribute=valueµÄÄ£Ê½*/
+		{ /**'='è¯´æ˜æ˜¯attribute=valueçš„æ¨¡å¼*/
 			return scan_attribute_value(tk, doc);
 		}
 		else if (chr == '>')
-		{ /**'>'£¬ËµÃ÷¸ÃÊôĞÔ±éÀú½áÊø£¬¿ÉÒÔÌí¼Óµ½½ÚµãÉÏ*/
+		{ /**'>'ï¼Œè¯´æ˜è¯¥å±æ€§éå†ç»“æŸï¼Œå¯ä»¥æ·»åŠ åˆ°èŠ‚ç‚¹ä¸Š*/
 			html_node_set_attribute_by_name(tk->ht_node, tk->ht_attr);
 			tk->ht_state = scan_data;
 			return 0;
@@ -836,7 +836,7 @@ static int scan_attribute_name(html_tokenizer_t* tk, html_tree_t* doc)
 		else
 		{
 			assert(chr == '/');
-			/**Í¬'>'Ò»Ñù£¬µ«ÊÇÍ¬Ê±ËµÃ÷ÁË¸Ã½ÚµãÊÇÒ»¸ö×Ô¹Ø±Õ½Úµã*/
+			/**åŒ'>'ä¸€æ ·ï¼Œä½†æ˜¯åŒæ—¶è¯´æ˜äº†è¯¥èŠ‚ç‚¹æ˜¯ä¸€ä¸ªè‡ªå…³é—­èŠ‚ç‚¹*/
 			html_node_set_attribute_by_name(tk->ht_node, tk->ht_attr);
 			return scan_self_closing_start_tag(tk, doc);
 		}
@@ -844,20 +844,20 @@ static int scan_attribute_name(html_tokenizer_t* tk, html_tree_t* doc)
 }
 
 /**
- * @brief HTML Tokenizer ´¦ÓÚattributeÃû³ÆÖ®Ç°£¬×¼±¸½ÓÊÕattributeÃû³ÆµÄ×´Ì¬
+ * @brief HTML Tokenizer å¤„äºattributeåç§°ä¹‹å‰ï¼Œå‡†å¤‡æ¥æ”¶attributeåç§°çš„çŠ¶æ€
  **/
 static int scan_before_attribute_name(html_tokenizer_t* tk, html_tree_t* doc)
 {
 	char ch = '\0';
 	SCANNER_ASSERT();
-	/**Ìø¹ı¿Õ¸ñ*/
+	/**è·³è¿‡ç©ºæ ¼*/
 	tk->ht_current = skip_ws(tk->ht_current, tk->ht_end);
 	if (tk->ht_current == tk->ht_end)
 	{
 		return 1;
 	}
 	ch = tk->ht_current[0];
-	/**±êÇ©Ãû³ÆºóÃæ½ô¸úµÄÊÇ'/'£¬ËµÃ÷ÓĞ¿ÉÄÜÊÇÒ»¸ö×Ô¹Ø±Õ±êÇ©*/
+	/**æ ‡ç­¾åç§°åé¢ç´§è·Ÿçš„æ˜¯'/'ï¼Œè¯´æ˜æœ‰å¯èƒ½æ˜¯ä¸€ä¸ªè‡ªå…³é—­æ ‡ç­¾*/
 	if (ch == '/')
 	{
 		tk->ht_current++;
@@ -871,7 +871,7 @@ static int scan_before_attribute_name(html_tokenizer_t* tk, html_tree_t* doc)
 	}
 	else
 	{
-		/**´´½¨Ò»¸öunknowÊôĞÔ*/
+		/**åˆ›å»ºä¸€ä¸ªunknowå±æ€§*/
 		tk->ht_attr = html_tree_create_attribute_by_tag(doc, ATTR_UNKNOWN);
 		tk->ht_attr->name = tk->ht_current;
 		tk->ht_current++;
@@ -880,7 +880,7 @@ static int scan_before_attribute_name(html_tokenizer_t* tk, html_tree_t* doc)
 }
 
 /**
- * @brief HTML Tokenizer ¿ªÊ¼±éÀú±êÇ©µÄname
+ * @brief HTML Tokenizer å¼€å§‹éå†æ ‡ç­¾çš„name
  **/
 static int scan_tag_name(html_tokenizer_t* tk, html_tree_t* doc)
 {
@@ -891,7 +891,7 @@ static int scan_tag_name(html_tokenizer_t* tk, html_tree_t* doc)
 	int i = 0;
 	char chr = '\0';
 	SCANNER_ASSERT();
-	/**±éÀúµ½Ö¸¶¨×Ö·û´¦*/
+	/**éå†åˆ°æŒ‡å®šå­—ç¬¦å¤„*/
 	ch = skip_to(tk->ht_current, tk->ht_end, g_tag_name_map);
 	if (ch == tk->ht_end)
 	{
@@ -902,12 +902,12 @@ static int scan_tag_name(html_tokenizer_t* tk, html_tree_t* doc)
 		assert(tk->ht_node);
 		len = ch - tk->ht_node->html_tag.tag_name;
 		//todo
-		/**»ñÈ¡±êÇ©ÀàĞÍ*/
-		/**È±ÉÙµÚÒ»¸ömap*/
+		/**è·å–æ ‡ç­¾ç±»å‹*/
+		/**ç¼ºå°‘ç¬¬ä¸€ä¸ªmap*/
 		type = get_tag_type(tk->ht_node->html_tag.tag_name, len);
 		//todo
 		tk->ht_node->html_tag.tag_type = type;
-		/**»ñÈ¡±êÇ©name*/
+		/**è·å–æ ‡ç­¾name*/
 		if (type != TAG_UNKNOWN)
 		{
 			tk->ht_node->html_tag.tag_name = get_tag_name(type);
@@ -920,7 +920,7 @@ static int scan_tag_name(html_tokenizer_t* tk, html_tree_t* doc)
 				return -1;
 			}
 			for (i = 0; i < len; i++)
-			{/**³õÊ¼»¯ÎªĞ¡Ğ´*/
+			{/**åˆå§‹åŒ–ä¸ºå°å†™*/
 				text[i] = tolower(text[i]);
 			}
 			tk->ht_node->html_tag.tag_name = text;
@@ -928,11 +928,11 @@ static int scan_tag_name(html_tokenizer_t* tk, html_tree_t* doc)
 		tk->ht_current = ch + 1;
 		chr = ch[0];
 		if (IS_WS(chr))
-		{/**±êÇ©Ãû³ÆºóÃæ½ô¸úµÄÊÇ¿Õ¸ñ£¬ÔòËµÃ÷¸Ã±êÇ©»¹ÓĞÊôĞÔ*/
+		{/**æ ‡ç­¾åç§°åé¢ç´§è·Ÿçš„æ˜¯ç©ºæ ¼ï¼Œåˆ™è¯´æ˜è¯¥æ ‡ç­¾è¿˜æœ‰å±æ€§*/
 			return scan_before_attribute_name(tk, doc);
 		}
 		else if (chr == '>')
-		{ /**±êÇ©Ãû³ÆºóÃæ½ô¸úµÄÊÇ'>'£¬ËµÃ÷¸Ã±êÇ©µÄÄÚÈİÒÑ¾­½áÊø*/
+		{ /**æ ‡ç­¾åç§°åé¢ç´§è·Ÿçš„æ˜¯'>'ï¼Œè¯´æ˜è¯¥æ ‡ç­¾çš„å†…å®¹å·²ç»ç»“æŸ*/
 			if (tk->ht_node->html_tag.is_close_tag && tk->ht_node->html_tag.page_offset >= 0)
 			{
 				tk->ht_node->html_tag.page_offset = ch + 1 - tk->ht_source;
@@ -941,7 +941,7 @@ static int scan_tag_name(html_tokenizer_t* tk, html_tree_t* doc)
 			return 0;
 		}
 		else
-		{ /**±êÇ©Ãû³ÆºóÃæ½ô¸úµÄÊÇ'/'£¬ËµÃ÷ÓĞ¿ÉÄÜÊÇÒ»¸ö×Ô¹Ø±Õ±êÇ©*/
+		{ /**æ ‡ç­¾åç§°åé¢ç´§è·Ÿçš„æ˜¯'/'ï¼Œè¯´æ˜æœ‰å¯èƒ½æ˜¯ä¸€ä¸ªè‡ªå…³é—­æ ‡ç­¾*/
 			assert(chr == '/');
 			return scan_self_closing_start_tag(tk, doc);
 		}
@@ -949,7 +949,7 @@ static int scan_tag_name(html_tokenizer_t* tk, html_tree_t* doc)
 }
 
 /**
- * @brief HTML Tokenizer É¨Ãèµ½±êÇ©½áÊø·û
+ * @brief HTML Tokenizer æ‰«æåˆ°æ ‡ç­¾ç»“æŸç¬¦
  **/
 static int scan_end_tag_open(html_tokenizer_t* tk, html_tree_t* doc)
 {
@@ -969,7 +969,7 @@ static int scan_end_tag_open(html_tokenizer_t* tk, html_tree_t* doc)
 		return scan_data(tk, doc);
 	}
 	else if (IS_LATIN(ch))
-	{/**À­¶¡×Ö·û£¬¼´³öÏÖ</a>Ö®ÀàµÄÇé¿ö£¬µ«ÊÇĞèÒªÅĞ¶Ï<Ö®Ç°ÊÇ·ñÓĞ×Ö·û*/
+	{/**æ‹‰ä¸å­—ç¬¦ï¼Œå³å‡ºç°</a>ä¹‹ç±»çš„æƒ…å†µï¼Œä½†æ˜¯éœ€è¦åˆ¤æ–­<ä¹‹å‰æ˜¯å¦æœ‰å­—ç¬¦*/
 		if (tk->ht_current - tk->ht_begin > 2)
 		{
 			if (emit_text(tk, doc, tk->ht_current - 2) != 0)
@@ -990,7 +990,7 @@ static int scan_end_tag_open(html_tokenizer_t* tk, html_tree_t* doc)
 		return scan_tag_name(tk, doc);
 	}
 	else if (ch == '>')
-	{/**</> Ö±½ÓºöÂÔ*/
+	{/**</> ç›´æ¥å¿½ç•¥*/
 		tk->ht_current++;
 		return scan_data(tk, doc);
 	}
@@ -1002,12 +1002,12 @@ static int scan_end_tag_open(html_tokenizer_t* tk, html_tree_t* doc)
 }
 
 /**
- * @brief HTML Tokenizer ³ıÀ­¶¡±êÇ©ÍâµÄÆäËû±êÇ©
+ * @brief HTML Tokenizer é™¤æ‹‰ä¸æ ‡ç­¾å¤–çš„å…¶ä»–æ ‡ç­¾
  **/
 static int scan_markup_decl_open(html_tokenizer_t* tk, html_tree_t* doc)
 {
 	SCANNER_ASSERT();
-	/**<!-- ×¢ÊÍ*/
+	/**<!-- æ³¨é‡Š*/
 	if (tk->ht_end - tk->ht_current >= 2 && strncmp(tk->ht_current, "--", 2) == 0)
 	{
 		if (tk->ht_current - tk->ht_begin > 2)
@@ -1023,7 +1023,7 @@ static int scan_markup_decl_open(html_tokenizer_t* tk, html_tree_t* doc)
 	}
 	else if (tk->ht_end - tk->ht_current >= 7 && strncasecmp(tk->ht_current, "DOCTYPE", 7) == 0)
 	{ /**<!DOCTYPE */
-		/**ÎÄ±¾½ÚµãÓÀÔ¶¶¼ÊÇÔÚÈ·ÈÏÏÂÒ»¸ö½ÚµãÖ®ºó¡°²¹¡±µÄ*/
+		/**æ–‡æœ¬èŠ‚ç‚¹æ°¸è¿œéƒ½æ˜¯åœ¨ç¡®è®¤ä¸‹ä¸€ä¸ªèŠ‚ç‚¹ä¹‹åâ€œè¡¥â€çš„*/
 		if (tk->ht_current - tk->ht_begin > 2)
 		{
 			if (emit_text(tk, doc, tk->ht_current - 2) != 0)
@@ -1079,7 +1079,7 @@ void html_tokenizer_reset(html_tokenizer_t *tokenizer, const char *html, size_t 
 }
 
 /**
- * @brief ±éÀúÒ³ÃæÔ´´úÂë
+ * @brief éå†é¡µé¢æºä»£ç 
  **/
 html_node_t* html_tokenize(html_tokenizer_t *tokenizer, html_tree_t *doc)
 {
@@ -1088,7 +1088,7 @@ html_node_t* html_tokenize(html_tokenizer_t *tokenizer, html_tree_t *doc)
 	assert(doc);
 	while (1)
 	{
-		/**±éÀú½á¹û²»Îª0£¬¾ùÎª³ö´í*/
+		/**éå†ç»“æœä¸ä¸º0ï¼Œå‡ä¸ºå‡ºé”™*/
 		if (tokenizer->ht_state(tokenizer, doc) != 0)
 		{
 			return NULL;

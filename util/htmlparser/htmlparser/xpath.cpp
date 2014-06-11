@@ -4,12 +4,12 @@
  *  Created on: 2012-5-23
  *      Author: shuangwei
  */
-#include "easou_xpath.h"
+#include "xpath.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "easou_html_attr.h"
-#include "easou_html_dtd.h"
+#include "html_attr.h"
+#include "html_dtd.h"
 
 #define NODESTATUS 1
 #define ATTRNAMESTATUS 2

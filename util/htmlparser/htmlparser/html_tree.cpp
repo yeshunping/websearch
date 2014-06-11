@@ -8,19 +8,19 @@
 #include <stddef.h>
 #include <string.h>
 #include <stdio.h>
-#include "log.h"
-#include "easou_url.h"
-#include "html_text_utils.h"
-#include "easou_html_attr.h"
-#include "easou_html_parser.h"
-#include "easou_html_tree.h"
-#include "easou_html_doctype.h"
-#include"debuginfo.h"
+#include "util/htmlparser/utils/log.h"
+#include "util/htmlparser/utils/url.h"
+#include "util/htmlparser/utils/html_text_utils.h"
+#include "html_attr.h"
+#include "html_parser.h"
+#include "html_tree.h"
+#include "html_doctype.h"
+#include "util/htmlparser/utils/debuginfo.h"
 
 using namespace EA_COMMON;
 
 /**
- * @brief ´´½¨Ê÷
+ * @brief åˆ›å»ºæ ‘
  **/
 html_tree_t* html_tree_create(int max_page_len)
 {
@@ -68,7 +68,7 @@ void html_tree_clean(html_tree_t *html_tree)
 //todo
 
 /**
- * @brief Ïú»ÙÊ÷
+ * @brief é”€æ¯æ ‘
  **/
 void html_tree_del(html_tree_t *tree)
 {
@@ -89,7 +89,7 @@ void html_tree_del(html_tree_t *tree)
 }
 
 /**
- * @brief ÉèÖÃÊÇ·ñ¼æÈÝxml
+ * @brief è®¾ç½®æ˜¯å¦å…¼å®¹xml
  **/
 void html_tree_set_xml_compatible(html_tree_t *tree, int enable)
 {
@@ -100,7 +100,7 @@ void html_tree_set_xml_compatible(html_tree_t *tree, int enable)
 }
 
 /**
- * @brief ÅÐ¶ÏÊÇ·ñ¼æÈÝxml
+ * @brief åˆ¤æ–­æ˜¯å¦å…¼å®¹xml
  **/
 int html_tree_is_xml_compatible(html_tree_t *tree)
 {
@@ -111,7 +111,7 @@ int html_tree_is_xml_compatible(html_tree_t *tree)
 }
 
 /**
- * @brief ÉèÖÃÊÇ·ñ¼æÈÝwml
+ * @brief è®¾ç½®æ˜¯å¦å…¼å®¹wml
  **/
 void html_tree_set_wml_compatible(html_tree_t *tree, int enable)
 {
@@ -122,7 +122,7 @@ void html_tree_set_wml_compatible(html_tree_t *tree, int enable)
 }
 
 /**
- * @brief ÅÐ¶ÏÊÇ·ñ¼æÈÝwml
+ * @brief åˆ¤æ–­æ˜¯å¦å…¼å®¹wml
  **/
 int html_tree_is_wml_compatible(html_tree_t *tree)
 {
@@ -133,7 +133,7 @@ int html_tree_is_wml_compatible(html_tree_t *tree)
 }
 
 /**
- * @brief ÉèÖÃÊÇ·ñ½âÎöjs
+ * @brief è®¾ç½®æ˜¯å¦è§£æžjs
  **/
 void html_tree_set_script_parsing(html_tree_t *tree, int enable)
 {
@@ -144,7 +144,7 @@ void html_tree_set_script_parsing(html_tree_t *tree, int enable)
 }
 
 /**
- * @brief ÅÐ¶ÏÊÇ·ñ½âÎöjs
+ * @brief åˆ¤æ–­æ˜¯å¦è§£æžjs
  **/
 int html_tree_is_script_parsing(html_tree_t *tree)
 {
@@ -155,13 +155,13 @@ int html_tree_is_script_parsing(html_tree_t *tree)
 }
 
 /**
- * @brief ½«htmlÍøÒ³½âÎö³ÉdomÊ÷
- * @param [in/out] html_tree   : html_tree_t*	domÊ÷½á¹¹
- * @param [in] page   : char*	Ò³ÃæÔ´´úÂë
- * @param [in] page_len   : int	Ò³ÃæÔ´´úÂëµÄ³¤¶È
- * @param [in] ignore_space   : bool	ÊÇ·ñºöÂÔÒ³ÃæÖÐµÄ¿Õ¸ñ
+ * @brief å°†htmlç½‘é¡µè§£æžæˆdomæ ‘
+ * @param [in/out] html_tree   : html_tree_t*	domæ ‘ç»“æž„
+ * @param [in] page   : char*	é¡µé¢æºä»£ç 
+ * @param [in] page_len   : int	é¡µé¢æºä»£ç çš„é•¿åº¦
+ * @param [in] ignore_space   : bool	æ˜¯å¦å¿½ç•¥é¡µé¢ä¸­çš„ç©ºæ ¼
  * @return  int
- * @retval  0:½âÎöÊ§°Ü;1:½âÎö³É¹¦.
+ * @retval  0:è§£æžå¤±è´¥;1:è§£æžæˆåŠŸ.
  * @author xunwu
  * @date 2011/08/02
  **/
@@ -182,7 +182,7 @@ int html_tree_parse(html_tree_t *tree, char *html, int size, bool ignore_space)
 }
 
 /**
- * @brief ±éÀúÊ÷
+ * @brief éåŽ†æ ‘
  **/
 int html_tree_visit(html_tree_t *html_tree, start_visit_t start_visit, finish_visit_t finish_visit, void *result, int flag)
 {
@@ -190,7 +190,7 @@ int html_tree_visit(html_tree_t *html_tree, start_visit_t start_visit, finish_vi
 }
 
 /**
- * @brief ±éÀú½Úµã
+ * @brief éåŽ†èŠ‚ç‚¹
  **/
 int html_node_visit(html_node_t *html_node, start_visit_t start_visit, finish_visit_t finish_visit, void *result, int flag)
 {
@@ -288,7 +288,7 @@ static int start_visit_description(html_tag_t *tag, void *result, int flag)
 }
 
 /**
- * @brief ÌáÈ¡description
+ * @brief æå–description
  **/
 int html_tree_extract_description(html_tree_t *html_tree, char* description, int size)
 {
@@ -303,7 +303,7 @@ int html_tree_extract_description(html_tree_t *html_tree, char* description, int
 }
 
 /**
- * @brief ÖØÖÃÊ÷
+ * @brief é‡ç½®æ ‘
  **/
 int html_tree_reset_no_destroy(struct html_tree_impl_t *self)
 {
@@ -563,9 +563,9 @@ int finish_mark_node_type(html_tag_t *tag, void *result)
 }
 
 /**
- * ±ê×¢domÊ÷µÄÃ¿¸ö½Úµãº¬ÓÐµÄ×Ó½ÚµãÀàÐÍ
- * html_tree£ºin
- * ½á¹û£º-1£º²ÎÊý´íÎó£»0£º³É¹¦£»>0:ÆäËû´íÎó
+ * æ ‡æ³¨domæ ‘çš„æ¯ä¸ªèŠ‚ç‚¹å«æœ‰çš„å­èŠ‚ç‚¹ç±»åž‹
+ * html_treeï¼šin
+ * ç»“æžœï¼š-1ï¼šå‚æ•°é”™è¯¯ï¼›0ï¼šæˆåŠŸï¼›>0:å…¶ä»–é”™è¯¯
  *
  */
 int markDomTreeSubType(html_tree_t *html_tree)

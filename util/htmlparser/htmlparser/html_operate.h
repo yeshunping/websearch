@@ -2,8 +2,8 @@
 #define EASOU_HTML_OPERATE_H_
 
 #include "queue.h"
-#include "easou_html_dtd.h"
-#include "easou_html_dom.h"
+#include "html_dtd.h"
+#include "html_dom.h"
 /**
  * @brief State handler
  **/

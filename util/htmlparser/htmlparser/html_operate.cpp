@@ -2,13 +2,13 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
-#include "easou_html_dom.h"
-#include "easou_html_attr.h"
-#include "easou_html_node.h"
-#include "easou_html_script.h"
-#include "easou_html_tokenizer.h"
-#include "easou_html_constructor.h"
-#include "easou_html_operate.h"
+#include "html_dom.h"
+#include "html_attr.h"
+#include "html_node.h"
+#include "html_script.h"
+#include "html_tokenizer.h"
+#include "html_constructor.h"
+#include "html_operate.h"
 
 extern struct html_tag_category_t g_html_tag_category_map[];
 
@@ -181,25 +181,19 @@ int do_popup(struct html_parser_t *parser, html_node_t *next)
 	return 0;
 }
 
-/**
- * @brief HTML5 Constructor meta code ignore 忽略
- **/
+
 int do_ignore(struct html_parser_t *parser, html_node_t *next)
 {
 	return 0;
 }
 
-/**
- * @brief HTML5 Constructor meta code error 错误
- **/
+
 int do_error(struct html_parser_t *parser, html_node_t *next)
 {
 	return -1;
 }
 
-/**
- * @brief HTML5 Constructor meta code warning  警告
- **/
+
 int do_warning(struct html_parser_t *parser, html_node_t *next)
 {
 	assert(parser);
@@ -1793,7 +1787,6 @@ int cal_node_length(const html_parser_t *parser, html_node_t *next)
 	current = SLIST_FIRST(stack);
 	if (next && current && current->si_node && IS_MATCH(current->si_node, next))
 	{
-		//shuangwei add 计算节点长度
 		if (next->html_tag.is_close_tag && next->html_tag.page_offset >= 0 && current->si_node->html_tag.page_offset >= 0)
 		{
 			current->si_node->html_tag.nodelength = next->html_tag.page_offset - current->si_node->html_tag.page_offset;

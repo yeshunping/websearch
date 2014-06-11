@@ -1,11 +1,11 @@
 #include <assert.h>
 #include <stdio.h>
-#include "easou_html_dtd.h"
-#include "easou_html_tree.h"
-#include "easou_html_dom.h"
-#include "easou_html_parser.h"
-#include "easou_html_operate.h"
-#include "easou_html_constructor.h"
+#include "html_dtd.h"
+#include "html_tree.h"
+#include "html_dom.h"
+#include "html_parser.h"
+#include "html_operate.h"
+#include "html_constructor.h"
 
 int on_xml_after(struct html_parser_t *parser, html_node_t *next)
 {
@@ -2378,7 +2378,7 @@ int on_after_head(struct html_parser_t *parser, html_node_t *next)
 			ret = do_warning(parser, next);
 			return ret;
 		default:
-			// ¸ù¾Ýgsp.kf.73.ppmt.info/picture/chapter?fid=108&pid=201111122020138695&bkid=1&lx=0&page=2&orgfid=0&rnd=8179 ÐÞ¸Ä shuangwei 2012-04-10
+			// ï¿½ï¿½ï¿½gsp.kf.73.ppmt.info/picture/chapter?fid=108&pid=201111122020138695&bkid=1&lx=0&page=2&orgfid=0&rnd=8179 ï¿½Þ¸ï¿½ shuangwei 2012-04-10
 			if (parser->hp_html && parser->hp_html->html_tag.tag_type == TAG_WAP_WML)
 			{
 				ret = do_warning(parser, next);
@@ -2658,7 +2658,7 @@ int on_initial(struct html_parser_t *parser, html_node_t *next)
 	int close = 0;
 	tag = next->html_tag.tag_type;
 	close = next->html_tag.is_close_tag;
-	/**ÊÇ¿ªÊ¼±êÇ©*/
+	/**ï¿½Ç¿ï¿½Ê¼ï¿½ï¿½Ç©*/
 	if (!close)
 	{
 		switch (tag)
@@ -2695,7 +2695,7 @@ int on_initial(struct html_parser_t *parser, html_node_t *next)
 		}
 	}
 	else
-	{/**ÊÇ½áÊø±êÇ©*/
+	{/**ï¿½Ç½ï¿½ï¿½ï¿½ï¿½Ç©*/
 		switch (tag)
 		{
 		default:

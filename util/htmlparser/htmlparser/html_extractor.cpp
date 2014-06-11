@@ -7,11 +7,11 @@
 #include <assert.h>
 #include <stdio.h>
 #include <string.h>
-#include "log.h"
-#include "easou_url.h"
-#include "html_text_utils.h"
-#include "easou_html_attr.h"
-#include "easou_html_extractor.h"
+#include "util/htmlparser/utils/log.h"
+#include "util/htmlparser/utils/url.h"
+#include "util/htmlparser/utils/html_text_utils.h"
+#include "html_attr.h"
+#include "html_extractor.h"
 
 using namespace EA_COMMON;
 
@@ -23,7 +23,7 @@ static const html_tag_type_t html_blockTagList[] =
 		TAG_HTML, TAG_BODY, TAG_MARQUEE, TAG_TBODY, TAG_THEAD, TAG_TFOOT };
 
 /*
- * ÊÇ·ñÊÇ¿é±êÇ©£»0£º¿é±êÇ©£»ÆäËû£º·Ç¿é±êÇ©
+ * æ˜¯å¦æ˜¯å—æ ‡ç­¾ï¼›0ï¼šå—æ ‡ç­¾ï¼›å…¶ä»–ï¼šéå—æ ‡ç­¾
  */
 static int isBlockTagInHtml(html_tag_type_t tagtype)
 {
@@ -87,8 +87,8 @@ static int finish_visit_title(html_tag_t *tag, void *result)
 }
 
 /**
- * @brief ÌáÈ¡±êÌâ,Ö§³Öwml
- * ·µ»ØÊµ¼ÊÌáÈ¡µÄ×Ö·û´®³¤¶È
+ * @brief æå–æ ‡é¢˜,æ”¯æŒwml
+ * è¿”å›å®é™…æå–çš„å­—ç¬¦ä¸²é•¿åº¦
  **/
 int html_tree_extract_title(html_tree_t *html_tree, char* title, int size)
 {
@@ -517,7 +517,7 @@ int html_tree_extract_link(html_node_list_t* list, char* baseUrl, link_t* link, 
 }
 
 /**
- * @brief ÌáÈ¡Á´½Ó
+ * @brief æå–é“¾æ¥
  * */
 int html_tree_extract_link(html_tree_t *html_tree, char* baseUrl, link_t* link, int& num)
 {
@@ -649,7 +649,7 @@ static int start_visit_keywords(html_tag_t *tag, void *result, int flag)
 }
 
 /**
- * ·µ»ØÊµ¼ÊÌáÈ¡×Ö·û´®³¤¶È
+ * è¿”å›å®é™…æå–å­—ç¬¦ä¸²é•¿åº¦
  */
 int html_tree_extract_abstract(html_tree_t *tree, char *abstract, int size, int merge)
 {
@@ -668,7 +668,7 @@ int html_tree_extract_abstract(html_tree_t *tree, char *abstract, int size, int 
 }
 
 /**
- * ·µ»ØÊµ¼ÊÌáÈ¡×Ö·û´®³¤¶È
+ * è¿”å›å®é™…æå–å­—ç¬¦ä¸²é•¿åº¦
  */
 int html_tree_extract_keywords(html_tree_t *tree, char *keywords, int size, int merge)
 {
@@ -807,7 +807,7 @@ static int start_visit_csslink(html_tag_t *tag, void *result, int flag)
 	return VISIT_NORMAL;
 }
 /**
- * @brief ÌáÈ¡Á´½Ó
+ * @brief æå–é“¾æ¥
  * */
 int html_tree_extract_csslink(html_tree_t *html_tree, const char* baseUrl, link_t* link, int& num)
 {
@@ -904,7 +904,7 @@ static int start_visit_node_content(html_tag_t *html_tag, void *result, int flag
 	return VISIT_NORMAL;
 }
 /**
- * @brief ÌáÈ¡Ä³Ò»½Úµã¼°ÆäÏÂµÄÄÚÈİ
+ * @brief æå–æŸä¸€èŠ‚ç‚¹åŠå…¶ä¸‹çš„å†…å®¹
  **/
 int html_node_extract_content(html_node_t *html_node, char* content, int size)
 {
@@ -950,7 +950,7 @@ static int finish_visit_for_base_url(html_tag_t *html_tag, void *result)
 	return VISIT_NORMAL;
 }
 
-//»ñÈ¡Ò³ÃæÄÚbase tagËùÖ¸¶¨µÄURL
+//è·å–é¡µé¢å†…base tagæ‰€æŒ‡å®šçš„URL
 int get_base_url(char *base_url, html_tree_t *html_tree)
 {
 	int ret = html_tree_visit(html_tree, &start_visit_for_base_url, &finish_visit_for_base_url, base_url, 0);
