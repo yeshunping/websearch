@@ -1,0 +1,15 @@
+total times:17079, call times:5140000, performance:300954 /second
+
+===================================================================
+set -- > hash_set:
+total times:9888, call times:5140000, performance:519822 /second
+===================================================================
+total times:9586, call times:5140000, performance:536198 /second
+
+===================================================================
+total times:6534, call times:5140000, performance:786654 /second
+total times:6525, call times:5140000, performance:787739 /second
+
+===================================================================
+port code from google
+total times:186, call times:5140000, performance:27634408 /second
