@@ -9,5 +9,9 @@ cc_library(name = 'cssparser',
         'DownLoad.cpp'
     ],
     warning = 'no',
+    deps = [
+            '//util/htmlparser/utils:utils',
+            '//util/htmlparser/htmlparser:htmlparser',
+            ],
 )
 

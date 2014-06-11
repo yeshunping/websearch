@@ -8,4 +8,9 @@ cc_library(name = 'vhtmlparser',
         'vstruct_profiler.cpp'
     ],
     warning = 'no',
+    deps = [
+            '//util/htmlparser/htmlparser:htmlparser',
+            '//util/htmlparser/cssparser:cssparser',
+            '//util/htmlparser/utils:utils',
+            ],
 )

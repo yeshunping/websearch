@@ -15,5 +15,8 @@ cc_library(name = 'htmlparser',
         'xpath.cpp'
     ],
     warning = 'no',
+    deps = [
+            '//util/htmlparser/utils:utils',
+            ],
 )
 
