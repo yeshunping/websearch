@@ -6,7 +6,8 @@
  *      Author: xunwu_chen@staff.easoucom
  *     Version: 1.2
  */
-#include "util/htmlparser/utils/log.h"
+
+#include "base/logging.h"
 #include "util/htmlparser/utils/string_util.h"
 #include "util/htmlparser/htmlparser/html_attr.h"
 #include "util/htmlparser/vhtmlparser/vhtml_parser.h"
@@ -17,8 +18,6 @@
 #include <ctype.h>
 #include <limits.h>
 #include <pthread.h>
-
-using namespace EA_COMMON;
 
 static const int ILLEGAL_TABLE_ATTR = 1; /**<        */
 static const int ILLEGAL_TABLE_STRUCTURE = 2; /**<        */
@@ -1079,7 +1078,7 @@ html_vnode_t *construct_vtree(nodepool_t *np, html_node_t *node, int depth, int 
 	}
 	return root;
 	ERR:
-	Fatal((char*) "construct vtree error!");
+	LOG(ERROR) << "construct vtree error!";
 	return NULL;
 }
 
@@ -1235,7 +1234,7 @@ static void push_space_mgr(space_mgr_t *space_mgr, int x, int y, int width)
 {
 	if (space_mgr->top >= MAX_AVAIL_SPACE_NUM - 1)
 	{
-		Warn("space stack full!");
+		LOG(WARNING) << "space stack full!";
 		return;
 	}
 	int cur_top = ++(space_mgr->top);
@@ -1262,7 +1261,7 @@ static avail_space_t pop_space_mgr(space_mgr_t *space_mgr)
 	}
 	else
 	{
-		Warn("space stack is empty!");
+		LOG(WARNING) << "space stack is empty!";
 		space.x = -1;
 		space.y = -1;
 		space.width = -1;

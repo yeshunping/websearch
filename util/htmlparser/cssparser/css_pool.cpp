@@ -7,6 +7,9 @@
  **/
 
 #include <string.h>
+
+#include "base/logging.h"
+#include "base/string_util.h"
 #include "css_parser.h"
 #include "css_pool.h"
 
@@ -69,7 +72,7 @@ int css_pool_init(css_pool_t *css_pool, int max_css_page_size, int css_num)
 {
 	if (css_num > MAX_CSS_NUM_IN_POOL)
 	{
-		Fatal((char*) "%s: css_num (%d) > MAX_CSS_NUM_IN_POOL (%d),  and is automatically ajusted to %d.", __FUNCTION__, css_num,
+	  LOG(ERROR) << StringPrintf("%s: css_num (%d) > MAX_CSS_NUM_IN_POOL (%d),  and is automatically ajusted to %d.", __FUNCTION__, css_num,
 				MAX_CSS_NUM_IN_POOL, MAX_CSS_NUM_IN_POOL);
 		css_num = MAX_CSS_NUM_IN_POOL;
 	}

@@ -6,7 +6,6 @@
  *      Author: xunwu_chen@staff.easoucom
  *     Version: 1.2
  */
-#include "util/htmlparser/utils/log.h"
 #include "util/htmlparser/utils/id_map.h"
 #include "util/htmlparser/htmlparser/html_attr.h"
 #include "util/htmlparser/vhtmlparser/vhtml_inner.h"

@@ -3,10 +3,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "log.h"
-#include "nodepool.h"
 
-using namespace EA_COMMON;
+#include "base/logging.h"
+#include "nodepool.h"
 
 static inline void nodepool_renew(nodepool_t *pool)
 {
@@ -20,7 +19,7 @@ static int nodepool_alloc(nodepool_t *pool)
 	memblock_t *m = NULL;
 	if ((m = (memblock_t *) malloc(sizeof(memblock_t) + pool->block_size)) == NULL)
 	{
-		Fatal("malloc error!");
+		LOG(ERROR) << "malloc error!";
 		return 0;
 	}
 	m->next = pool->memlist;

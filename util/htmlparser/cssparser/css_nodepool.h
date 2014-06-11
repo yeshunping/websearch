@@ -10,10 +10,7 @@
 #ifndef EASOU_CSS_NODEPOOL_H_
 #define EASOU_CSS_NODEPOOL_H_
 
-#include "util/htmlparser/utils/log.h"
 #include "css_dtd.h"
-
-using namespace EA_COMMON;
 /**
  * @brief	init nodepool
  * @retval   success: return 1; fail: return -1.

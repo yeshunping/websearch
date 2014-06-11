@@ -15,11 +15,8 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 
-#include "log.h"
 #include "string_util.h"
 #include "url.h"
-
-using namespace EA_COMMON;
 
 /*
  * @breif 是否是绝对url

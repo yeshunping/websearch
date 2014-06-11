@@ -17,12 +17,9 @@
 #include <arpa/inet.h>
 #include <errno.h>
 
-#include "log.h"
 #include "string_util.h"
 #include "url.h"
 #include "common_utils.h"
-
-using namespace EA_COMMON;
 
 int check_path(const char * dirpath) {
   struct stat buf;

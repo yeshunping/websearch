@@ -11,11 +11,8 @@
 #include "html_doctype.h"
 #include "html_tree.h"
 #include "html_dom.h"
-#include "util/htmlparser/utils/log.h"
 
 #include <string.h>
-
-using namespace EA_COMMON;
 
 /**
  * WAP1.0 特有标签

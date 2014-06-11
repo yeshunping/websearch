@@ -8,7 +8,6 @@
 #include <stddef.h>
 #include <string.h>
 #include <stdio.h>
-#include "util/htmlparser/utils/log.h"
 #include "util/htmlparser/utils/url.h"
 #include "util/htmlparser/utils/html_text_utils.h"
 #include "html_attr.h"
@@ -16,8 +15,6 @@
 #include "html_tree.h"
 #include "html_doctype.h"
 #include "util/htmlparser/utils/debuginfo.h"
-
-using namespace EA_COMMON;
 
 /**
  * @brief 创建树

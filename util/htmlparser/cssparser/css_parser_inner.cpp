@@ -8,7 +8,8 @@
  */
 #include <stdlib.h>
 #include <string.h>
-#include "util/htmlparser/utils/log.h"
+
+#include "base/logging.h"
 #include "css_dtd.h"
 #include "css_parser.h"
 #include "css_parser_inner.h"
@@ -16,8 +17,6 @@
 #include "util/htmlparser/utils/url.h"
 #include "util/htmlparser/utils/string_util.h"
 #include "DownLoad.h"
-
-using namespace EA_COMMON;
 
 /**
  * @brief .
@@ -36,7 +35,7 @@ int adjust_str_heap(css_t *css, size_t len)
 		if (css->css_inner.str_heap.p_heap == NULL)
 		{
 			css->css_inner.str_heap.p_heap = origin_mem;
-			Fatal((char*) "%s:%s:realloc error!", __FILE__, __FUNCTION__);
+			LOG(ERROR) << "realloc error!";
 			return -1;
 		}
 		//TODO free origin_mem
@@ -455,7 +454,7 @@ void scan_ignore(css_scan_t *css_scan, css_t *css)
 						int page_len = cDown.download(fullUrl, strlen(fullUrl), buf, MAX_PAGE_SIZE, pcsspos);
 						if (page_len > 0)
 						{
-							Debug("download %s success", fullUrl);
+							LOG(INFO) << "download " << fullUrl << " success";
 							//最后一个参数设置成false，只处理第一次import的css
 							if (css_parse(css, pcsspos, importUrl, true, false) < 0)
 							{

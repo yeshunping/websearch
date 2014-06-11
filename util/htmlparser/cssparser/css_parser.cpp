@@ -9,7 +9,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "util/htmlparser/utils/log.h"
+
+#include "base/logging.h"
 #include "util/htmlparser/htmlparser/html_attr.h"
 #include "util/htmlparser/htmlparser/html_tree.h"
 #include "css_parser.h"
@@ -17,8 +18,6 @@
 #include "css_dtd.h"
 #include "util/htmlparser/utils/string_util.h"
 #include "util/htmlparser/utils/debug.h"
-
-using namespace EA_COMMON;
 
 /**
  * @brief CSS
@@ -63,7 +62,7 @@ css_t *css_create(int max_css_text_size)
 	css = (css_t*) calloc(sizeof(css_t), 1);
 	if (NULL == css)
 	{
-		Fatal((char*) "%s:%s:malloc css_t error!", __FILE__, __FUNCTION__);
+		LOG(ERROR) <<  "malloc css_t error!";
 		goto FAIL_CC;
 	}
 	/* alloc string heap */
@@ -71,7 +70,7 @@ css_t *css_create(int max_css_text_size)
 	p_inner->str_heap.p_heap = (char *) calloc(max_css_text_size, 1);
 	if (NULL == p_inner->str_heap.p_heap)
 	{
-		Fatal((char*) "%s:%s:malloc str_heap error!", __FILE__, __FUNCTION__);
+		LOG(ERROR) << "malloc str_heap error!";
 		goto FAIL_CC;
 	}
 	p_inner->str_heap.heap_size = max_css_text_size;
@@ -448,7 +447,7 @@ css_selector_t *make_selector(css_scan_t *css_scan, css_t *css)
 		css_selector_t *new_selector = (css_selector_t *) css_get_from_nodepool(pool, sizeof(css_selector_t));
 		if (NULL == new_selector)
 		{
-			Fatal((char*) "%s:%s:get from nodepool error!", __FILE__, __FUNCTION__);
+		  LOG(ERROR) << "get from nodepool error!";
 			goto FAIL_MS;
 		}
 		/* make new selector */
@@ -599,7 +598,7 @@ static css_property_t *create_new_prop(css_nodepool_t *pool, char *prop_name, cs
 	css_property_t *new_prop = (css_property_t *) css_get_from_nodepool(pool, sizeof(css_property_t));
 	if (new_prop == NULL)
 	{
-		Fatal((char*) "%s:%s:get from nodepool error!", __FILE__, __FUNCTION__);
+	  LOG(ERROR) << "get from nodepool error!";
 		return NULL;
 	}
 	new_prop->name = prop_name;
@@ -831,7 +830,7 @@ static css_ruleset_t *make_ruleset_list_only_with_selector(css_scan_t *css_scan,
 		ruleset = (css_ruleset_t *) css_get_from_nodepool(pool, sizeof(css_ruleset_t));
 		if (ruleset == NULL)
 		{
-			Fatal((char*) "%s:%s:get from nodepool error!", __FILE__, __FUNCTION__);
+		  LOG(ERROR) << "get from nodepool error!";
 			break;
 		}
 		ruleset->selector = selector;

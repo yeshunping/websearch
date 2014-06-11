@@ -7,13 +7,10 @@
 #include <assert.h>
 #include <stdio.h>
 #include <string.h>
-#include "util/htmlparser/utils/log.h"
 #include "util/htmlparser/utils/url.h"
 #include "util/htmlparser/utils/html_text_utils.h"
 #include "html_attr.h"
 #include "html_extractor.h"
-
-using namespace EA_COMMON;
 
 // come from vhtml_parser.cpp
 static const html_tag_type_t html_blockTagList[] =

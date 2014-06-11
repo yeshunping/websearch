@@ -1,6 +1,5 @@
 cc_library(name = 'utils',
     srcs = [
-#         'bootstrap.cpp',
         'common_utils.cpp',
         'debug.cpp',
         'html_text_utils.cpp',
@@ -9,11 +8,11 @@ cc_library(name = 'utils',
         'simplehashmap.cpp',
         'string_util.cpp',
         'url.cpp',
-        'log.cpp',
     ],
     warning = 'no',
-    incs = ['.', '../../../thirdparty/log4cpp/include',],
-    deps = ['//thirdparty/log4cpp:log4cpp',
+    incs = ['.',],
+    deps = [
+            '//base:base',
             ],
 )
 

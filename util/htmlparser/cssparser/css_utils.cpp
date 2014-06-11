@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "util/htmlparser/utils/log.h"
+#include "base/logging.h"
 #include "util/htmlparser/htmlparser/html_pool.h"
 #include "util/htmlparser/htmlparser/html_attr.h"
 #include "util/htmlparser/htmlparser/html_tree.h"
@@ -19,8 +19,6 @@
 #include "css_utils.h"
 #include "util/htmlparser/utils/debug.h"
 #include "util/htmlparser/utils/string_util.h"
-
-using namespace EA_COMMON;
 
 /**
  * @brief 销毁css环境
@@ -49,7 +47,7 @@ css_env_t *css_env_create(int max_css_page_size, int css_num)
 	css_env_t *cc = (css_env_t *) calloc(1, sizeof(css_env_t));
 	if (NULL == cc)
 	{
-		Fatal((char*) "%s:%d:alloc error!", __FILE__, __LINE__);
+		LOG(ERROR) << "alloc error!";
 		goto ERR;
 	}
 	if (css_pool_init(&cc->css_pool, max_css_page_size, css_num) == -1)

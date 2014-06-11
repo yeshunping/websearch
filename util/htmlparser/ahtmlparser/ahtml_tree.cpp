@@ -7,7 +7,6 @@
  *     Version: 1.1
  */
 #include <pthread.h>
-#include "util/htmlparser/utils/log.h"
 #include "util/htmlparser/htmlparser/html_attr.h"
 #include "util/htmlparser/vhtmlparser/vhtml_tree.h"
 #include "util/htmlparser/ahtmlparser/ahtml_tree.h"

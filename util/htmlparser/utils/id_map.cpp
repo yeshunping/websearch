@@ -8,10 +8,9 @@
  **/
 #include <assert.h>
 #include <stdlib.h>
-#include "log.h"
-#include "id_map.h"
 
-using namespace EA_COMMON;
+#include "base/logging.h"
+#include "id_map.h"
 
 /**
  * @brief 释放内存块链表.
@@ -107,7 +106,7 @@ idmap_t *idmap_create(int node_size, int init_node_num)
 	NULL_GOTO(idmap,ERR);
 	idmap->map_unit_size = init_node_num;
 	if(idmap_alloc(idmap) == -1){
-		Fatal("create idmap error!");
+		LOG(ERROR) << "create idmap error!";
 		goto ERR;
 	}
 	if(nodepool_init(&idmap->nodepool, node_size, idmap->map_unit_size) == 0){
@@ -132,7 +131,7 @@ ERR:
 void *idmap_get_node(idmap_t *idmap, int id)
 {
 	if(id < 0){
-		Fatal("Illegal id, id should >= 0.");
+		LOG(ERROR) << "Illegal id, id should >= 0.";
 		goto ERR;
 	}
 
