@@ -8,13 +8,13 @@
  */
 #include <stdlib.h>
 #include <string.h>
-#include "log.h"
-#include "easou_css_dtd.h"
-#include "easou_css_parser.h"
-#include "easou_css_parser_inner.h"
-#include "easou_html_dtd.h"
-#include "easou_url.h"
-#include "easou_string.h"
+#include "util/htmlparser/utils/log.h"
+#include "css_dtd.h"
+#include "css_parser.h"
+#include "css_parser_inner.h"
+#include "util/htmlparser/htmlparser/html_dtd.h"
+#include "util/htmlparser/utils/url.h"
+#include "util/htmlparser/utils/string_util.h"
 #include "DownLoad.h"
 
 using namespace EA_COMMON;

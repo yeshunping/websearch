@@ -10,7 +10,7 @@
 #define EASOU_CSS_PARSER_INNER_H_
 
 #include <stdio.h>
-#include "easou_css_dtd.h"
+#include "css_dtd.h"
 
 /**
  * @brief 如果CSS文本太长,重新分配str_heap.

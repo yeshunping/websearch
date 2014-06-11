@@ -1,6 +1,6 @@
 /**
  * easou_css_parser.cpp
- * Description: CSS½âÎö
+ * Description: CSSè§£æ
  *  Created on: 2011-06-20
  * Last modify: 2012-10-26 sue_zhang@staff.easou.com shuangwei_zhang@staff.easou.com
  *      Author: xunwu_chen@staff.easoucom
@@ -9,14 +9,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "log.h"
-#include "easou_html_attr.h"
-#include "easou_html_tree.h"
-#include "easou_css_parser.h"
-#include "easou_css_nodepool.h"
-#include "easou_css_dtd.h"
-#include "easou_string.h"
-#include "easou_debug.h"
+#include "util/htmlparser/utils/log.h"
+#include "util/htmlparser/htmlparser/html_attr.h"
+#include "util/htmlparser/htmlparser/html_tree.h"
+#include "css_parser.h"
+#include "css_nodepool.h"
+#include "css_dtd.h"
+#include "util/htmlparser/utils/string_util.h"
+#include "util/htmlparser/utils/debug.h"
 
 using namespace EA_COMMON;
 
@@ -26,7 +26,7 @@ using namespace EA_COMMON;
 #define PROP_FIRST_ALPHA(PROP_NAME)	(PROP_NAME[0]=='-'?PROP_NAME[1]:PROP_NAME[0])
 
 /**
- * @brief Çå³ıcssĞÅÏ¢
+ * @brief æ¸…é™¤cssä¿¡æ¯
  * @param [in/out] css   : easou_css_t*
  * @return  void 
  * @author xunwu
@@ -43,7 +43,7 @@ void css_clean(easou_css_t *css)
 }
 
 /**
- * @brief ´´½¨Ò»¸öcss½âÎö½á¹¹
+ * @brief åˆ›å»ºä¸€ä¸ªcssè§£æç»“æ„
  * @param [in] max_css_text_size
  * @return  easou_css_t*
  * @author xunwu
@@ -56,7 +56,7 @@ easou_css_t *css_create(int max_css_text_size)
 
 	if (max_css_text_size <= 0)
 	{
-	    // FIXME:¸úº¯ÊıµÄ¶¨Òå²»·ûºÏ£¬Ó¦¸Ã·µ»Ø-1¡£±»µ÷ÓÃº¯Êı²»ÄÜ´òÕâÖÖ²¹¶¡¡£
+	    // FIXME:è·Ÿå‡½æ•°çš„å®šä¹‰ä¸ç¬¦åˆï¼Œåº”è¯¥è¿”å›-1ã€‚è¢«è°ƒç”¨å‡½æ•°ä¸èƒ½æ‰“è¿™ç§è¡¥ä¸ã€‚
 		return css_create();
 	}
 	/* alloc easou_css_t */
@@ -101,7 +101,7 @@ easou_css_t *css_create(int max_css_text_size)
 }
 
 /**
- * @brief Ïú»Ùcss
+ * @brief é”€æ¯css
  * @param [in/out] css   : easou_css_t*
  * @author xunwu
  * @date 2011/06/20
@@ -123,7 +123,7 @@ void css_destroy(easou_css_t *css)
 }
 
 /**
- * @brief ´´½¨Ò»¸öcss½âÎö½á¹¹
+ * @brief åˆ›å»ºä¸€ä¸ªcssè§£æç»“æ„
  * @param [in] max_css_text_size
  * @return  easou_css_t*
  * @author xunwu
@@ -192,7 +192,7 @@ int get_new_token(easou_css_scan_t *css_scan, easou_css_str_heap_t *str_heap, ea
 }
 
 /**
- * @brief	·ÖÎöÊôĞÔÑ¡Ôñ×Ó
+ * @brief	åˆ†æå±æ€§é€‰æ‹©å­
  *	assert no spaces in the attr string.
  * @param [in/out] simple_selector   : css_simple_selector_t*
  * @param [in/out] pstr   : char*
@@ -260,7 +260,7 @@ static char* parse_attr_selector(easou_css_simple_selector_t *simple_selector, c
 }
 
 /**
- * @brief	·ÖÎöÆÕÍ¨Ñ¡Ôñ×Ó
+ * @brief	åˆ†ææ™®é€šé€‰æ‹©å­
  *	simple_selector : element_name? [ HASH | class | attrib | pseudo ]* S*
  * @author xunwu
  * @date 2011/06/20
@@ -371,7 +371,7 @@ static void parse_simple_selector(easou_css_simple_selector_t *simple_selector, 
 }
 
 /**
- * @brief	Çå¿ÕÑ¡Ôñ×Ó
+ * @brief	æ¸…ç©ºé€‰æ‹©å­
  * @author xunwu
  * @date 2011/06/20
  **/
@@ -387,7 +387,7 @@ static void selector_clean(easou_css_selector_t *selector)
 }
 
 /**
- * @brief ÆÕÍ¨Ñ¡Ôñ×ÓÊÇ·ñºÏ·¨
+ * @brief æ™®é€šé€‰æ‹©å­æ˜¯å¦åˆæ³•
  * @return  bool 
  * @retval   
  * @see 
@@ -416,7 +416,7 @@ static bool is_illegal_simple_selector(const easou_css_simple_selector_t *sslt)
 }
 
 /**
- * @brief ´´½¨Ñ¡Ôñ×Ó
+ * @brief åˆ›å»ºé€‰æ‹©å­
  * @param [in/out] css_scan   : css_scan_t*
  * @param [in/out] css   : easou_css_t*
  * @return  css_selector_t* 
@@ -546,7 +546,7 @@ bool is_useful_css_prop(easou_css_prop_type_t prop)
 }
 
 /**
- * @brief µÃµ½ÊôĞÔµÄÖµ
+ * @brief å¾—åˆ°å±æ€§çš„å€¼
  * @author xunwu
  * @date 2011/06/20
  **/
@@ -572,7 +572,7 @@ static char *get_prop_value(easou_css_scan_t *css_scan, easou_css_str_heap_t *st
 }
 
 /**
- * @brief	µÃµ½ÊôĞÔµÄname
+ * @brief	å¾—åˆ°å±æ€§çš„name
  * @author xunwu
  * @date 2011/06/20
  **/
@@ -590,7 +590,7 @@ static char *get_prop_name(easou_css_scan_t *css_scan, easou_css_str_heap_t *str
 }
 
 /**
- * @brief	ĞÂ½¨ÊôĞÔ
+ * @brief	æ–°å»ºå±æ€§
  * @author xunwu
  * @date 2011/06/20
  **/
@@ -609,7 +609,7 @@ static easou_css_property_t *create_new_prop(easou_css_nodepool_t *pool, char *p
 }
 
 /**
- * @brief	´´½¨ÊôĞÔÁĞ±í
+ * @brief	åˆ›å»ºå±æ€§åˆ—è¡¨
  * @author xunwu
  * @date 2011/06/20
  **/
@@ -666,7 +666,7 @@ static easou_css_property_t *make_property_list(easou_css_scan_t *css_scan, easo
 }
 
 /**
- * @brief	´òÓ¡Ñ¡Ôñ×Ó
+ * @brief	æ‰“å°é€‰æ‹©å­
  * @author xunwu
  * @date 2011/06/20
  **/
@@ -787,7 +787,7 @@ static void print_selector(easou_css_selector_t *selector, FILE *fout, int *comb
 }
 
 /**
- * @brief	´òÓ¡ÊôĞÔÁĞ±í
+ * @brief	æ‰“å°å±æ€§åˆ—è¡¨
  * @author xunwu
  * @date 2011/06/20
  **/
@@ -811,7 +811,7 @@ static void print_prop_list(easou_css_property_t *prop_list, FILE *fout)
 }
 
 /**
- * @brief	ÒÔÑ¡Ôñ×ÓÎªÖ÷¼ü´´½¨¹æÔòÁĞ±í
+ * @brief	ä»¥é€‰æ‹©å­ä¸ºä¸»é”®åˆ›å»ºè§„åˆ™åˆ—è¡¨
  * @author xunwu
  * @date 2011/06/20
  **/
@@ -860,7 +860,7 @@ static easou_css_ruleset_t *make_ruleset_list_only_with_selector(easou_css_scan_
 }
 
 /**
- * @brief	´òÓ¡CSS.
+ * @brief	æ‰“å°CSS.
  * @author xunwu
  * @date 2011/06/20
  **/
@@ -894,11 +894,11 @@ void print_css(easou_css_t *css, FILE *fout)
 }
 
 /**
- * @brief	ÅĞ¶ÏÊÇ·ñÊÇfontÊôĞÔ
+ * @brief	åˆ¤æ–­æ˜¯å¦æ˜¯fontå±æ€§
  * @author xunwu
  * @date 2011/06/20
  **/
-// FIXME:Õâ¸ö¿ÉÒÔ¸Ä³Éinline
+// FIXME:è¿™ä¸ªå¯ä»¥æ”¹æˆinline
 bool is_font_property(easou_css_property_t *prop)
 {
 	if (prop->type != CSS_PROP_UNKNOWN)
@@ -908,11 +908,11 @@ bool is_font_property(easou_css_property_t *prop)
 }
 
 /**
- * @brief	ÅĞ¶ÏÊÇ·ñÊÇgeoÊôĞÔ
+ * @brief	åˆ¤æ–­æ˜¯å¦æ˜¯geoå±æ€§
  * @author xunwu
  * @date 2011/06/20
  **/
-// FIXME:Õâ¸ö¿ÉÒÔ¸Ä³Éinline
+// FIXME:è¿™ä¸ªå¯ä»¥æ”¹æˆinline
 bool is_geo_property(easou_css_property_t *prop)
 {
 	if (prop->type != CSS_PROP_UNKNOWN)
@@ -922,7 +922,7 @@ bool is_geo_property(easou_css_property_t *prop)
 }
 
 /**
- * @brief	¹æÔòÖĞÌí¼ÓÊôĞÔ
+ * @brief	è§„åˆ™ä¸­æ·»åŠ å±æ€§
  * @param [in/out] ruleset   : css_ruleset_t*
  * @param [in/out] prop_list   : css_property_t*
  * @author xunwu
@@ -931,7 +931,7 @@ bool is_geo_property(easou_css_property_t *prop)
 static void ruleset_add_props(easou_css_ruleset_t *ruleset, easou_css_property_t *prop_list)
 {
 	easou_css_property_t *next_prop = NULL;
-	/**Ã¿Ò»¸öÊôĞÔ¶¼Ìí¼Óµ½¶ÓÁĞÍ·²¿*/
+	/**æ¯ä¸€ä¸ªå±æ€§éƒ½æ·»åŠ åˆ°é˜Ÿåˆ—å¤´éƒ¨*/
 	for (easou_css_property_t *prop = prop_list; prop != NULL; prop = next_prop)
 	{
 		next_prop = prop->next;
@@ -963,7 +963,7 @@ static void ruleset_add_props(easou_css_ruleset_t *ruleset, easou_css_property_t
 			}
 		}
 	}
-	/* ¿ÉÒÔ¿¼ÂÇ½«Õâ²¿·Ö²Ù×÷ÒÆµ½Ñ­»·ÀïÃæ */
+	/* å¯ä»¥è€ƒè™‘å°†è¿™éƒ¨åˆ†æ“ä½œç§»åˆ°å¾ªç¯é‡Œé¢ */
 	easou_css_property_t *cur_end = NULL;
 	if (ruleset->font_prop_begin != NULL)
 	{
@@ -996,7 +996,7 @@ static void ruleset_add_props(easou_css_ruleset_t *ruleset, easou_css_property_t
 }
 
 /**
- * @brief	¿½±´ÊôĞÔ
+ * @brief	æ‹·è´å±æ€§
  * @author xunwu
  * @date 2011/06/20
  **/
@@ -1107,7 +1107,7 @@ int css_parse_no_index(easou_css_t *css, const char *css_text, const char *css_u
 
 	while (1)
 	{
-		/**´´½¨¹æÔò¼¯£¬µ«ÊÇÖ»ÓĞÑ¡Ôñ×Ó£¬¿ÉÄÜ»áÓĞ¶à¸öÑ¡Ôñ×Ó*/
+		/**åˆ›å»ºè§„åˆ™é›†ï¼Œä½†æ˜¯åªæœ‰é€‰æ‹©å­ï¼Œå¯èƒ½ä¼šæœ‰å¤šä¸ªé€‰æ‹©å­*/
 		easou_css_ruleset_t *ruleset_list = make_ruleset_list_only_with_selector(&css_scan, css);
 		if (*(css_scan.p_next) == '\0')
 		{
@@ -1121,21 +1121,21 @@ int css_parse_no_index(easou_css_t *css, const char *css_text, const char *css_u
 		{
 			css_scan.p_next = skip_block(css_scan.p_next);
 		}
-		/**´´½¨ÊôĞÔ¼¯*/
+		/**åˆ›å»ºå±æ€§é›†*/
 		easou_css_property_t *prop_list = make_property_list(&css_scan, css);
-		/**ÊôĞÔ¼¯ºÍ¹æÔò¼¯¶¼ÓĞĞ§£¬Ôò¿ÉÒÔ½«ÊôĞÔ¼¯ÒÆÖ²µ½¹æÔò¼¯ÉÏÃæ*/
+		/**å±æ€§é›†å’Œè§„åˆ™é›†éƒ½æœ‰æ•ˆï¼Œåˆ™å¯ä»¥å°†å±æ€§é›†ç§»æ¤åˆ°è§„åˆ™é›†ä¸Šé¢*/
 		if (prop_list != NULL && ruleset_list != NULL)
 		{
 			easou_css_ruleset_t *ruleset_list_tail = ruleset_list;
 			easou_css_ruleset_t *first_ruleset = ruleset_list;
 			ruleset_add_props(first_ruleset, prop_list);
-			/**½«ÕâÒ»¶Îcss´úÂëÖĞ²»Í¬Æ¬¶Î£¨¶à¸öÑ¡Ôñ×Ó£©Ò²´®³ÉÒ»¸öÁ´±í£¬Õâ´ÎÊÇÌí¼Óµ½¶ÓÁĞÎ²²¿*/
+			/**å°†è¿™ä¸€æ®µcssä»£ç ä¸­ä¸åŒç‰‡æ®µï¼ˆå¤šä¸ªé€‰æ‹©å­ï¼‰ä¹Ÿä¸²æˆä¸€ä¸ªé“¾è¡¨ï¼Œè¿™æ¬¡æ˜¯æ·»åŠ åˆ°é˜Ÿåˆ—å°¾éƒ¨*/
 			for (easou_css_ruleset_t *ruleset = first_ruleset->next; ruleset != NULL; ruleset = ruleset->next)
 			{
 				ruleset_prop_copy(ruleset, first_ruleset);
 				ruleset_list_tail = ruleset;
 			}
-			/**Ìí¼Óµ½¶ÓÁĞÍ·²¿£¬²Ù×÷¼ò±ãÊÇÒ»·½Ãæ£¬²éÕÒÊ±ÕıÊÊºÏÁÙ½üÔ­Ôò*/
+			/**æ·»åŠ åˆ°é˜Ÿåˆ—å¤´éƒ¨ï¼Œæ“ä½œç®€ä¾¿æ˜¯ä¸€æ–¹é¢ï¼ŒæŸ¥æ‰¾æ—¶æ­£é€‚åˆä¸´è¿‘åŸåˆ™*/
 			ruleset_list_tail->next = css->all_ruleset_list;
 			css->all_ruleset_list = ruleset_list;
 		}
@@ -1150,7 +1150,7 @@ int css_parse_no_index(easou_css_t *css, const char *css_text, const char *css_u
 			css_scan.p_next++;
 		}
 		else
-		{ /**ÎŞÑ¡Ôñ×ÓµÄ´úÂë£¬ºöÂÔµô*/
+		{ /**æ— é€‰æ‹©å­çš„ä»£ç ï¼Œå¿½ç•¥æ‰*/
 			css_scan.p_next = skip_block(css_scan.p_next);
 		}
 	}
@@ -1167,7 +1167,7 @@ int css_parse_no_index(easou_css_t *css, const char *css_text, const char *css_u
 
 int css_parse(easou_css_t *css, const char *css_text, const char *css_url, bool is_continue, bool test_import)
 {
-	//È¥µôUTF£­8ÎÄ¼şµÄBOMÍ·
+	//å»æ‰UTFï¼8æ–‡ä»¶çš„BOMå¤´
 	if (strncmp(css_text, "\357\273\277", 3) == 0)
 	{
 		css_text += 3;

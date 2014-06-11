@@ -1,6 +1,6 @@
 /**
  * css_utils.cpp
- * Description: cssparser¶ÔÍâ½Ó¿Ú
+ * Description: cssparserå¯¹å¤–æ¥å£
  *  Created on: 2011-06-20
  * Last modify: 2012-10-26 sue_zhang@staff.easou.com shuangwei_zhang@staff.easou.com
  *      Author: xunwu_chen@staff.easoucom
@@ -10,20 +10,20 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "log.h"
-#include "easou_html_pool.h"
-#include "easou_html_attr.h"
-#include "easou_html_tree.h"
-#include "easou_css_pool.h"
-#include "easou_css_parser.h"
-#include "easou_css_utils.h"
-#include "easou_debug.h"
-#include "easou_string.h"
+#include "util/htmlparser/utils/log.h"
+#include "util/htmlparser/htmlparser/html_pool.h"
+#include "util/htmlparser/htmlparser/html_attr.h"
+#include "util/htmlparser/htmlparser/html_tree.h"
+#include "css_pool.h"
+#include "css_parser.h"
+#include "css_utils.h"
+#include "util/htmlparser/utils/debug.h"
+#include "util/htmlparser/utils/string_util.h"
 
 using namespace EA_COMMON;
 
 /**
- * @brief Ïú»Ùcss»·¾³
+ * @brief é”€æ¯cssç¯å¢ƒ
  * @author xunwu
  * @date 2011/06/20
  **/
@@ -37,10 +37,10 @@ void css_env_destroy(easou_css_env_t *cc)
 }
 
 /**
- * @brief CSS»·¾³µÄ´´½¨.
- * @param [in] max_css_page_size   : int ×î´ócss
- * @param [in] css_num   : int	×î¶à½âÎöcssµÄÊıÁ¿.
- * @return  css_env_t*	css½âÎö»·¾³.
+ * @brief CSSç¯å¢ƒçš„åˆ›å»º.
+ * @param [in] max_css_page_size   : int æœ€å¤§css
+ * @param [in] css_num   : int	æœ€å¤šè§£æcssçš„æ•°é‡.
+ * @return  css_env_t*	cssè§£æç¯å¢ƒ.
  * @author xunwu
  * @date 2011/06/20
  **/
@@ -62,7 +62,7 @@ easou_css_env_t *css_env_create(int max_css_page_size, int css_num)
 }
 
 /**
- * @brief Çå¿ÕcssĞÅÏ¢
+ * @brief æ¸…ç©ºcssä¿¡æ¯
  */
 static void cssinfo_keep_clean(easou_cssinfo_keep_t *css_keep)
 {
@@ -111,7 +111,7 @@ bool is_apply_for_screen_media_list(const char *pvalue)
 }
 
 /**
- * @brief ÅĞ¶Ï¸Ã½ÚµãÊÇ·ñ»áÓ°Ïìscreen
+ * @brief åˆ¤æ–­è¯¥èŠ‚ç‚¹æ˜¯å¦ä¼šå½±å“screen
  * @author xunwu
  * @date 2011/06/20
  **/
@@ -123,18 +123,18 @@ bool is_apply_for_screen_media(html_tag_t *html_tag)
 }
 
 /**
- * @brief ÅĞ¶Ï±êÇ©ÊÇ·ñÊÇcss link
+ * @brief åˆ¤æ–­æ ‡ç­¾æ˜¯å¦æ˜¯css link
  * @author xunwu
  * @date 2011/06/20
  **/
 bool is_css_link_tag(html_tag_t *html_tag)
 {
-	/**±ØĞëÊÇlink*/
+	/**å¿…é¡»æ˜¯link*/
 	if (html_tag->tag_type != TAG_LINK)
 	{
 		return false;
 	}
-	/**ATTR_RELÊôĞÔ±ØĞëÊÇstylesheet*/
+	/**ATTR_RELå±æ€§å¿…é¡»æ˜¯stylesheet*/
 	const char *pvalue = get_attribute_value(html_tag, ATTR_REL);
 	if (pvalue != NULL && strcasecmp(pvalue, "stylesheet") == 0 && is_apply_for_screen_media(html_tag))
 	{
@@ -160,7 +160,7 @@ static void get_style_text(easou_page_css_t *css_keep, html_tag_t *html_tag, con
 		{
 //			Warn("%s:too many style text:%s!", __FUNCTION__, url);
 		}
-		/**´¦ÀístyleµÄimport½øÀ´µÄcss£¬²»¿¼ÂÇ*/
+		/**å¤„ç†styleçš„importè¿›æ¥çš„cssï¼Œä¸è€ƒè™‘*/
 		//	collect_import_css_url(css_keep, ptxt, url);
 	}
 }
@@ -176,7 +176,7 @@ static int start_visit_for_cssinfo(html_tag_t *html_tag, void *result, int flag)
 }
 
 /**
- * @brief »ñÈ¡Ò³ÃæÖĞµÄcss.
+ * @brief è·å–é¡µé¢ä¸­çš„css.
  * @see
  * @author xunwu
  * @date 2011/06/20
@@ -188,10 +188,10 @@ static void get_cssinfo(easou_cssinfo_keep_t *css_keep, const html_tree_t *html_
 }
 
 /**
- * @brief	´ÓÒ³ÃæÖĞ»ñÈ¡cssĞÅÏ¢
- * @param [out] page_css   : page_css_t*	Ò³ÃæÖĞµÄcssĞÅÏ¢
- * @param [in] html_tree   : const html_tree_t*	´´½¨ºÃµÄdomÊ÷
- * @param [in] url   : const char*	Ò³ÃæµÄurl
+ * @brief	ä»é¡µé¢ä¸­è·å–cssä¿¡æ¯
+ * @param [out] page_css   : page_css_t*	é¡µé¢ä¸­çš„cssä¿¡æ¯
+ * @param [in] html_tree   : const html_tree_t*	åˆ›å»ºå¥½çš„domæ ‘
+ * @param [in] url   : const char*	é¡µé¢çš„url
  * @author xunwu
  * @date 2011/06/20
  **/
@@ -204,7 +204,7 @@ void get_page_css_info(easou_page_css_t *page_css, const html_tree_t *html_tree,
 }
 
 /**
- * @brief ½âÎöÒ³ÃæÖĞµÄcss
+ * @brief è§£æé¡µé¢ä¸­çš„css
  * @author xunwu
  * @date 2011/06/20
  **/
@@ -251,10 +251,10 @@ void parse_internal_css(easou_css_env_t *css_env, easou_page_css_t *page_css, co
 }
 
 /**
- * @brief	»ñÈ¡²¢½âÎöÒ³ÃæÖĞµÄcss.
- * @param [out] css_env   : easou_css_env_t*	css½âÎö»·¾³.
- * @param [in] html_tree   : html_tree_t*	½âÎö¹ıµÄhtmlÊ÷.
- * @param [in] url   : const char*	Ò³ÃæURL.
+ * @brief	è·å–å¹¶è§£æé¡µé¢ä¸­çš„css.
+ * @param [out] css_env   : easou_css_env_t*	cssè§£æç¯å¢ƒ.
+ * @param [in] html_tree   : html_tree_t*	è§£æè¿‡çš„htmlæ ‘.
+ * @param [in] url   : const char*	é¡µé¢URL.
  * @author xunwu
  * @date 2011/06/20
  **/
@@ -283,7 +283,7 @@ void csspool_print_selector(const easou_css_pool_t *csspool, const char* filenam
 }
 
 /**
- * ¸´Î»css»·¾³
+ * å¤ä½cssç¯å¢ƒ
  */
 void css_env_reset(easou_css_env_t *cc)
 {
@@ -313,7 +313,7 @@ void add_out_style_text(easou_page_css_t *css_keep, char * ptxt, char *css_url)
 		{
 //			Warn("%s:too many style!", __FUNCTION__);
 		}
-		/**´¦ÀístyleµÄimport½øÀ´µÄcss£¬²»¿¼ÂÇ*/
+		/**å¤„ç†styleçš„importè¿›æ¥çš„cssï¼Œä¸è€ƒè™‘*/
 //		collect_import_css_url(css_keep, ptxt, url);
 	}
 }

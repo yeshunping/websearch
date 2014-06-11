@@ -3,14 +3,14 @@
  * @author xunwu
  * @date 2011/06/20
  * @version 1.0(create)
- * @brief	CSSÀàĞÍ¶¨Òå
+ * @brief	CSSç±»å‹å®šä¹‰
  *  
  **/
 
-#include "easou_css_dtd.h"
+#include "css_dtd.h"
 
 /**
- * @brief css_prop_first_char_map[i]±íÊ¾ÒÔASCIIÂëiÎªÊ××ÖÄ¸µÄCSSÊôĞÔÔÚcss_property_name_arrayÖĞµÄ¿ªÊ¼Î»ÖÃ.
+ * @brief css_prop_first_char_map[i]è¡¨ç¤ºä»¥ASCIIç iä¸ºé¦–å­—æ¯çš„CSSå±æ€§åœ¨css_property_name_arrayä¸­çš„å¼€å§‹ä½ç½®.
  */
 short css_prop_first_char_map[] = 
 {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
@@ -52,7 +52,7 @@ short css_other_usefull_prop[] =
 		};
 
 /**
- * css_property_name_array[]Óëprop_typeinfo_array[]Ã¿¸öÔªËØÒ»Ò»¶ÔÓ¦
+ * css_property_name_array[]ä¸prop_typeinfo_array[]æ¯ä¸ªå…ƒç´ ä¸€ä¸€å¯¹åº”
  */
 const char *css_property_name_array[] =
 {
@@ -240,7 +240,7 @@ const char *css_property_name_array[] =
 	"writing-mode"
 };
 
-/* css_property_name_array[]Óëprop_typeinfo_array[]Ã¿¸öÔªËØÒ»Ò»¶ÔÓ¦ */
+/* css_property_name_array[]ä¸prop_typeinfo_array[]æ¯ä¸ªå…ƒç´ ä¸€ä¸€å¯¹åº” */
 const easou_css_prop_type_info_t prop_typeinfo_array[] =
 {
 /* property-type, is font property, is geo property */
@@ -406,12 +406,12 @@ const easou_css_prop_type_info_t prop_typeinfo_array[] =
 	{CSS_PROP_TEXT_ALIGN_LAST,1,0},
 	{CSS_PROP_TEXT_AUTOSPACE,0,0},
 	{CSS_PROP_TEXT_DECORATION,1,0},
-	{CSS_PROP_TEXT_INDENT,0,0},	/*Ëõ½ø*/
+	{CSS_PROP_TEXT_INDENT,0,0},	/*ç¼©è¿›*/
 	{CSS_PROP_TEXT_JUSTIFY,0,0},
 	{CSS_PROP_TEXT_KASHIDA_SPACE,0,0},
 	{CSS_PROP_TEXT_OVERFLOW,0,0},
 	{CSS_PROP_TEXT_SHADOW,1,0},
-	{CSS_PROP_TEXT_TRANSFORM,0,0},	/*´óĞ¡Ğ´×ª»»*/
+	{CSS_PROP_TEXT_TRANSFORM,0,0},	/*å¤§å°å†™è½¬æ¢*/
 	{CSS_PROP_TEXT_UNDERLINE_POSITION,1,0},
 	{CSS_PROP_TOP,0,1},
 	{CSS_PROP_UNICODE_BIDI,0,0},
@@ -426,6 +426,6 @@ const easou_css_prop_type_info_t prop_typeinfo_array[] =
 	{CSS_PROP_WORD_BREAK,0,0},
 	{CSS_PROP_WORD_SPACING,0,0},
 	{CSS_PROP_WORD_WRAP,0,1},
-	{CSS_PROP_WRITING_MODE,0,0},	/* ÎÄ×ÖµÄÊéĞ´Ë³Ğò:×óÓÒ|ÉÏÏÂ*/
+	{CSS_PROP_WRITING_MODE,0,0},	/* æ–‡å­—çš„ä¹¦å†™é¡ºåº:å·¦å³|ä¸Šä¸‹*/
 	{CSS_PROP_UNKNOWN,0,0}
 };

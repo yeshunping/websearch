@@ -1,6 +1,6 @@
 /**
  * easou_css_dtd.h
- * Description: CSS±ê×¼ÀàĞÍ¶¨Òå
+ * Description: CSSæ ‡å‡†ç±»å‹å®šä¹‰
  *  Created on: 2011-06-20
  * Last modify: 2012-10-31 sue_zhang@staff.easou.com shuangwei_zhang@staff.easou.com
  *      Author: xunwu_chen@staff.easoucom
@@ -13,28 +13,28 @@
 #define UL_MAX_PORT_LEN 1024
 #define UL_MAX_PATH_LEN 1024
 
-#include "easou_html_dom.h"
-#include "simplehashmap.h"
+#include "util/htmlparser/htmlparser/html_dom.h"
+#include "util/htmlparser/utils/simplehashmap.h"
 
 /**
- * @brief CSSÊôĞÔ°´¹¦ÄÜ»®·ÖÀàĞÍ
+ * @brief CSSå±æ€§æŒ‰åŠŸèƒ½åˆ’åˆ†ç±»å‹
  */
 typedef enum _css_prop_func_type
 {
-	CSS_PROP_HUNC_FONT, /* ×ÖÌåÊôĞÔ */
-	CSS_PROP_HUNC_GEO, /* ¼¸ºÎÊôĞÔ */
-	CSS_PROP_HUNC_OTHER /* ÆäËûÊôĞÔ  */
+	CSS_PROP_HUNC_FONT, /* å­—ä½“å±æ€§ */
+	CSS_PROP_HUNC_GEO, /* å‡ ä½•å±æ€§ */
+	CSS_PROP_HUNC_OTHER /* å…¶ä»–å±æ€§  */
 } css_prop_func_type;
 
-extern short css_prop_first_char_map[]; /* CSSÊôĞÔ°´Ê××ÖÄ¸ÅÅĞòÊı×é */
+extern short css_prop_first_char_map[]; /* CSSå±æ€§æŒ‰é¦–å­—æ¯æ’åºæ•°ç»„ */
 
-/* css_property_name_array[]Óëprop_type_array[]Ã¿¸öÔªËØÒ»Ò»¶ÔÓ¦ */
+/* css_property_name_array[]ä¸prop_type_array[]æ¯ä¸ªå…ƒç´ ä¸€ä¸€å¯¹åº” */
 extern const char *css_property_name_array[];
 
-extern short css_other_usefull_prop[]; /* ³ı×ÖÌå£¬Î»ÖÃ´óĞ¡ÊôĞÔÍâÆäËüÓĞÓÃµÄÊôĞÔ */
+extern short css_other_usefull_prop[]; /* é™¤å­—ä½“ï¼Œä½ç½®å¤§å°å±æ€§å¤–å…¶å®ƒæœ‰ç”¨çš„å±æ€§ */
 
 /**
- * @brief ËùÓĞµÄCSSÊôĞÔ
+ * @brief æ‰€æœ‰çš„CSSå±æ€§
  */
 typedef enum _easou_css_prop_type_t
 {
@@ -223,61 +223,61 @@ typedef enum _easou_css_prop_type_t
 	CSS_PROP_UNKNOWN
 } easou_css_prop_type_t;
 
-#define CSS_PROPERTY_NUM (CSS_PROP_UNKNOWN-CSS_PROP_ACCELERATOR)		  /**< CSSÊôĞÔ¸öÊı  */
+#define CSS_PROPERTY_NUM (CSS_PROP_UNKNOWN-CSS_PROP_ACCELERATOR)		  /**< CSSå±æ€§ä¸ªæ•°  */
 
 /**
- * @brief CSSÊôĞÔÀàĞÍĞÅÏ¢
+ * @brief CSSå±æ€§ç±»å‹ä¿¡æ¯
  */
 typedef struct _easou_css_prop_type_info_t
 {
-	_easou_css_prop_type_t type; /* ÊôĞÔÀàĞÍ  */
-	bool is_font_prop; /* ÊÇ·ñ×ÖÌåÊôĞÔ  */
-	bool is_geo_prop; /* ÊÇ·ñ¼¸ºÎÊôĞÔ  */
+	_easou_css_prop_type_t type; /* å±æ€§ç±»å‹  */
+	bool is_font_prop; /* æ˜¯å¦å­—ä½“å±æ€§  */
+	bool is_geo_prop; /* æ˜¯å¦å‡ ä½•å±æ€§  */
 } easou_css_prop_type_info_t;
 
-/* css_property_name_array[]Óëprop_type_array[]Ã¿¸öÔªËØÒ»Ò»¶ÔÓ¦ */
+/* css_property_name_array[]ä¸prop_type_array[]æ¯ä¸ªå…ƒç´ ä¸€ä¸€å¯¹åº” */
 extern const easou_css_prop_type_info_t prop_typeinfo_array[];
 
-#define CSS_UNIVERSAL_SELECTOR	((html_tag_type_t)(-1))		  /**< È«¾ÖÑ¡Ôñ×Ó£¬»ù±¾ÉÏÊÇÃ¿¸ö±êÇ©¶¼¿ÉÒÔ±»äÖÈ¾  */
+#define CSS_UNIVERSAL_SELECTOR	((html_tag_type_t)(-1))		  /**< å…¨å±€é€‰æ‹©å­ï¼ŒåŸºæœ¬ä¸Šæ˜¯æ¯ä¸ªæ ‡ç­¾éƒ½å¯ä»¥è¢«æ¸²æŸ“  */
 
 /**
- * @brief CSSÊôĞÔÑ¡Ôñ×ÓÀàĞÍ.
+ * @brief CSSå±æ€§é€‰æ‹©å­ç±»å‹.
  */
 typedef enum _easou_css_attr_selector_type_t
 {
-	CSS_ATTR_SELECT_MATCH_NOVALUE, /* ÎŞÊôĞÔÖµÆ¥Åä  */
-	CSS_ATTR_SELECT_MATCH_EXACTLY, /* ÊôĞÔÑÏ¸ñÆ¥Åä  */
-	CSS_ATTR_SELECT_MATCH_ANY, /* Æ¥ÅäÆäÖĞÒ»¸ö */
-	CSS_ATTR_SELECT_MATCH_BEGIN, /* Æ¥ÅäÇ°×º  */
-	CSS_ATTR_SELECT_OTHER /* ÆäËû  */
+	CSS_ATTR_SELECT_MATCH_NOVALUE, /* æ— å±æ€§å€¼åŒ¹é…  */
+	CSS_ATTR_SELECT_MATCH_EXACTLY, /* å±æ€§ä¸¥æ ¼åŒ¹é…  */
+	CSS_ATTR_SELECT_MATCH_ANY, /* åŒ¹é…å…¶ä¸­ä¸€ä¸ª */
+	CSS_ATTR_SELECT_MATCH_BEGIN, /* åŒ¹é…å‰ç¼€  */
+	CSS_ATTR_SELECT_OTHER /* å…¶ä»–  */
 } easou_css_attr_selector_type_t;
 
 /**
- * @brief CSSÊôĞÔÑ¡Ôñ·û.
+ * @brief CSSå±æ€§é€‰æ‹©ç¬¦.
  */
 typedef struct _easou_css_attr_selector_t
 {
-	easou_css_attr_selector_type_t type; /* ÊôĞÔÑ¡Ôñ×ÓÀàĞÍ  */
-	html_attribute_t attr; /* ÊôĞÔ/Öµ  */
-	struct _easou_css_attr_selector_t *next; /* ÏÂÒ»¸öÊôĞÔÑ¡Ôñ×Ó  */
+	easou_css_attr_selector_type_t type; /* å±æ€§é€‰æ‹©å­ç±»å‹  */
+	html_attribute_t attr; /* å±æ€§/å€¼  */
+	struct _easou_css_attr_selector_t *next; /* ä¸‹ä¸€ä¸ªå±æ€§é€‰æ‹©å­  */
 } easou_css_attr_selector_t;
 
-/**< CLASSÑ¡Ôñ×Ó  */
+/**< CLASSé€‰æ‹©å­  */
 typedef char* easou_css_class_selector_t;
-/**< IDÑ¡Ôñ×Ó  */
+/**< IDé€‰æ‹©å­  */
 typedef char* easou_css_id_selector_t;
-/**< Î±ÀàÑ¡Ôñ×Ó  */
+/**< ä¼ªç±»é€‰æ‹©å­  */
 typedef char* easou_css_pseudo_selector_t;
 
 /**
- * @brief CSSÑ¡Ôñ×Ó×éºÏÀàĞÍ
+ * @brief CSSé€‰æ‹©å­ç»„åˆç±»å‹
  */
 typedef enum _easou_css_selector_combinator_t
 {
-	CSS_NON_COMBINATOR, /**< ÎŞ×éºÏ  */
-	CSS_DESCEND_COMBINATOR, /**< ºó´úÑ¡Ôñ×Ó  */
-	CSS_CHILD_COMBINATOR, /**< ×ÓÑ¡Ôñ×Ó  */
-	CSS_ADJACENT_COMBINATOR /**< ÏàÁÚÑ¡Ôñ×Ó  */
+	CSS_NON_COMBINATOR, /**< æ— ç»„åˆ  */
+	CSS_DESCEND_COMBINATOR, /**< åä»£é€‰æ‹©å­  */
+	CSS_CHILD_COMBINATOR, /**< å­é€‰æ‹©å­  */
+	CSS_ADJACENT_COMBINATOR /**< ç›¸é‚»é€‰æ‹©å­  */
 } easou_css_selector_combinator_t;
 
 enum simple_selector_type_t
@@ -295,108 +295,108 @@ enum simple_selector_type_t
 };
 
 /**
- * @brief Ò»°ãÑ¡Ôñ×Ó.
+ * @brief ä¸€èˆ¬é€‰æ‹©å­.
  */
 typedef struct _easou_css_simple_selector_t
 {
 	simple_selector_type_t type;
-	html_tag_type_t tag_type; /**< ÀàĞÍÑ¡Ôñ×Ó(×ª»¯ÎªHTML_TAGÀàĞÍ)  */
-	char *name; /**< ÀàĞÍÑ¡Ôñ×Ó¶ÔÓ¦µÄHTML_TAGÃû  */
-	easou_css_attr_selector_t *attr_selector; /**< ÊôĞÔÑ¡Ôñ×Ó  */
-	easou_css_class_selector_t class_selector; /**< CLASSÑ¡Ôñ×Ó  */
-	easou_css_id_selector_t id_selector; /**<  IDÑ¡Ôñ×Ó */
-	easou_css_pseudo_selector_t pseudo_selector; /**< Î±ÀàÑ¡Ôñ×Ó  */
+	html_tag_type_t tag_type; /**< ç±»å‹é€‰æ‹©å­(è½¬åŒ–ä¸ºHTML_TAGç±»å‹)  */
+	char *name; /**< ç±»å‹é€‰æ‹©å­å¯¹åº”çš„HTML_TAGå  */
+	easou_css_attr_selector_t *attr_selector; /**< å±æ€§é€‰æ‹©å­  */
+	easou_css_class_selector_t class_selector; /**< CLASSé€‰æ‹©å­  */
+	easou_css_id_selector_t id_selector; /**<  IDé€‰æ‹©å­ */
+	easou_css_pseudo_selector_t pseudo_selector; /**< ä¼ªç±»é€‰æ‹©å­  */
 } easou_css_simple_selector_t;
 
 /**
- * @brief CSSÑ¡Ôñ×Ó,ÓÉ¼òµ¥Ñ¡Ôñ×Ó×éºÏ¶ø³É.
+ * @brief CSSé€‰æ‹©å­,ç”±ç®€å•é€‰æ‹©å­ç»„åˆè€Œæˆ.
  */
 typedef struct _easou_css_selector_t
 {
-	struct _easou_css_selector_t *pre_selector; /**< Ç°Ñ¡Ôñ×Ó  */
-	easou_css_selector_combinator_t combinator; /**< ×éºÏ·ûºÅ */
-	easou_css_simple_selector_t simple_selector; /**< ¼òµ¥Ñ¡Ôñ×Ó  */
+	struct _easou_css_selector_t *pre_selector; /**< å‰é€‰æ‹©å­  */
+	easou_css_selector_combinator_t combinator; /**< ç»„åˆç¬¦å· */
+	easou_css_simple_selector_t simple_selector; /**< ç®€å•é€‰æ‹©å­  */
 } easou_css_selector_t;
 
 /**
- * @brief CSSÊôĞÔ
+ * @brief CSSå±æ€§
  */
 typedef struct _easou_css_property_t
 {
-	easou_css_prop_type_t type; /**< ÊôĞÔÀàĞÍ  */
-	char *name; /**< ÊôĞÔ  */
-	char *value; /**< Öµ  */
+	easou_css_prop_type_t type; /**< å±æ€§ç±»å‹  */
+	char *name; /**< å±æ€§  */
+	char *value; /**< å€¼  */
 	struct _easou_css_property_t *next;
 } easou_css_property_t;
 
 /**
- * @brief CSS¹æÔò¼¯
+ * @brief CSSè§„åˆ™é›†
  */
 typedef struct _easou_css_ruleset_t
 {
 	int id;
-	easou_css_selector_t *selector; /**< Ñ¡Ôñ×Ó  */
-	easou_css_property_t *all_property_list; /**< ËùÓĞÊôĞÔÁĞ±í  */
-	easou_css_property_t *font_prop_begin, *font_prop_end; /**< ×ÖÌåÊôĞÔµÄ¿ªÊ¼ºÍ½áÎ²Ö¸Õë  */
-	easou_css_property_t *geo_prop_begin, *geo_prop_end; /**< ¼¸ºÎÊôĞÔµÄ¿ªÊ¼ºÍ½áÎ²Ö¸Õë  */
-	easou_css_property_t *other_prop_begin, *other_prop_end; /**< ÆäËûÊôĞÔµÄ¿ªÊ¼ºÍ½áÎ²Ö¸Õë  */
-	struct _easou_css_ruleset_t *next; /**< ÔÚCSS½á¹¹ÉÏµÄÏÂÒ»¸ö¹æÔò¼¯  */
-	struct _easou_css_ruleset_t *index_next; /**< ÔÚË÷ÒıÉÏµÄÏÂÒ»¸ö¹æÔò¼¯  */
+	easou_css_selector_t *selector; /**< é€‰æ‹©å­  */
+	easou_css_property_t *all_property_list; /**< æ‰€æœ‰å±æ€§åˆ—è¡¨  */
+	easou_css_property_t *font_prop_begin, *font_prop_end; /**< å­—ä½“å±æ€§çš„å¼€å§‹å’Œç»“å°¾æŒ‡é’ˆ  */
+	easou_css_property_t *geo_prop_begin, *geo_prop_end; /**< å‡ ä½•å±æ€§çš„å¼€å§‹å’Œç»“å°¾æŒ‡é’ˆ  */
+	easou_css_property_t *other_prop_begin, *other_prop_end; /**< å…¶ä»–å±æ€§çš„å¼€å§‹å’Œç»“å°¾æŒ‡é’ˆ  */
+	struct _easou_css_ruleset_t *next; /**< åœ¨CSSç»“æ„ä¸Šçš„ä¸‹ä¸€ä¸ªè§„åˆ™é›†  */
+	struct _easou_css_ruleset_t *index_next; /**< åœ¨ç´¢å¼•ä¸Šçš„ä¸‹ä¸€ä¸ªè§„åˆ™é›†  */
 } easou_css_ruleset_t;
 
 /**
- * @brief ×Ö·û´®¶Ñ½á¹¹,ÓÃÓÚ´æ·ÅCSS½âÎöµÄ×Ö·û´®.
+ * @brief å­—ç¬¦ä¸²å †ç»“æ„,ç”¨äºå­˜æ”¾CSSè§£æçš„å­—ç¬¦ä¸².
  */
 typedef struct _easou_css_str_heap_t
 {
-	char *p_heap; /**< ·ÖÅäµÄÄÚ´æ¿ªÊ¼Ö¸Õë  */
-	size_t heap_size; /**< ·ÖÅäµÄÄÚ´æ´óĞ¡  */
-	char *p_heap_avail; /**< µ±Ç°¿ÉÓÃµÄÄÚ´æÖ¸Õë  */
+	char *p_heap; /**< åˆ†é…çš„å†…å­˜å¼€å§‹æŒ‡é’ˆ  */
+	size_t heap_size; /**< åˆ†é…çš„å†…å­˜å¤§å°  */
+	char *p_heap_avail; /**< å½“å‰å¯ç”¨çš„å†…å­˜æŒ‡é’ˆ  */
 } easou_css_str_heap_t;
 
 /**
- * @brief ÄÚ´æ¹ÜÀí½Úµã.
+ * @brief å†…å­˜ç®¡ç†èŠ‚ç‚¹.
  */
 typedef struct _easou_css_mem_node_t
 {
-	void *p_mem; /**< ÄÚ´æ¿éÖ¸Õë  */
-	size_t mem_size; /**< ÄÚ´æ¿é´óĞ¡  */
+	void *p_mem; /**< å†…å­˜å—æŒ‡é’ˆ  */
+	size_t mem_size; /**< å†…å­˜å—å¤§å°  */
 	struct _easou_css_mem_node_t *next;
 } easou_css_mem_node_t;
 
 /**
- * @brief ½Úµã³Ø.
- *	ÓÃÓÚ¹ÜÀíÒÑ·ÖÅäµÄÒ»ÏµÁĞÄÚ´æ¿é,²¢¸ºÔğ·ÖÅäÃ¿Ò»¸ö½ÚµãµÄÄÚ´æ.
+ * @brief èŠ‚ç‚¹æ± .
+ *	ç”¨äºç®¡ç†å·²åˆ†é…çš„ä¸€ç³»åˆ—å†…å­˜å—,å¹¶è´Ÿè´£åˆ†é…æ¯ä¸€ä¸ªèŠ‚ç‚¹çš„å†…å­˜.
  */
 typedef struct _easou_css_nodepool_t
 {
-	easou_css_mem_node_t *mem_node_list; /**< ÒÑ·ÖÅäµÄÄÚ´æÁ´  */
-	void *p_curr_mem; /**< µ±Ç°Ê¹ÓÃµÄÄÚ´æ¿é  */
-	size_t p_curr_mem_size; /**< µ±Ç°ÄÚ´æµÄ´óĞ¡  */
-	void *p_pool_avail; /**< µ±Ç°¿ÉÓÃµÄÄÚ´æ¿ªÍ·´¦Ö¸Õë  */
+	easou_css_mem_node_t *mem_node_list; /**< å·²åˆ†é…çš„å†…å­˜é“¾  */
+	void *p_curr_mem; /**< å½“å‰ä½¿ç”¨çš„å†…å­˜å—  */
+	size_t p_curr_mem_size; /**< å½“å‰å†…å­˜çš„å¤§å°  */
+	void *p_pool_avail; /**< å½“å‰å¯ç”¨çš„å†…å­˜å¼€å¤´å¤„æŒ‡é’ˆ  */
 } easou_css_nodepool_t;
 
 /**
- * @brief CSS½âÎöÊ¹ÓÃµÄÄÚ²¿½á¹¹
+ * @brief CSSè§£æä½¿ç”¨çš„å†…éƒ¨ç»“æ„
  */
 typedef struct _easou_css_inner_t
 {
-	easou_css_str_heap_t str_heap; /**< ×Ö·û´®¶Ñ½á¹¹  */
-	easou_css_nodepool_t nodepool; /**< ½Úµã³Ø  */
+	easou_css_str_heap_t str_heap; /**< å­—ç¬¦ä¸²å †ç»“æ„  */
+	easou_css_nodepool_t nodepool; /**< èŠ‚ç‚¹æ±   */
 } easou_css_inner_t;
 
 /**
- * @brief CSSË÷Òı½áµã
+ * @brief CSSç´¢å¼•ç»“ç‚¹
  */
 typedef struct _easou_css_index_node_t
 {
-	const char *key; /**< Ë÷Òı¼üÖµ  */
-	void *data; /**< Ë÷ÒıµÄÊı¾İ  */
+	const char *key; /**< ç´¢å¼•é”®å€¼  */
+	void *data; /**< ç´¢å¼•çš„æ•°æ®  */
 	struct _easou_css_index_node_t *next;
 } easou_css_index_node_t;
 
 /**
- * @brief CSS¼òµ¥Ñ¡Ôñ×ÓµÄË÷Òı½áµã
+ * @brief CSSç®€å•é€‰æ‹©å­çš„ç´¢å¼•ç»“ç‚¹
  */
 typedef struct _simple_selector_index_node_t
 {
@@ -407,75 +407,75 @@ typedef struct _simple_selector_index_node_t
 	struct _simple_selector_index_node_t *next;
 } simple_selector_index_node_t;
 
-#define TAG_TYPE_NUM_LIMIT	256 		  /**< TAGÀàĞÍµÄÊıÁ¿  */
+#define TAG_TYPE_NUM_LIMIT	256 		  /**< TAGç±»å‹çš„æ•°é‡  */
 
 /**
- * @brief CSSË÷Òı½á¹¹
+ * @brief CSSç´¢å¼•ç»“æ„
  */
 typedef struct _easou_css_index_t
 {
-	easou_css_index_node_t *type_index[TAG_TYPE_NUM_LIMIT]; /**< Ã¿¸öTAGÀàĞÍ¶ÔÓ¦Ò»¸öË÷Òı  */
+	easou_css_index_node_t *type_index[TAG_TYPE_NUM_LIMIT]; /**< æ¯ä¸ªTAGç±»å‹å¯¹åº”ä¸€ä¸ªç´¢å¼•  */
 	hashmap_t *class_map;
 } easou_css_index_t;
 
 /**
- * @brief CSS½âÎö³öÀ´µÄ½á¹¹
+ * @brief CSSè§£æå‡ºæ¥çš„ç»“æ„
  */
 typedef struct _easou_css_t
 {
-	easou_css_inner_t css_inner; /**< CSSÄÚ²¿½á¹¹,ÓÃÓÚÄÚ´æ¹ÜÀí  */
-	easou_css_ruleset_t *all_ruleset_list; /**< ËùÓĞ¹æÔò¼¯ÁĞ±í  */
-	easou_css_index_t index; /**< CSSË÷Òı½á¹¹  */
+	easou_css_inner_t css_inner; /**< CSSå†…éƒ¨ç»“æ„,ç”¨äºå†…å­˜ç®¡ç†  */
+	easou_css_ruleset_t *all_ruleset_list; /**< æ‰€æœ‰è§„åˆ™é›†åˆ—è¡¨  */
+	easou_css_index_t index; /**< CSSç´¢å¼•ç»“æ„  */
 } easou_css_t;
 
 /**
- * @brief É¨Ãè×´Ì¬¼ÇÂ¼Æ÷
+ * @brief æ‰«æçŠ¶æ€è®°å½•å™¨
  *
  */
 typedef enum _easou_css_token_type_t
 {
 	CSS_TOKEN_URI, /**< URI token  */
-	CSS_TOKEN_STRING, /**< É¨Ãèµ½×Ö·û´®  */
-	CSS_TOKEN_NORMAL, /**< Ò»°ãÉ¨Ãè  */
-	CSS_TOKEN_UNKNOWN /**< Î´ÖªÉ¨Ãè */
+	CSS_TOKEN_STRING, /**< æ‰«æåˆ°å­—ç¬¦ä¸²  */
+	CSS_TOKEN_NORMAL, /**< ä¸€èˆ¬æ‰«æ  */
+	CSS_TOKEN_UNKNOWN /**< æœªçŸ¥æ‰«æ */
 } easou_css_token_type_t;
 
 /**
- * @brief É¨Ãè×´Ì¬¼ÇÂ¼Æ÷
+ * @brief æ‰«æçŠ¶æ€è®°å½•å™¨
  */
 typedef enum _easou_css_state_t
 {
-	CSS_STAT_SCAN_SELECTOR, /**< É¨ÃèÑ¡Ôñ×Ó  */
-	CSS_STAT_SCAN_PROP_NAME, /**< É¨ÃèÊôĞÔµÄÃû³Æ */
-	CSS_STAT_SCAN_PROP_VALUE /**< É¨ÃèÊôĞÔµÄÖµ */
+	CSS_STAT_SCAN_SELECTOR, /**< æ‰«æé€‰æ‹©å­  */
+	CSS_STAT_SCAN_PROP_NAME, /**< æ‰«æå±æ€§çš„åç§° */
+	CSS_STAT_SCAN_PROP_VALUE /**< æ‰«æå±æ€§çš„å€¼ */
 } easou_css_state_t;
 
 /**
- * @brief cssÉ¨ÃèÆ÷
+ * @brief cssæ‰«æå™¨
  *
  */
 typedef struct _easou_css_scan_t
 {
-	char *p_curr_token; /**< µ±Ç°É¨Ãèµ½µÄ×Ö·û  */
-	int p_curr_token_len; /**< µ±Ç°É¨Ãèµ½µÄ×Ö·û³¤¶È  */
+	char *p_curr_token; /**< å½“å‰æ‰«æåˆ°çš„å­—ç¬¦  */
+	int p_curr_token_len; /**< å½“å‰æ‰«æåˆ°çš„å­—ç¬¦é•¿åº¦  */
 	const char *p_next; /**<   */
-	easou_css_token_type_t type; /**< µ±Ç°ÕıÔÚÉ¨ÃèµÄ×Ö·ûÀàĞÍ  */
-	easou_css_state_t state; /**< µ±Ç°ÕıÔÚÉ¨ÃèµÄcssÀàĞÍ  */
-	const char *css_url; /**< µ±Ç°ÕıÔÚÉ¨ÃèµÄcssµÄurl  */
-	bool test_import; /**< ÊÇ·ñÏÂÔØcssÎÄ¼şÖĞimportµÄcss  */
+	easou_css_token_type_t type; /**< å½“å‰æ­£åœ¨æ‰«æçš„å­—ç¬¦ç±»å‹  */
+	easou_css_state_t state; /**< å½“å‰æ­£åœ¨æ‰«æçš„cssç±»å‹  */
+	const char *css_url; /**< å½“å‰æ­£åœ¨æ‰«æçš„cssçš„url  */
+	bool test_import; /**< æ˜¯å¦ä¸‹è½½cssæ–‡ä»¶ä¸­importçš„css  */
 } easou_css_scan_t;
 
 /**
- * @brief CSSÊôĞÔĞÅÏ¢
+ * @brief CSSå±æ€§ä¿¡æ¯
  */
 typedef struct _easou_css_prop_info_t
 {
-	char *value; /**< ÊôĞÔÖµ  */
-	int prio_val; /**< ÊôĞÔµÄÓÅÏÈ¼¶Öµ  */
+	char *value; /**< å±æ€§å€¼  */
+	int prio_val; /**< å±æ€§çš„ä¼˜å…ˆçº§å€¼  */
 } easou_css_prop_info_t;
 
 /**
- * @brief CSSÊôĞÔ¼¯
+ * @brief CSSå±æ€§é›†
  */
 typedef struct _easou_css_property_set_t
 {
@@ -483,14 +483,14 @@ typedef struct _easou_css_property_set_t
 } easou_css_property_set_t;
 
 /**
- * @brief ½ÚµãºÍcssÊôĞÔµÄ½áºÏÌå
+ * @brief èŠ‚ç‚¹å’Œcsså±æ€§çš„ç»“åˆä½“
  */
 typedef struct _prop_set_param_t
 {
 	easou_css_property_set_t *prop_set;
 	const html_node_t *html_node;
 	int prop_num;
-	int order; //ÎªcssÊôĞÔÔö¼ÓÓÅÏÈ¼¶£¬orderÎª³öÏÖµÄË³Ğò2012-05-02
+	int order; //ä¸ºcsså±æ€§å¢åŠ ä¼˜å…ˆçº§ï¼Œorderä¸ºå‡ºç°çš„é¡ºåº2012-05-02
 } prop_set_param_t;
 
 #endif /*EASOU_CSS_DTD_H_*/

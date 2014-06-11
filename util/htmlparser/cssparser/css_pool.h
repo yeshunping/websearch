@@ -3,62 +3,62 @@
  * @author xunwu
  * @date 2011/06/20
  * @version 1.0(create)
- * @brief css_poolÓÃÓÚ:·ÖÅä¶à¸öCSS½á¹¹µÄ¿Õ¼ä,´æ·Å¶à¸ö½âÎöºÃµÄCSS½á¹¹.
+ * @brief css_poolç”¨äº:åˆ†é…å¤šä¸ªCSSç»“æ„çš„ç©ºé—´,å­˜æ”¾å¤šä¸ªè§£æå¥½çš„CSSç»“æ„.
  *
  **/
 #ifndef EASOU_CSS_POOL_H_
 #define EASOU_CSS_POOL_H_
 
-#include "easou_css_parser.h"
+#include "css_parser.h"
 
 #define MAX_CSS_NUM_IN_POOL 512
-#define DEFAULT_CSS_NUM_IN_POOL	8		  /**< Ä¬ÈÏ·ÖÅä¿Õ¼äµÄCSS½á¹¹ÊıÁ¿  */
+#define DEFAULT_CSS_NUM_IN_POOL	8		  /**< é»˜è®¤åˆ†é…ç©ºé—´çš„CSSç»“æ„æ•°é‡  */
 
-/**cssµÄ½âÎö½á¹û*/
+/**cssçš„è§£æç»“æœ*/
 typedef struct _easou_css_pool_t
 {
-	easou_css_t *css_array[MAX_CSS_NUM_IN_POOL]; /**< CSSÊı×éÖ¸Õë */
-	short order[MAX_CSS_NUM_IN_POOL]; /**< ¶ÔÓ¦µÄCSSµÄĞòºÅ£¬orderÊı×ÖÔ½´óÓÅÏÈ¼¶Ô½¸ß*/
-	int alloc_css_num; /**< ÒÑ·ÖÅä¿Õ¼äµÄCSS½á¹¹ÊıÁ¿  */
-	int used_css_num; /**< ÒÑÊ¹ÓÃ(¼´×°ÓĞ½âÎöºóµÄ½á¹¹)µÄCSSÊıÁ¿*/
+	easou_css_t *css_array[MAX_CSS_NUM_IN_POOL]; /**< CSSæ•°ç»„æŒ‡é’ˆ */
+	short order[MAX_CSS_NUM_IN_POOL]; /**< å¯¹åº”çš„CSSçš„åºå·ï¼Œorderæ•°å­—è¶Šå¤§ä¼˜å…ˆçº§è¶Šé«˜*/
+	int alloc_css_num; /**< å·²åˆ†é…ç©ºé—´çš„CSSç»“æ„æ•°é‡  */
+	int used_css_num; /**< å·²ä½¿ç”¨(å³è£…æœ‰è§£æåçš„ç»“æ„)çš„CSSæ•°é‡*/
 	hashmap_t *hm;
 } easou_css_pool_t;
 
 /**
- * @brief Çå¿Õcss_pool,Ê¹CSS½á¹¹»Øµ½Î´½âÎöµÄ×´Ì¬.
+ * @brief æ¸…ç©ºcss_pool,ä½¿CSSç»“æ„å›åˆ°æœªè§£æçš„çŠ¶æ€.
  * @author xunwu
  * @date 2011/06/21
  **/
 void css_pool_clean(easou_css_pool_t *css_pool);
 
 /**
- * @brief	»ñÈ¡css_poolÖĞCSSÊı×éµÄÊıÁ¿.
+ * @brief	è·å–css_poolä¸­CSSæ•°ç»„çš„æ•°é‡.
  * @author xunwu
  * @date 2011/06/21
  **/
 int get_css_pool_array_size(easou_css_pool_t *css_pool);
 
 /**
- * @brief	Ïú»Ùcss_pool,»ØÊÕÒÑ·ÖÅäµÄ¿Õ¼ä.
+ * @brief	é”€æ¯css_pool,å›æ”¶å·²åˆ†é…çš„ç©ºé—´.
  * @author xunwu
  * @date 2011/06/20
  **/
 void css_pool_destroy(easou_css_pool_t *css_pool);
 
 /**
- * @brief ³õÊ¼»¯css_pool,ÎªCSS½á¹¹·ÖÅä¿Õ¼ä.
- * @param [in/out] css_pool   : css_pool_t*	ÒÑ·ÖÅä¿Õ¼äµÄcss_pool.
- * @param [in/out] max_css_page_size   : int	css_pageµÄ´óĞ¡,¸ù¾İÕâ¸öÖµÎªCSS½á¹¹·ÖÅä¿Õ¼ä.
- * @param [in/out] css_num   : int	·ÖÅä¿Õ¼äµÄCSS½á¹¹ÊıÁ¿.
+ * @brief åˆå§‹åŒ–css_pool,ä¸ºCSSç»“æ„åˆ†é…ç©ºé—´.
+ * @param [in/out] css_pool   : css_pool_t*	å·²åˆ†é…ç©ºé—´çš„css_pool.
+ * @param [in/out] max_css_page_size   : int	css_pageçš„å¤§å°,æ ¹æ®è¿™ä¸ªå€¼ä¸ºCSSç»“æ„åˆ†é…ç©ºé—´.
+ * @param [in/out] css_num   : int	åˆ†é…ç©ºé—´çš„CSSç»“æ„æ•°é‡.
  * @return  int
- * @retval  -1:Ê§°Ü;1:³É¹¦.
+ * @retval  -1:å¤±è´¥;1:æˆåŠŸ.
  * @author xunwu
  * @date 2011/06/20
  **/
 int css_pool_init(easou_css_pool_t *css_pool, int max_css_page_size, int css_num);
 
 /**
- * @brief ½«csspoolÖĞµÄCSS°´orderÖµ´ÓĞ¡µ½´óÅÅĞò.orderÖµÔ½´ó,ÓÅÏÈ¼¶Ô½¸ß.
+ * @brief å°†csspoolä¸­çš„CSSæŒ‰orderå€¼ä»å°åˆ°å¤§æ’åº.orderå€¼è¶Šå¤§,ä¼˜å…ˆçº§è¶Šé«˜.
  * @author xunwu
  * @date 2011/06/20
  **/

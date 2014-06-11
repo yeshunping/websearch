@@ -9,10 +9,10 @@
 #ifndef EASOU_CSS_PARSER_H_
 #define EASOU_CSS_PARSER_H_
 
-#include "easou_html_tree.h"
-#include "easou_css_nodepool.h"
-#include "easou_css_dtd.h"
-#include "easou_css_parser_inner.h"
+#include "util/htmlparser/htmlparser/html_tree.h"
+#include "css_nodepool.h"
+#include "css_dtd.h"
+#include "css_parser_inner.h"
 
 #define CSS_DEFAULT_TEXT_SIZE	(128*1024)		  /**< CSS文件默认大小  */
 

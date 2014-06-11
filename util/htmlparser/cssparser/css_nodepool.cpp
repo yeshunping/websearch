@@ -3,21 +3,21 @@
  * @author xunwu
  * @date 2011/06/21
  * @version 1.0
- * @brief	CSS½Úµã·ÖÅä¹ÜÀí.
+ * @brief	CSSèŠ‚ç‚¹åˆ†é…ç®¡ç†.
  *
  **/
 #include <stdio.h>
 #include <stdlib.h>
-#include "log.h"
-#include "easou_css_nodepool.h"
+#include "util/htmlparser/utils/log.h"
+#include "css_nodepool.h"
 
 using namespace EA_COMMON;
 
 /**
- * @brief ·ÖÅäĞÂµÄÄÚ´æ¹ÜÀí½Úµã.
- * @param [in] size   : size_t	ĞÂÄÚ´æ¿é´óĞ¡.
- * @return  css_mem_node_t*	ĞÂµÄÄÚ´æ¹ÜÀí½Úµã.
- * @retval	Ê§°Ü·µ»ØNULL.
+ * @brief åˆ†é…æ–°çš„å†…å­˜ç®¡ç†èŠ‚ç‚¹.
+ * @param [in] size   : size_t	æ–°å†…å­˜å—å¤§å°.
+ * @return  css_mem_node_t*	æ–°çš„å†…å­˜ç®¡ç†èŠ‚ç‚¹.
+ * @retval	å¤±è´¥è¿”å›NULL.
  * @author xunwu
  * @date 2011/06/20
  **/
@@ -56,10 +56,10 @@ static easou_css_mem_node_t *css_new_mem_node(size_t size)
 
 /**
  * @brief give required size of mem to nodepool.
- * @param [in] pool   : css_nodepool_t*	½Úµã¹ÜÀí³Ø.
- * @param [in] size   : size_t	ĞÂÄÚ´æ´óĞ¡.
+ * @param [in] pool   : css_nodepool_t*	èŠ‚ç‚¹ç®¡ç†æ± .
+ * @param [in] size   : size_t	æ–°å†…å­˜å¤§å°.
  * @return  int
- * @retval  -1:Ê§°Ü;1:³É¹¦.
+ * @retval  -1:å¤±è´¥;1:æˆåŠŸ.
  * @author xunwu
  * @date 2011/06/20
  **/
@@ -149,8 +149,8 @@ void css_nodepool_destroy(easou_css_nodepool_t *pool)
 }
 
 /**
- * @brief	´Ónodepool»ñÈ¡size´óĞ¡µÄÄÚ´æ.
- * @retval   ³É¹¦·µ»ØÄÚ´æµØÖ·,Ê§°Ü·µ»ØNULL.
+ * @brief	ä»nodepoolè·å–sizeå¤§å°çš„å†…å­˜.
+ * @retval   æˆåŠŸè¿”å›å†…å­˜åœ°å€,å¤±è´¥è¿”å›NULL.
  * @author xunwu
  * @date 2011/11/10
  **/

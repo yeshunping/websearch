@@ -3,15 +3,15 @@
  * @author xunwu
  * @date 2011/06/20
  * @version 1.0(create)
- * @brief CSS½ÚµãÄÚ´æ·ÖÅä¹ÜÀí.
+ * @brief CSSèŠ‚ç‚¹å†…å­˜åˆ†é…ç®¡ç†.
  *
  **/
 
 #ifndef EASOU_CSS_NODEPOOL_H_
 #define EASOU_CSS_NODEPOOL_H_
 
-#include "log.h"
-#include "easou_css_dtd.h"
+#include "util/htmlparser/utils/log.h"
+#include "css_dtd.h"
 
 using namespace EA_COMMON;
 /**
@@ -37,8 +37,8 @@ void css_nodepool_reset(easou_css_nodepool_t *pool);
 void css_nodepool_destroy(easou_css_nodepool_t *pool);
 
 /**
- * @brief	´Ónodepool»ñÈ¡size´óĞ¡µÄÄÚ´æ.
- * @retval   ³É¹¦·µ»ØÄÚ´æµØÖ·,Ê§°Ü·µ»ØNULL.
+ * @brief	ä»nodepoolè·å–sizeå¤§å°çš„å†…å­˜.
+ * @retval   æˆåŠŸè¿”å›å†…å­˜åœ°å€,å¤±è´¥è¿”å›NULL.
  * @see
  * @author xunwu
  * @date 2011/06/20

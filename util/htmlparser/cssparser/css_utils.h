@@ -1,6 +1,6 @@
 /**
  * easou_css_utils.h
- * Description: CSS½âÎö¶ÔÍâ½Ó¿Ú
+ * Description: CSSè§£æå¯¹å¤–æ¥å£
  *  Created on: 2011-06-20
  * Last modify: 2012-10-31 sue_zhang@staff.easou.com shuangwei_zhang@staff.easou.com
  *      Author: xunwu_chen@staff.easoucom
@@ -9,76 +9,76 @@
 #ifndef EASOU_CSS_UTILS_H_
 #define EASOU_CSS_UTILS_H_
 
-#include "easou_css_pool.h"
-#include "easou_html_tree.h"
+#include "css_pool.h"
+#include "util/htmlparser/htmlparser/html_tree.h"
 
 /**
- * @brief ¶ÔÍøÒ³ÖĞcssµÄÃèÊö
+ * @brief å¯¹ç½‘é¡µä¸­cssçš„æè¿°
  */
 typedef struct _easou_page_css_t
 {
-	short style_txt_num; /**< style cssÎÄ±¾µÄÊıÁ¿  */
-	const char *style_txt[MAX_CSS_NUM_IN_POOL]; /**< css style ÎÄ±¾  */
-	char css_url[MAX_CSS_NUM_IN_POOL][MAX_URL_SIZE]; /**< ±£´æÍâ²¿css¶ÔÓ¦µÄurl */
+	short style_txt_num; /**< style cssæ–‡æœ¬çš„æ•°é‡  */
+	const char *style_txt[MAX_CSS_NUM_IN_POOL]; /**< css style æ–‡æœ¬  */
+	char css_url[MAX_CSS_NUM_IN_POOL][MAX_URL_SIZE]; /**< ä¿å­˜å¤–éƒ¨csså¯¹åº”çš„url */
 } easou_page_css_t;
 
 /**
- * @brief CSS½âÎö»·¾³.
+ * @brief CSSè§£æç¯å¢ƒ.
  */
 typedef struct _easou_css_env_t
 {
-	easou_page_css_t page_css; /**< Ò³ÃæÖĞcss     */
-	easou_css_pool_t css_pool; /**< CSSµÄ½âÎö½á¹û      */
+	easou_page_css_t page_css; /**< é¡µé¢ä¸­css     */
+	easou_css_pool_t css_pool; /**< CSSçš„è§£æç»“æœ      */
 } easou_css_env_t;
 
 /**
- * @brief Ò³ÃæµÄcssĞÅÏ¢£¬Ö÷ÒªÊÇÄÚ²¿Ê¹ÓÃ
+ * @brief é¡µé¢çš„cssä¿¡æ¯ï¼Œä¸»è¦æ˜¯å†…éƒ¨ä½¿ç”¨
  */
 typedef struct _easou_cssinfo_keep_t
 {
-	const char *url; /**< Ò³ÃæURL  */
-	bool is_skip_child; /**< ÊÇ·ñ´¦Àí×ÓËï½Úµã  */
-	easou_page_css_t *page_css; /**Ò³ÃæÖĞµÄcssĞÅÏ¢*/
+	const char *url; /**< é¡µé¢URL  */
+	bool is_skip_child; /**< æ˜¯å¦å¤„ç†å­å­™èŠ‚ç‚¹  */
+	easou_page_css_t *page_css; /**é¡µé¢ä¸­çš„cssä¿¡æ¯*/
 } easou_cssinfo_keep_t;
 
 /**
- * @brief ÅĞ¶Ï¸Ã½ÚµãÒÔ¼°¸Ã½Úµãµ½×Ó½ÚµãÊÇ·ñÖ§³Öscreen_media
- * @param [in]html_tag: html_tag_t *  ½ÚµãµÄÀàĞÍ.
+ * @brief åˆ¤æ–­è¯¥èŠ‚ç‚¹ä»¥åŠè¯¥èŠ‚ç‚¹åˆ°å­èŠ‚ç‚¹æ˜¯å¦æ”¯æŒscreen_media
+ * @param [in]html_tag: html_tag_t *  èŠ‚ç‚¹çš„ç±»å‹.
  * @author xunwu
  * @date 2011/06/20
  **/
 bool is_apply_for_screen_media(html_tag_t *html_tag);
 
 /**
- * @brief CSS»·¾³µÄ´´½¨.
- * @param [in] max_css_page_size   : int ×î´ócss
- * @param [in] css_num   : int	×î¶à½âÎöcssµÄÊıÁ¿.
- * @return  css_env_t*	css½âÎö»·¾³.
+ * @brief CSSç¯å¢ƒçš„åˆ›å»º.
+ * @param [in] max_css_page_size   : int æœ€å¤§css
+ * @param [in] css_num   : int	æœ€å¤šè§£æcssçš„æ•°é‡.
+ * @return  css_env_t*	cssè§£æç¯å¢ƒ.
  * @author xunwu
  * @date 2011/06/20
  **/
 easou_css_env_t *css_env_create(int max_css_page_size, int css_num);
 
 /**
- * @brief Ïú»Ùcss½âÎö»·¾³.
+ * @brief é”€æ¯cssè§£æç¯å¢ƒ.
  * @author xunwu
  * @date 2011/06/20
  **/
 void css_env_destroy(easou_css_env_t *env);
 
 /**
- * @brief	´ÓÒ³ÃæÖĞ»ñÈ¡cssĞÅÏ¢
- * @param [out] page_css   : page_css_t*	Ò³ÃæÖĞµÄcssĞÅÏ¢
- * @param [in] html_tree   : const html_tree_t*	´´½¨ºÃµÄdomÊ÷
- * @param [in] url   : const char*	Ò³ÃæµÄurl
+ * @brief	ä»é¡µé¢ä¸­è·å–cssä¿¡æ¯
+ * @param [out] page_css   : page_css_t*	é¡µé¢ä¸­çš„cssä¿¡æ¯
+ * @param [in] html_tree   : const html_tree_t*	åˆ›å»ºå¥½çš„domæ ‘
+ * @param [in] url   : const char*	é¡µé¢çš„url
  * @author xunwu
  * @date 2011/06/20
  **/
 void get_page_css_info(easou_page_css_t *page_css, const html_tree_t *html_tree, const char *url);
 
 /**
- * @brief ½âÎöÒ³ÃæÖĞµÄcss
- * @param [in] test_import, ÊÇ·ñ²âÊÔcssÎÄ¼şÖĞimportµÄcss
+ * @brief è§£æé¡µé¢ä¸­çš„css
+ * @param [in] test_import, æ˜¯å¦æµ‹è¯•cssæ–‡ä»¶ä¸­importçš„css
  * @author xunwu
  * @date 2011/06/20
  * @last modify on 2012-10-26 sue_zhang@staff.easou.com
@@ -86,11 +86,11 @@ void get_page_css_info(easou_page_css_t *page_css, const html_tree_t *html_tree,
 void parse_internal_css(easou_css_env_t *css_env, easou_page_css_t *page_css, const char *url, bool test_import = false);
 
 /**
- * @brief	»ñÈ¡²¢½âÎöÒ³ÃæÖĞµÄcss.
- * @param [out] css_env   : easou_css_env_t*	css½âÎö»·¾³.
- * @param [in] html_tree   : html_tree_t*	½âÎö¹ıµÄhtmlÊ÷.
- * @param [in] url   : const char*	Ò³ÃæURL.
- * @param [in] test_import, ÊÇ·ñ²âÊÔcssÎÄ¼şÖĞimportµÄcss
+ * @brief	è·å–å¹¶è§£æé¡µé¢ä¸­çš„css.
+ * @param [out] css_env   : easou_css_env_t*	cssè§£æç¯å¢ƒ.
+ * @param [in] html_tree   : html_tree_t*	è§£æè¿‡çš„htmlæ ‘.
+ * @param [in] url   : const char*	é¡µé¢URL.
+ * @param [in] test_import, æ˜¯å¦æµ‹è¯•cssæ–‡ä»¶ä¸­importçš„css
  * @author xunwu
  * @date 2011/06/20
  * @last modify on 2012-10-26 sue_zhang@staff.easou.com
@@ -98,25 +98,25 @@ void parse_internal_css(easou_css_env_t *css_env, easou_page_css_t *page_css, co
 int get_parse_css_inpage(easou_css_env_t *css_env, const html_tree_t *html_tree, const char *url, bool test_import = false);
 
 /**
- * @brief µ÷ÊÔ½Ó¿Ú£¬´òÓ¡½âÎöºÃµÄcssĞÅÏ¢µ½ÎÄ¼şÖĞ
- * @param [in] csspool	:	½âÎöºÃµÄcss½á¹û
- * @param [in] filename	:	±£´æµÄÎÄ¼şÃû³Æ
+ * @brief è°ƒè¯•æ¥å£ï¼Œæ‰“å°è§£æå¥½çš„cssä¿¡æ¯åˆ°æ–‡ä»¶ä¸­
+ * @param [in] csspool	:	è§£æå¥½çš„cssç»“æœ
+ * @param [in] filename	:	ä¿å­˜çš„æ–‡ä»¶åç§°
  * @author sue
  * @date 2012/04/09
  */
 void csspool_print_selector(const easou_css_pool_t *csspool, const char* filename);
 
 /**
- * @brief ¸´Î»css½âÎö»·¾³
- * @param [in] cc:easou_css_env_t * css»·¾³
+ * @brief å¤ä½cssè§£æç¯å¢ƒ
+ * @param [in] cc:easou_css_env_t * cssç¯å¢ƒ
  */
 void css_env_reset(easou_css_env_t *cc);
 
 /**
- * @brief Ìí¼ÓÍâ²¿css
- * @param [in/out]easou_page_css_t *css_keep css»·¾³
- * @param [in] ptxt Íâ²¿cssÎÄ±¾£¬ptxt¿Õ¼äÔÚ½âÎöÍê³ÉÖ®Ç°²»ÄÜÊÍ·Å
- * @param [in] css_url, Íâ²¿cssµÄurl
+ * @brief æ·»åŠ å¤–éƒ¨css
+ * @param [in/out]easou_page_css_t *css_keep cssç¯å¢ƒ
+ * @param [in] ptxt å¤–éƒ¨cssæ–‡æœ¬ï¼Œptxtç©ºé—´åœ¨è§£æå®Œæˆä¹‹å‰ä¸èƒ½é‡Šæ”¾
+ * @param [in] css_url, å¤–éƒ¨cssçš„url
  * @last modify on 2012-10-26 sue_zhang@staff.easou.com
  */
 void add_out_style_text(easou_page_css_t *css_keep, char *ptxt, char *css_url);
