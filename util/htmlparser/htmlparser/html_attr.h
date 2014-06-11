@@ -1,5 +1,5 @@
 /**
- * @file easou_html_attr.h
+ * @file html_attr.h
 
  * @date 2011/08/02
  * @version 1.0

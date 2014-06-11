@@ -1,5 +1,5 @@
 /**
- * @file easou_vstruct_profiler.h
+ * @file vstruct_profiler.h
 
  * @date 2011/06/27
  * @version 1.0 

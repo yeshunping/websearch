@@ -25,7 +25,7 @@
 /**
  * @brief
  */
-typedef struct easou_avail_space_t
+typedef struct avail_space_t
 {
 	int x; /**<  */
 	int y; /**<   */
@@ -73,14 +73,14 @@ void html_vtree_get_html_property(html_vtree_t *html_vtree);
 
  * @date 2011/06/27
  **/
-void html_vtree_add_info_with_css(html_vtree_t *html_vtree, easou_css_pool_t *css_pool);
+void html_vtree_add_info_with_css(html_vtree_t *html_vtree, css_pool_t *css_pool);
 
 /**
  * @brief 使用css渲染vtree，该方法使用css的hash索引进行渲染
  * @author sue
  * @date 2013/04/12
  */
-void html_vtree_add_info_with_css2(html_vtree_t *html_vtree, easou_css_pool_t *css_pool);
+void html_vtree_add_info_with_css2(html_vtree_t *html_vtree, css_pool_t *css_pool);
 
 /**
  * @brief
@@ -137,7 +137,7 @@ void trans_down_top(html_vnode_t *root, int page_width);
 
  * @date 2011/06/27
  **/
-char *get_css_attribute(html_vnode_t *html_vnode, easou_css_prop_type_t type);
+char *get_css_attribute(html_vnode_t *html_vnode, css_prop_type_t type);
 
 /**
  * @brief 判断vnode的子节点是否在同一行上

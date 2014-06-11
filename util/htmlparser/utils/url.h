@@ -1,5 +1,5 @@
 /*
- * easou_url.h
+ * url.h
  *
  *  Created on: 2011-11-21
  *      Author: xunwu
@@ -27,7 +27,7 @@
 /*
  * @breif 是否是绝对url
  */
-int easou_is_url(const char *url);
+int is_url(const char *url);
 
 /**
  * @brief 获取主域名，不包括最后的com
@@ -52,14 +52,14 @@ int get_href_type(const char *phref, const char *base_url);
  * @param[out] path 路径
  * @return 1正常，0无效url格式
  */
-int easou_parse_url(const char *input, char *site, char *port, char *path);
+int parse_url(const char *input, char *site, char *port, char *path);
 
 /**
  * @brief 归一化URL路径
  * @param[in,out] path 路径
  * @return 1正常，0无效url格式
  */
-int easou_single_path(char *path);
+int single_path(char *path);
 
 /**
  * @brief 根据url解析出其中的路径部分
@@ -67,7 +67,7 @@ int easou_single_path(char *path);
  * @param[out] path 路径
  * @return NULL失败，否则为指向path的指针
  */
-char *easou_get_path(const char *url, char *path);
+char *get_path(const char *url, char *path);
 
 /**
  * @brief 根据url解析出其中的站点名部分
@@ -75,13 +75,13 @@ char *easou_get_path(const char *url, char *path);
  * @param[out] site 站点名( be sure it is enough,larger than UL_MAX_SITE_LEN)
  * @return NULL失败，否则为指向site的指针
  */
-char *easou_get_site(const char *url, char *site);
+char *get_site(const char *url, char *site);
 
 /**
  * @brief 规范化路径的形式,对'\\', './', '/.', '../', '/..', '//'等形式进行规范化
  * @param[in,out] path 待转化的路径
  */
-void easou_normalize_path(char *path);
+void normalize_path(char *path);
 
 /**
  * @brief get directory of path
@@ -94,33 +94,33 @@ void remove_path_file_name(char *path);
  * @param[out] pport 端口
  * @return 1成功，0失败
  */
-int easou_get_port(const char* url, int* pport);
+int get_port(const char* url, int* pport);
 
 /**
  * @brief 从url中获取静态的部分（?或者;之前的部分）
  * @param url 输入的url
  * @param[out] staticurl 静态部分缓冲区
  */
-void easou_get_static_part(const char *url, char *staticurl);
+void get_static_part(const char *url, char *staticurl);
 
-//int easou_parse_url(char *input,char *site,char *port,char *path);
-//char *easou_get_path(char *url, char *path);
-//char *easou_get_site(char *url, char *site);
-//int easou_get_port(char* url,int* pport);
-//void easou_get_static_part(char *url, char *staticurl);
+//int parse_url(char *input,char *site,char *port,char *path);
+//char *get_path(char *url, char *path);
+//char *get_site(char *url, char *site);
+//int get_port(char* url,int* pport);
+//void get_static_part(char *url, char *staticurl);
 
 /**
  * @brief 判断url是否是动态url
  * @returnu 0不是动态url，非0，是动态url
  */
-int easou_isdyn(const char* str);
+int isdyn(const char* str);
 
 /**
  * @brief 判断url是否合法，这个方法在某种情况下会修改url输入，调用时需要注意。
  * @param url 输入url
  * @returnu 1合法，0不合法
  */
-int easou_check_url(char* url);
+int check_url(char* url);
 
 /**
  * @brief 从站点名中获取主干部分, 比如"www.easou.com"将获得"easou"
@@ -129,54 +129,54 @@ int easou_check_url(char* url);
  * @param size 缓冲区大小
  * @return 1成功，-1未知错误，-2站点没有主干部分，-3站点不包含'.'
  */
-int easou_fetch_trunk(const char* site, char *trunk, int size);
+int fetch_trunk(const char* site, char *trunk, int size);
 
 /**
  * @brief 检查站点名是否是IP地址
  * @param sitename 站点名
  * @return 0不是，非0是
  */
-int easou_is_dotip(const char *sitename);
+int is_dotip(const char *sitename);
 
 /**
- * @brief 从站点名中获取主干部分，功能类同@ref easou_fetch_trunk()
+ * @brief 从站点名中获取主干部分，功能类同@ref fetch_trunk()
  * @param site 站点名
  * @param[out] domain 存放主干部分的缓冲区
  * @param size 缓冲区大小
  * @return NULL失败，否则为指向site主干部分的指针
  */
-const char* easou_fetch_maindomain(const char* site, char *domain, int size);
+const char* fetch_maindomain(const char* site, char *domain, int size);
 
 /**
  * @brief 检查url是否规范化
  * @param url 检查的url
  * @return 1是，0不是
  */
-int easou_isnormalized_url(const char *url);
+int isnormalized_url(const char *url);
 
 /**
  * @brief 将url转化为统一的形式\n
- * 执行@ref easou_normalize_site, @ref easou_normalize_port, @ref easou_single_path, @ref easou_normalize_path
+ * 执行@ref normalize_site, @ref normalize_port, @ref single_path, @ref normalize_path
  * @param url 待转化的url
  * @param[out] buf 转化后的url缓冲区
  * @return 1成功，0无效url
- * @note you can use easou_normalize_url(buf, buf) to save an extra buffer.
+ * @note you can use normalize_url(buf, buf) to save an extra buffer.
  */
-int easou_normalize_url(const char* url, char* buf);
+int normalize_url(const char* url, char* buf);
 
 /**
  * @brief 将站点名进行规范化（大写转为小写）
  * @param site 站点名
  * @return 1成功，0失败
  */
-int easou_normalize_site(char *site);
+int normalize_site(char *site);
 
 /**
  * 将端口字符串进行规范化（检查端口范围合法性，并去掉80端口的字符串）
  * @param port 指向的端口的指针
  * @return 1成功，0失败
  */
-int easou_normalize_port(char *port);
+int normalize_port(char *port);
 
 /**
  *  根据url解析出其中的各个部分,支持加长的url，最高可支持到1024，path最长可到800，site最长可到128
@@ -196,7 +196,7 @@ int easou_normalize_port(char *port);
  *  - 0  无效url格式
  *  - @note 为保证程序安全,传入的buf请小于默认最大值
  */
-int easou_parse_url_ex(const char *input, char *site, size_t site_size, char *port, size_t port_size, char *path, size_t max_path_size);
+int parse_url_ex(const char *input, char *site, size_t site_size, char *port, size_t port_size, char *path, size_t max_path_size);
 
 /**
  *  根据url解析出其中的路径部分,支持加长的url，最高可支持到1024，path最长可到800，site最长可到128
@@ -210,7 +210,7 @@ int easou_parse_url_ex(const char *input, char *site, size_t site_size, char *po
  *  - NULL     表示失败
  *  - @note 为保证程序安全,传入的path_size请小于默认最大值
  */
-char *easou_get_path_ex(const char *url, char *path, size_t path_size);
+char *get_path_ex(const char *url, char *path, size_t path_size);
 
 /**
  *  根据url解析出其中的站点名部分,支持加长的url，最高可支持到1024，path最长可到800，site最长可到128
@@ -224,7 +224,7 @@ char *easou_get_path_ex(const char *url, char *path, size_t path_size);
  *  - NULL     表示失败
  *  - @note 为保证程序安全,传入的site_size请小于默认最大值
  */
-char *easou_get_site_ex(const char *url, char *site, size_t site_size);
+char *get_site_ex(const char *url, char *site, size_t site_size);
 
 /**
  *  从url中获取端口信息,支持加长的url，最高可支持到1024，path最长可到800，site最长可到128
@@ -236,11 +236,11 @@ char *easou_get_site_ex(const char *url, char *site, size_t site_size);
  *  - 1   表示成功
  *  - 0   表示失败
  */
-int easou_get_port_ex(const char* url, int* pport);
+int get_port_ex(const char* url, int* pport);
 
 /**
  *  将url转化为统一的形式\n,支持加长的url，最高可支持到1024，path最长可到800，site最长可到128
- *  执行@ref easou_normalize_site, @ref easou_normalize_port, @ref easou_single_path, @ref easou_normalize_path
+ *  执行@ref normalize_site, @ref normalize_port, @ref single_path, @ref normalize_path
  *
  *  @param[in]  url           待转化的url
  *  @param[in]  buf           转化后的url缓冲区
@@ -251,7 +251,7 @@ int easou_get_port_ex(const char* url, int* pport);
  *  - 0   无效url
  *  - @note 为保证程序安全,传入的site_size请小于默认最大值
  */
-int easou_normalize_url_ex(const char* url, char* buf, size_t buf_size);
+int normalize_url_ex(const char* url, char* buf, size_t buf_size);
 
 /**
  *  从url中获取静态的部分（?或者;之前的部分）,支持加长的url，最高可支持到1024，path最长可到800，site最长可到128
@@ -262,7 +262,7 @@ int easou_normalize_url_ex(const char* url, char* buf, size_t buf_size);
  *  @param[out] staticurl           静态部分
  *  @return 无
  */
-void easou_get_static_part_ex(const char *url, char *staticurl, size_t staticurl_size);
+void get_static_part_ex(const char *url, char *staticurl, size_t staticurl_size);
 
 /**
  *  检查url是否规范化,支持加长的url，最高可支持到1024，path最长可到800，site最长可到128
@@ -273,7 +273,7 @@ void easou_get_static_part_ex(const char *url, char *staticurl, size_t staticurl
  *  - 1   是
  *  - 0   不是
  */
-int easou_isnormalized_url_ex(const char *url);
+int isnormalized_url_ex(const char *url);
 
 /**
  *  规范化路径的形式\n,支持加长的url，最高可支持到1024，path最长可到800，site最长可到128
@@ -283,7 +283,7 @@ int easou_isnormalized_url_ex(const char *url);
  *  @param[out] path           转化后的路径
  *  @return 无
  */
-void easou_normalize_path_ex(char *path);
+void normalize_path_ex(char *path);
 
 /**
  *  归一化URL路径,支持加长的url，最高可支持到1024，path最长可到800，site最长可到128
@@ -294,7 +294,7 @@ void easou_normalize_path_ex(char *path);
  *  - 1   正常
  *  - 0   无效url格式路径
  */
-int easou_single_path_ex(char *path);
+int single_path_ex(char *path);
 
 /**
  *  判断url是否合法,支持加长的url，最高可支持到1024，path最长可到800，site最长可到128
@@ -305,7 +305,7 @@ int easou_single_path_ex(char *path);
  *  - 1   合法
  *  - 0   不合法
  */
-int easou_check_url_ex(char *url);
+int check_url_ex(char *url);
 
 /**
  *  根据url解析出其中的各个部分,支持加长的url，最高可支持到2048，path最长可到1600，site最长可到256
@@ -325,7 +325,7 @@ int easou_check_url_ex(char *url);
  *  - 0  无效url格式
  *  - @note 为保证程序安全,传入的buf请小于默认最大值
  */
-int easou_parse_url_ex2(const char *input, char *site, size_t site_size, char *port, size_t port_size, char *path, size_t max_path_size);
+int parse_url_ex2(const char *input, char *site, size_t site_size, char *port, size_t port_size, char *path, size_t max_path_size);
 /**
  *  根据url解析出其中的路径部分,支持加长的url，最高可支持到2048，path最长可到1600，site最长可到256
  *
@@ -338,7 +338,7 @@ int easou_parse_url_ex2(const char *input, char *site, size_t site_size, char *p
  *  - NULL     表示失败
  *  - @note 为保证程序安全,传入的path_size请小于默认最大值
  */
-char *easou_get_path_ex2(const char *url, char *path, size_t path_size);
+char *get_path_ex2(const char *url, char *path, size_t path_size);
 
 /**
  *  根据url解析出其中的站点名部分,支持加长的url，最高可支持到2048，path最长可到1600，site最长可到256
@@ -352,7 +352,7 @@ char *easou_get_path_ex2(const char *url, char *path, size_t path_size);
  *  - NULL     表示失败
  *  - @note 为保证程序安全,传入的site_size请小于默认最大值
  */
-char *easou_get_site_ex2(const char *url, char *site, size_t site_size);
+char *get_site_ex2(const char *url, char *site, size_t site_size);
 
 /**
  *  从url中获取端口信息,支持加长的url，最高可支持到2048，path最长可到1600，site最长可到256
@@ -364,11 +364,11 @@ char *easou_get_site_ex2(const char *url, char *site, size_t site_size);
  *  - 1   表示成功
  *  - 0   表示失败
  */
-int easou_get_port_ex2(const char* url, int* pport);
+int get_port_ex2(const char* url, int* pport);
 
 /**
  *  将url转化为统一的形式\n,支持加长的url，最高可支持到2048，path最长可到1600，site最长可到256
- *  执行@ref easou_normalize_site, @ref easou_normalize_port, @ref easou_single_path, @ref easou_normalize_path
+ *  执行@ref normalize_site, @ref normalize_port, @ref single_path, @ref normalize_path
  *
  *  @param[in]  url           待转化的url
  *  @param[in]  buf           转化后的url缓冲区
@@ -379,7 +379,7 @@ int easou_get_port_ex2(const char* url, int* pport);
  *  - 0   无效url
  *  - @note 为保证程序安全,传入的site_size请小于默认最大值
  */
-int easou_normalize_url_ex2(const char* url, char* buf, size_t buf_size);
+int normalize_url_ex2(const char* url, char* buf, size_t buf_size);
 
 /**
  *  从url中获取静态的部分（?或者;之前的部分）,支持加长的url，最高可支持到2048，path最长可到1600，site最长可到256
@@ -390,7 +390,7 @@ int easou_normalize_url_ex2(const char* url, char* buf, size_t buf_size);
  *  @param[out] staticurl           静态部分
  *  @return 无
  */
-void easou_get_static_part_ex2(const char *url, char *staticurl, size_t staticurl_size);
+void get_static_part_ex2(const char *url, char *staticurl, size_t staticurl_size);
 
 /**
  *  检查url是否规范化,支持加长的url，最高可支持到2048，path最长可到1600，site最长可到256
@@ -401,7 +401,7 @@ void easou_get_static_part_ex2(const char *url, char *staticurl, size_t staticur
  *  - 1   是
  *  - 0   不是
  */
-int easou_isnormalized_url_ex2(const char *url);
+int isnormalized_url_ex2(const char *url);
 
 /**
  *  规范化路径的形式\n,支持加长的url，最高可支持到2048，path最长可到1600，site最长可到256
@@ -411,7 +411,7 @@ int easou_isnormalized_url_ex2(const char *url);
  *  @param[out] path           转化后的路径
  *  @return 无
  */
-void easou_normalize_path_ex2(char *path);
+void normalize_path_ex2(char *path);
 
 /**
  *  归一化URL路径,支持加长的url，最高可支持到2048，path最长可到1600，site最长可到256
@@ -422,7 +422,7 @@ void easou_normalize_path_ex2(char *path);
  *  - 1   正常
  *  - 0   无效url格式路径
  */
-int easou_single_path_ex2(char *path);
+int single_path_ex2(char *path);
 
 /**
  *  判断url是否合法,支持加长的url，最高可支持到2048，path最长可到1600，site最长可到256
@@ -433,7 +433,7 @@ int easou_single_path_ex2(char *path);
  *  - 1   合法
  *  - 0   不合法
  */
-int easou_check_url_ex2(char *url);
+int check_url_ex2(char *url);
 
 /**
  * @brief 获得url深度
@@ -443,8 +443,8 @@ int get_url_depth(const char * url);
 /**
  * @brief 页面内的相对URL拼成一个绝对URL
  */
-int easou_combine_url(char *result_url, const char *base_url, const char *relative_url);
-void easou_combine_url_inner(char *url, char *domain, char *port, char *path);
+int combine_url(char *result_url, const char *base_url, const char *relative_url);
+void combine_url_inner(char *url, char *domain, char *port, char *path);
 
 /**
  * @brief 是不是类似首页的url
@@ -519,7 +519,7 @@ typedef struct _p_url_t
 
 const char *parse_url_inner(url_t *url, const char *url_buffer, int length);
 
-int easou_single_path_inner(char *path);
+int single_path_inner(char *path);
 
 /**
  * @brief 判断是否首页

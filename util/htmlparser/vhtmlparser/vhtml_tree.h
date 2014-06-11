@@ -1,5 +1,5 @@
 /**
- * easou_vhtml_tree.h
+ * vhtml_tree.h
  * Description: V树解析
  *  Created on: 2011-11-13
  * Last modify: 2012-10-26 sue_zhang@staff.easou.com shuangwei_zhang@staff.easou.com
@@ -76,7 +76,7 @@ void html_vtree_del_with_tree(html_vtree_t *html_vtree);
 
  * @date 2011/06/27
  **/
-int html_vtree_parse_with_css(html_vtree_t *html_vtree, easou_css_pool_t* css_pool, int page_width = DEFAULT_PAGE_WX);
+int html_vtree_parse_with_css(html_vtree_t *html_vtree, css_pool_t* css_pool, int page_width = DEFAULT_PAGE_WX);
 
 /**
  * @brief 在DOM树的基础上解析出V树

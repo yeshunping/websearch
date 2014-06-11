@@ -2,7 +2,7 @@
 #include <string.h>
 
 #include "util/htmlparser/utils/string_util.h"
-#include "ctype.h"
+//#include <ctype.h>
 #include "html_node.h"
 
 SLAB_DEFINE(node, _html_node_t);

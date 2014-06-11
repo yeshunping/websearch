@@ -1,5 +1,5 @@
 /*
- * easou_html_dom.h
+ * html_dom.h
  *
  *  Created on: 2011-11-8
  *      Author: ddt

@@ -1,5 +1,5 @@
 /**
- * easou_css_parser_inner.cpp
+ * css_parser_inner.cpp
  * Description:
  *  Created on: 2011-11-10
  * Last modify: 2012-10-31 sue_zhang@staff.easou.com shuangwei_zhang@staff.easou.com
@@ -21,13 +21,13 @@ using namespace EA_COMMON;
 
 /**
  * @brief .
- * @param [in/out] css   : easou_css_t*
+ * @param [in/out] css   : css_t*
  * @param [in/out] len   : size_t
  * @return  int
 
  * @date 2011/06/20
  **/
-int adjust_str_heap(easou_css_t *css, size_t len)
+int adjust_str_heap(css_t *css, size_t len)
 {
 	if (css->css_inner.str_heap.heap_size < len)
 	{
@@ -48,7 +48,7 @@ int adjust_str_heap(easou_css_t *css, size_t len)
 
 /**
  * @brief 判断是否是css中的空格
- * @param [in/out] css   : easou_css_t*
+ * @param [in/out] css   : css_t*
  * @param [in/out] len   : size_t
  * @return  int
 
@@ -220,7 +220,7 @@ const char *skip_current_selector(const char *pstr)
 
  * @date 2011/06/20
  **/
-void scan_string(easou_css_scan_t *css_scan, easou_css_str_heap_t *str_heap)
+void scan_string(css_scan_t *css_scan, css_str_heap_t *str_heap)
 {
 	char sep_chr = *(css_scan->p_next);
 	css_scan->p_next++;
@@ -297,7 +297,7 @@ static const int css_prop_value_sep_chr_map[256] =
 
  * @date 2011/06/20
  **/
-bool is_css_sep_chr_state(easou_css_state_t state, char chr)
+bool is_css_sep_chr_state(css_state_t state, char chr)
 {
 	switch (state)
 	{
@@ -324,7 +324,7 @@ bool is_css_sep_chr_state(easou_css_state_t state, char chr)
 
  * @date 2011/06/20
  **/
-void scan_attr(easou_css_scan_t *css_scan, easou_css_str_heap_t *str_heap)
+void scan_attr(css_scan_t *css_scan, css_str_heap_t *str_heap)
 {
 	while (*(css_scan->p_next) != '\0' && *(css_scan->p_next) != ']')
 	{
@@ -344,7 +344,7 @@ void scan_attr(easou_css_scan_t *css_scan, easou_css_str_heap_t *str_heap)
 
  * @date 2011/06/20
  **/
-inline void scan_a_step(easou_css_scan_t *css_scan, easou_css_str_heap_t *str_heap)
+inline void scan_a_step(css_scan_t *css_scan, css_str_heap_t *str_heap)
 {
 	if (*css_scan->p_next == '/' && *(css_scan->p_next + 1) == '*')
 	{
@@ -361,7 +361,7 @@ inline void scan_a_step(easou_css_scan_t *css_scan, easou_css_str_heap_t *str_he
 
  * @date 2011/06/20
  **/
-void scan_normal(easou_css_scan_t *css_scan, easou_css_str_heap_t *str_heap)
+void scan_normal(css_scan_t *css_scan, css_str_heap_t *str_heap)
 {
 	while (*(css_scan->p_next) != '\0' && is_css_sep_chr_state(css_scan->state, *(css_scan->p_next)) == false)
 	{
@@ -381,7 +381,7 @@ void scan_normal(easou_css_scan_t *css_scan, easou_css_str_heap_t *str_heap)
 
  * @date 2011/06/20
  **/
-void scan_url(easou_css_scan_t *css_scan, easou_css_str_heap_t *str_heap)
+void scan_url(css_scan_t *css_scan, css_str_heap_t *str_heap)
 {
 	while (*(css_scan->p_next) != '\0' && *(css_scan->p_next) != '\t' && *(css_scan->p_next) != '\r' && *(css_scan->p_next) != '\n'
 			&& *(css_scan->p_next) != '\f' && !(*(css_scan->p_next) == ')' && *(css_scan->p_next - 1) != '\\'))
@@ -409,11 +409,11 @@ static const int scan_ignore_map[256] =
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, //240~255
 		};
 
-void scan_ignore(easou_css_scan_t *css_scan, easou_css_t *css)
+void scan_ignore(css_scan_t *css_scan, css_t *css)
 {
 	while (1)
 	{
-		css_scan->p_next = easou_skip_space(css_scan->p_next);
+		css_scan->p_next = skip_space(css_scan->p_next);
 		if (!scan_ignore_map[(unsigned char)(*(css_scan->p_next))])
 			break;
 		if (*(css_scan->p_next) == '@')
@@ -444,7 +444,7 @@ void scan_ignore(easou_css_scan_t *css_scan, easou_css_t *css)
 					{
 						p1++;
 					}
-					easou_combine_url(importUrl, css_scan->css_url, p1);
+					combine_url(importUrl, css_scan->css_url, p1);
 					sprintf(fullUrl, "http://%s", importUrl);
 					//Warn("import css:%s", fullUrl);
 					if (css_scan->test_import && false)

@@ -1,5 +1,5 @@
 /**
- * easou_string.h
+ * string.h
  * Description: 字符串相关的工具函数
  *  Created on: 2011-11-23
  * Last modify: 2012-10-26 sue_zhang@staff.easou.com shuangwei_zhang@staff.easou.com
@@ -33,23 +33,23 @@ extern char g_whitespace_map[];
  *  - 1 表示是空格
  *  @note 注意space字符包括'\0',这与函数isspace不同
  */
-#define easou_isspace(ch) CHAR_SPACE[(unsigned char)(ch)]
+#define isspace(ch) CHAR_SPACE[(unsigned char)(ch)]
 
 /*
  * 字符大小写转换
  */
-char easou_tolower(unsigned char chr);
+char tolower(unsigned char chr);
 
 /**
  * 字符串大小写转换
  */
-int easou_trans2lower(char* lower, char* upper);
+int trans2lower(char* lower, char* upper);
 
 /**
  * @brief 转化为半角. 输出和输入buffer可相同.
  * @return int, 转换后的长度
  **/
-int easou_trans2bj(const char *in, char *out);
+int trans2bj(const char *in, char *out);
 
 /**
  * @brief 转化为半角和小写. 输出和输入buffer可相同.
@@ -96,7 +96,7 @@ bool is_only_space_between(const char *begin, const char *end);
 
  * @date 2011/06/20
  **/
-const char *easou_skip_space(const char *pstr);
+const char *skip_space(const char *pstr);
 
 /**
  * @brief	是否是一个表示时间的字符串
@@ -110,7 +110,7 @@ bool is_time_str(const char * str_time);
  * @param [in] siz   : size_t 目标缓冲区的大小
  * @return  size_t 返回应该期望的字符串长度，注意可能会超过缓冲区大小
  **/
-size_t easou_strlcpy(char *dst, const char *src, size_t siz);
+size_t strlcpy(char *dst, const char *src, size_t siz);
 
 /**
  * @brief 最长公共子串. 返回公共子串的长度，可能与编码有关.
@@ -118,14 +118,9 @@ size_t easou_strlcpy(char *dst, const char *src, size_t siz);
 int longest_common_substring(const char *l, const char *r);
 
 /**
- * @brief 	忽略大小写查找字符串.
- **/
-char *easou_strcasestr(const char *haystack, const char *needle);
-
-/**
  * @brief 过掉字符串内的空白，英文单词间空白除外. 返回转换后的长度.
  **/
-int easou_trim_space(char *buf);
+int trim_space(char *buf);
 
 /**
  * @brief 裁剪字符串两边的空格， 如果中间有空格则会截取到中间的第1个空格处。在原字符串上修改。

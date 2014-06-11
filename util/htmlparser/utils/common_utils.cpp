@@ -1,5 +1,5 @@
 /*
- * easou_common_utils.cpp
+ * common_utils.cpp
  *
  *  Created on: 2012-12-20
  *      Author: sue

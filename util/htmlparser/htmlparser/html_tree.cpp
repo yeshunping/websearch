@@ -1,5 +1,5 @@
 /*
- * easou_html_tree.cpp
+ * html_tree.cpp
  *
  *  Created on: 2011-11-8
  *      Author: xunwu

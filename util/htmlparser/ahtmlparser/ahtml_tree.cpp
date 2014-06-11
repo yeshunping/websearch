@@ -1,5 +1,5 @@
 /**
- * easou_ahtml_tree.cpp
+ * ahtml_tree.cpp
  *	Description: 在vtree的基础上进行分块操作
  *  Created on: 2011-06-27
  * Last modify: 2012-10-26 sue_zhang@staff.easou.com shuangwei_zhang@staff.easou.com

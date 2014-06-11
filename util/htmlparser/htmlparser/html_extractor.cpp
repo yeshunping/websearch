@@ -1,5 +1,5 @@
 /**
- * easou_html_extractor.cpp
+ * html_extractor.cpp
  *
  *  Created on: 2012-1-9
  *      Author: xunwu
@@ -15,7 +15,7 @@
 
 using namespace EA_COMMON;
 
-// come from easou_vhtml_parser.cpp
+// come from vhtml_parser.cpp
 static const html_tag_type_t html_blockTagList[] =
 { TAG_BLOCKQUOTE, TAG_CENTER, TAG_DD, TAG_DIV, TAG_DL, TAG_DT, TAG_FORM, TAG_H1, TAG_H2, TAG_H3, TAG_H4, TAG_H5, TAG_H6, TAG_HR, TAG_IFRAME,
 		TAG_LI, TAG_OL, TAG_P, TAG_PRE, TAG_TABLE, TAG_TR, TAG_UL,
@@ -179,30 +179,11 @@ static int url_recheck(char *url)
 		return 0;
 	}
 	// check syntax of url, lower upper char in site name
-	if (easou_check_url(url) == 0)
+	if (check_url(url) == 0)
 	{
 		return 0;
 	}
 	return 1;
-}
-/*
- * unparse url
- */
-static void combine_url_inner(char *url, char *domain, char *port, char *path)
-{
-	if (*port == '\0')
-	{
-		if (domain != NULL)
-			snprintf(url, MAX_URL_LEN, "%s%s", domain, path);
-		else
-			snprintf(url, MAX_URL_LEN, "%s", path);
-	}
-	else
-	{
-		snprintf(url, MAX_URL_LEN, "%s:%s%s", domain, port, path);
-	}
-	//todo
-//	html_derefrence_text(url, 0, MAX_URL_LEN-1, url);
 }
 
 /*
@@ -234,7 +215,7 @@ static int is_abs_path(const char *path)
 static int is_rel_path(const char *url)
 {
 	const char *p;
-	if (easou_is_url(url))
+	if (is_url(url))
 		return 0;
 	if (is_net_path(url))
 		return 0;
@@ -264,13 +245,13 @@ int html_combine_url(char *result_url, const char *src, char *base_domain, char 
 
 	assert(src != NULL);
 
-	if (easou_is_url(src))
+	if (is_url(src))
 	{
-		if (strlen(src) >= MAX_URL_LEN || !easou_parse_url(src, domain, port, path) || !easou_single_path(path))
+		if (strlen(src) >= MAX_URL_LEN || !parse_url(src, domain, port, path) || !single_path(path))
 		{
 			return -1;
 		}
-		easou_normalize_path(path);
+		normalize_path(path);
 		combine_url_inner(result_url, domain, port, path);
 	}
 	else if (is_net_path(src))
@@ -278,9 +259,9 @@ int html_combine_url(char *result_url, const char *src, char *base_domain, char 
 		if (strlen(src) >= MAX_PATH_LEN)
 			return -1;
 		snprintf(path, sizeof(path), "%s", src);
-		if (!easou_single_path(path))
+		if (!single_path(path))
 			return -1;
-		easou_normalize_path(path);
+		normalize_path(path);
 		char *p = path;
 		while (p && *p == '/')
 			p++;
@@ -294,9 +275,9 @@ int html_combine_url(char *result_url, const char *src, char *base_domain, char 
 		if (strlen(src) >= MAX_PATH_LEN)
 			return -1;
 		snprintf(path, sizeof(path), "%s", src);
-		if (!easou_single_path(path))
+		if (!single_path(path))
 			return -1;
-		easou_normalize_path(path);
+		normalize_path(path);
 		combine_url_inner(result_url, base_domain, base_port, path);
 	}
 	else if (is_rel_path(src))
@@ -328,11 +309,11 @@ int html_combine_url(char *result_url, const char *src, char *base_domain, char 
 				res = 2;
 			}
 		}
-		if (!easou_single_path(path))
+		if (!single_path(path))
 		{
 			return -1;
 		}
-		easou_normalize_path(path);
+		normalize_path(path);
 		combine_url_inner(result_url, base_domain, base_port, path);
 	}
 	else
@@ -374,16 +355,16 @@ static int start_visit_link(html_tag_t *tag, void *result, int flag)
 		char port[MAX_PORT_LEN] = { '\0' };
 		char path[MAX_PATH_LEN] = { '\0' };
 		base_url = get_attribute_value(tag, ATTR_HREF);
-		if (base_url == NULL || !easou_is_url(base_url) || strlen(base_url) >= MAX_URL_LEN || !easou_parse_url(base_url, domain, port, path)
-				|| !easou_single_path(path))
+		if (base_url == NULL || !is_url(base_url) || strlen(base_url) >= MAX_URL_LEN || !parse_url(base_url, domain, port, path)
+				|| !single_path(path))
 		{
 			return VISIT_NORMAL;
 		}
-		ret = easou_parse_url(base_url, link->base_domain, link->base_port, link->base_path);
+		ret = parse_url(base_url, link->base_domain, link->base_port, link->base_path);
 		assert(ret == 1);
-		ret = easou_single_path(link->base_path);
+		ret = single_path(link->base_path);
 		assert(ret == 1);
-		easou_normalize_path(link->base_path);
+		normalize_path(link->base_path);
 		remove_path_file_name(link->base_path);
 		return VISIT_NORMAL;
 	}
@@ -491,7 +472,7 @@ int html_tree_extract_link(html_node_list_t* list, char* baseUrl, link_t* link, 
 	lnk.need_space = 0;
 	lnk.in_anchor = 0;
 	lnk.in_option = 0;
-	if (!easou_parse_url(baseUrl, lnk.base_domain, lnk.base_port, lnk.base_path))
+	if (!parse_url(baseUrl, lnk.base_domain, lnk.base_port, lnk.base_path))
 	{
 		return -1;
 	}
@@ -538,7 +519,7 @@ int html_tree_extract_link(html_tree_t *html_tree, char* baseUrl, link_t* link, 
 	lnk.need_space = 0;
 	lnk.in_anchor = 0;
 	lnk.in_option = 0;
-	if (!easou_parse_url(baseUrl, lnk.base_domain, lnk.base_port, lnk.base_path))
+	if (!parse_url(baseUrl, lnk.base_domain, lnk.base_port, lnk.base_path))
 	{
 		return -1;
 	}
@@ -717,16 +698,16 @@ static int start_visit_csslink(html_tag_t *tag, void *result, int flag)
 		char port[MAX_PORT_LEN] = { '\0' };
 		char path[MAX_PATH_LEN] = { '\0' };
 		base_url = get_attribute_value(tag, ATTR_HREF);
-		if (base_url == NULL || !easou_is_url(base_url) || strlen(base_url) >= MAX_URL_LEN || !easou_parse_url(base_url, domain, port, path)
-				|| !easou_single_path(path))
+		if (base_url == NULL || !is_url(base_url) || strlen(base_url) >= MAX_URL_LEN || !parse_url(base_url, domain, port, path)
+				|| !single_path(path))
 		{
 			return VISIT_NORMAL;
 		}
-		ret = easou_parse_url(base_url, link->base_domain, link->base_port, link->base_path);
+		ret = parse_url(base_url, link->base_domain, link->base_port, link->base_path);
 		assert(ret == 1);
-		ret = easou_single_path(link->base_path);
+		ret = single_path(link->base_path);
 		assert(ret == 1);
-		easou_normalize_path(link->base_path);
+		normalize_path(link->base_path);
 		remove_path_file_name(link->base_path);
 		return VISIT_NORMAL;
 	}
@@ -750,7 +731,7 @@ static int start_visit_csslink(html_tag_t *tag, void *result, int flag)
 
     	if(pstyle){
     	//	printf("find style ,str=%s\n",pstyle);
-    		while (pstyle&&easou_isspace(*pstyle))
+    		while (pstyle&&isspace(*pstyle))
     		{
     		    		pstyle++;
     		}
@@ -828,7 +809,7 @@ int html_tree_extract_csslink(html_tree_t *html_tree, const char* baseUrl, link_
 	lnk.need_space = 0;
 	lnk.in_anchor = 0;
 	lnk.in_option = 0;
-	if (!easou_parse_url(baseUrl, lnk.base_domain, lnk.base_port, lnk.base_path))
+	if (!parse_url(baseUrl, lnk.base_domain, lnk.base_port, lnk.base_path))
 	{
 		return -1;
 	}
@@ -932,8 +913,8 @@ static int start_visit_for_base_url(html_tag_t *html_tag, void *result, int flag
 	if (html_tag->tag_type == TAG_BASE)
 	{
 		char *base_url = get_attribute_value(html_tag, ATTR_HREF);
-		if (NULL == base_url || !easou_is_url(base_url) || strlen(base_url) >= UL_MAX_URL_LEN
-				|| !easou_parse_url(base_url, domain, port, path) || !easou_single_path(path))
+		if (NULL == base_url || !is_url(base_url) || strlen(base_url) >= UL_MAX_URL_LEN
+				|| !parse_url(base_url, domain, port, path) || !single_path(path))
 		{
 			return VISIT_FINISH;
 		}

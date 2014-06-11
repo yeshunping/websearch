@@ -1,5 +1,5 @@
 /*
- * easou_html_parser.h
+ * html_parser.h
  *
  *  Created on: 2011-11-8
  *      Author: ddt

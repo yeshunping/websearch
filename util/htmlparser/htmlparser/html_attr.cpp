@@ -1,5 +1,5 @@
 /**
- * @file easou_html_attr.cpp
+ * @file html_attr.cpp
 
  * @date 2011/08/02
  * @version 1.0
@@ -16,7 +16,7 @@
 #include "html_attr.h"
 #include "util/htmlparser/utils/debug.h"
 
-#define EASOU_ATTR "easou_mask"
+#define EASOU_ATTR "mask"
 
 #define EASOU_MASK_BEGIN	(" "EASOU_ATTR"=\"")		  /**< easou属性开始标识 */
 

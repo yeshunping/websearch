@@ -124,7 +124,7 @@ int print_vnode_html(html_vnode_t *html_vnode, char* buf, int size, int& avail, 
 					char domain[MAX_SITE_LEN] = { '\0' };
 					char port[MAX_PORT_LEN] = { '\0' };
 					char path[MAX_PATH_LEN] = { '\0' };
-					int ret = easou_parse_url(base, domain, port, path);
+					int ret = parse_url(base, domain, port, path);
 					assert(ret == 1);
 					char href_buf[2048];
 					if(html_combine_url(href_buf, attribute->value, domain, path, port) > 0)

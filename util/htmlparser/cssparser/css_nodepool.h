@@ -1,5 +1,5 @@
 /**
- * @file easou_css_parser.h
+ * @file css_parser.h
 
  * @date 2011/06/20
  * @version 1.0(create)
@@ -20,21 +20,21 @@ using namespace EA_COMMON;
 
  * @date 2011/06/20
  **/
-int css_nodepool_init(easou_css_nodepool_t *pool, size_t size);
+int css_nodepool_init(css_nodepool_t *pool, size_t size);
 
 /**
  * @brief reset the nodepool to have only one memery node and reset the pool as never used
 
  * @date 2011/06/20
  **/
-void css_nodepool_reset(easou_css_nodepool_t *pool);
+void css_nodepool_reset(css_nodepool_t *pool);
 
 /**
  * @brief destroy the nodepool
 
  * @date 2011/06/20
  **/
-void css_nodepool_destroy(easou_css_nodepool_t *pool);
+void css_nodepool_destroy(css_nodepool_t *pool);
 
 /**
  * @brief	从nodepool获取size大小的内存.
@@ -43,6 +43,6 @@ void css_nodepool_destroy(easou_css_nodepool_t *pool);
 
  * @date 2011/06/20
  **/
-void *css_get_from_nodepool(easou_css_nodepool_t *pool, size_t size);
+void *css_get_from_nodepool(css_nodepool_t *pool, size_t size);
 
 #endif /*EASOU_CSS_NODEPOOL_H_*/

@@ -1,5 +1,5 @@
 /**
- * @file easou_css_dtd.cpp
+ * @file css_dtd.cpp
 
  * @date 2011/06/20
  * @version 1.0(create)
@@ -241,7 +241,7 @@ const char *css_property_name_array[] =
 };
 
 /* css_property_name_array[]与prop_typeinfo_array[]每个元素一一对应 */
-const easou_css_prop_type_info_t prop_typeinfo_array[] =
+const css_prop_type_info_t prop_typeinfo_array[] =
 {
 /* property-type, is font property, is geo property */
 /* cannot be font prop and geo prop at the same time*/

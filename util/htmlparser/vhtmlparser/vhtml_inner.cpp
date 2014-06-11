@@ -1,5 +1,5 @@
 /**
- * @file easou_vhtml_com.cpp
+ * @file vhtml_com.cpp
 
  * @date 2011/06/20
  * @brief 一些vTree解析基础函数的实现。
@@ -26,7 +26,7 @@ int parse_style_attr(const char *style_str, style_attr_t *style_attr, int max_st
 	int i;
 
 	// skip space
-	while (*p != '\0' && easou_isspace((unsigned char)*p))
+	while (*p != '\0' && isspace((unsigned char)*p))
 	{
 		p++;
 	}
@@ -44,7 +44,7 @@ int parse_style_attr(const char *style_str, style_attr_t *style_attr, int max_st
 
 		//name
 		i = 0;
-		while (*p != '\0' && *p != ':' && !easou_isspace ((unsigned char)*p))
+		while (*p != '\0' && *p != ':' && !isspace ((unsigned char)*p))
 		{
 			if (i < MAX_ATTR_NAME_LENGTH - 1)
 				style_attr[attr_cnt].name[i++] = tolower(*p++);
@@ -54,7 +54,7 @@ int parse_style_attr(const char *style_str, style_attr_t *style_attr, int max_st
 		style_attr[attr_cnt].name[i] = 0;
 
 		// skip space
-		while (*p != '\0' && easou_isspace ((unsigned char) *p))
+		while (*p != '\0' && isspace ((unsigned char) *p))
 			p++;
 		// split char
 
@@ -62,7 +62,7 @@ int parse_style_attr(const char *style_str, style_attr_t *style_attr, int max_st
 		{
 			p++;
 			//space
-			while (*p != '\0' && easou_isspace((unsigned char)*p))
+			while (*p != '\0' && isspace((unsigned char)*p))
 			{
 				p++;
 			}
@@ -80,12 +80,12 @@ int parse_style_attr(const char *style_str, style_attr_t *style_attr, int max_st
 				}
 			}
 			//skip value last space
-			while (i - 1 >= 0 && easou_isspace((unsigned char)style_attr[attr_cnt].value[i-1]))
+			while (i - 1 >= 0 && isspace((unsigned char)style_attr[attr_cnt].value[i-1]))
 				i--;
 			style_attr[attr_cnt].value[i] = '\0';
 		}
 		// skip  ';'
-		while (*p != '\0' && (easou_isspace((unsigned int)*p) || *p == ';'))
+		while (*p != '\0' && (isspace((unsigned int)*p) || *p == ';'))
 			p++;
 		attr_cnt++;
 	}

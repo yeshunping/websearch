@@ -1,5 +1,5 @@
 /**
- * easou_vhtml_basic.h
+ * vhtml_basic.h
  * Description: vtree解析时以及对外的一些基本判断和设置操作,数据结构的定义
  */
 
@@ -104,7 +104,7 @@ typedef struct _rgb_t {
  * @brief 节点的CSS属性.
  */
 typedef struct _css_prop_node_t {
-  easou_css_prop_type_t type; /**< 属性类型  */
+  css_prop_type_t type; /**< 属性类型  */
   int priority; /**< 属性权值  */
   char *value; /**< 属性值  */
   struct _css_prop_node_t *next;
@@ -246,7 +246,7 @@ typedef struct _html_vtree_t {
  *	每个VTREE对应这样一个结构.
  */
 typedef struct _vtree_in_t {
-  easou_css_env_t *css_env; /**< CSS解析环境 */
+  css_env_t *css_env; /**< CSS解析环境 */
   char CSS_OUT_PAGE[CSS_PAGE_LEN];
   unsigned long long url_num;
   unsigned long long request_css_num;

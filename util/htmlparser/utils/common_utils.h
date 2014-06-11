@@ -1,5 +1,5 @@
 /*
- * easou_common_utils.h
+ * common_utils.h
  *
  *  Created on: 2012-12-20
  *      Author: sue

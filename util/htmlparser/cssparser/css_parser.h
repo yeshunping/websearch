@@ -1,5 +1,5 @@
 /**
- * easou_css_parser.h
+ * css_parser.h
  * Description: CSS解析和属性查找.
  *  Created on: 2011-06-20
  * Last modify: 2012-10-26 sue_zhang@staff.easou.com shuangwei_zhang@staff.easou.com
@@ -25,7 +25,7 @@
 
  * @date 2011/06/20
  **/
-easou_css_t *css_create(int max_css_text_size);
+css_t *css_create(int max_css_text_size);
 
 /**
  * @brief 用默认参数创建CSS结构.
@@ -34,7 +34,7 @@ easou_css_t *css_create(int max_css_text_size);
 
  * @date 2011/06/20
  **/
-easou_css_t *css_create();
+css_t *css_create();
 
 /**
  * @brief 销毁CSS结构.
@@ -42,7 +42,7 @@ easou_css_t *css_create();
 
  * @date 2011/06/20
  **/
-void css_destroy(easou_css_t *css);
+void css_destroy(css_t *css);
 
 /**
  * @brief 清空css_t结构,回到未解析的状态.
@@ -50,7 +50,7 @@ void css_destroy(easou_css_t *css);
 
  * @date 2011/06/20
  **/
-void css_clean(easou_css_t *css);
+void css_clean(css_t *css);
 
 /**
  * @brief 根据CSS文本解析得到CSS结构,并创建索引.
@@ -65,11 +65,11 @@ void css_clean(easou_css_t *css);
  * @date 2011/06/20
  * @last modify on 2012-10-26 sue_zhang@staff.easou.com
  **/
-int css_parse(easou_css_t *css, const char *css_text, const char *css_url, bool is_continue, bool test_import);
+int css_parse(css_t *css, const char *css_text, const char *css_url, bool is_continue, bool test_import);
 
 /**
  * @brief	解析css文本，不建索引，主要是要找到选择子和选择子对应的规则集.
- * @param [in/out] css   : easou_css_t*	解析好的css结构.
+ * @param [in/out] css   : css_t*	解析好的css结构.
  * @param [in] css_text   : const char*	CSS文本
  * @param [in] css_url, 被解析的CSS的url
  * @param [in] is_continue, 如果为true则不重置css参数
@@ -80,14 +80,14 @@ int css_parse(easou_css_t *css, const char *css_text, const char *css_url, bool 
  * @date 2011/06/20
  * @last modify on 2012-10-26 sue_zhang@staff.easou.com
  **/
-int css_parse_no_index(easou_css_t *css, const char *css_text, const char *css_url, bool is_continue, bool test_import);
+int css_parse_no_index(css_t *css, const char *css_text, const char *css_url, bool is_continue, bool test_import);
 
 /**
  * @brief 是否有用的CSS属性,目前只认为几何属性和字体属性有用.
 
  * @date 2011/06/20
  **/
-bool is_useful_css_prop(easou_css_prop_type_t prop);
+bool is_useful_css_prop(css_prop_type_t prop);
 
 /**
  * @brief 根据属性名查找属性类型.
@@ -96,6 +96,6 @@ bool is_useful_css_prop(easou_css_prop_type_t prop);
 
  * @date 2011/06/20
  **/
-easou_css_prop_type_t css_seek_prop_type(const char *name);
+css_prop_type_t css_seek_prop_type(const char *name);
 
 #endif /*EASOU_CSS_PARSER_H_*/

@@ -1,5 +1,5 @@
 /*
- * easou_html_dtd.h
+ * html_dtd.h
  *
  *  Created on: 2011-11-8
  *      Author: ddt

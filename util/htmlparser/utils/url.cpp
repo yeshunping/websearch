@@ -1,5 +1,5 @@
 /*
- * easou_url.cpp
+ * url.cpp
  *
  *  Created on: 2011-11-21
  *      Author: ddt
@@ -24,7 +24,7 @@ using namespace EA_COMMON;
 /*
  * @breif 是否是绝对url
  */
-int easou_is_url(const char *url)
+int is_url(const char *url)
 {
 	if (strncasecmp(url, "http://", 7) ==0 || strncasecmp(url, "https://", 8) ==0)
 	{
@@ -33,8 +33,8 @@ int easou_is_url(const char *url)
 	return 0;
 }
 
-int easou_is_dotip(const char *sitename);
-int easou_is_ignore(const char* slip);
+int is_dotip(const char *sitename);
+int is_ignore(const char* slip);
 
 const char* fetch_maindomain_l(const char* site, char *domain, int size)
 {
@@ -42,7 +42,7 @@ const char* fetch_maindomain_l(const char* site, char *domain, int size)
 	const char* ptail;
 	int len;
 	int tailLen = 0;
-	if (easou_is_dotip(site))
+	if (is_dotip(site))
 	{
 		strncpy(domain, site, size - 1);
 		domain[size - 1] = 0;
@@ -60,7 +60,7 @@ const char* fetch_maindomain_l(const char* site, char *domain, int size)
 	{
 		if ((pfirst == site - 1) || (*pfirst == '.'))
 		{
-			if (easou_is_ignore(pfirst + 1) == 0)
+			if (is_ignore(pfirst + 1) == 0)
 			{
 				len = size - 1 > ptail - pfirst - 1 + tailLen ? ptail - pfirst - 1 + tailLen : size - 1;
 				memcpy(domain, pfirst + 1, len);
@@ -83,7 +83,7 @@ const char*  fetch_maindomain(const char* site,char *domain,int size) {
     const char* pfirst;
     const char* ptail;
     int len;
-    if(easou_is_dotip(site)) {
+    if(is_dotip(site)) {
         strncpy(domain,site,size-1);
         domain[size-1]=0;
         return site;
@@ -97,7 +97,7 @@ const char*  fetch_maindomain(const char* site,char *domain,int size) {
     pfirst=ptail-1;
     while(pfirst >=site-1) {
         if((pfirst == site - 1 ) || (*pfirst=='.')) {
-            if(easou_is_ignore(pfirst+1)==0) {
+            if(is_ignore(pfirst+1)==0) {
                 len=size-1>ptail-pfirst-1?ptail-pfirst-1:size-1;
                 memcpy(domain,pfirst+1,len);
                 domain[len]=0;
@@ -118,7 +118,7 @@ const char * fetch_maindomain_from_url(const char * url , char * domain , int si
 {
 	char site[MAX_URL_LEN];
 	site[0] = '\0';
-	if(easou_parse_url(url , site , NULL ,NULL)==0){
+	if(parse_url(url , site , NULL ,NULL)==0){
 		return NULL ;
 	}
 	return fetch_maindomain(site ,domain , size ) ;
@@ -128,7 +128,7 @@ const char * fetch_domain_l_from_url(const char * url, char * domain, int size)
 {
 	char site[MAX_URL_LEN];
 	site[0] = '\0';
-	if(easou_parse_url(url , site , NULL ,NULL)==0){
+	if(parse_url(url , site , NULL ,NULL)==0){
 		return NULL ;
 	}
 	return fetch_maindomain_l(site ,domain , size ) ;
@@ -289,7 +289,7 @@ static char EASOU_LFCR[256] = {
 /**
  * @brief 移除\r、\n
  **/
-static int easou_delete_inter(char * str)
+static int delete_inter(char * str)
 {
 	if (NULL == str)
 	{
@@ -316,7 +316,7 @@ static int easou_delete_inter(char * str)
 	return p1 - str;
 }
 
-static int easou_space_escape(char * url,int max_url_len, int max_site_len, int max_path_len) {
+static int space_escape(char * url,int max_url_len, int max_site_len, int max_path_len) {
     char * pin = url ;
     int  pout = 0 ;
     char url_tmp[MAX_URL_LEN] ;
@@ -367,7 +367,7 @@ static int easou_space_escape(char * url,int max_url_len, int max_site_len, int 
     strncpy(url,url_tmp,pout+1) ;
     return 1 ;
 }
-static int easou_space_escape_path(char * path,int max_path_len) {
+static int space_escape_path(char * path,int max_path_len) {
     char * pin = path ;
     int  pout = 0 ;
     char url_tmp[MAX_URL_LEN] ;
@@ -392,7 +392,7 @@ static int easou_space_escape_path(char * path,int max_path_len) {
     strncpy(path,url_tmp,pout+1) ;
     return 1 ;
 }
-// {{{ easou_to_char
+// {{{ to_char
 
 //translate the HEX to DEC
 //return the DEC
@@ -415,7 +415,7 @@ static char EASOU_TO_CHAR[256] = {
     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 };
-int easou_to_char(char hex[2]) {
+int to_char(char hex[2]) {
 
     int r;
     int h[2];
@@ -427,7 +427,7 @@ int easou_to_char(char hex[2]) {
     return r;
 }
 
-static int easou_single_path_nointer(char *path) {
+static int single_path_nointer(char *path) {
     char *pin;
     int   pout;
     char  hex[2];
@@ -448,7 +448,7 @@ static int easou_single_path_nointer(char *path) {
             strncpy(hex,++pin,2);
             strncpy(tmp_hex,hex,2);
             pin ++;
-            escape_char = easou_to_char(hex);
+            escape_char = to_char(hex);
             if(escape_char == 0) {
                 pin--;
                 path[pout++]='%';
@@ -478,7 +478,7 @@ static int easou_single_path_nointer(char *path) {
                 strncpy(hex,++pin,2);
                 strncpy(tmp_hex,hex,2);
                 pin ++;
-                escape_char = easou_to_char(hex);
+                escape_char = to_char(hex);
                 if(escape_char == 0) {
                     pin--;
                     path[pout++]='%';
@@ -511,7 +511,7 @@ static int easou_single_path_nointer(char *path) {
                 strncpy(hex,++pin,2);
                 strncpy(tmp_hex,hex,2);
                 pin ++;
-                escape_char = easou_to_char(hex);
+                escape_char = to_char(hex);
                 if(escape_char == 0) {
                     pin--;
                     path[pout++]='%';
@@ -544,7 +544,7 @@ static int easou_single_path_nointer(char *path) {
                 strncpy(hex,++pin,2);
                 strncpy(tmp_hex,hex,2);
                 pin ++;
-                escape_char = easou_to_char(hex);
+                escape_char = to_char(hex);
                 if(escape_char == 0) {
                     pin--;
                     path[pout++]='%';
@@ -572,12 +572,12 @@ static int easou_single_path_nointer(char *path) {
     path[pout] = 0;
     if ( pout > (MAX_PATH_LEN-1) ){ //TODO
 #ifdef DEBUG_PARSER
-    Debug("[easou_single_path_nointer] - pout length return. pout:%d path:%s",pout,path);
+    Debug("[single_path_nointer] - pout length return. pout:%d path:%s",pout,path);
 #endif
         return 0;
     }
     if(space_flag==1) {
-        return easou_space_escape_path(path,MAX_PATH_LEN);
+        return space_escape_path(path,MAX_PATH_LEN);
     } else {
         return 1;
     }
@@ -586,12 +586,12 @@ static int easou_single_path_nointer(char *path) {
 /*
  * function : convert the escape squence to original one
  */
-int easou_single_path(char *path) {
-    easou_delete_inter(path);
-    return easou_single_path_nointer(path);
+int single_path(char *path) {
+    delete_inter(path);
+    return single_path_nointer(path);
 }
 
-static int easou_single_path_ex_nointer(char *path, int len) {
+static int single_path_ex_nointer(char *path, int len) {
     char *pin;
     int   pout;
     char  hex[2];
@@ -613,7 +613,7 @@ static int easou_single_path_ex_nointer(char *path, int len) {
             strncpy(hex,++pin,2);
             strncpy(tmp_hex,hex,2);
             pin ++;
-            escape_char = easou_to_char(hex);
+            escape_char = to_char(hex);
             if(escape_char == 0) {
                 pin--;
                 path[pout++]='%';
@@ -643,7 +643,7 @@ static int easou_single_path_ex_nointer(char *path, int len) {
                 strncpy(hex,++pin,2);
                 strncpy(tmp_hex,hex,2);
                 pin ++;
-                escape_char = easou_to_char(hex);
+                escape_char = to_char(hex);
                 if(escape_char == 0) {
                     pin--;
                     path[pout++]='%';
@@ -676,7 +676,7 @@ static int easou_single_path_ex_nointer(char *path, int len) {
                 strncpy(hex,++pin,2);
                 strncpy(tmp_hex,hex,2);
                 pin ++;
-                escape_char = easou_to_char(hex);
+                escape_char = to_char(hex);
                 if(escape_char == 0) {
                     pin--;
                     path[pout++]='%';
@@ -709,7 +709,7 @@ static int easou_single_path_ex_nointer(char *path, int len) {
                 strncpy(hex,++pin,2);
                 strncpy(tmp_hex,hex,2);
                 pin ++;
-                escape_char = easou_to_char(hex);
+                escape_char = to_char(hex);
                 if(escape_char == 0) {
                     pin--;
                     path[pout++]='%';
@@ -738,16 +738,16 @@ static int easou_single_path_ex_nointer(char *path, int len) {
     if (pout > len )
         return 0;
     if(space_flag == 1) {
-        return easou_space_escape_path(path,MAX_PATH_LEN);;
+        return space_escape_path(path,MAX_PATH_LEN);;
     } else {
         return 1;
     }
     //check abs_path over
 }
 
-int easou_single_path_ex(char *path) {
-    int len = easou_delete_inter(path); //delete '\r' '\n';
-    return easou_single_path_ex_nointer(path, len);
+int single_path_ex(char *path) {
+    int len = delete_inter(path); //delete '\r' '\n';
+    return single_path_ex_nointer(path, len);
 }
 
 void replace_slash(char *path) {
@@ -768,7 +768,7 @@ void replace_slash(char *path) {
 }
 
 
-void easou_normalize_path(char *path) {
+void normalize_path(char *path) {
     char *p, *q;
     char tmp[MAX_URL_LEN];
     char *pend;
@@ -850,7 +850,7 @@ void easou_normalize_path(char *path) {
 
 
 //parse a url and extract site name, port and others.
-int easou_parse_url(const char *input, char *site, char *port, char *path)
+int parse_url(const char *input, char *site, char *port, char *path)
 {
 	char tmp[MAX_URL_LEN];
 	char *pin = tmp;
@@ -859,12 +859,12 @@ int easou_parse_url(const char *input, char *site, char *port, char *path)
 
 	if (strlen(input) >= MAX_URL_LEN)
 	{
-		//Warn("easou_parse_url: url is too long");
+		//Warn("parse_url: url is too long");
 		return 0;
 	}
 
 	strcpy(tmp, input);
-	easou_delete_inter(tmp);
+	delete_inter(tmp);
 
 	if (strncasecmp(pin, "http://", 7) == 0)
 		pin += 7;
@@ -886,7 +886,7 @@ int easou_parse_url(const char *input, char *site, char *port, char *path)
 			path[0] = '\0';
 			if (strlen(p_query) < MAX_PATH_LEN - 1)
 			{
-				easou_strlcpy(path, "/", 2);
+				strlcpy(path, "/", 2);
 				strcat(path, p_query);
 			}
 			else
@@ -954,31 +954,31 @@ int easou_parse_url(const char *input, char *site, char *port, char *path)
 		}
 		else
 		{
-			//Warn("easou_parse_url: site name too long or empty url[%s]", pin);
+			//Warn("parse_url: site name too long or empty url[%s]", pin);
 			return 0;
 		}
 	}
 	return 1;
 }
 
-char *easou_get_path(const char *url, char *path)
+char *get_path(const char *url, char *path)
 {
-	if (easou_parse_url(url, NULL, NULL, path) == 0)
+	if (parse_url(url, NULL, NULL, path) == 0)
 		return NULL;
 	return path;
 }
 
-char *easou_get_site(const char *url, char *site)
+char *get_site(const char *url, char *site)
 {
-	if (easou_parse_url(url, site, NULL, NULL) == 0)
+	if (parse_url(url, site, NULL, NULL) == 0)
 		return NULL;
 	return site;
 }
 
-int easou_get_port(const char* url, int* pport)
+int get_port(const char* url, int* pport)
 {
 	char strport[MAX_PORT_LEN];
-	if (easou_parse_url(url, NULL, strport, NULL) == 1)
+	if (parse_url(url, NULL, strport, NULL) == 1)
 	{
 		if (strlen(strport) == 0)
 		{
@@ -995,7 +995,7 @@ int easou_get_port(const char* url, int* pport)
 		return 0;
 }
 
-void easou_get_static_part(const char *url, char *staticurl)
+void get_static_part(const char *url, char *staticurl)
 {
 	char *p;
 	char buffer[MAX_URL_LEN];
@@ -1017,7 +1017,7 @@ void easou_get_static_part(const char *url, char *staticurl)
 	strcpy(staticurl, buffer);
 }
 
-const int easou_dyn_char_table[256]= {
+const int dyn_char_table[256]= {
     0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
     1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
     1,1,1,1,1,1,0,1,1,1,0,1,1,1,1,1,
@@ -1036,11 +1036,11 @@ const int easou_dyn_char_table[256]= {
     1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
 };
 
-int easou_isdyn(const char* str)
+int isdyn(const char* str)
 {
 	unsigned char* pch = (unsigned char*) str;
 
-	while (easou_dyn_char_table[*pch++])
+	while (dyn_char_table[*pch++])
 	{
 	}
 	return *(--pch);
@@ -1207,7 +1207,7 @@ static char URL_PARAM[256] = {
     1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
 };
 
-int easou_check_url(char *url)
+int check_url(char *url)
 {
 	char *pin;
 	char *pout;
@@ -1216,7 +1216,7 @@ int easou_check_url(char *url)
 	int dotcount = 0;
 	char *url_start;
 	int space_flag = 0;
-	int len = easou_delete_inter(url); //delete \r\n;
+	int len = delete_inter(url); //delete \r\n;
 	if (strncasecmp(url, "http://", 7) == 0)
 	{
 		pin = url + 7;
@@ -1242,7 +1242,7 @@ int easou_check_url(char *url)
 			{
 				if (pin[1] != '\0' && pin[2] != '\0')
 				{
-					unsigned char escape_char = easou_to_char(pin + 1);
+					unsigned char escape_char = to_char(pin + 1);
 					if (URL_LET_DIG_HY[escape_char])
 					{
 						if (URL_UP_LET[escape_char])
@@ -1288,7 +1288,7 @@ int easou_check_url(char *url)
 				{
 					if (pin[1] != '\0' && pin[2] != '\0')
 					{
-						unsigned char escape_char = easou_to_char(pin + 1);
+						unsigned char escape_char = to_char(pin + 1);
 						if (URL_LET_DIG_HY[escape_char] == 1)
 						{
 							if (URL_UP_LET[escape_char])
@@ -1394,14 +1394,14 @@ int easou_check_url(char *url)
 		if (pout - url > len)
 			return 0;
 		if (space_flag == 1)
-			return easou_space_escape(url, MAX_URL_LEN, MAX_SITE_LEN, MAX_PATH_LEN);
+			return space_escape(url, MAX_URL_LEN, MAX_SITE_LEN, MAX_PATH_LEN);
 		else
 			return 1;
 	}
 	else if (*pin != 0)
 		return 0;
 	if (space_flag == 1)
-		return easou_space_escape(url, MAX_URL_LEN, MAX_SITE_LEN, MAX_PATH_LEN);
+		return space_escape(url, MAX_URL_LEN, MAX_SITE_LEN, MAX_PATH_LEN);
 	else
 		return 1;
 	//check abs_path over
@@ -1484,7 +1484,7 @@ int check_hostname(char *host_name)
  * return : non-zero if is
  *        : 0 if not
  */
-int easou_is_dotip(const char *sitename)
+int is_dotip(const char *sitename)
 {
 	in_addr l_inp;
 	int ret = inet_aton(sitename, &l_inp);
@@ -1493,13 +1493,13 @@ int easou_is_dotip(const char *sitename)
 
 const int IGNORE_COUNT=47;
 
-typedef struct easou_ilist
+typedef struct ilist
 {
 	char name[36];
 	int length;
-} easou_ilist_t;
+} ilist_t;
 
-const easou_ilist_t easou_ignore_list[IGNORE_COUNT]= {
+const ilist_t ignore_list[IGNORE_COUNT]= {
     {"ac.",3},
     {"ah.",3},
     {"bj.",3},
@@ -1549,7 +1549,7 @@ const easou_ilist_t easou_ignore_list[IGNORE_COUNT]= {
     {"zj.",3}
 };
 
-int easou_is_ignore(const char* slip)
+int is_ignore(const char* slip)
 {
 	int head = 0;
 	int tail = IGNORE_COUNT - 1;
@@ -1558,7 +1558,7 @@ int easou_is_ignore(const char* slip)
 	while (head <= tail)
 	{
 		cur = (head + tail) / 2;
-		ret = strncmp(slip, easou_ignore_list[cur].name, easou_ignore_list[cur].length);
+		ret = strncmp(slip, ignore_list[cur].name, ignore_list[cur].length);
 		if (ret < 0)
 		{
 			tail = cur - 1;
@@ -1586,13 +1586,13 @@ int easou_is_ignore(const char* slip)
  *          -3 if the site have no dot
  *          -1 unknown error
  */
-int easou_fetch_trunk(const char* site, char *trunk, int size)
+int fetch_trunk(const char* site, char *trunk, int size)
 {
 	const char* pfirst;
 	const char* ptail;
 	int len;
 
-	if (easou_is_dotip(site))
+	if (is_dotip(site))
 	{
 		strncpy(trunk, site, size - 1);
 		trunk[size - 1] = 0;
@@ -1609,7 +1609,7 @@ int easou_fetch_trunk(const char* site, char *trunk, int size)
 	{
 		if ((pfirst < site) || (*pfirst == '.'))
 		{
-			if (easou_is_ignore(pfirst + 1) == 0)
+			if (is_ignore(pfirst + 1) == 0)
 			{
 				len = size - 1 > ptail - pfirst - 1 ? ptail - pfirst - 1 : size - 1;
 				memcpy(trunk, pfirst + 1, len);
@@ -1626,58 +1626,7 @@ int easou_fetch_trunk(const char* site, char *trunk, int size)
 	return -2;
 }
 
-/*
- * fetch the main domain from the sitename, if is a dotip, ip in domain,
- * if have no domain,return the whole sitename.
- * in-argu : site : the site name
- * out-argu : domain : the main domain of the sitename
- * in-argu : size : the buffer size of the trunk
- * return : the pointer to the domain in the site buffer
- *        : NULL if site format error.
- */
-const char* easou_fetch_maindomain(const char* site, char *domain, int size)
-{
-	const char* pfirst;
-	const char* ptail;
-	int len;
-
-	if (easou_is_dotip(site))
-	{
-		strncpy(domain, site, size - 1);
-		domain[size - 1] = 0;
-		return site;
-	}
-
-	ptail = strrchr(site, '.');
-	if (ptail == NULL)
-	{
-		goto end;
-	}
-	pfirst = ptail - 1;
-	while (pfirst >= site - 1)
-	{
-		if ((pfirst == site - 1) || (*pfirst == '.'))
-		{
-			if (easou_is_ignore(pfirst + 1) == 0)
-			{
-				len = size - 1 > ptail - pfirst - 1 ? ptail - pfirst - 1 : size - 1;
-				memcpy(domain, pfirst + 1, len);
-				domain[len] = 0;
-				return pfirst + 1;
-			}
-			else
-			{
-				ptail = pfirst;
-			}
-		}
-		pfirst--;
-	}
-	end: strncpy(domain, site, size - 1);
-	domain[size - 1] = 0;
-	return site;
-}
-
-int easou_isnormalized_url(const char *url)
+int isnormalized_url(const char *url)
 {
 	const char *pin;
 	char port[6];
@@ -1800,7 +1749,7 @@ int easou_isnormalized_url(const char *url)
 	//check abs_path over
 }
 
-int easou_normalize_site(char *site)
+int normalize_site(char *site)
 {
 	int dotcount = 0;
 	char *pin = site;
@@ -1818,7 +1767,7 @@ int easou_normalize_site(char *site)
 			{
 				if (pin[1] != '\0' && pin[2] != '\0')
 				{
-					unsigned char escape_char = easou_to_char(pin + 1);
+					unsigned char escape_char = to_char(pin + 1);
 					if (URL_LET_DIG_HY[escape_char])
 					{
 						if (URL_UP_LET[escape_char])
@@ -1864,7 +1813,7 @@ int easou_normalize_site(char *site)
 				{
 					if (pin[1] != '\0' && pin[2] != '\0')
 					{
-						unsigned char escape_char = easou_to_char(pin + 1);
+						unsigned char escape_char = to_char(pin + 1);
 						if (URL_LET_DIG_HY[escape_char] == 1)
 						{
 							if (URL_UP_LET[escape_char])
@@ -1904,10 +1853,10 @@ int easou_normalize_site(char *site)
 	return 1;
 }
 
-int easou_normalize_site_special_for_ps_20101026(char *site)
+int normalize_site_special_for_ps_20101026(char *site)
 {
 	//加入这个函数是一个很扯淡的原因
-	//因为在easou_dict里面的create_url_sign的话依赖了easou_normalize_url_ex2
+	//因为在dict里面的create_url_sign的话依赖了normalize_url_ex2
 	//而在normalize_url_ex2里面依赖修改这个函数的行为
 	//所以我们需要增加这个接口函数.
 	//相对于url_normalize_site部分的变动会使用(MODIFY)标记.
@@ -1928,7 +1877,7 @@ int easou_normalize_site_special_for_ps_20101026(char *site)
 			{
 				if (pin[1] != '\0' && pin[2] != '\0')
 				{
-					unsigned char escape_char = easou_to_char(pin + 1);
+					unsigned char escape_char = to_char(pin + 1);
 					if (URL_LET_DIG_HY[escape_char])
 					{
 						if (URL_UP_LET[escape_char])
@@ -1981,7 +1930,7 @@ int easou_normalize_site_special_for_ps_20101026(char *site)
 				{
 					if (pin[1] != '\0' && pin[2] != '\0')
 					{
-						unsigned char escape_char = easou_to_char(pin + 1);
+						unsigned char escape_char = to_char(pin + 1);
 						if (URL_LET_DIG_HY[escape_char] == 1)
 						{
 							if (URL_UP_LET[escape_char])
@@ -2028,7 +1977,7 @@ int easou_normalize_site_special_for_ps_20101026(char *site)
 }
 
 
-int easou_normalize_port(char *port)
+int normalize_port(char *port)
 {
 	char *pin = port;
 	unsigned uport;
@@ -2057,27 +2006,27 @@ int easou_normalize_port(char *port)
 	return 1;
 }
 
-int easou_normalize_url(const char* url, char* buf)
+int normalize_url(const char* url, char* buf)
 {
 	char site[MAX_SITE_LEN];
 	char port[MAX_PORT_LEN];
 	char path[MAX_PATH_LEN];
 
-	if (easou_parse_url(url, site, port, path) == 0)
+	if (parse_url(url, site, port, path) == 0)
 		return 0;
 
-	if (easou_normalize_site(site) == 0)
+	if (normalize_site(site) == 0)
 		return 0;
-	if (easou_normalize_port(port) == 0)
+	if (normalize_port(port) == 0)
 		return 0;
-	//这里调用easou_single_path_nointer而不调用easou_single_path
-	//easou_single_path_nointer里没有easou_delete_inter操作,在easou_parse_url
-	//里面已经作过一次easou_parse_url这里没必要再作一次
-	//easou_single_path为了支持外部程序中直接调用easou_single_path对未经过easou_parse_url
-	//处理的path进行处理，加上了easou_delete_inter
-	if (easou_single_path_nointer(path) == 0)
+	//这里调用single_path_nointer而不调用single_path
+	//single_path_nointer里没有delete_inter操作,在parse_url
+	//里面已经作过一次parse_url这里没必要再作一次
+	//single_path为了支持外部程序中直接调用single_path对未经过parse_url
+	//处理的path进行处理，加上了delete_inter
+	if (single_path_nointer(path) == 0)
 		return 0;
-	easou_normalize_path(path);
+	normalize_path(path);
 
 	if (port[0] == '\0')
 	{
@@ -2090,28 +2039,28 @@ int easou_normalize_url(const char* url, char* buf)
 	return 1;
 }
 
-//int easou_parse_url(char *input,char *site,char *port,char *path) {
-//    return easou_parse_url((const char*)input, site, port, path);
+//int parse_url(char *input,char *site,char *port,char *path) {
+//    return parse_url((const char*)input, site, port, path);
 //}
 //
-//char *easou_get_path(char *url, char *path) {
-//    return easou_get_path((const char *)url, path);
+//char *get_path(char *url, char *path) {
+//    return get_path((const char *)url, path);
 //}
 //
-//char *easou_get_site(char *url, char *site) {
-//    return easou_get_site((const char *)url, site);
+//char *get_site(char *url, char *site) {
+//    return get_site((const char *)url, site);
 //}
 //
-//int easou_get_port(char* url,int* pport) {
-//    return easou_get_port((const char* )url, pport);
+//int get_port(char* url,int* pport) {
+//    return get_port((const char* )url, pport);
 //}
 //
-//void easou_get_static_part(char *url, char *staticurl) {
-//    easou_get_static_part((const char *)url, staticurl);
+//void get_static_part(char *url, char *staticurl) {
+//    get_static_part((const char *)url, staticurl);
 //}
 
 
-int easou_parse_url_ex(const char *input, char *site,size_t site_size,
+int parse_url_ex(const char *input, char *site,size_t site_size,
                     char *port, size_t port_size, char *path,
 		size_t max_path_size)
 {
@@ -2122,12 +2071,12 @@ int easou_parse_url_ex(const char *input, char *site,size_t site_size,
 
 	if (strlen(input) >= MAX_URL_LEN)
 	{
-//        printf("easou_parse_url_ex: url is too long");
+//        printf("parse_url_ex: url is too long");
 		return 0;
 	}
 
 	strcpy(tmp, input);
-	easou_delete_inter(tmp);
+	delete_inter(tmp);
 
 	if (strncasecmp(pin, "http://", 7) == 0)
 		pin += 7;
@@ -2216,7 +2165,7 @@ int easou_parse_url_ex(const char *input, char *site,size_t site_size,
 		}
 		else
 		{
-//            printf("easou_parse_url_ex: site name too long or empty url[%s]",pin);
+//            printf("parse_url_ex: site name too long or empty url[%s]",pin);
 			return 0;
 		}
 
@@ -2225,24 +2174,24 @@ int easou_parse_url_ex(const char *input, char *site,size_t site_size,
 
 }
 
-char *easou_get_path_ex(const char *url, char *path, size_t path_size)
+char *get_path_ex(const char *url, char *path, size_t path_size)
 {
-	if (easou_parse_url_ex(url, NULL, 0, NULL, 0, path, path_size) == 0)
+	if (parse_url_ex(url, NULL, 0, NULL, 0, path, path_size) == 0)
 		return NULL;
 	return path;
 }
 
-char *easou_get_site_ex(const char *url, char *site, size_t site_size)
+char *get_site_ex(const char *url, char *site, size_t site_size)
 {
-	if (easou_parse_url_ex(url, site, site_size, NULL, 0, NULL, 0) == 0)
+	if (parse_url_ex(url, site, site_size, NULL, 0, NULL, 0) == 0)
 		return NULL;
 	return site;
 }
 
-int easou_get_port_ex(const char* url, int* pport)
+int get_port_ex(const char* url, int* pport)
 {
 	char strport[MAX_PORT_LEN];
-	if (easou_parse_url_ex(url, NULL, 0, strport, MAX_PORT_LEN, NULL, 0) == 1)
+	if (parse_url_ex(url, NULL, 0, strport, MAX_PORT_LEN, NULL, 0) == 1)
 	{
 		if (strlen(strport) == 0)
 		{
@@ -2259,27 +2208,27 @@ int easou_get_port_ex(const char* url, int* pport)
 		return 0;
 }
 
-int easou_normalize_url_ex(const char* url, char* buf, size_t buf_size)
+int normalize_url_ex(const char* url, char* buf, size_t buf_size)
 {
 	char site[MAX_SITE_LEN];
 	char port[MAX_PORT_LEN];
 	char path[MAX_PATH_LEN];
 
-	if (easou_parse_url_ex(url, site, MAX_SITE_LEN, port, MAX_PORT_LEN, path, MAX_PATH_LEN) == 0)
+	if (parse_url_ex(url, site, MAX_SITE_LEN, port, MAX_PORT_LEN, path, MAX_PATH_LEN) == 0)
 		return 0;
 
-	if (easou_normalize_site(site) == 0)
+	if (normalize_site(site) == 0)
 		return 0;
-	if (easou_normalize_port(port) == 0)
+	if (normalize_port(port) == 0)
 		return 0;
-	//这里调用easou_single_path_ex_nointer而不调用easou_single_path_ex
-	//easou_single_path_ex_nointer里没有easou_delete_inter操作,在easou_parse_url_ex
-	//里面已经作过一次easou_parse_url_ex这里没必要再作一次
-	//easou_single_path_ex为了支持外部程序中直接调用easou_single_path_ex对未经过easou_parse_url_ex
-	//处理的path进行处理，加上了easou_delete_inter
-	if (easou_single_path_ex_nointer(path, MAX_PATH_LEN) == 0)
+	//这里调用single_path_ex_nointer而不调用single_path_ex
+	//single_path_ex_nointer里没有delete_inter操作,在parse_url_ex
+	//里面已经作过一次parse_url_ex这里没必要再作一次
+	//single_path_ex为了支持外部程序中直接调用single_path_ex对未经过parse_url_ex
+	//处理的path进行处理，加上了delete_inter
+	if (single_path_ex_nointer(path, MAX_PATH_LEN) == 0)
 		return 0;
-	easou_normalize_path_ex(path);
+	normalize_path_ex(path);
 
 	if (port[0] == '\0')
 	{
@@ -2292,7 +2241,7 @@ int easou_normalize_url_ex(const char* url, char* buf, size_t buf_size)
 	return 1;
 }
 
-void easou_get_static_part_ex(const char *url, char *staticurl, size_t staticurl_size)
+void get_static_part_ex(const char *url, char *staticurl, size_t staticurl_size)
 {
 	char *p;
 	char buffer[MAX_URL_LEN];
@@ -2313,7 +2262,7 @@ void easou_get_static_part_ex(const char *url, char *staticurl, size_t staticurl
 	snprintf(staticurl, staticurl_size, "%s", buffer);
 }
 
-int easou_isnormalized_url_ex(const char *url)
+int isnormalized_url_ex(const char *url)
 {
 	const char *pin;
 	char port[6];
@@ -2436,7 +2385,7 @@ int easou_isnormalized_url_ex(const char *url)
 	//check abs_path over
 }
 
-void easou_normalize_path_ex(char *path)
+void normalize_path_ex(char *path)
 {
 	char *p, *q;
 	char tmp[MAX_URL_LEN];
@@ -2533,7 +2482,7 @@ void easou_normalize_path_ex(char *path)
 	return;
 }
 
-int easou_check_url_ex(char *url)
+int check_url_ex(char *url)
 {
 	char *pin;
 	char *pout;
@@ -2543,7 +2492,7 @@ int easou_check_url_ex(char *url)
 	char *url_start;
 	int len;
 	int space_flag = 0;
-	len = easou_delete_inter(url); //delete \r\n;
+	len = delete_inter(url); //delete \r\n;
 	if (strncasecmp(url, "http://", 7) == 0)
 	{
 		pin = url + 7;
@@ -2569,7 +2518,7 @@ int easou_check_url_ex(char *url)
 			{
 				if (pin[1] != '\0' && pin[2] != '\0')
 				{
-					unsigned char escape_char = easou_to_char(pin + 1);
+					unsigned char escape_char = to_char(pin + 1);
 					if (URL_LET_DIG_HY[escape_char])
 					{
 						if (URL_UP_LET[escape_char])
@@ -2615,7 +2564,7 @@ int easou_check_url_ex(char *url)
 				{
 					if (pin[1] != '\0' && pin[2] != '\0')
 					{
-						unsigned char escape_char = easou_to_char(pin + 1);
+						unsigned char escape_char = to_char(pin + 1);
 						if (URL_LET_DIG_HY[escape_char] == 1)
 						{
 							if (URL_UP_LET[escape_char])
@@ -2721,7 +2670,7 @@ int easou_check_url_ex(char *url)
 		if (pout - url > len)
 			return 0;
 		if (space_flag == 1)
-			return easou_space_escape(url, MAX_URL_LEN, MAX_SITE_LEN, MAX_PATH_LEN);
+			return space_escape(url, MAX_URL_LEN, MAX_SITE_LEN, MAX_PATH_LEN);
 		else
 			return 1;
 	}
@@ -2729,7 +2678,7 @@ int easou_check_url_ex(char *url)
 		return 0;
 	*pout = '\0';
 	if (space_flag == 1)
-		return easou_space_escape(url, MAX_URL_LEN, MAX_SITE_LEN, MAX_PATH_LEN);
+		return space_escape(url, MAX_URL_LEN, MAX_SITE_LEN, MAX_PATH_LEN);
 	else
 		return 1;
 
@@ -2739,9 +2688,9 @@ int easou_check_url_ex(char *url)
 //##########################################################
 //##########################################################
 //##########################################################
-//the difference to 'easou_parse_url_ex' is
+//the difference to 'parse_url_ex' is
 //MAX_URL_LEN->MAX_URL_LEN
-int easou_parse_url_ex2(const char *input, char *site,size_t site_size,
+int parse_url_ex2(const char *input, char *site,size_t site_size,
                      char *port, size_t port_size, char *path,
 		size_t max_path_size)
 {
@@ -2752,12 +2701,12 @@ int easou_parse_url_ex2(const char *input, char *site,size_t site_size,
 
 	if (strlen(input) >= MAX_URL_LEN)
 	{
-//        printf("easou_parse_url_ex2: url is too long");
+//        printf("parse_url_ex2: url is too long");
 		return 0;
 	}
 
 	strcpy(tmp, input);
-	easou_delete_inter(tmp);
+	delete_inter(tmp);
 
 	if (strncasecmp(pin, "http://", 7) == 0)
 		pin += 7;
@@ -2778,7 +2727,7 @@ int easou_parse_url_ex2(const char *input, char *site,size_t site_size,
 			path[0] = '\0';
 			if (strlen(p_query) < max_path_size - 1)
 			{
-				easou_strlcpy(path, "/", 2);
+				strlcpy(path, "/", 2);
 				strcat(path, p_query);
 			}
 			else
@@ -2847,7 +2796,7 @@ int easou_parse_url_ex2(const char *input, char *site,size_t site_size,
 		}
 		else
 		{
-//            printf("easou_parse_url_ex2: site name too long or empty url[%s]",pin);
+//            printf("parse_url_ex2: site name too long or empty url[%s]",pin);
 			return 0;
 		}
 
@@ -2855,24 +2804,24 @@ int easou_parse_url_ex2(const char *input, char *site,size_t site_size,
 	return 1;
 }
 
-char *easou_get_path_ex2(const char *url, char *path, size_t path_size)
+char *get_path_ex2(const char *url, char *path, size_t path_size)
 {
-	if (easou_parse_url_ex2(url, NULL, 0, NULL, 0, path, path_size) == 0)
+	if (parse_url_ex2(url, NULL, 0, NULL, 0, path, path_size) == 0)
 		return NULL;
 	return path;
 }
 
-char *easou_get_site_ex2(const char *url, char *site, size_t site_size)
+char *get_site_ex2(const char *url, char *site, size_t site_size)
 {
-	if (easou_parse_url_ex2(url, site, site_size, NULL, 0, NULL, 0) == 0)
+	if (parse_url_ex2(url, site, site_size, NULL, 0, NULL, 0) == 0)
 		return NULL;
 	return site;
 }
 
-int easou_get_port_ex2(const char* url, int* pport)
+int get_port_ex2(const char* url, int* pport)
 {
 	char strport[MAX_PORT_LEN];
-	if (easou_parse_url_ex2(url, NULL, 0, strport, MAX_PORT_LEN, NULL, 0) == 1)
+	if (parse_url_ex2(url, NULL, 0, strport, MAX_PORT_LEN, NULL, 0) == 1)
 	{
 		if (strlen(strport) == 0)
 		{
@@ -2890,7 +2839,7 @@ int easou_get_port_ex2(const char* url, int* pport)
 }
 
 //escape sapce of whole url...and check the site and path length..
-static int easou_space_escape_ex2(char * url, int max_url_len, int max_site_len, int max_path_len)
+static int space_escape_ex2(char * url, int max_url_len, int max_site_len, int max_path_len)
 {
 	char * pin = url;
 	int pout = 0;
@@ -2961,7 +2910,7 @@ static int easou_space_escape_ex2(char * url, int max_url_len, int max_site_len,
 	return 1;
 }
 
-static int easou_space_escape_path_ex2(char * path, int max_path_len)
+static int space_escape_path_ex2(char * path, int max_path_len)
 {
 	char * pin = path;
 	int pout = 0;
@@ -2992,7 +2941,7 @@ static int easou_space_escape_path_ex2(char * path, int max_path_len)
 	return 1;
 }
 
-static int easou_single_path_ex2_nointer(char *path, int len)
+static int single_path_ex2_nointer(char *path, int len)
 {
 	char *pin;
 	int pout;
@@ -3018,7 +2967,7 @@ static int easou_single_path_ex2_nointer(char *path, int len)
 			strncpy(hex, ++pin, 2);
 			strncpy(tmp_hex, hex, 2);
 			pin++;
-			escape_char = easou_to_char(hex);
+			escape_char = to_char(hex);
 			if (escape_char == 0)
 			{
 				pin--;
@@ -3055,7 +3004,7 @@ static int easou_single_path_ex2_nointer(char *path, int len)
 				strncpy(hex, ++pin, 2);
 				strncpy(tmp_hex, hex, 2);
 				pin++;
-				escape_char = easou_to_char(hex);
+				escape_char = to_char(hex);
 				if (escape_char == 0)
 				{
 					pin--;
@@ -3095,7 +3044,7 @@ static int easou_single_path_ex2_nointer(char *path, int len)
 				strncpy(hex, ++pin, 2);
 				strncpy(tmp_hex, hex, 2);
 				pin++;
-				escape_char = easou_to_char(hex);
+				escape_char = to_char(hex);
 				if (escape_char == 0)
 				{
 					pin--;
@@ -3134,7 +3083,7 @@ static int easou_single_path_ex2_nointer(char *path, int len)
 				strncpy(hex, ++pin, 2);
 				strncpy(tmp_hex, hex, 2);
 				pin++;
-				escape_char = easou_to_char(hex);
+				escape_char = to_char(hex);
 				if (escape_char == 0)
 				{
 					pin--;
@@ -3168,7 +3117,7 @@ static int easou_single_path_ex2_nointer(char *path, int len)
 		return 0;
 	if (space_flag == 1)
 	{
-		return easou_space_escape_path_ex2(path, MAX_PATH_LEN);;
+		return space_escape_path_ex2(path, MAX_PATH_LEN);;
 	}
 	else
 	{
@@ -3180,7 +3129,7 @@ static int easou_single_path_ex2_nointer(char *path, int len)
 
 //加入这个函数的原因是因为.
 //ps想不省去fragment来进行归一化.
-static int easou_single_path_ex2_nointer_special_for_ps_20110221(char *path, int len)
+static int single_path_ex2_nointer_special_for_ps_20110221(char *path, int len)
 {
 	char *pin;
 	int pout;
@@ -3206,7 +3155,7 @@ static int easou_single_path_ex2_nointer_special_for_ps_20110221(char *path, int
 			strncpy(hex, ++pin, 2);
 			strncpy(tmp_hex, hex, 2);
 			pin++;
-			escape_char = easou_to_char(hex);
+			escape_char = to_char(hex);
 			if (escape_char == 0)
 			{
 				pin--;
@@ -3243,7 +3192,7 @@ static int easou_single_path_ex2_nointer_special_for_ps_20110221(char *path, int
 				strncpy(hex, ++pin, 2);
 				strncpy(tmp_hex, hex, 2);
 				pin++;
-				escape_char = easou_to_char(hex);
+				escape_char = to_char(hex);
 				if (escape_char == 0)
 				{
 					pin--;
@@ -3283,7 +3232,7 @@ static int easou_single_path_ex2_nointer_special_for_ps_20110221(char *path, int
 				strncpy(hex, ++pin, 2);
 				strncpy(tmp_hex, hex, 2);
 				pin++;
-				escape_char = easou_to_char(hex);
+				escape_char = to_char(hex);
 				if (escape_char == 0)
 				{
 					pin--;
@@ -3322,7 +3271,7 @@ static int easou_single_path_ex2_nointer_special_for_ps_20110221(char *path, int
 				strncpy(hex, ++pin, 2);
 				strncpy(tmp_hex, hex, 2);
 				pin++;
-				escape_char = easou_to_char(hex);
+				escape_char = to_char(hex);
 				if (escape_char == 0)
 				{
 					pin--;
@@ -3366,7 +3315,7 @@ static int easou_single_path_ex2_nointer_special_for_ps_20110221(char *path, int
 	path[pout] = 0;
 	if (space_flag == 1)
 	{
-		return easou_space_escape_path_ex2(path, MAX_PATH_LEN);;
+		return space_escape_path_ex2(path, MAX_PATH_LEN);;
 	}
 	else
 	{
@@ -3375,27 +3324,27 @@ static int easou_single_path_ex2_nointer_special_for_ps_20110221(char *path, int
 	//check abs_path over
 }
 
-int easou_normalize_url_ex2(const char* url, char* buf, size_t buf_size)
+int normalize_url_ex2(const char* url, char* buf, size_t buf_size)
 {
 	char site[MAX_SITE_LEN];
 	char port[MAX_PORT_LEN];
 	char path[MAX_PATH_LEN];
 
-	if (easou_parse_url_ex2(url, site, MAX_SITE_LEN, port, MAX_PORT_LEN, path, MAX_PATH_LEN) == 0)
+	if (parse_url_ex2(url, site, MAX_SITE_LEN, port, MAX_PORT_LEN, path, MAX_PATH_LEN) == 0)
 		return 0;
 
-	if (easou_normalize_site(site) == 0)
+	if (normalize_site(site) == 0)
 		return 0;
-	if (easou_normalize_port(port) == 0)
+	if (normalize_port(port) == 0)
 		return 0;
-	//这里调用easou_single_path_ex2_nointer而不调用easou_single_path_ex2
-	//easou_single_path_ex2_nointer里没有easou_delete_inter操作,在easou_parse_url_ex2
-	//里面已经作过一次easou_parse_url_ex2这里没必要再作一次
-	//easou_single_path_ex2为了支持外部程序中直接调用easou_single_path_ex2对未经过easou_parse_url_ex2
-	//处理的path进行处理，加上了easou_delete_inter
-	if (easou_single_path_ex2_nointer(path, MAX_PATH_LEN) == 0)
+	//这里调用single_path_ex2_nointer而不调用single_path_ex2
+	//single_path_ex2_nointer里没有delete_inter操作,在parse_url_ex2
+	//里面已经作过一次parse_url_ex2这里没必要再作一次
+	//single_path_ex2为了支持外部程序中直接调用single_path_ex2对未经过parse_url_ex2
+	//处理的path进行处理，加上了delete_inter
+	if (single_path_ex2_nointer(path, MAX_PATH_LEN) == 0)
 		return 0;
-	easou_normalize_path_ex2(path);
+	normalize_path_ex2(path);
 
 	if (port[0] == '\0')
 	{
@@ -3408,30 +3357,30 @@ int easou_normalize_url_ex2(const char* url, char* buf, size_t buf_size)
 	return 1;
 }
 
-int easou_normalize_url_ex2_special_for_ps_20110221(const char* url, char* buf, size_t buf_size)
+int normalize_url_ex2_special_for_ps_20110221(const char* url, char* buf, size_t buf_size)
 {
 	//加入这个函数的原因
-	//可以参看 easou_normalize_url_ex2_special_for_ps_20101026 这个函数.
+	//可以参看 normalize_url_ex2_special_for_ps_20101026 这个函数.
 	char site[MAX_SITE_LEN];
 	char port[MAX_PORT_LEN];
 	char path[MAX_PATH_LEN];
 
-	if (easou_parse_url_ex2(url, site, MAX_SITE_LEN, port, MAX_PORT_LEN, path, MAX_PATH_LEN) == 0)
+	if (parse_url_ex2(url, site, MAX_SITE_LEN, port, MAX_PORT_LEN, path, MAX_PATH_LEN) == 0)
 		return 0;
 
-	if (easou_normalize_site_special_for_ps_20101026(site) == 0)
+	if (normalize_site_special_for_ps_20101026(site) == 0)
 		return 0;
-	if (easou_normalize_port(port) == 0)
+	if (normalize_port(port) == 0)
 		return 0;
-	//这里调用easou_single_path_ex2_nointer而不调用easou_single_path_ex2
-	//easou_single_path_ex2_nointer里没有easou_delete_inter操作,在easou_parse_url_ex2
-	//里面已经作过一次easou_parse_url_ex2这里没必要再作一次
-	//easou_single_path_ex2为了支持外部程序中直接调用easou_single_path_ex2对未经过easou_parse_url_ex2
-	//处理的path进行处理，加上了easou_delete_inter
+	//这里调用single_path_ex2_nointer而不调用single_path_ex2
+	//single_path_ex2_nointer里没有delete_inter操作,在parse_url_ex2
+	//里面已经作过一次parse_url_ex2这里没必要再作一次
+	//single_path_ex2为了支持外部程序中直接调用single_path_ex2对未经过parse_url_ex2
+	//处理的path进行处理，加上了delete_inter
 	//这里需要把fragment也作为归一化的内容里面去.
-	if (easou_single_path_ex2_nointer_special_for_ps_20110221(path, MAX_PATH_LEN) == 0)
+	if (single_path_ex2_nointer_special_for_ps_20110221(path, MAX_PATH_LEN) == 0)
 		return 0;
-	easou_normalize_path_ex2(path);
+	normalize_path_ex2(path);
 
 	if (port[0] == '\0')
 	{
@@ -3444,7 +3393,7 @@ int easou_normalize_url_ex2_special_for_ps_20110221(const char* url, char* buf, 
 	return 1;
 }
 
-void easou_get_static_part_ex2(const char *url, char *staticurl, size_t staticurl_size)
+void get_static_part_ex2(const char *url, char *staticurl, size_t staticurl_size)
 {
 	char *p;
 	char buffer[MAX_URL_LEN];
@@ -3466,7 +3415,7 @@ void easou_get_static_part_ex2(const char *url, char *staticurl, size_t staticur
 }
 
 //actually not modified ...
-int easou_isnormalized_url_ex2(const char *url)
+int isnormalized_url_ex2(const char *url)
 {
 	const char *pin;
 	char port[6];
@@ -3589,7 +3538,7 @@ int easou_isnormalized_url_ex2(const char *url)
 	//check abs_path over
 }
 
-void easou_normalize_path_ex2(char *path)
+void normalize_path_ex2(char *path)
 {
 	char *p, *q;
 	char tmp[MAX_URL_LEN];
@@ -3686,13 +3635,13 @@ void easou_normalize_path_ex2(char *path)
 	return;
 }
 
-int easou_single_path_ex2(char *path)
+int single_path_ex2(char *path)
 {
-	int len = easou_delete_inter(path); //delete '\r' '\n';
-	return easou_single_path_ex2_nointer(path, len);
+	int len = delete_inter(path); //delete '\r' '\n';
+	return single_path_ex2_nointer(path, len);
 }
 
-int easou_check_url_ex2(char *url)
+int check_url_ex2(char *url)
 {
 	char *pin;
 	char *pout;
@@ -3702,7 +3651,7 @@ int easou_check_url_ex2(char *url)
 	char *url_start;
 	int len;
 	int space_flag = 0;
-	len = easou_delete_inter(url); //delete \r\n;
+	len = delete_inter(url); //delete \r\n;
 	if (strncasecmp(url, "http://", 7) == 0)
 	{
 		pin = url + 7;
@@ -3728,7 +3677,7 @@ int easou_check_url_ex2(char *url)
 			{
 				if (pin[1] != '\0' && pin[2] != '\0')
 				{
-					unsigned char escape_char = easou_to_char(pin + 1);
+					unsigned char escape_char = to_char(pin + 1);
 					if (URL_LET_DIG_HY[escape_char])
 					{
 						if (URL_UP_LET[escape_char])
@@ -3774,7 +3723,7 @@ int easou_check_url_ex2(char *url)
 				{
 					if (pin[1] != '\0' && pin[2] != '\0')
 					{
-						unsigned char escape_char = easou_to_char(pin + 1);
+						unsigned char escape_char = to_char(pin + 1);
 						if (URL_LET_DIG_HY[escape_char] == 1)
 						{
 							if (URL_UP_LET[escape_char])
@@ -3880,7 +3829,7 @@ int easou_check_url_ex2(char *url)
 		if (pout - url > len)
 			return 0;
 		if (space_flag == 1)
-			return easou_space_escape_ex2(url, MAX_URL_LEN, MAX_SITE_LEN, MAX_PATH_LEN);
+			return space_escape_ex2(url, MAX_URL_LEN, MAX_SITE_LEN, MAX_PATH_LEN);
 		else
 			return 1;
 	}
@@ -3888,7 +3837,7 @@ int easou_check_url_ex2(char *url)
 		return 0;
 	*pout = '\0';
 	if (space_flag == 1)
-		return easou_space_escape_ex2(url, MAX_URL_LEN, MAX_SITE_LEN, MAX_PATH_LEN);
+		return space_escape_ex2(url, MAX_URL_LEN, MAX_SITE_LEN, MAX_PATH_LEN);
 	else
 		return 1;
 	//check abs_path over
@@ -3982,7 +3931,7 @@ static int to_char_inner(char hex[2])
 /**
  * url归一化
  */
-int easou_single_path_inner(char *path)
+int single_path_inner(char *path)
 {
 	char *pin;
 	int pout;
@@ -4229,7 +4178,7 @@ int easou_single_path_inner(char *path)
 /*
  * unparse url
  */
-void easou_combine_url_inner(char *url, char *domain, char *port, char *path)
+void combine_url_inner(char *url, char *domain, char *port, char *path)
 {
 	if (*port == '\0')
 	{
@@ -4271,7 +4220,7 @@ static int is_abs_path(const char *path)
 static int is_rel_path(const char *url)
 {
 	const char *p;
-	if (easou_is_url(url))
+	if (is_url(url))
 		return 0;
 	if (is_net_path(url))
 		return 0;
@@ -4301,34 +4250,34 @@ void remove_path_file_name(char *path)
 }
 
 /*页面内的相对URL拼成一个绝对URL*/
-int easou_combine_url (char *result_url, const char *base_url, const char *relative_url)
+int combine_url (char *result_url, const char *base_url, const char *relative_url)
 {
 	char domain[MAX_SITE_LEN], base_domain[MAX_SITE_LEN];
 	char port[MAX_PORT_LEN], base_port[MAX_PORT_LEN];
 	char path[MAX_PATH_LEN], base_path[MAX_PATH_LEN];
 	char relpath[MAX_PATH_LEN];
-	if (!easou_parse_url(base_url, base_domain, base_port, base_path))
+	if (!parse_url(base_url, base_domain, base_port, base_path))
 	{
 		return -1;
 	}
-	if (easou_is_url(relative_url))
+	if (is_url(relative_url))
 	{
-		if (strlen(relative_url) >= MAX_URL_LEN || !easou_parse_url(relative_url, domain, port, path)
-				|| !easou_single_path_inner(path))
+		if (strlen(relative_url) >= MAX_URL_LEN || !parse_url(relative_url, domain, port, path)
+				|| !single_path_inner(path))
 		{
 			return -1;
 		}
-		easou_normalize_path(path);
-		easou_combine_url_inner(result_url, domain, port, path);
+		normalize_path(path);
+		combine_url_inner(result_url, domain, port, path);
 	}
 	else if (is_net_path(relative_url))
 	{
 		if (strlen(relative_url) >= MAX_PATH_LEN)
 			return -1;
 		snprintf(path, sizeof(path), "%s", relative_url);
-		if (!easou_single_path_inner(path))
+		if (!single_path_inner(path))
 			return -1;
-		easou_normalize_path(path);
+		normalize_path(path);
 		char *p = path;
 		while (*p == '/')
 			p++;
@@ -4339,17 +4288,17 @@ int easou_combine_url (char *result_url, const char *base_url, const char *relat
 			path[l] = '\0';
 		}
 		port[0] = '\0';
-		easou_combine_url_inner(result_url, NULL, port, path);
+		combine_url_inner(result_url, NULL, port, path);
 	}
 	else if (is_abs_path(relative_url))
 	{
 		if (strlen(relative_url) >= MAX_PATH_LEN)
 			return -1;
 		snprintf(path, sizeof(path), "%s", relative_url);
-		if (!easou_single_path_inner(path))
+		if (!single_path_inner(path))
 			return -1;
-		easou_normalize_path(path);
-		easou_combine_url_inner(result_url, base_domain, base_port, path);
+		normalize_path(path);
+		combine_url_inner(result_url, base_domain, base_port, path);
 	}
 	else if (is_rel_path(relative_url))
 	{
@@ -4378,19 +4327,19 @@ int easou_combine_url (char *result_url, const char *base_url, const char *relat
 				// src is a single '#'
 				return -1;
 		}
-		if (!easou_single_path_inner(path))
+		if (!single_path_inner(path))
 		{
 			return -1;
 		}
-		easou_normalize_path(path);
-		easou_combine_url_inner(result_url, base_domain, base_port, path);
+		normalize_path(path);
+		combine_url_inner(result_url, base_domain, base_port, path);
 	}
 	else
 	{
 		return -1;
 	}
 	//check syntax of url, lower upper char in site name
-	if (easou_check_url(result_url) == 0)
+	if (check_url(result_url) == 0)
 	{
 		return -1;
 	}
@@ -4411,15 +4360,15 @@ int is_like_top_url(const char *url)
 	int newLen = inputLen < MAX_URL_LEN ? inputLen : (MAX_URL_LEN - 1);
 	memcpy(urlBuf, url, newLen);
 	*(urlBuf + newLen) = 0;
-	if (easou_check_url(urlBuf) == 0)
+	if (check_url(urlBuf) == 0)
 		return 0;
 	char buf[16];
 	buf[0] = '\0';
-	if (easou_isdyn(url)) // filter dynamic url
+	if (isdyn(url)) // filter dynamic url
 		return 0;
 	char path[MAX_PATH_LEN];
 	path[0] = '\0';
-	if (easou_get_path(url, path) == 0)
+	if (get_path(url, path) == 0)
 		return 0;
 	if (strcmp(path, "/") == 0)
 		return 1;
@@ -4431,7 +4380,7 @@ int is_like_top_url(const char *url)
 		if (strchr(p + 1, '/') == NULL)
 		{ // no 3rd '/'
 			snprintf(buf, sizeof(buf), "%s", p + 1);
-			easou_trans2lower(buf, buf);
+			trans2lower(buf, buf);
 			if (strstr(buf, "index") || strstr(buf, "main"))
 				return 1; // like "abc.com/.../index... or main..."
 			else
@@ -4778,7 +4727,7 @@ int is_dir_url(const char *url)
 	int newLen = inputLen < MAX_URL_LEN ? inputLen : (MAX_URL_LEN - 1);
 	memcpy(urlBuf, url, newLen);
 	*(urlBuf + newLen) = 0;
-	if (easou_check_url(urlBuf) == 0)
+	if (check_url(urlBuf) == 0)
 		return 0;
 	const char *p = url;
 	if (url[strlen(url) - 1] == '/')

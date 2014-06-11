@@ -1,5 +1,5 @@
 /**
- * @file easou_ahtml_tree.h
+ * @file ahtml_tree.h
 
  * @date 2011/06/27
  * @version 1.0 
@@ -45,7 +45,7 @@ typedef struct _area_tree_t {
 /**
  * @brief	创建一棵分块树.
  * @param [in] cfg   : area_config_t*	用于配置分块树的分块粒度.可为NULL.
- * @return  easou_area_tree_t*	已分配空间的分块树.
+ * @return  area_tree_t*	已分配空间的分块树.
 
  * @date 2011/07/05
  **/
@@ -74,7 +74,7 @@ void area_tree_clean(area_tree_t *atree);
 
 /**
  * @brief 在VTREE上划分分块树.
- * @param [out] atree   : easou_area_tree_t*	分块树.
+ * @param [out] atree   : area_tree_t*	分块树.
  * @param [in] vtree   : const html_vtree_t*	待划分的VTREE.
  * @param [in] base_url : 网页原始url
  * @return  int 
@@ -86,7 +86,7 @@ int area_partition(area_tree_t *atree, html_vtree_t *vtree, const char *base_url
 
 /**
  * @brief 划分一个分块.
- * @param [in] area   : easou_html_area_t*	待划分的分块.
+ * @param [in] area   : html_area_t*	待划分的分块.
  * @param [in] cfg   : const area_config_t*	分块的粒度配置.
  * @param [in/out] np   : nodepool_t*	分块节点池.
  * @param [in] depth   : unsigned int	待划分的分块的深度.`

@@ -1,5 +1,5 @@
 /**
- * @file easou_html_tokenizer.cpp
+ * @file html_tokenizer.cpp
 
  * @date 2011/08/02
  * @version 1.0

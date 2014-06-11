@@ -1,5 +1,5 @@
 /**
- * @file easou_css_nodepool.cpp
+ * @file css_nodepool.cpp
 
  * @date 2011/06/21
  * @version 1.0
@@ -21,10 +21,10 @@ using namespace EA_COMMON;
 
  * @date 2011/06/20
  **/
-static easou_css_mem_node_t *css_new_mem_node(size_t size)
+static css_mem_node_t *css_new_mem_node(size_t size)
 {
 	/* alloc mem node */
-	easou_css_mem_node_t *pnode = (easou_css_mem_node_t *) calloc(sizeof(easou_css_mem_node_t), 1);
+	css_mem_node_t *pnode = (css_mem_node_t *) calloc(sizeof(css_mem_node_t), 1);
 	if (NULL == pnode)
 	{
 		Fatal((char*) "%s:%s:malloc error!", __FILE__, __FUNCTION__);
@@ -63,10 +63,10 @@ static easou_css_mem_node_t *css_new_mem_node(size_t size)
 
  * @date 2011/06/20
  **/
-static int css_nodepool_request(easou_css_nodepool_t *pool, size_t size)
+static int css_nodepool_request(css_nodepool_t *pool, size_t size)
 {
 	/* alloc mem node */
-	easou_css_mem_node_t *pnode = css_new_mem_node(size);
+	css_mem_node_t *pnode = css_new_mem_node(size);
 	if (NULL == pnode)
 	{
 		return -1;
@@ -86,7 +86,7 @@ static int css_nodepool_request(easou_css_nodepool_t *pool, size_t size)
 
  * @date 2011/11/10
  **/
-int css_nodepool_init(easou_css_nodepool_t *pool, size_t size)
+int css_nodepool_init(css_nodepool_t *pool, size_t size)
 {
 	pool->mem_node_list = NULL;
 	return css_nodepool_request(pool, size);
@@ -97,10 +97,10 @@ int css_nodepool_init(easou_css_nodepool_t *pool, size_t size)
 
  * @date 2011/06/21
  **/
-void css_nodepool_reset(easou_css_nodepool_t *pool)
+void css_nodepool_reset(css_nodepool_t *pool)
 {
-	easou_css_mem_node_t *keep_node = NULL;
-	easou_css_mem_node_t *node = NULL;
+	css_mem_node_t *keep_node = NULL;
+	css_mem_node_t *node = NULL;
 	keep_node = pool->mem_node_list;
 	node = keep_node;
 	/* free extra mem and only keep one mem node*/
@@ -128,12 +128,12 @@ void css_nodepool_reset(easou_css_nodepool_t *pool)
 
  * @date 2011/11/10
  **/
-void css_nodepool_destroy(easou_css_nodepool_t *pool)
+void css_nodepool_destroy(css_nodepool_t *pool)
 {
-	easou_css_mem_node_t *node = pool->mem_node_list;
+	css_mem_node_t *node = pool->mem_node_list;
 	while (node != NULL)
 	{
-		easou_css_mem_node_t *next = node->next;
+		css_mem_node_t *next = node->next;
 		if (node->p_mem != NULL)
 		{
 			free(node->p_mem);
@@ -154,7 +154,7 @@ void css_nodepool_destroy(easou_css_nodepool_t *pool)
 
  * @date 2011/11/10
  **/
-void *css_get_from_nodepool(easou_css_nodepool_t *pool, size_t size)
+void *css_get_from_nodepool(css_nodepool_t *pool, size_t size)
 {
 	void *ret_mem = NULL;
 	if (size > pool->p_curr_mem_size)

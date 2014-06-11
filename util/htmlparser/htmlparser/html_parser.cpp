@@ -1,5 +1,5 @@
 /*
- * easou_html_parser.cpp
+ * html_parser.cpp
  *
  *  Created on: 2011-11-8
  *      Author: xunwu

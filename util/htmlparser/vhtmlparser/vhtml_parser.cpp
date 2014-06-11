@@ -1,5 +1,5 @@
 /**
- * easou_vhtml_parser.cpp
+ * vhtml_parser.cpp
  * Description: 计算节点的坐标和长宽
  *  Created on: 2011-06-27
  * Last modify: 2012-10-26 sue_zhang@staff.easou.com shuangwei_zhang@staff.easou.com
@@ -361,17 +361,17 @@ inline bool is_rect_vnode(html_vnode_t *vnode)
 	}
 }
 
-#define NEXT_CSS_PROP_TYPE(t)	((easou_css_prop_type_t)((int)(t)+1))
+#define NEXT_CSS_PROP_TYPE(t)	((css_prop_type_t)((int)(t)+1))
 
 /**
  * @brief
 
  * @date 2011/06/27
  **/
-static int create_css_prop_list(html_vnode_t *vnode, const easou_css_property_set_t *prop_set, const int numof_css_prop, nodepool_t *css_np)
+static int create_css_prop_list(html_vnode_t *vnode, const css_property_set_t *prop_set, const int numof_css_prop, nodepool_t *css_np)
 {
 	int current_prop_num = 0;
-	for (easou_css_prop_type_t iter = CSS_PROP_ACCELERATOR; current_prop_num < numof_css_prop; iter = NEXT_CSS_PROP_TYPE(iter))
+	for (css_prop_type_t iter = CSS_PROP_ACCELERATOR; current_prop_num < numof_css_prop; iter = NEXT_CSS_PROP_TYPE(iter))
 	{
 		if (prop_set->prop[iter].value != NULL)
 		{
@@ -452,7 +452,7 @@ static int is_display_by_style(const char *aValue)
 	return 2;
 }
 
-static bool is_valid_by_css(easou_css_property_set_t *prop_set)
+static bool is_valid_by_css(css_property_set_t *prop_set)
 {
 	const char *aValue = NULL;
 	if ((aValue = prop_set->prop[CSS_PROP_DISPLAY].value) != NULL)
@@ -691,7 +691,7 @@ static inline void set_vnode_height(html_vnode_t *vnode, const char *value)
 
  * @date 2011/06/27
  **/
-static void set_vnode_by_css(html_vnode_t *vnode, easou_css_property_set_t *prop_set)
+static void set_vnode_by_css(html_vnode_t *vnode, css_property_set_t *prop_set)
 {
 	char *value = NULL;
 	if ((value = prop_set->prop[CSS_PROP_WIDTH].value) != NULL)
@@ -800,7 +800,7 @@ static void set_vnode_by_css(html_vnode_t *vnode, easou_css_property_set_t *prop
 /**
  * @brief assert the tag of the node checked is a block tag
  */
-static bool is_inline_element(easou_css_property_set_t *prop_set, int numof_css_prop, html_vnode_t *vnode)
+static bool is_inline_element(css_property_set_t *prop_set, int numof_css_prop, html_vnode_t *vnode)
 {
 	if (numof_css_prop == 0)
 	{
@@ -3633,7 +3633,7 @@ static int mark_subtree_invalid(html_vnode_t *vnode, void *data)
 
 struct css_context_t
 {
-	easou_css_pool_t *csspool;
+	css_pool_t *csspool;
 	nodepool_t *css_np;
 	short selectors_st[CSS_SELECTOR_MAX]; //用来保存各个选择子的状态
 	css_pre_status_t pre_st[CSS_PRE_STATUS_MAX]; //用来保存节点的css状态更新情况
@@ -3653,15 +3653,15 @@ static bool is_important(const char *val)
 	return false;
 }
 
-int get_prop_values(easou_css_property_set_t *prop_set, easou_css_property_t *prop_begin, easou_css_property_t *prop_end, int pri_val)
+int get_prop_values(css_property_set_t *prop_set, css_property_t *prop_begin, css_property_t *prop_end, int pri_val)
 {
 	int added_prop_num = 0;
-	for (easou_css_property_t *prop = prop_begin; prop != NULL; prop = prop->next)
+	for (css_property_t *prop = prop_begin; prop != NULL; prop = prop->next)
 	{
 		int this_pri_val = pri_val;
 		if (is_important(prop->value))
 			this_pri_val = 2;
-		easou_css_prop_info_t *prop_info = &(prop_set->prop[prop->type]);
+		css_prop_info_t *prop_info = &(prop_set->prop[prop->type]);
 		if (prop_info->value == NULL)
 		{
 			added_prop_num++;
@@ -3684,7 +3684,7 @@ int get_prop_values(easou_css_property_set_t *prop_set, easou_css_property_t *pr
  * @author sue
  * @date 2013/04/12
  */
-static int update_css_down_status(css_context_t *context, char* key, easou_css_property_set_t* prop_set, html_vnode_t *vnode)
+static int update_css_down_status(css_context_t *context, char* key, css_property_set_t* prop_set, html_vnode_t *vnode)
 {
 	void *value = hashmap_get(context->csspool->hm, key);
 	if (value == NULL)
@@ -3745,7 +3745,7 @@ static int update_css_down_status(css_context_t *context, char* key, easou_css_p
  * @author sue
  * @date 2013/04/12
  */
-static int get_css_props(css_context_t *context, easou_css_property_set_t* prop_set, html_vnode_t* vnode)
+static int get_css_props(css_context_t *context, css_property_set_t* prop_set, html_vnode_t* vnode)
 {
 	vnode->user_ptr = NULL;
 	html_tag_t* tag = &(vnode->hpNode->html_tag);
@@ -3774,7 +3774,7 @@ static int get_css_props(css_context_t *context, easou_css_property_set_t* prop_
 		int len = 0;
 		while (*end)
 		{
-			while (*end && !easou_isspace(*end))
+			while (*end && !isspace(*end))
 			{
 				end++;
 				len++;
@@ -3796,7 +3796,7 @@ static int get_css_props(css_context_t *context, easou_css_property_set_t* prop_
 				selector_str[ret] = 0;
 				numof_css_prop += update_css_down_status(context, selector_str, prop_set, vnode);
 			}
-			while (*end && easou_isspace(*end))
+			while (*end && isspace(*end))
 			{
 				end++;
 			}
@@ -3856,7 +3856,7 @@ static int start_add_info_with_css2(html_vnode_t *vnode, void *data)
 
 	html_node_t *node = vnode->hpNode;
 
-	easou_css_property_set_t prop_set;
+	css_property_set_t prop_set;
 	memset(&prop_set, 0, sizeof(prop_set));
 
 	int numof_css_prop = get_css_props(context, &prop_set, vnode);
@@ -4065,7 +4065,7 @@ static int finish_add_info_with_css2(html_vnode_t *vnode, void *data)
 	return VISIT_NORMAL;
 }
 
-void html_vtree_add_info_with_css2(html_vtree_t *html_vtree, easou_css_pool_t *css_pool)
+void html_vtree_add_info_with_css2(html_vtree_t *html_vtree, css_pool_t *css_pool)
 {
 	struct css_context_t css_context;
 	css_context.csspool = css_pool;
@@ -4203,7 +4203,7 @@ void html_vtree_get_html_property(html_vtree_t *html_vtree)
 
  * @date 2011/06/27
  **/
-char *get_css_attribute(html_vnode_t *html_vnode, easou_css_prop_type_t type)
+char *get_css_attribute(html_vnode_t *html_vnode, css_prop_type_t type)
 {
 	for (css_prop_node_t *cnode = html_vnode->css_prop; cnode; cnode = cnode->next)
 	{
@@ -4308,7 +4308,7 @@ static int parse_color(const char *val)
 		const char *p_val = val + strlen("rgb");
 		for (int iter = 0; *p_val && iter < 3; p_val++)
 		{
-			if (easou_isspace(*p_val))
+			if (isspace(*p_val))
 				continue;
 			if (*p_val == '(' && iter == 0)
 				continue;
@@ -4447,7 +4447,7 @@ static void parse_font(font_t *font, const char *value, int base_size)
 	for (char *pval = val_buf; *pval;)
 	{
 		char *p_end = pval;
-		while (!easou_isspace(*p_end) && *p_end != '/' && *p_end != '\0')
+		while (!isspace(*p_end) && *p_end != '/' && *p_end != '\0')
 		{
 			p_end++;
 		}
@@ -4486,7 +4486,7 @@ static void parse_font(font_t *font, const char *value, int base_size)
 		else
 		{
 			pval = p_end + 1;
-			while (easou_isspace(*pval) && *pval != '\0')
+			while (isspace(*pval) && *pval != '\0')
 			{
 				pval++;
 			}
@@ -4538,7 +4538,7 @@ static void parse_background(font_t *font, const char *val)
 			break;
 		}
 
-		if (!easou_isspace(*p))
+		if (!isspace(*p))
 			*q++ = *p;
 		else if (stat == OUT_BRACKET)
 			break;
@@ -4852,7 +4852,7 @@ static void get_tag_font_info(html_vnode_t *vnode)
 			if (attr->value)
 			{
 				snprintf(valbuf, sizeof(valbuf), "%s", attr->value);
-				easou_trans2lower(valbuf, valbuf);
+				trans2lower(valbuf, valbuf);
 				int color = parse_color(valbuf);
 				if (color >= 0)
 					vnode->font.bgcolor = color;
@@ -4862,7 +4862,7 @@ static void get_tag_font_info(html_vnode_t *vnode)
 			if (attr->value)
 			{
 				snprintf(valbuf, sizeof(valbuf), "%s", attr->value);
-				easou_trans2lower(valbuf, valbuf);
+				trans2lower(valbuf, valbuf);
 				int color = parse_color(valbuf);
 				if (color >= 0)
 					vnode->font.color = color;

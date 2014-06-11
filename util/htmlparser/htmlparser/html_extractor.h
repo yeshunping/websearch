@@ -1,5 +1,5 @@
 /*
- * easou_html_extractor.h
+ * html_extractor.h
  *
  *  Created on: 2012-1-9
  *      Author: xunwu

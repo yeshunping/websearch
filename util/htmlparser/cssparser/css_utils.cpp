@@ -27,7 +27,7 @@ using namespace EA_COMMON;
 
  * @date 2011/06/20
  **/
-void css_env_destroy(easou_css_env_t *cc)
+void css_env_destroy(css_env_t *cc)
 {
 	if (cc)
 	{
@@ -44,9 +44,9 @@ void css_env_destroy(easou_css_env_t *cc)
 
  * @date 2011/06/20
  **/
-easou_css_env_t *css_env_create(int max_css_page_size, int css_num)
+css_env_t *css_env_create(int max_css_page_size, int css_num)
 {
-	easou_css_env_t *cc = (easou_css_env_t *) calloc(1, sizeof(easou_css_env_t));
+	css_env_t *cc = (css_env_t *) calloc(1, sizeof(css_env_t));
 	if (NULL == cc)
 	{
 		Fatal((char*) "%s:%d:alloc error!", __FILE__, __LINE__);
@@ -64,7 +64,7 @@ easou_css_env_t *css_env_create(int max_css_page_size, int css_num)
 /**
  * @brief 清空css信息
  */
-static void cssinfo_keep_clean(easou_cssinfo_keep_t *css_keep)
+static void cssinfo_keep_clean(cssinfo_keep_t *css_keep)
 {
 	css_keep->url = NULL;
 	css_keep->is_skip_child = false;
@@ -79,7 +79,7 @@ bool is_apply_for_screen_media_list(const char *pvalue)
 	const char *nextp = NULL;
 	for (const char *p = pvalue; *p; p = nextp)
 	{
-		p = easou_skip_space(p);
+		p = skip_space(p);
 		const char *sep = strchr(p, ',');
 		int l = 0;
 		if (sep != NULL)
@@ -143,7 +143,7 @@ bool is_css_link_tag(html_tag_t *html_tag)
 	return false;
 }
 
-static void get_style_text(easou_page_css_t *css_keep, html_tag_t *html_tag, const char *url)
+static void get_style_text(page_css_t *css_keep, html_tag_t *html_tag, const char *url)
 {
 	if (!is_apply_for_screen_media(html_tag))
 	{
@@ -167,7 +167,7 @@ static void get_style_text(easou_page_css_t *css_keep, html_tag_t *html_tag, con
 
 static int start_visit_for_cssinfo(html_tag_t *html_tag, void *result, int flag)
 {
-	easou_cssinfo_keep_t *css_keep = (easou_cssinfo_keep_t *) result;
+	cssinfo_keep_t *css_keep = (cssinfo_keep_t *) result;
 	if (html_tag->tag_type == TAG_STYLE)
 	{
 		get_style_text(css_keep->page_css, html_tag, css_keep->url);
@@ -181,7 +181,7 @@ static int start_visit_for_cssinfo(html_tag_t *html_tag, void *result, int flag)
 
  * @date 2011/06/20
  **/
-static void get_cssinfo(easou_cssinfo_keep_t *css_keep, const html_tree_t *html_tree, const char *url)
+static void get_cssinfo(cssinfo_keep_t *css_keep, const html_tree_t *html_tree, const char *url)
 {
 	css_keep->url = url;
 	html_tree_visit((html_tree_t *) html_tree, &start_visit_for_cssinfo, NULL, css_keep, 0);
@@ -195,9 +195,9 @@ static void get_cssinfo(easou_cssinfo_keep_t *css_keep, const html_tree_t *html_
 
  * @date 2011/06/20
  **/
-void get_page_css_info(easou_page_css_t *page_css, const html_tree_t *html_tree, const char *url)
+void get_page_css_info(page_css_t *page_css, const html_tree_t *html_tree, const char *url)
 {
-	easou_cssinfo_keep_t css_keep;
+	cssinfo_keep_t css_keep;
 	css_keep.page_css = page_css;
 	cssinfo_keep_clean(&css_keep);
 	get_cssinfo(&css_keep, html_tree, url);
@@ -208,9 +208,9 @@ void get_page_css_info(easou_page_css_t *page_css, const html_tree_t *html_tree,
 
  * @date 2011/06/20
  **/
-void parse_internal_css(easou_css_env_t *css_env, easou_page_css_t *page_css, const char *page_url, bool test_import)
+void parse_internal_css(css_env_t *css_env, page_css_t *page_css, const char *page_url, bool test_import)
 {
-	easou_css_pool_t *css_pool = &css_env->css_pool;
+	css_pool_t *css_pool = &css_env->css_pool;
 	css_pool_clean(css_pool);
 	int order = css_pool->used_css_num;
 	int success = 0;
@@ -230,7 +230,7 @@ void parse_internal_css(easou_css_env_t *css_env, easou_page_css_t *page_css, co
 			{
 				css_pool->order[css_pool->used_css_num] = order++;
 
-				for (easou_css_ruleset_t* ruleset = css_pool->css_array[css_pool->used_css_num]->all_ruleset_list; ruleset != NULL; ruleset = ruleset->next)
+				for (css_ruleset_t* ruleset = css_pool->css_array[css_pool->used_css_num]->all_ruleset_list; ruleset != NULL; ruleset = ruleset->next)
 					ruleset->id = select_id++;
 
 				css_create_hash_index(css_pool->css_array[css_pool->used_css_num], css_pool->hm);
@@ -252,13 +252,13 @@ void parse_internal_css(easou_css_env_t *css_env, easou_page_css_t *page_css, co
 
 /**
  * @brief	获取并解析页面中的css.
- * @param [out] css_env   : easou_css_env_t*	css解析环境.
+ * @param [out] css_env   : css_env_t*	css解析环境.
  * @param [in] html_tree   : html_tree_t*	解析过的html树.
  * @param [in] url   : const char*	页面URL.
 
  * @date 2011/06/20
  **/
-int get_parse_css_inpage(easou_css_env_t *css_env, const html_tree_t *html_tree, const char *url, bool test_import)
+int get_parse_css_inpage(css_env_t *css_env, const html_tree_t *html_tree, const char *url, bool test_import)
 {
 	get_page_css_info(&(css_env->page_css), html_tree, url);
 	parse_internal_css(css_env, &(css_env->page_css), url, test_import);
@@ -268,7 +268,7 @@ int get_parse_css_inpage(easou_css_env_t *css_env, const html_tree_t *html_tree,
 	return css_env->page_css.style_txt_num;
 }
 
-void csspool_print_selector(const easou_css_pool_t *csspool, const char* filename)
+void csspool_print_selector(const css_pool_t *csspool, const char* filename)
 {
 	if (csspool->used_css_num <= 0)
 		return;
@@ -285,7 +285,7 @@ void csspool_print_selector(const easou_css_pool_t *csspool, const char* filenam
 /**
  * 复位css环境
  */
-void css_env_reset(easou_css_env_t *cc)
+void css_env_reset(css_env_t *cc)
 {
 	if (cc)
 	{
@@ -295,7 +295,7 @@ void css_env_reset(easou_css_env_t *cc)
 	}
 }
 
-void add_out_style_text(easou_page_css_t *css_keep, char * ptxt, char *css_url)
+void add_out_style_text(page_css_t *css_keep, char * ptxt, char *css_url)
 {
 	if (css_keep == NULL)
 	{

@@ -1,5 +1,5 @@
 /*
- * easou_xpath.cpp
+ * xpath.cpp
  *
  *  Created on: 2012-5-23
  *      Author: shuangwei

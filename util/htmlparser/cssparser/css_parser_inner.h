@@ -1,5 +1,5 @@
 /**
- * easou_css_parser_inner.h
+ * css_parser_inner.h
  * Description: CSS结构定义和内部公用函数
  *  Created on: 2011-06-20
  * Last modify: 2012-10-31 sue_zhang@staff.easou.com shuangwei_zhang@staff.easou.com
@@ -21,14 +21,14 @@
 
  * @date 2011/06/20
  **/
-int adjust_str_heap(easou_css_t *css, size_t len);
+int adjust_str_heap(css_t *css, size_t len);
 
 /**
  * @brief	打印解析出的CSS.
 
  * @date 2011/06/20
  **/
-void print_css(easou_css_t *css, FILE *fout);
+void print_css(css_t *css, FILE *fout);
 
 /**
  * @brief 为CSS结构创建hash索引，需要配合遍历去渲染节点
@@ -37,21 +37,21 @@ void print_css(easou_css_t *css, FILE *fout);
  * @author sue
  * @date 2013/04/11
  */
-bool css_create_hash_index(easou_css_t *css, hashmap_t* hm);
+bool css_create_hash_index(css_t *css, hashmap_t* hm);
 
 /**
  * @brief	是否几何属性.
 
  * @date 2011/06/20
  **/
-bool is_geo_property(easou_css_property_t *prop);
+bool is_geo_property(css_property_t *prop);
 
 /**
  * @brief	是否字体属性.
 
  * @date 2011/06/20
  **/
-bool is_font_property(easou_css_property_t *prop);
+bool is_font_property(css_property_t *prop);
 
 /**
  * @brief 扫描注释
@@ -106,42 +106,42 @@ const char *skip_current_selector(const char *pstr);
 
  * @date 2011/06/20
  **/
-void scan_string(easou_css_scan_t *css_scan, easou_css_str_heap_t *str_heap);
+void scan_string(css_scan_t *css_scan, css_str_heap_t *str_heap);
 
 /**
  * @brief
 
  * @date 2011/06/20
  **/
-bool is_css_sep_chr_state(easou_css_state_t state, char chr);
+bool is_css_sep_chr_state(css_state_t state, char chr);
 
 /**
  * @brief	扫描属性
 
  * @date 2011/06/20
  **/
-void scan_attr(easou_css_scan_t *css_scan, easou_css_str_heap_t *str_heap);
+void scan_attr(css_scan_t *css_scan, css_str_heap_t *str_heap);
 
 /**
  * @brief
 
  * @date 2011/06/20
  **/
-inline void scan_a_step(easou_css_scan_t *css_scan, easou_css_str_heap_t *str_heap);
+inline void scan_a_step(css_scan_t *css_scan, css_str_heap_t *str_heap);
 
 /**
  * @brief
 
  * @date 2011/06/20
  **/
-void scan_normal(easou_css_scan_t *css_scan, easou_css_str_heap_t *str_heap);
+void scan_normal(css_scan_t *css_scan, css_str_heap_t *str_heap);
 
 /**
  * @brief
 
  * @date 2011/06/20
  **/
-void scan_url(easou_css_scan_t *css_scan, easou_css_str_heap_t *str_heap);
+void scan_url(css_scan_t *css_scan, css_str_heap_t *str_heap);
 
 /**
  * @brief 解析css过程中，跳过一些可以忽略的元素，比如注释
@@ -151,6 +151,6 @@ void scan_url(easou_css_scan_t *css_scan, easou_css_str_heap_t *str_heap);
  * @date 2011/06/20
  * @last modify on 2012-10-26 sue_zhang@staff.easou.com
  **/
-void scan_ignore(easou_css_scan_t *css_scan, easou_css_t *css);
+void scan_ignore(css_scan_t *css_scan, css_t *css);
 
 #endif /*EASOU_CSS_PARSER_INNER_H_*/

@@ -1,5 +1,5 @@
 /**
- * easou_css_parser.cpp
+ * css_parser.cpp
  * Description: CSS解析
  *  Created on: 2011-06-20
  * Last modify: 2012-10-26 sue_zhang@staff.easou.com shuangwei_zhang@staff.easou.com
@@ -27,12 +27,12 @@ using namespace EA_COMMON;
 
 /**
  * @brief 清除css信息
- * @param [in/out] css   : easou_css_t*
+ * @param [in/out] css   : css_t*
  * @return  void 
 
  * @date 2011/06/20
  **/
-void css_clean(easou_css_t *css)
+void css_clean(css_t *css)
 {
 	css->all_ruleset_list = NULL;
 	css->css_inner.str_heap.p_heap_avail = css->css_inner.str_heap.p_heap;
@@ -45,25 +45,25 @@ void css_clean(easou_css_t *css)
 /**
  * @brief 创建一个css解析结构
  * @param [in] max_css_text_size
- * @return  easou_css_t*
+ * @return  css_t*
 
  * @date 2011/06/21
  **/
-easou_css_t *css_create(int max_css_text_size)
+css_t *css_create(int max_css_text_size)
 {
-	easou_css_t *css = NULL;
-	easou_css_inner_t *p_inner = NULL;
+	css_t *css = NULL;
+	css_inner_t *p_inner = NULL;
 
 	if (max_css_text_size <= 0)
 	{
 	    // FIXME:跟函数的定义不符合，应该返回-1。被调用函数不能打这种补丁。
 		return css_create();
 	}
-	/* alloc easou_css_t */
-	css = (easou_css_t*) calloc(sizeof(easou_css_t), 1);
+	/* alloc css_t */
+	css = (css_t*) calloc(sizeof(css_t), 1);
 	if (NULL == css)
 	{
-		Fatal((char*) "%s:%s:malloc easou_css_t error!", __FILE__, __FUNCTION__);
+		Fatal((char*) "%s:%s:malloc css_t error!", __FILE__, __FUNCTION__);
 		goto FAIL_CC;
 	}
 	/* alloc string heap */
@@ -102,11 +102,11 @@ easou_css_t *css_create(int max_css_text_size)
 
 /**
  * @brief 销毁css
- * @param [in/out] css   : easou_css_t*
+ * @param [in/out] css   : css_t*
 
  * @date 2011/06/20
  **/
-void css_destroy(easou_css_t *css)
+void css_destroy(css_t *css)
 {
 	css_nodepool_destroy(&(css->css_inner.nodepool));
 	if (css->css_inner.str_heap.p_heap != NULL)
@@ -125,16 +125,16 @@ void css_destroy(easou_css_t *css)
 /**
  * @brief 创建一个css解析结构
  * @param [in] max_css_text_size
- * @return  easou_css_t*
+ * @return  css_t*
 
  * @date 2011/06/21
  **/
-easou_css_t *css_create()
+css_t *css_create()
 {
 	return css_create(CSS_DEFAULT_TEXT_SIZE);
 }
 
-int get_new_token(easou_css_scan_t *css_scan, easou_css_str_heap_t *str_heap, easou_css_t *css)
+int get_new_token(css_scan_t *css_scan, css_str_heap_t *str_heap, css_t *css)
 {
 	scan_ignore(css_scan, css);
 	css_scan->p_curr_token = str_heap->p_heap_avail;
@@ -196,17 +196,17 @@ int get_new_token(easou_css_scan_t *css_scan, easou_css_str_heap_t *str_heap, ea
  *	assert no spaces in the attr string.
  * @param [in/out] simple_selector   : css_simple_selector_t*
  * @param [in/out] pstr   : char*
- * @param [in/out] css   : easou_css_t*
+ * @param [in/out] css   : css_t*
  * @return  char*
  * @retval   
  * @see 
 
  * @date 2011/06/20
  **/
-static char* parse_attr_selector(easou_css_simple_selector_t *simple_selector, char *pstr, easou_css_t *css)
+static char* parse_attr_selector(css_simple_selector_t *simple_selector, char *pstr, css_t *css)
 {
-	easou_css_attr_selector_t *attr_selector = (easou_css_attr_selector_t *) css_get_from_nodepool(&(css->css_inner.nodepool),
-			sizeof(easou_css_attr_selector_t));
+	css_attr_selector_t *attr_selector = (css_attr_selector_t *) css_get_from_nodepool(&(css->css_inner.nodepool),
+			sizeof(css_attr_selector_t));
 	/* extract the attr string out */
 	char *ptend = pstr;
 	ptend = strchr(ptend, ']');
@@ -265,7 +265,7 @@ static char* parse_attr_selector(easou_css_simple_selector_t *simple_selector, c
 
  * @date 2011/06/20
  **/
-static void parse_simple_selector(easou_css_simple_selector_t *simple_selector, easou_css_t *css)
+static void parse_simple_selector(css_simple_selector_t *simple_selector, css_t *css)
 {
 	char *pstr = simple_selector->name;
 
@@ -375,7 +375,7 @@ static void parse_simple_selector(easou_css_simple_selector_t *simple_selector, 
 
  * @date 2011/06/20
  **/
-static void selector_clean(easou_css_selector_t *selector)
+static void selector_clean(css_selector_t *selector)
 {
 	selector->pre_selector = NULL;
 	selector->combinator = CSS_NON_COMBINATOR;
@@ -394,7 +394,7 @@ static void selector_clean(easou_css_selector_t *selector)
 
  * @date 2011/06/20
  **/
-static bool is_illegal_simple_selector(const easou_css_simple_selector_t *sslt)
+static bool is_illegal_simple_selector(const css_simple_selector_t *sslt)
 {
 	if (sslt->tag_type == TAG_UNKNOWN)
 	{
@@ -418,17 +418,17 @@ static bool is_illegal_simple_selector(const easou_css_simple_selector_t *sslt)
 /**
  * @brief 创建选择子
  * @param [in/out] css_scan   : css_scan_t*
- * @param [in/out] css   : easou_css_t*
+ * @param [in/out] css   : css_t*
  * @return  css_selector_t* 
 
  * @date 2011/06/20
  **/
-easou_css_selector_t *make_selector(easou_css_scan_t *css_scan, easou_css_t *css)
+css_selector_t *make_selector(css_scan_t *css_scan, css_t *css)
 {
-	easou_css_selector_t *selector = NULL;
-	easou_css_selector_combinator_t curr_combinator = CSS_NON_COMBINATOR;
-	easou_css_str_heap_t *str_heap = &(css->css_inner.str_heap);
-	easou_css_nodepool_t *pool = &(css->css_inner.nodepool);
+	css_selector_t *selector = NULL;
+	css_selector_combinator_t curr_combinator = CSS_NON_COMBINATOR;
+	css_str_heap_t *str_heap = &(css->css_inner.str_heap);
+	css_nodepool_t *pool = &(css->css_inner.nodepool);
 	while (1)
 	{
 		/* scan token */
@@ -445,7 +445,7 @@ easou_css_selector_t *make_selector(easou_css_scan_t *css_scan, easou_css_t *css
 			break;
 		}
 		/* get memory */
-		easou_css_selector_t *new_selector = (easou_css_selector_t *) css_get_from_nodepool(pool, sizeof(easou_css_selector_t));
+		css_selector_t *new_selector = (css_selector_t *) css_get_from_nodepool(pool, sizeof(css_selector_t));
 		if (NULL == new_selector)
 		{
 			Fatal((char*) "%s:%s:get from nodepool error!", __FILE__, __FUNCTION__);
@@ -504,7 +504,7 @@ easou_css_selector_t *make_selector(easou_css_scan_t *css_scan, easou_css_t *css
 
  * @date 2011/06/20
  **/
-easou_css_prop_type_t css_seek_prop_type(const char *name)
+css_prop_type_t css_seek_prop_type(const char *name)
 {
 	char first_alpha = '\0';
 	if (name != NULL && name[0] != '\0')
@@ -532,7 +532,7 @@ easou_css_prop_type_t css_seek_prop_type(const char *name)
 
  * @date 2011/06/20
  **/
-bool is_useful_css_prop(easou_css_prop_type_t prop)
+bool is_useful_css_prop(css_prop_type_t prop)
 {
 	if (prop_typeinfo_array[prop].is_geo_prop || prop_typeinfo_array[prop].is_font_prop)
 	{
@@ -550,7 +550,7 @@ bool is_useful_css_prop(easou_css_prop_type_t prop)
 
  * @date 2011/06/20
  **/
-static char *get_prop_value(easou_css_scan_t *css_scan, easou_css_str_heap_t *str_heap, easou_css_t *css)
+static char *get_prop_value(css_scan_t *css_scan, css_str_heap_t *str_heap, css_t *css)
 {
 	char *cur_val = NULL;
 	css_scan->state = CSS_STAT_SCAN_PROP_VALUE;
@@ -576,7 +576,7 @@ static char *get_prop_value(easou_css_scan_t *css_scan, easou_css_str_heap_t *st
 
  * @date 2011/06/20
  **/
-static char *get_prop_name(easou_css_scan_t *css_scan, easou_css_str_heap_t *str_heap, easou_css_t *css)
+static char *get_prop_name(css_scan_t *css_scan, css_str_heap_t *str_heap, css_t *css)
 {
 	char *cur_name = NULL;
 	css_scan->state = CSS_STAT_SCAN_PROP_NAME;
@@ -594,9 +594,9 @@ static char *get_prop_name(easou_css_scan_t *css_scan, easou_css_str_heap_t *str
 
  * @date 2011/06/20
  **/
-static easou_css_property_t *create_new_prop(easou_css_nodepool_t *pool, char *prop_name, easou_css_prop_type_t prop_type, char *prop_value)
+static css_property_t *create_new_prop(css_nodepool_t *pool, char *prop_name, css_prop_type_t prop_type, char *prop_value)
 {
-	easou_css_property_t *new_prop = (easou_css_property_t *) css_get_from_nodepool(pool, sizeof(easou_css_property_t));
+	css_property_t *new_prop = (css_property_t *) css_get_from_nodepool(pool, sizeof(css_property_t));
 	if (new_prop == NULL)
 	{
 		Fatal((char*) "%s:%s:get from nodepool error!", __FILE__, __FUNCTION__);
@@ -613,11 +613,11 @@ static easou_css_property_t *create_new_prop(easou_css_nodepool_t *pool, char *p
 
  * @date 2011/06/20
  **/
-static easou_css_property_t *make_property_list(easou_css_scan_t *css_scan, easou_css_t *css)
+static css_property_t *make_property_list(css_scan_t *css_scan, css_t *css)
 {
-	easou_css_property_t *css_prop_list = NULL;
-	easou_css_str_heap_t *str_heap = &(css->css_inner.str_heap);
-	easou_css_nodepool_t *pool = &(css->css_inner.nodepool);
+	css_property_t *css_prop_list = NULL;
+	css_str_heap_t *str_heap = &(css->css_inner.str_heap);
+	css_nodepool_t *pool = &(css->css_inner.nodepool);
 	while (1)
 	{
 		char *cur_name = NULL;
@@ -626,8 +626,8 @@ static easou_css_property_t *make_property_list(easou_css_scan_t *css_scan, easo
 		cur_name = get_prop_name(css_scan, str_heap, css);
 		if (cur_name == NULL)
 			break;
-		easou_trans2lower(cur_name, cur_name);
-		easou_css_prop_type_t prop_type = css_seek_prop_type(cur_name);
+		trans2lower(cur_name, cur_name);
+		css_prop_type_t prop_type = css_seek_prop_type(cur_name);
 		scan_ignore(css_scan, css);
 		if (*(css_scan->p_next) != ':' || !is_useful_css_prop(prop_type))
 		{
@@ -640,11 +640,11 @@ static easou_css_property_t *make_property_list(easou_css_scan_t *css_scan, easo
 			cur_value = get_prop_value(css_scan, str_heap, css);
 			if (cur_value == NULL)
 				break;
-			easou_trans2lower(cur_value, cur_value);
+			trans2lower(cur_value, cur_value);
 			/* create a new property */
 			if (cur_name != NULL && cur_name[0] != '\0' && cur_value != NULL && cur_value[0] != '\0')
 			{
-				easou_css_property_t *new_prop = create_new_prop(pool, cur_name, prop_type, cur_value);
+				css_property_t *new_prop = create_new_prop(pool, cur_name, prop_type, cur_value);
 				if (new_prop == NULL)
 					break;
 				new_prop->next = css_prop_list;
@@ -670,7 +670,7 @@ static easou_css_property_t *make_property_list(easou_css_scan_t *css_scan, easo
 
  * @date 2011/06/20
  **/
-static void print_selector(easou_css_selector_t *selector, FILE *fout, int *combine_num, easou_css_ruleset_t *ruleset)
+static void print_selector(css_selector_t *selector, FILE *fout, int *combine_num, css_ruleset_t *ruleset)
 {
 	*combine_num = *combine_num + 1;
 	static const char *attr_type_str[] =
@@ -780,7 +780,7 @@ static void print_selector(easou_css_selector_t *selector, FILE *fout, int *comb
 		counter_add("select_type_tag&id&class", 1);
 	}
 
-	for (easou_css_attr_selector_t *attr = selector->simple_selector.attr_selector; attr; attr = attr->next)
+	for (css_attr_selector_t *attr = selector->simple_selector.attr_selector; attr; attr = attr->next)
 	{
 		fprintf(fout, "(name:%s|value:%s|type:%s)", attr->attr.name, attr->attr.value, attr_type_str[attr->type]);
 	}
@@ -791,9 +791,9 @@ static void print_selector(easou_css_selector_t *selector, FILE *fout, int *comb
 
  * @date 2011/06/20
  **/
-static void print_prop_list(easou_css_property_t *prop_list, FILE *fout)
+static void print_prop_list(css_property_t *prop_list, FILE *fout)
 {
-	easou_css_property_t *prop = prop_list;
+	css_property_t *prop = prop_list;
 	fprintf(fout, "\n{");
 	while (prop != NULL)
 	{
@@ -815,20 +815,20 @@ static void print_prop_list(easou_css_property_t *prop_list, FILE *fout)
 
  * @date 2011/06/20
  **/
-static easou_css_ruleset_t *make_ruleset_list_only_with_selector(easou_css_scan_t *css_scan, easou_css_t *css)
+static css_ruleset_t *make_ruleset_list_only_with_selector(css_scan_t *css_scan, css_t *css)
 {
-	easou_css_ruleset_t *ruleset = NULL;
-	easou_css_ruleset_t *ruleset_list = NULL;
-	easou_css_nodepool_t *pool = &(css->css_inner.nodepool);
+	css_ruleset_t *ruleset = NULL;
+	css_ruleset_t *ruleset_list = NULL;
+	css_nodepool_t *pool = &(css->css_inner.nodepool);
 	css_scan->state = CSS_STAT_SCAN_SELECTOR;
 	while (1)
 	{
-		easou_css_selector_t *selector = make_selector(css_scan, css);
+		css_selector_t *selector = make_selector(css_scan, css);
 		if (selector == NULL)
 			goto NEXT;
 
 		/* make a new ruleset and hang on the list */
-		ruleset = (easou_css_ruleset_t *) css_get_from_nodepool(pool, sizeof(easou_css_ruleset_t));
+		ruleset = (css_ruleset_t *) css_get_from_nodepool(pool, sizeof(css_ruleset_t));
 		if (ruleset == NULL)
 		{
 			Fatal((char*) "%s:%s:get from nodepool error!", __FILE__, __FUNCTION__);
@@ -864,9 +864,9 @@ static easou_css_ruleset_t *make_ruleset_list_only_with_selector(easou_css_scan_
 
  * @date 2011/06/20
  **/
-void print_css(easou_css_t *css, FILE *fout)
+void print_css(css_t *css, FILE *fout)
 {
-	for (easou_css_ruleset_t *ruleset = css->all_ruleset_list; ruleset != NULL; ruleset = ruleset->next)
+	for (css_ruleset_t *ruleset = css->all_ruleset_list; ruleset != NULL; ruleset = ruleset->next)
 	{
 		int combine_num = 0;
 		print_selector(ruleset->selector, fout, &combine_num, ruleset);
@@ -883,7 +883,7 @@ void print_css(easou_css_t *css, FILE *fout)
 	void* data;
 	while((data = hashmap_iter_next(css->index.class_map)) != NULL)
 	{
-		easou_css_index_node_t* index_node = (easou_css_index_node_t*)data;
+		css_index_node_t* index_node = (css_index_node_t*)data;
 		counter_add("select_type_class[hash_check]", 1);
 		while(index_node->next != NULL)
 		{
@@ -899,7 +899,7 @@ void print_css(easou_css_t *css, FILE *fout)
  * @date 2011/06/20
  **/
 // FIXME:这个可以改成inline
-bool is_font_property(easou_css_property_t *prop)
+bool is_font_property(css_property_t *prop)
 {
 	if (prop->type != CSS_PROP_UNKNOWN)
 		return prop_typeinfo_array[prop->type].is_font_prop;
@@ -913,7 +913,7 @@ bool is_font_property(easou_css_property_t *prop)
  * @date 2011/06/20
  **/
 // FIXME:这个可以改成inline
-bool is_geo_property(easou_css_property_t *prop)
+bool is_geo_property(css_property_t *prop)
 {
 	if (prop->type != CSS_PROP_UNKNOWN)
 		return prop_typeinfo_array[prop->type].is_geo_prop;
@@ -928,11 +928,11 @@ bool is_geo_property(easou_css_property_t *prop)
 
  * @date 2011/06/20
  **/
-static void ruleset_add_props(easou_css_ruleset_t *ruleset, easou_css_property_t *prop_list)
+static void ruleset_add_props(css_ruleset_t *ruleset, css_property_t *prop_list)
 {
-	easou_css_property_t *next_prop = NULL;
+	css_property_t *next_prop = NULL;
 	/**每一个属性都添加到队列头部*/
-	for (easou_css_property_t *prop = prop_list; prop != NULL; prop = next_prop)
+	for (css_property_t *prop = prop_list; prop != NULL; prop = next_prop)
 	{
 		next_prop = prop->next;
 		if (is_font_property(prop))
@@ -964,7 +964,7 @@ static void ruleset_add_props(easou_css_ruleset_t *ruleset, easou_css_property_t
 		}
 	}
 	/* 可以考虑将这部分操作移到循环里面 */
-	easou_css_property_t *cur_end = NULL;
+	css_property_t *cur_end = NULL;
 	if (ruleset->font_prop_begin != NULL)
 	{
 		ruleset->all_property_list = ruleset->font_prop_begin;
@@ -1000,7 +1000,7 @@ static void ruleset_add_props(easou_css_ruleset_t *ruleset, easou_css_property_t
 
  * @date 2011/06/20
  **/
-static void ruleset_prop_copy(easou_css_ruleset_t *des_ruleset, easou_css_ruleset_t *src_ruleset)
+static void ruleset_prop_copy(css_ruleset_t *des_ruleset, css_ruleset_t *src_ruleset)
 {
 	des_ruleset->all_property_list = src_ruleset->all_property_list;
 	des_ruleset->font_prop_begin = src_ruleset->font_prop_begin;
@@ -1011,7 +1011,7 @@ static void ruleset_prop_copy(easou_css_ruleset_t *des_ruleset, easou_css_rulese
 	des_ruleset->other_prop_end = src_ruleset->other_prop_end;
 }
 
-static inline int get_selector_string(easou_css_simple_selector_t* s, char* buf, int size)
+static inline int get_selector_string(css_simple_selector_t* s, char* buf, int size)
 {
 	int ret;
 	if (s->type == SIMPLE_SELECTOR_CLASS)
@@ -1037,13 +1037,13 @@ static inline int get_selector_string(easou_css_simple_selector_t* s, char* buf,
 	return ret;
 }
 
-bool css_create_hash_index(easou_css_t *css, hashmap_t* hm)
+bool css_create_hash_index(css_t *css, hashmap_t* hm)
 {
 	char selector_str[1024];
-	easou_css_nodepool_t *npool = &(css->css_inner.nodepool);
-	for (easou_css_ruleset_t *rs = css->all_ruleset_list; rs != NULL; rs = rs->next)
+	css_nodepool_t *npool = &(css->css_inner.nodepool);
+	for (css_ruleset_t *rs = css->all_ruleset_list; rs != NULL; rs = rs->next)
 	{
-		easou_css_selector_t *selector = rs->selector;
+		css_selector_t *selector = rs->selector;
 		short start = 1;
 		for (; selector; selector = selector->pre_selector, start--)
 			;
@@ -1084,7 +1084,7 @@ bool css_create_hash_index(easou_css_t *css, hashmap_t* hm)
 	return true;
 }
 
-int css_parse_no_index(easou_css_t *css, const char *css_text, const char *css_url, bool is_continue, bool test_import)
+int css_parse_no_index(css_t *css, const char *css_text, const char *css_url, bool is_continue, bool test_import)
 {
 	if (!is_continue)
 	{
@@ -1093,7 +1093,7 @@ int css_parse_no_index(easou_css_t *css, const char *css_text, const char *css_u
 			return -1;
 		}
 	}
-	easou_css_scan_t css_scan;
+	css_scan_t css_scan;
 	css_scan.p_next = css_text;
 	css_scan.p_curr_token = NULL;
 	css_scan.p_curr_token_len = 0;
@@ -1108,7 +1108,7 @@ int css_parse_no_index(easou_css_t *css, const char *css_text, const char *css_u
 	while (1)
 	{
 		/**创建规则集，但是只有选择子，可能会有多个选择子*/
-		easou_css_ruleset_t *ruleset_list = make_ruleset_list_only_with_selector(&css_scan, css);
+		css_ruleset_t *ruleset_list = make_ruleset_list_only_with_selector(&css_scan, css);
 		if (*(css_scan.p_next) == '\0')
 		{
 			break;
@@ -1122,15 +1122,15 @@ int css_parse_no_index(easou_css_t *css, const char *css_text, const char *css_u
 			css_scan.p_next = skip_block(css_scan.p_next);
 		}
 		/**创建属性集*/
-		easou_css_property_t *prop_list = make_property_list(&css_scan, css);
+		css_property_t *prop_list = make_property_list(&css_scan, css);
 		/**属性集和规则集都有效，则可以将属性集移植到规则集上面*/
 		if (prop_list != NULL && ruleset_list != NULL)
 		{
-			easou_css_ruleset_t *ruleset_list_tail = ruleset_list;
-			easou_css_ruleset_t *first_ruleset = ruleset_list;
+			css_ruleset_t *ruleset_list_tail = ruleset_list;
+			css_ruleset_t *first_ruleset = ruleset_list;
 			ruleset_add_props(first_ruleset, prop_list);
 			/**将这一段css代码中不同片段（多个选择子）也串成一个链表，这次是添加到队列尾部*/
-			for (easou_css_ruleset_t *ruleset = first_ruleset->next; ruleset != NULL; ruleset = ruleset->next)
+			for (css_ruleset_t *ruleset = first_ruleset->next; ruleset != NULL; ruleset = ruleset->next)
 			{
 				ruleset_prop_copy(ruleset, first_ruleset);
 				ruleset_list_tail = ruleset;
@@ -1165,7 +1165,7 @@ int css_parse_no_index(easou_css_t *css, const char *css_text, const char *css_u
 	}
 }
 
-int css_parse(easou_css_t *css, const char *css_text, const char *css_url, bool is_continue, bool test_import)
+int css_parse(css_t *css, const char *css_text, const char *css_url, bool is_continue, bool test_import)
 {
 	//去掉UTF－8文件的BOM头
 	if (strncmp(css_text, "\357\273\277", 3) == 0)

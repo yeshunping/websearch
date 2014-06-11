@@ -1,5 +1,5 @@
 /**
- * easou_vhtml_tree.cpp
+ * vhtml_tree.cpp
  * Description: V树解析
  *  Created on: 2011-11-13
  * Last modify: 2012-10-26 sue_zhang@staff.easou.com shuangwei_zhang@staff.easou.com
@@ -261,7 +261,7 @@ int html_vtree_parse_with_tree(html_vtree_t *html_vtree, vtree_in_t *vtree_in,
 }
 
 int html_vtree_parse_with_css(html_vtree_t *html_vtree,
-                              easou_css_pool_t *css_pool, int page_width) {
+                              css_pool_t *css_pool, int page_width) {
   debuginfo_on(CALC_VTREE); timeinit(); timestart();
 
   int ret = VTREE_NORMAL;

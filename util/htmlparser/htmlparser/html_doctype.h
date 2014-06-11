@@ -1,5 +1,5 @@
 /*
- * easou_html_doctype.h
+ * html_doctype.h
  *
  * 文档类型相关。确定wap1.0，wap2.0，web
  *

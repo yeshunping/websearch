@@ -1,5 +1,5 @@
 /*
- * easou_html_doctype.cpp
+ * html_doctype.cpp
  *
  * 识别逻辑：
  * 1. 如果有wml标签, 则是wap1.0

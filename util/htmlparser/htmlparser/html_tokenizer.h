@@ -1,5 +1,5 @@
 /**
- * @file easou_html_tokenizer.h
+ * @file html_tokenizer.h
 
  * @date 2011/08/02
  * @version 1.0

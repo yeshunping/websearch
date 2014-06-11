@@ -873,7 +873,7 @@ int html_tree_copy_html_text_gb18030(char *buffer, int available, int end, char 
             break;
 
         /* Space */
-        if (easou_isspace(*mark)) {
+        if (isspace(*mark)) {
             mark++;
             continue;
         }
@@ -906,7 +906,7 @@ int html_tree_copy_html_text_gb18030(char *buffer, int available, int end, char 
             }
 
             /* Space */
-            if (easou_isspace(*src)) {
+            if (isspace(*src)) {
                 if (src == begin && available-1 >= 0 && buffer[available-1] != ' ')
                     buffer[available++] = ' ';
                 src++;
@@ -961,7 +961,7 @@ int html_tree_copy_html_text_gb18030(char *buffer, int available, int end, char 
         }
 
         //space
-        if (easou_isspace(*src)) {
+        if (isspace(*src)) {
             if (available-1 >= 0 && buffer[available-1] != ' ') {
                 buffer[available++] = ' ';
             }else{

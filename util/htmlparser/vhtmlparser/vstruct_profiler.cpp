@@ -1,5 +1,5 @@
 /**
- * easou_vstruct_profiler.cpp
+ * vstruct_profiler.cpp
  * Description: 计算子树结构信息
  *  Created on: 2011-06-27
  * Last modify: 2012-10-26 sue_zhang@staff.easou.com shuangwei_zhang@staff.easou.com

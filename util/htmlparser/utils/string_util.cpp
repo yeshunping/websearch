@@ -1,5 +1,5 @@
 /**
- * easou_string.cpp
+ * string.cpp
  * Description: 字符串相关的工具函数
  *  Created on: 2011-11-23
  * Last modify: 2012-10-26 sue_zhang@staff.easou.com shuangwei_zhang@staff.easou.com
@@ -77,7 +77,7 @@ static const unsigned char CHAR_ALPHA_LOW[256] =
 /**
  * 大写转小写(字符)
  */
-char easou_tolower(unsigned char chr)
+char tolower(unsigned char chr)
 {
 	return CHAR_ALPHA_LOW[chr];
 }
@@ -85,7 +85,7 @@ char easou_tolower(unsigned char chr)
 /**
  * 大写转小写(字符串)
  */
-int easou_trans2lower(char* lower, char* upper)
+int trans2lower(char* lower, char* upper)
 {
 	if ((lower == NULL) || (upper == NULL))
 	{
@@ -105,7 +105,7 @@ int easou_trans2lower(char* lower, char* upper)
  * @brief 转化为半角. 输出和输入buffer可相同.
  * @return int, 转换后的长度
  **/
-int easou_trans2bj(const char *in, char *out)
+int trans2bj(const char *in, char *out)
 {
 	int i = 0;
 	int j = 0;
@@ -133,8 +133,8 @@ int easou_trans2bj(const char *in, char *out)
  **/
 void trans2bj_lower(const char *in, char *out)
 {
-	easou_trans2bj(in, out);
-	easou_trans2lower(out, out);
+	trans2bj(in, out);
+	trans2lower(out, out);
 }
 
 /**
@@ -290,7 +290,7 @@ bool is_space_text(const char *text)
 	return true;
 }
 
-const char *easou_skip_space(const char *pstr)
+const char *skip_space(const char *pstr)
 {
 	const char *pt = pstr;
 	while (g_whitespace_map[(unsigned char) (*pt)])
@@ -313,7 +313,7 @@ const char *easou_skip_space(const char *pstr)
 
 bool is_only_space_between(const char *begin, const char *end)
 {
-	const char *p = easou_skip_space(begin);
+	const char *p = skip_space(begin);
 	return (p == end);
 }
 
@@ -367,7 +367,7 @@ bool is_has_special_word(const char * spec_words[], const char * word)
 			{
 				break;
 			}
-			if (easou_isspace(*psrc))
+			if (isspace(*psrc))
 			{
 				psrc++;
 			}
@@ -405,7 +405,7 @@ bool is_has_special_word(const char * spec_words[], const char * word)
 /**
  * @brief 字符串拷贝
  **/
-size_t easou_strlcpy(char *dst, const char *src, size_t siz)
+size_t strlcpy(char *dst, const char *src, size_t siz)
 {
 	register char *d = dst;
 	register const char *s = src;
@@ -477,28 +477,9 @@ int longest_common_substring(const char *l, const char *r)
 }
 
 /**
- * @brief 	忽略大小写查找字符串,效率较低.
- **/
-char *easou_strcasestr(const char *haystack, const char *needle)
-{
-	const char *p = haystack;
-
-	size_t l = strlen(needle);
-	while (*p)
-	{
-		if (strncasecmp(p, needle, l) == 0)
-		{
-			return (char *) p;
-		}
-		p++;
-	}
-	return NULL;
-}
-
-/**
  * @brief 过掉字符串内的空白，英文单词间空白除外. 返回转换后的长度.
  **/
-int easou_trim_space(char *buf)
+int trim_space(char *buf)
 {
 	const char *p = buf;
 	char *q = buf;
@@ -627,7 +608,7 @@ bool is_time_str(const char * str_time)
 	copy_html_text(time_buff, 0, MAX_TIME_STR_LEN, (char*) str_time);
 	str_len = strlen(time_buff);
 	unsigned char * looper = (unsigned char *) time_buff;
-	easou_trans2bj(time_buff, time_buff);
+	trans2bj(time_buff, time_buff);
 	unsigned char * p_begin = NULL;
 	time_pos_t time_pos[MAX_TIME_UNIT_NUM];
 	memset(time_pos, 0, sizeof(time_pos));
