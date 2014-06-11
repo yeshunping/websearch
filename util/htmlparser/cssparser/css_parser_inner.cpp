@@ -1,11 +1,4 @@
-/**
- * css_parser_inner.cpp
- * Description:
- *  Created on: 2011-11-10
- * Last modify: 2012-10-31 sue_zhang@staff.easou.com shuangwei_zhang@staff.easou.com
- *      Author: xunwu_chen@staff.easoucom
- *     Version: 1.2
- */
+
 #include <stdlib.h>
 #include <string.h>
 

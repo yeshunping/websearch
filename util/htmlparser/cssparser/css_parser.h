@@ -1,11 +1,4 @@
-/**
- * css_parser.h
- * Description: CSS解析和属性查找.
- *  Created on: 2011-06-20
- * Last modify: 2012-10-26 sue_zhang@staff.easou.com shuangwei_zhang@staff.easou.com
- *      Author: xunwu_chen@staff.easoucom
- *     Version: 1.2
- */
+
 #ifndef EASOU_CSS_PARSER_H_
 #define EASOU_CSS_PARSER_H_
 

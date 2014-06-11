@@ -2,6 +2,9 @@
 #include <assert.h>
 #include <ctype.h>
 #include <string.h>
+
+#include "base/logging.h"
+#include "base/string_util.h"
 #include "util/htmlparser/htmlparser/html_attr.h"
 #include "util/htmlparser/vhtmlparser/vhtml_basic.h"
 #include "util/htmlparser/utils/debuginfo.h"
@@ -227,7 +230,7 @@ int html_vtree_visit_ex(html_vtree_t *html_vtree,
 
 void print_font(font_t *pfont) {
   if (pfont) {
-    myprintf(
+    LOG(INFO) << StringPrintf(
         "font info:is_bold=%d,is_strong=%d,is_big=%d,size=%d,color=%d\n",
         pfont->is_bold, pfont->is_strong, pfont->is_big, pfont->size, pfont->color);
   }

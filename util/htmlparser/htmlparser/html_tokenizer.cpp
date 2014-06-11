@@ -1,11 +1,3 @@
-/**
- * @file html_tokenizer.cpp
-
- * @date 2011/08/02
- * @version 1.0
- * @brief html源代码读取器
- *
- **/
 
 #include <assert.h>
 #include <stdlib.h>

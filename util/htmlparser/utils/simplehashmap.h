@@ -1,6 +1,4 @@
-/**
- * @file utils/simplehash.h
- **/
+
 
 #ifndef  __SIMPLEHASH_H_
 #define  __SIMPLEHASH_H_

@@ -1,11 +1,4 @@
-/**
- * string.cpp
- * Description: 字符串相关的工具函数
- *  Created on: 2011-11-23
- * Last modify: 2012-10-26 sue_zhang@staff.easou.com shuangwei_zhang@staff.easou.com
- *      Author: xunwu_chen@staff.easoucom
- *     Version: 1.2
- */
+
 
 #include <assert.h>
 #include <ctype.h>

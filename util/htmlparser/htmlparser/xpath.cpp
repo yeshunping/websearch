@@ -1,9 +1,4 @@
-/*
- * xpath.cpp
- *
- *  Created on: 2012-5-23
- *      Author: shuangwei
- */
+
 #include "xpath.h"
 #include <stdlib.h>
 #include <stdio.h>

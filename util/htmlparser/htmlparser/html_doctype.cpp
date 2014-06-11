@@ -1,12 +1,4 @@
-/*
- * html_doctype.cpp
- *
- * 识别逻辑：
- * 1. 如果有wml标签, 则是wap1.0
- *
- *  Created on: 2012-4-17
- *      Author: sandy
- */
+
 
 #include "html_doctype.h"
 #include "html_tree.h"

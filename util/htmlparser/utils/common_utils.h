@@ -1,9 +1,4 @@
-/*
- * common_utils.h
- *
- *  Created on: 2012-12-20
- *      Author: sue
- */
+
 
 #ifndef EASOU_COMMON_UTILS_H_
 #define EASOU_COMMON_UTILS_H_

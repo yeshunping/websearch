@@ -1,9 +1,4 @@
-/*
- * xpath.h
- *
- *  Created on: 2012-5-23
- *      Author: shuangwei
- */
+
 
 #ifndef EASOU_XPATH_H_
 #define EASOU_XPATH_H_

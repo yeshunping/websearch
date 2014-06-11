@@ -1,9 +1,4 @@
-/**
- * html_extractor.cpp
- *
- *  Created on: 2012-1-9
- *      Author: xunwu
- **/
+
 #include <assert.h>
 #include <stdio.h>
 #include <string.h>

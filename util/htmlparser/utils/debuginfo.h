@@ -1,14 +1,10 @@
-/*
- * debuginfo.h
- *
- *  Created on: 2012-4-1
- *      Author: shuangwei
- */
 
 #ifndef DEBUGINFO_H_
 #define DEBUGINFO_H_
-#include "stdio.h"
-#include "stdlib.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+
 extern int g_EASOU_DEBUG ;
 extern FILE *g_logfile;
 extern char * g_debugbuf;

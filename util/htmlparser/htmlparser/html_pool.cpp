@@ -1,11 +1,4 @@
-/**
- * @file pool.cpp
 
- * @date 2011/08/03
- * @version 1.0
- * @brief Memory pool implementation
- *  
- **/
 
 #include <assert.h>
 #include <stdlib.h>

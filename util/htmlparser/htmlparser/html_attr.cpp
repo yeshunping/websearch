@@ -1,11 +1,4 @@
-/**
- * @file html_attr.cpp
 
- * @date 2011/08/02
- * @version 1.0
- * @brief 处理easou自定义属性.
- *
- **/
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>

@@ -1,9 +1,4 @@
-/*
- * html_text_utils.h
- *
- *  Created on: 2011-11-30
- *      Author: ddt
- */
+
 
 #ifndef HTML_TEXT_UTILS_H_
 #define HTML_TEXT_UTILS_H_

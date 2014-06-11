@@ -1,11 +1,4 @@
-/**
- * @file css_pool.h
 
- * @date 2011/06/20
- * @version 1.0(create)
- * @brief css_pool用于:分配多个CSS结构的空间,存放多个解析好的CSS结构.
- *
- **/
 #ifndef EASOU_CSS_POOL_H_
 #define EASOU_CSS_POOL_H_
 

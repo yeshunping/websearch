@@ -1,11 +1,4 @@
-/**
- * @file ahtml_tree.h
 
- * @date 2011/06/27
- * @version 1.0 
- * @brief 在vtree的基础上进行分块操作
- *  
- **/
 
 #ifndef  __EASOU_AHTML_TREE_H
 #define  __EASOU_AHTML_TREE_H

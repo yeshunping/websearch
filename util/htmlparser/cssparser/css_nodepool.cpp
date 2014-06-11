@@ -1,11 +1,4 @@
-/**
- * @file css_nodepool.cpp
 
- * @date 2011/06/21
- * @version 1.0
- * @brief	CSS节点分配管理.
- *
- **/
 #include <stdio.h>
 #include <stdlib.h>
 

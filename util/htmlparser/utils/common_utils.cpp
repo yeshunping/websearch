@@ -1,9 +1,4 @@
-/*
- * common_utils.cpp
- *
- *  Created on: 2012-12-20
- *      Author: sue
- */
+
 #include <assert.h>
 #include <stdlib.h>
 #include <stdio.h>

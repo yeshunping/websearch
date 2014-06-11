@@ -1,9 +1,4 @@
-/*
- * html_text_utils.cpp
- *
- *  Created on: 2011-11-30
- *      Author: ddt
- */
+
 
 #include <assert.h>
 #include <stdlib.h>

@@ -1,11 +1,4 @@
-/**
- * @file html_attr.h
 
- * @date 2011/08/02
- * @version 1.0
- * @brief 对属性的描述，包含easou自定义属怄1�7.
- *  
- **/
 
 #ifndef  __EASOU_HTML_ATTR_H_
 #define  __EASOU_HTML_ATTR_H_

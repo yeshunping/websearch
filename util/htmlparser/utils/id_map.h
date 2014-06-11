@@ -1,10 +1,3 @@
-/**
- * @file mem-mgr/id_access.h
-
- * @date 2011/06/27
- * @version 1.0
- * @brief 通过唯一的顺序编号存取信息.有类型无关存取和类型相关存取两种方式.
- **/
 
 #ifndef  __ID_MAP_H_
 #define  __ID_MAP_H_

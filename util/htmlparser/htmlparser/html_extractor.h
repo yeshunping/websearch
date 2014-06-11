@@ -1,9 +1,4 @@
-/*
- * html_extractor.h
- *
- *  Created on: 2012-1-9
- *      Author: xunwu
- */
+
 
 #ifndef EASOU_HTML_EXTRACTOR_H_
 #define EASOU_HTML_EXTRACTOR_H_

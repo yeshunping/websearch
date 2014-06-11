@@ -1,11 +1,4 @@
-/**
- * @file css_parser.h
 
- * @date 2011/06/20
- * @version 1.0(create)
- * @brief CSS节点内存分配管理.
- *
- **/
 
 #ifndef EASOU_CSS_NODEPOOL_H_
 #define EASOU_CSS_NODEPOOL_H_

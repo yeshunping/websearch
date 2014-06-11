@@ -1,11 +1,4 @@
-/**
- * css_utils.h
- * Description: CSS解析对外接口
- *  Created on: 2011-06-20
- * Last modify: 2012-10-31 sue_zhang@staff.easou.com shuangwei_zhang@staff.easou.com
- *      Author: xunwu_chen@staff.easoucom
- *     Version: 1.2
- */
+
 #ifndef EASOU_CSS_UTILS_H_
 #define EASOU_CSS_UTILS_H_
 

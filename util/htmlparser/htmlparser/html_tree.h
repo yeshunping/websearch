@@ -1,9 +1,3 @@
-/**
- * html_tree.h
- *
- *  Created on: 2011-11-8
- *      Author: xunwu
- */
 
 #ifndef EASOU_HTML_TREE_H_
 #define EASOU_HTML_TREE_H_
@@ -99,13 +93,13 @@ void printNode(html_node_t *html_node);
  * 0, 成功；-1，失败
  */
 int determine_doctype(html_tree_t *html_tree, const char* url);
-
-/**
- * 打印节点及其属性
- */
-void printTree(html_tree_t *html_tree);
-
-void PrintNode(html_node_t *html_node, int level);
+//
+///**
+// * 打印节点及其属性
+// */
+//void printTree(html_tree_t *html_tree);
+//
+//void PrintNode(html_node_t *html_node, int level);
 
 /**
  * 标注dom树的每个节点含有的子节点类型

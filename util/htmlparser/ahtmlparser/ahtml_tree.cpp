@@ -1,11 +1,4 @@
-/**
- * ahtml_tree.cpp
- *	Description: 在vtree的基础上进行分块操作
- *  Created on: 2011-06-27
- * Last modify: 2012-10-26 sue_zhang@staff.easou.com shuangwei_zhang@staff.easou.com
- *      Author: xunwu_chen@staff.easou.com
- *     Version: 1.1
- */
+
 #include <pthread.h>
 #include "util/htmlparser/htmlparser/html_attr.h"
 #include "util/htmlparser/vhtmlparser/vhtml_tree.h"

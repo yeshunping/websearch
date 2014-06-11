@@ -1,11 +1,4 @@
-/**
- * @file css_dtd.cpp
 
- * @date 2011/06/20
- * @version 1.0(create)
- * @brief	CSS类型定义
- *  
- **/
 
 #include "css_dtd.h"
 

@@ -1,9 +1,4 @@
-/*
- * html_parser.cpp
- *
- *  Created on: 2011-11-8
- *      Author: xunwu
- */
+
 
 #include <assert.h>
 #include <string.h>

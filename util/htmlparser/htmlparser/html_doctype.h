@@ -1,11 +1,4 @@
-/*
- * html_doctype.h
- *
- * 文档类型相关。确定wap1.0，wap2.0，web
- *
- *  Created on: 2012-4-17
- *      Author: sandy
- */
+
 
 #ifndef EASOU_HTML_DOCTYPE_H_
 #define EASOU_HTML_DOCTYPE_H_

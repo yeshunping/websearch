@@ -1,9 +1,4 @@
-/*
- * html_dom.h
- *
- *  Created on: 2011-11-8
- *      Author: ddt
- */
+
 
 #ifndef EASOU_HTML_DOM_H_
 #define EASOU_HTML_DOM_H_

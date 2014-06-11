@@ -1,11 +1,4 @@
-/**
- * @file html_tokenizer.h
 
- * @date 2011/08/02
- * @version 1.0
- * @brief html源代码读取器
- *
- **/
 
 #ifndef EASOU_HTML_TOKENIZER_H_
 #define EASOU_HTML_TOKENIZER_H_

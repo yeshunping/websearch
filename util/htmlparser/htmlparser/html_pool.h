@@ -1,11 +1,4 @@
-/**
- * @file pool.h
 
- * @date 2011/08/03
- * @version 1.0
- * @brief Memory pool
- *  
- **/
 
 #ifndef  __POOL_H_
 #define  __POOL_H_

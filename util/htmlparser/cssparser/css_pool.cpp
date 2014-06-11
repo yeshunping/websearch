@@ -1,10 +1,4 @@
-/**
- * @file css_pool.cpp
 
- * @date 2011/07/15
- * @brief css_pool用于:分配多个CSS结构的空间,存放多个解析好的CSS结构.
- *  
- **/
 
 #include <string.h>
 

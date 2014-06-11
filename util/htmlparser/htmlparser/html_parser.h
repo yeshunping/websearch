@@ -1,9 +1,4 @@
-/*
- * html_parser.h
- *
- *  Created on: 2011-11-8
- *      Author: ddt
- */
+
 
 #ifndef EASOU_HTML_PARSER_H_
 #define EASOU_HTML_PARSER_H_

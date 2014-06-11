@@ -1,11 +1,4 @@
-/**
- * css_parser.cpp
- * Description: CSS解析
- *  Created on: 2011-06-20
- * Last modify: 2012-10-26 sue_zhang@staff.easou.com shuangwei_zhang@staff.easou.com
- *      Author: xunwu_chen@staff.easoucom
- *     Version: 1.2
- */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

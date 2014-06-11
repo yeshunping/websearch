@@ -1,9 +1,4 @@
-/*
- * url.cpp
- *
- *  Created on: 2011-11-21
- *      Author: ddt
- */
+
 #include <assert.h>
 #include <stdlib.h>
 #include <stdio.h>

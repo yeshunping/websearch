@@ -1,9 +1,4 @@
-/*
- * html_tree.cpp
- *
- *  Created on: 2011-11-8
- *      Author: xunwu
- */
+
 #include <assert.h>
 #include <stddef.h>
 #include <string.h>
@@ -358,134 +353,134 @@ int determine_doctype(html_tree_t *html_tree, const char* url)
 {
 	return determine_doctype_from_tree(html_tree, url);
 }
-
-void printNode(html_node_t *html_node)
-{
-	if (html_node)
-	{
-		html_attribute_t *attribute;
-		if (html_node->html_tag.tag_name)
-		{
-			myprintf("<%s", html_node->html_tag.tag_name);
-		}
-		else
-		{
-			if (html_node->html_tag.tag_type == TAG_ROOT)
-			{
-				myprintf("<ROOT");
-			}
-			else
-			{
-				myprintf("<%d", html_node->html_tag.tag_type);
-			}
-
-		}
-		for (attribute = html_node->html_tag.attribute; attribute != NULL; attribute = attribute->next)
-		{
-			myprintf( " %s", attribute->name);
-			if (attribute->value != NULL)
-			{
-				myprintf("=\"%s\"", attribute->value);
-			}
-		}
-		if (html_node->html_tag.tag_type == TAG_PURETEXT)
-		{
-			myprintf( ";text=%s#;", html_node->html_tag.text);
-		}
-		myprintf( ">\n");
-	}
-}
-
-void PrintNode(html_node_t *html_node, int level)
-{
-	html_attribute_t *attribute;
-	html_node_t *child;
-
-	if (level == 0)
-	{
-		myprintf( " ");
-	}
-	for (int i = 0; i < level - 1; i++)
-	{
-		myprintf( " ");
-	}
-
-	if (html_node->html_tag.tag_type == TAG_DOCTYPE)
-	{
-		myprintf("<!DOCTYPE %s>\n", html_node->html_tag.text);
-	}
-	else if (html_node->html_tag.tag_type == TAG_COMMENT)
-	{
-		myprintf("<!-- %s -->\n", html_node->html_tag.text);
-	}
-	else if (html_node->html_tag.tag_type == TAG_PURETEXT)
-	{
-		myprintf("%s\n", html_node->html_tag.text);
-	}
-	else
-	{
-
-		if (html_node->html_tag.tag_name)
-		{
-			myprintf("<%s", html_node->html_tag.tag_name);
-		}
-		else
-		{
-			if (html_node->html_tag.tag_type == TAG_ROOT)
-			{
-				myprintf("<ROOT");
-			}
-			else
-			{
-				myprintf("<%d", html_node->html_tag.tag_type);
-			}
-
-		}
-		for (attribute = html_node->html_tag.attribute; attribute != NULL; attribute = attribute->next)
-		{
-			myprintf( " %s", attribute->name);
-			if (attribute->value != NULL)
-			{
-				myprintf("=\"%s\"", attribute->value);
-			}
-		}
-		if (html_node->html_tag.is_self_closed)
-		{
-			myprintf("/");
-		}
-		myprintf( ">(childnodetype=%x,subnodetype=%x)\n", html_node->childnodetype, html_node->subnodetype);
-
-	}
-
-	for (child = html_node->child; child != NULL; child = child->next)
-	{
-		PrintNode(child, level + 1);
-	}
-	if (html_node->html_tag.tag_type != TAG_COMMENT && html_node->html_tag.tag_type != TAG_DOCTYPE && html_node->html_tag.tag_type != TAG_PURETEXT && !html_node->html_tag.is_self_closed)
-	{
-		for (int i = 0; i < level - 1; i++)
-		{
-			myprintf("  ");
-		}
-		if (html_node->html_tag.tag_type == TAG_ROOT)
-		{
-			myprintf("</ROOT>\n");
-		}
-		else
-		{
-			myprintf("</%s>\n", html_node->html_tag.tag_name);
-		}
-	}
-}
-
-void printTree(html_tree_t *html_tree)
-{
-	if (html_tree)
-	{
-		myprintf("the attr of tree is %x\n", html_tree->treeAttr);
-		PrintNode(&(html_tree->root), 0);
-	}
-}
+//
+//void printNode(html_node_t *html_node)
+//{
+//	if (html_node)
+//	{
+//		html_attribute_t *attribute;
+//		if (html_node->html_tag.tag_name)
+//		{
+//			myprintf("<%s", html_node->html_tag.tag_name);
+//		}
+//		else
+//		{
+//			if (html_node->html_tag.tag_type == TAG_ROOT)
+//			{
+//				myprintf("<ROOT");
+//			}
+//			else
+//			{
+//				myprintf("<%d", html_node->html_tag.tag_type);
+//			}
+//
+//		}
+//		for (attribute = html_node->html_tag.attribute; attribute != NULL; attribute = attribute->next)
+//		{
+//			myprintf( " %s", attribute->name);
+//			if (attribute->value != NULL)
+//			{
+//				myprintf("=\"%s\"", attribute->value);
+//			}
+//		}
+//		if (html_node->html_tag.tag_type == TAG_PURETEXT)
+//		{
+//			myprintf( ";text=%s#;", html_node->html_tag.text);
+//		}
+//		myprintf( ">\n");
+//	}
+//}
+//
+//void PrintNode(html_node_t *html_node, int level)
+//{
+//	html_attribute_t *attribute;
+//	html_node_t *child;
+//
+//	if (level == 0)
+//	{
+//		myprintf( " ");
+//	}
+//	for (int i = 0; i < level - 1; i++)
+//	{
+//		myprintf( " ");
+//	}
+//
+//	if (html_node->html_tag.tag_type == TAG_DOCTYPE)
+//	{
+//		myprintf("<!DOCTYPE %s>\n", html_node->html_tag.text);
+//	}
+//	else if (html_node->html_tag.tag_type == TAG_COMMENT)
+//	{
+//		myprintf("<!-- %s -->\n", html_node->html_tag.text);
+//	}
+//	else if (html_node->html_tag.tag_type == TAG_PURETEXT)
+//	{
+//		myprintf("%s\n", html_node->html_tag.text);
+//	}
+//	else
+//	{
+//
+//		if (html_node->html_tag.tag_name)
+//		{
+//			myprintf("<%s", html_node->html_tag.tag_name);
+//		}
+//		else
+//		{
+//			if (html_node->html_tag.tag_type == TAG_ROOT)
+//			{
+//				myprintf("<ROOT");
+//			}
+//			else
+//			{
+//				myprintf("<%d", html_node->html_tag.tag_type);
+//			}
+//
+//		}
+//		for (attribute = html_node->html_tag.attribute; attribute != NULL; attribute = attribute->next)
+//		{
+//			myprintf( " %s", attribute->name);
+//			if (attribute->value != NULL)
+//			{
+//				myprintf("=\"%s\"", attribute->value);
+//			}
+//		}
+//		if (html_node->html_tag.is_self_closed)
+//		{
+//			myprintf("/");
+//		}
+//		myprintf( ">(childnodetype=%x,subnodetype=%x)\n", html_node->childnodetype, html_node->subnodetype);
+//
+//	}
+//
+//	for (child = html_node->child; child != NULL; child = child->next)
+//	{
+//		PrintNode(child, level + 1);
+//	}
+//	if (html_node->html_tag.tag_type != TAG_COMMENT && html_node->html_tag.tag_type != TAG_DOCTYPE && html_node->html_tag.tag_type != TAG_PURETEXT && !html_node->html_tag.is_self_closed)
+//	{
+//		for (int i = 0; i < level - 1; i++)
+//		{
+//			myprintf("  ");
+//		}
+//		if (html_node->html_tag.tag_type == TAG_ROOT)
+//		{
+//			myprintf("</ROOT>\n");
+//		}
+//		else
+//		{
+//			myprintf("</%s>\n", html_node->html_tag.tag_name);
+//		}
+//	}
+//}
+//
+//void printTree(html_tree_t *html_tree)
+//{
+//	if (html_tree)
+//	{
+//		myprintf("the attr of tree is %x\n", html_tree->treeAttr);
+//		PrintNode(&(html_tree->root), 0);
+//	}
+//}
 
 int finish_mark_node_type(html_tag_t *tag, void *result)
 {

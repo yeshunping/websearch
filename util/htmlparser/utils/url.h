@@ -1,9 +1,3 @@
-/*
- * url.h
- *
- *  Created on: 2011-11-21
- *      Author: xunwu
- */
 
 #ifndef EASOU_URL_H_
 #define EASOU_URL_H_

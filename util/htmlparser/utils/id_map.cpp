@@ -1,11 +1,4 @@
-/**
- * @file mem-mgr/id_map.cpp
 
- * @date 2011/06/27
- * @version 1.0 
- * @brief 对每个或大多数id值都要存取信息的情况下所使用的id map.
- *  
- **/
 #include <assert.h>
 #include <stdlib.h>
 
