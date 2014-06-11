@@ -1,8 +1,3 @@
-/**
- * @Description	: 调试信息打印工具
- * @Author	: sue
- * @Date	: 2012-12-28
- */
 
 #ifndef EASOU_DEBUG_H_
 #define EASOU_DEBUG_H_
