@@ -10,7 +10,7 @@
 #include "base/time.h"
 #include "base/logging.h"
 #include "base/string_util.h"
-#include "base/es.h"
+#include "base/ns.h"
 #include "base/file_path.h"
 
 namespace file {

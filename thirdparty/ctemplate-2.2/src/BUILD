@@ -1,7 +1,7 @@
 cc_library(name = 'ctemplate',
            srcs = [
-                   'diff_tpl_auto_escape.cc',
-                   'make_tpl_varnames_h.cc',
+                   #'diff_tpl_auto_escape.cc',
+                   #'make_tpl_varnames_h.cc',
                    'per_expand_data.cc',
                    'template_annotator.cc',
                    'template_cache.cc',
@@ -18,5 +18,6 @@ cc_library(name = 'ctemplate',
                   ],
            incs = ['.', '.'],
            warning = 'no',
+           deps = ['#pthread'],
           )
 

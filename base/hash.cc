@@ -33,7 +33,7 @@
 #include <string>
 #include "thirdparty/stringencoders/modp_b16.h"
 #include "base/string_util.h"
-#include "base/es.h"
+#include "base/ns.h"
 
 namespace {
 static const uint32 kFingerPrint32Seed = 0xfd12deff;

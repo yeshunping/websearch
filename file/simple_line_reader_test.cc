@@ -5,7 +5,7 @@
 #include <string>
 
 #include "base/logging.h"
-#include "base/es.h"
+#include "base/ns.h"
 #include "file/file.h"
 #include "thirdparty/gtest/gtest.h"
 

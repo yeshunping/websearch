@@ -4,7 +4,7 @@
 #include "file/simple_line_reader.h"
 #include "base/logging.h"
 #include "base/string_util.h"
-#include "base/es.h"
+#include "base/ns.h"
 
 namespace file {
 SimpleLineReader::SimpleLineReader(const string& filename,

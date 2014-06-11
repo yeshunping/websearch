@@ -4,7 +4,7 @@
 #include <string>
 
 #include "base/hash.h"
-#include "base/es.h"
+#include "base/ns.h"
 #include "thirdparty/gtest/gtest.h"
 
 TEST(HashUnittest, Fingerprint) {

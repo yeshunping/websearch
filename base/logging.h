@@ -8,7 +8,7 @@
 #include <string>
 #include <cstring>
 #include <sstream>
-#include "base/es.h"
+#include "base/ns.h"
 #include "base/flags.h"
 
 #include "base/basictypes.h"
