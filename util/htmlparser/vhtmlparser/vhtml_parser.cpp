@@ -1,17 +1,17 @@
 /**
  * easou_vhtml_parser.cpp
- * Description: ¼ÆËã½ÚµãµÄ×ø±êºÍ³¤¿í
+ * Description: è®¡ç®—èŠ‚ç‚¹çš„åæ ‡å’Œé•¿å®½
  *  Created on: 2011-06-27
  * Last modify: 2012-10-26 sue_zhang@staff.easou.com shuangwei_zhang@staff.easou.com
  *      Author: xunwu_chen@staff.easoucom
  *     Version: 1.2
  */
-#include "log.h"
-#include "easou_string.h"
-#include "easou_html_attr.h"
-#include "easou_vhtml_parser.h"
-#include "easou_vhtml_basic.h"
-#include "easou_debug.h"
+#include "util/htmlparser/utils/log.h"
+#include "util/htmlparser/utils/string_util.h"
+#include "util/htmlparser/htmlparser/html_attr.h"
+#include "util/htmlparser/vhtmlparser/vhtml_parser.h"
+#include "util/htmlparser/vhtmlparser/vhtml_basic.h"
+#include "util/htmlparser/utils/debug.h"
 
 #include <math.h>
 #include <ctype.h>
@@ -56,7 +56,7 @@ static html_vnode_t *next_cell_list(html_vnode_t *cell_list, int *FLAG_is_bad_ta
 static html_vnode_t *next_cell(html_vnode_t *cell);
 
 /**
- * @brief Ç©ÃûÓëÔÚÑÕÉ«×Ö·û´®ÁĞ±íÖĞÎ»ÖÃµÄ¶ÔÓ¦¹ØÏµ¡£
+ * @brief ç­¾åä¸åœ¨é¢œè‰²å­—ç¬¦ä¸²åˆ—è¡¨ä¸­ä½ç½®çš„å¯¹åº”å…³ç³»ã€‚
  */
 const short g_sign_to_pos[] =
 { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 1, -1, -1, -1, -1, -1, -1, -1, 3, -1, 4, 6, 8, -1, -1, 10, -1, -1, -1, -1, 11, 13, 14, 15, -1, 16, -1, 17, 18, -1, 20, -1, 23, -1, 25, -1, 28, 30, -1, -1, 31, 32, 33, 36, 39, 40, 43, -1, 45, 47, 51, -1,
@@ -65,9 +65,9 @@ const short g_sign_to_pos[] =
 		-1, -1, -1, -1, -1, -1, -1, 139 };
 
 /**
- * @brief ÍøÒ³Ô¤¶¨ÒåÑÕÉ«×Ö·û´®ÁĞ±í
- *   °´ÑÕÉ«×Ö·û´®µÄÇ©ÃûÅÅÁĞ.
- *   Ç©Ãû·½Ê½Îª:×Ö·û´®Ã¿¸ö×Ö·ûÖµ-'a'Ïà¼Ó.
+ * @brief ç½‘é¡µé¢„å®šä¹‰é¢œè‰²å­—ç¬¦ä¸²åˆ—è¡¨
+ *   æŒ‰é¢œè‰²å­—ç¬¦ä¸²çš„ç­¾åæ’åˆ—.
+ *   ç­¾åæ–¹å¼ä¸º:å­—ç¬¦ä¸²æ¯ä¸ªå­—ç¬¦å€¼-'a'ç›¸åŠ .
  *
  */
 const char *g_color_str_arr[] =
@@ -80,7 +80,7 @@ const char *g_color_str_arr[] =
 		"darkturquoise", "paleturquoise", "mediumspringgreen", "mediumturquoise", "lightgoldenrodyellow" };
 
 /**
- * @brief ÍøÒ³Ô¤¶¨ÒåÑÕÉ«¶ÔÓ¦µÄÑÕÉ«±àÂë£¬ÓëÉÏ±íÅÅÁĞË³ĞòÏàÍ¬.
+ * @brief ç½‘é¡µé¢„å®šä¹‰é¢œè‰²å¯¹åº”çš„é¢œè‰²ç¼–ç ï¼Œä¸ä¸Šè¡¨æ’åˆ—é¡ºåºç›¸åŒ.
  *
  */
 const unsigned int g_color_value[] =
@@ -104,7 +104,7 @@ const html_tag_type_t inlineContainerTagList[] =
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 const char *init_block_tag_map()
@@ -120,7 +120,7 @@ const char *init_block_tag_map()
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 const char *init_inline_tag_map()
@@ -135,7 +135,7 @@ const char *init_inline_tag_map()
 }
 
 /**
- * @brief ÊÇ·ñÎª¿é¼¶ÔªËØ
+ * @brief æ˜¯å¦ä¸ºå—çº§å…ƒç´ 
  */
 int inline is_block_tag(html_tag_type_t tagType)
 {
@@ -196,7 +196,7 @@ int html_vtree_init()
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static bool flex_bigger(int num1, int num2)
@@ -214,7 +214,7 @@ static bool flex_bigger(int num1, int num2)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static inline int pt2px(int ptval)
@@ -224,7 +224,7 @@ static inline int pt2px(int ptval)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static char *parse_expr(char *expr)
@@ -257,7 +257,7 @@ static char *parse_expr(char *expr)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static int get_pxlen(const char *val)
@@ -337,7 +337,7 @@ static html_vnode_t *last_valid_node(html_vnode_t *vnode)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 inline bool is_rect_vnode(html_vnode_t *vnode)
@@ -365,7 +365,7 @@ inline bool is_rect_vnode(html_vnode_t *vnode)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static int create_css_prop_list(html_vnode_t *vnode, const easou_css_property_set_t *prop_set, const int numof_css_prop, nodepool_t *css_np)
@@ -394,7 +394,7 @@ static int create_css_prop_list(html_vnode_t *vnode, const easou_css_property_se
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static int is_valid_by_style(const char *aValue)
@@ -602,7 +602,7 @@ static void vnode_clear(html_vnode_t *vnode)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static inline void set_vnode_width(html_vnode_t *vnode, const char *value)
@@ -647,7 +647,7 @@ static inline void set_vnode_width(html_vnode_t *vnode, const char *value)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static inline void set_vnode_height(html_vnode_t *vnode, const char *value)
@@ -688,7 +688,7 @@ static inline void set_vnode_height(html_vnode_t *vnode, const char *value)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static void set_vnode_by_css(html_vnode_t *vnode, easou_css_property_set_t *prop_set)
@@ -994,7 +994,7 @@ static void deal_pre_tag(html_vnode_t *vnode)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static inline void trans_text_size(html_vnode_t *vnode)
@@ -1122,8 +1122,8 @@ bool is_child_in_aline(html_vnode_t *vnode)
 }
 
 /**
- * @brief ¸ù¾İ×æÏÈ½ÚµãµÄ¸ß¶È¹ÀËãµ±Ç°½ÚµãµÄ¸ß¶È
- * @author xunwu
+ * @brief æ ¹æ®ç¥–å…ˆèŠ‚ç‚¹çš„é«˜åº¦ä¼°ç®—å½“å‰èŠ‚ç‚¹çš„é«˜åº¦
+
  * @date 2011/06/27
  **/
 static int estimate_hx_by_upper(html_vnode_t *vnode)
@@ -1145,8 +1145,8 @@ static int estimate_hx_by_upper(html_vnode_t *vnode)
 }
 
 /**
- * @brief ¼ÆËãÒ¶×Ó½ÚµãµÄ¸ß¶È
- * @author xunwu
+ * @brief è®¡ç®—å¶å­èŠ‚ç‚¹çš„é«˜åº¦
+
  * @date 2011/06/27
  **/
 static void compute_leaf_hx(html_vnode_t *vnode)
@@ -1228,7 +1228,7 @@ static void compute_leaf_hx(html_vnode_t *vnode)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static void push_space_mgr(space_mgr_t *space_mgr, int x, int y, int width)
@@ -1246,7 +1246,7 @@ static void push_space_mgr(space_mgr_t *space_mgr, int x, int y, int width)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static avail_space_t pop_space_mgr(space_mgr_t *space_mgr)
@@ -1272,7 +1272,7 @@ static avail_space_t pop_space_mgr(space_mgr_t *space_mgr)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static avail_space_t select_space(space_mgr_t *space_mgr, int wx)
@@ -1290,7 +1290,7 @@ static avail_space_t select_space(space_mgr_t *space_mgr, int wx)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static void space_clear(space_mgr_t *space_mgr, u_int property, int parent_wx)
@@ -1314,7 +1314,7 @@ static void space_clear(space_mgr_t *space_mgr, u_int property, int parent_wx)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static void upd_space_mgr_float_left(space_mgr_t *space_mgr, html_vnode_t *node)
@@ -1366,7 +1366,7 @@ static void upd_space_mgr_float_left(space_mgr_t *space_mgr, html_vnode_t *node)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static void upd_space_mgr_float_right(space_mgr_t *space_mgr, html_vnode_t *node)
@@ -1405,7 +1405,7 @@ static void upd_space_mgr_float_right(space_mgr_t *space_mgr, html_vnode_t *node
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static void upd_space_mgr_line(space_mgr_t *space_mgr, html_vnode_t *node, int max_line_ypos)
@@ -1482,7 +1482,7 @@ static void lay_marquee(html_vnode_t *vnode)
 }
 
 /**
- * @brief ÍÆËãÎÄ±¾½ÚµãµÄ¸ß¶È
+ * @brief æ¨ç®—æ–‡æœ¬èŠ‚ç‚¹çš„é«˜åº¦
  **/
 static int deduce_txtnode_height(int origin_xpos, int origin_ypos, int current_xpos, int current_ypos, int limitWx, unsigned int line_height)
 {
@@ -1504,7 +1504,7 @@ static int deduce_txtnode_height(int origin_xpos, int origin_ypos, int current_x
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static void build_txt_vnode(html_vnode_t *pbVnode, html_vnode_t *txtVnode, int limitWx)
@@ -1566,7 +1566,7 @@ static void build_txt_vnode(html_vnode_t *pbVnode, html_vnode_t *txtVnode, int l
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static html_vnode_t *create_text_vnode(html_vnode_t *pbVnode, html_vnode_t *startVnode, int limitWx)
@@ -1624,7 +1624,7 @@ static html_vnode_t *create_text_vnode(html_vnode_t *pbVnode, html_vnode_t *star
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static void txt_block_layout(space_mgr_t *space_mgr, html_vnode_t *txVnode, int *ll_max_ypos)
@@ -1643,7 +1643,7 @@ static void txt_block_layout(space_mgr_t *space_mgr, html_vnode_t *txVnode, int 
 }
 
 /**
- * @brief »ñÈ¡µ¥Ôª¸ñµÄÖ¸¶¨¿í¶È
+ * @brief è·å–å•å…ƒæ ¼çš„æŒ‡å®šå®½åº¦
  */
 static int get_cell_width(html_vnode_t *vnode)
 {
@@ -1664,7 +1664,7 @@ static int get_cell_width(html_vnode_t *vnode)
 }
 
 /**
- * @brief »ñÈ¡rowspanÖµ
+ * @brief è·å–rowspanå€¼
  */
 static int get_cell_rowspan(html_vnode_t *vnode)
 {
@@ -1689,19 +1689,19 @@ static int get_cell_rowspan(html_vnode_t *vnode)
 }
 
 /**
- * @brief ¶ÔÆë±í¸ñµÄÃ¿Ò»ĞĞ
- * @author xunwu
+ * @brief å¯¹é½è¡¨æ ¼çš„æ¯ä¸€è¡Œ
+
  * @date 2011/06/27
  **/
 static void align_each_row(html_vnode_t *vnode)
 {
 	int wx_left = vnode->wx;
-	int not_assign_width_num = 0; //Ã»ÓĞÖ¸¶¨¿í¶ÈµÄµ¥Ôª¸ñ¸öÊı
+	int not_assign_width_num = 0; //æ²¡æœ‰æŒ‡å®šå®½åº¦çš„å•å…ƒæ ¼ä¸ªæ•°
 	html_vnode_t *cell_list = first_cell_list_in_table(vnode->firstChild);
 	for (; cell_list; cell_list = next_cell_list(cell_list, NULL))
 	{
-		int hi = 0; //¼ÆËãĞĞµÄ×î´ó¸ß¶È£¬row_spanÎª1µÄ
-		int max_hi = 0; //¼ÆËãĞĞµÄ×î´ó¸ß¶È£¬°üÀ¨row_span²»Îª1µÄ
+		int hi = 0; //è®¡ç®—è¡Œçš„æœ€å¤§é«˜åº¦ï¼Œrow_spanä¸º1çš„
+		int max_hi = 0; //è®¡ç®—è¡Œçš„æœ€å¤§é«˜åº¦ï¼ŒåŒ…æ‹¬row_spanä¸ä¸º1çš„
 		for (html_vnode_t *cell = cell_list; cell; cell = next_cell(cell))
 		{
 			int row_span = get_cell_rowspan(cell);
@@ -1723,21 +1723,21 @@ static void align_each_row(html_vnode_t *vnode)
 				not_assign_width_num++;
 			}
 		}
-		//ÉèÖÃµ¥Ôª¸ñµÄ¸ß¶ÈÎªĞĞµÄ×î´ó¸ß¶È
+		//è®¾ç½®å•å…ƒæ ¼çš„é«˜åº¦ä¸ºè¡Œçš„æœ€å¤§é«˜åº¦
 		for (html_vnode_t *cell = cell_list; cell; cell = next_cell(cell))
 		{
 			int row_span = get_cell_rowspan(cell);
 			if (row_span == 1)
-			{ //¶ÔÆërow_spanÎª1µÄ
+			{ //å¯¹é½row_spanä¸º1çš„
 				cell->hx = hi;
 				debuginfo(CALC_VTREE, "vnode(id=%d) set height to %d while align height for row of table", cell->id, cell->hx);
 			}
 			else
-			{ //¶ÔÆërow_span²»Îª1µÄ
+			{ //å¯¹é½row_spanä¸ä¸º1çš„
 				cell->hx = max_hi;
 				debuginfo(CALC_VTREE, "vnode(id=%d) set height to %d while align height for row of table", cell->id, cell->hx);
 			}
-			//¶ÔÆëµ¥Ôª¸ñµÄ¿í¶È
+			//å¯¹é½å•å…ƒæ ¼çš„å®½åº¦
 			int assigned_width = get_cell_width(cell);
 			if (assigned_width == -1 && not_assign_width_num == 1)
 			{
@@ -1754,7 +1754,7 @@ static void align_each_row(html_vnode_t *vnode)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static void txt_vnode_pos_trans(html_vnode_t *start_tvnode, html_vnode_t *end_tvnode, html_vnode_t *vitual_tvnode)
@@ -1770,8 +1770,8 @@ static void txt_vnode_pos_trans(html_vnode_t *start_tvnode, html_vnode_t *end_tv
 }
 
 /**
- * @brief ¼ÆËãÏà¶Ô²¼¾ÖÏÂ½ÚµãµÄÎ»ÖÃ¼°³¤¿í
- * @author xunwu
+ * @brief è®¡ç®—ç›¸å¯¹å¸ƒå±€ä¸‹èŠ‚ç‚¹çš„ä½ç½®åŠé•¿å®½
+
  * @date 2011/06/27
  **/
 static void relative_layout(html_vnode_t * vnode, space_mgr_t *space_mgr)
@@ -1792,7 +1792,7 @@ static void relative_layout(html_vnode_t * vnode, space_mgr_t *space_mgr)
 	{
 		return;
 	}
-	//¼ÆËãÒ¶×Ó½ÚµãµÄ¸ß¶È
+	//è®¡ç®—å¶å­èŠ‚ç‚¹çš„é«˜åº¦
 	if (!vnode->firstChild)
 	{
 		compute_leaf_hx(vnode);
@@ -1959,8 +1959,8 @@ void compute_absolute_pos(html_vnode_t *vnode)
 }
 
 /**
- * @brief ¸ù¾İ¿í¶È°Ù·Ö±ÈÉèÖÃ½ÚµãµÄ¿í¶È
- * @author xunwu
+ * @brief æ ¹æ®å®½åº¦ç™¾åˆ†æ¯”è®¾ç½®èŠ‚ç‚¹çš„å®½åº¦
+
  * @date 2011/06/27
  **/
 static void get_wx_by_wp(html_vnode_t *vnode, int upLimitWx)
@@ -1977,13 +1977,13 @@ static void get_wx_by_wp(html_vnode_t *vnode, int upLimitWx)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static void get_this_wx(html_vnode_t *vnode, int upLimitWx)
 {
 	if (vnode->wp < 0 && IS_LINE_BREAK(vnode->property) && IS_BREAK_BEFORE(vnode->property) && !IS_ABSOLUTE(vnode->property))
-	{ //Ã»ÓĞÉèÖÃ¿í¶È°Ù·Ö±È£¬ÇÒÏà¶ÔÓÚ¸¸½Úµã¶À×ÔÎª1ĞĞ£¬ÇÒ²»Îª²¼¾Ö²»Îª¾ø¶ÔÎ»ÖÃ
+	{ //æ²¡æœ‰è®¾ç½®å®½åº¦ç™¾åˆ†æ¯”ï¼Œä¸”ç›¸å¯¹äºçˆ¶èŠ‚ç‚¹ç‹¬è‡ªä¸º1è¡Œï¼Œä¸”ä¸ä¸ºå¸ƒå±€ä¸ä¸ºç»å¯¹ä½ç½®
 		if (upLimitWx < vnode->min_wx)
 		{
 			vnode->wx = vnode->min_wx;
@@ -2018,7 +2018,7 @@ static void get_this_wx(html_vnode_t *vnode, int upLimitWx)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static int getColSpan(html_tag_t *html_tag, int *FLAG_is_bad_table)
@@ -2056,7 +2056,7 @@ static int getColSpan(html_tag_t *html_tag, int *FLAG_is_bad_table)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static html_vnode_t *cell_list_in_tr(html_vnode_t *begin_vnode)
@@ -2086,7 +2086,7 @@ static html_vnode_t *cell_list_in_tr(html_vnode_t *begin_vnode)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static html_vnode_t *first_cell_list_in_table_group(html_vnode_t *begin_vnode)
@@ -2133,7 +2133,7 @@ static html_vnode_t *first_cell_list_in_table_group(html_vnode_t *begin_vnode)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static html_vnode_t *first_cell_list_in_table(html_vnode_t *begin_vnode)
@@ -2180,7 +2180,7 @@ static html_vnode_t *first_cell_list_in_table(html_vnode_t *begin_vnode)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static void set_other_wx_in_tr(html_vnode_t *begin_vnode)
@@ -2212,7 +2212,7 @@ static void set_other_wx_in_tr(html_vnode_t *begin_vnode)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static void set_other_wx_in_table(html_vnode_t *begin_vnode, int tablewx)
@@ -2258,7 +2258,7 @@ static void set_other_wx_in_table(html_vnode_t *begin_vnode, int tablewx)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static html_vnode_t *next_cell_list(html_vnode_t *curr_cell_list, int *FLAG_is_bad_table)
@@ -2320,7 +2320,7 @@ static html_vnode_t *next_cell_list(html_vnode_t *curr_cell_list, int *FLAG_is_b
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static html_vnode_t *next_cell(html_vnode_t *cell)
@@ -2360,8 +2360,8 @@ static html_vnode_t *next_cell(html_vnode_t *cell)
 }
 
 /**
- * @brief »ñÈ¡±í¸ñµÄÁĞÊı
- * @author xunwu
+ * @brief è·å–è¡¨æ ¼çš„åˆ—æ•°
+
  * @date 2011/06/27
  **/
 static int get_col_num(html_vnode_t *vnode, int *FLAG_is_bad_table)
@@ -2390,7 +2390,7 @@ static int get_col_num(html_vnode_t *vnode, int *FLAG_is_bad_table)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static void table_col_clear(table_col_t *tcol, int col_num)
@@ -2407,7 +2407,7 @@ static void table_col_clear(table_col_t *tcol, int col_num)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static void update_col_wx(table_col_t *tcol, int col_no, int wx, int colspan, int *FLAG_is_bad_table)
@@ -2470,7 +2470,7 @@ static void update_col_wx(table_col_t *tcol, int col_no, int wx, int colspan, in
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static void cmp_cell_list(table_col_t *tcol, html_vnode_t *cell_list, int wxlimit, int *FLAG_is_bad_table)
@@ -2503,7 +2503,7 @@ static void cmp_cell_list(table_col_t *tcol, html_vnode_t *cell_list, int wxlimi
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static void compute_cols(table_col_t *tcol, html_vnode_t *vnode, int *FLAG_is_bad_table)
@@ -2517,7 +2517,7 @@ static void compute_cols(table_col_t *tcol, html_vnode_t *vnode, int *FLAG_is_ba
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static void eval_noval_cols(table_col_t *tcol, int begin, int end, int sparewx, int tot_flex)
@@ -2539,7 +2539,7 @@ static void eval_noval_cols(table_col_t *tcol, int begin, int end, int sparewx, 
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static void evalColsWx(table_col_t *tcol, int col_num, int table_wx)
@@ -2609,7 +2609,7 @@ static void evalColsWx(table_col_t *tcol, int col_num, int table_wx)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static int evalCellWx(html_vnode_t *vnode, table_col_t *tcol, table_col_t *default_col)
@@ -2676,8 +2676,8 @@ static int evalCellWx_badtable(html_vnode_t *vnode, table_col_t *default_col)
 }
 
 /**
- * @brief ¸ù¾İ±í¸ñµÄÁĞ¿íµ÷Õû±í¸ñµÄ¿í¶È
- * @author xunwu
+ * @brief æ ¹æ®è¡¨æ ¼çš„åˆ—å®½è°ƒæ•´è¡¨æ ¼çš„å®½åº¦
+
  * @date 2011/06/27
  **/
 static void adjust_table_wx(html_vnode_t *vnode, table_col_t *tcol, int col_num)
@@ -2695,7 +2695,7 @@ static void adjust_table_wx(html_vnode_t *vnode, table_col_t *tcol, int col_num)
 }
 
 /**
- * @brief ¼ì²é±í¸ñµÄÁĞ¿í£¬¿´ÊÇ·ñÎªÕıÈ·µÄ±í¸ñ
+ * @brief æ£€æŸ¥è¡¨æ ¼çš„åˆ—å®½ï¼Œçœ‹æ˜¯å¦ä¸ºæ­£ç¡®çš„è¡¨æ ¼
  */
 static void check_cols_wx(table_col_t *tcol, int col_num, html_vnode_t *vnode, int *FLAG_is_bad_table)
 {
@@ -2728,8 +2728,8 @@ static void check_cols_wx(table_col_t *tcol, int col_num, html_vnode_t *vnode, i
 }
 
 /**
- * @brief ¼ÆËã±í¸ñµÄ¿í¶È
- * @author xunwu
+ * @brief è®¡ç®—è¡¨æ ¼çš„å®½åº¦
+
  * @date 2011/06/27
  **/
 static int html_table_compute_wx(html_vnode_t *vnode, table_col_t *default_col)
@@ -2790,7 +2790,7 @@ static int html_table_compute_wx(html_vnode_t *vnode, table_col_t *default_col)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static void estimate_my_wx(html_vnode_t *mynode, int wxLimit)
@@ -2859,7 +2859,7 @@ static void estimate_my_wx(html_vnode_t *mynode, int wxLimit)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static void compute_child_wx(html_vnode_t *vnode)
@@ -3019,8 +3019,8 @@ int html_vtree_compute_wx(html_vnode_t *vnode, table_col_t *default_col)
 }
 
 /**
- * @brief ¼ÆËãtextareaµÄ×î´ó¿í¶È
- * @author xunwu
+ * @brief è®¡ç®—textareaçš„æœ€å¤§å®½åº¦
+
  * @date 2011/06/27
  **/
 static void compute_textarea_wx_limit(html_vnode_t *vnode)
@@ -3045,8 +3045,8 @@ static void compute_textarea_wx_limit(html_vnode_t *vnode)
 }
 
 /**
- * @brief ¼ÆËãinput½ÚµãµÄ×î´ó¿í¶È
- * @author xunwu
+ * @brief è®¡ç®—inputèŠ‚ç‚¹çš„æœ€å¤§å®½åº¦
+
  * @date 2011/06/27
  **/
 static void compute_input_wx_limit(html_vnode_t *vnode)
@@ -3119,7 +3119,7 @@ static inline bool is_break_both_side(html_vnode_t *vnode)
 }
 
 /**
- * @brief ¸ù¾İ¸¸½ÚµãµÄ¿í¶ÈÈ·¶¨µ±Ç°½ÚµãµÄ¿í¶È
+ * @brief æ ¹æ®çˆ¶èŠ‚ç‚¹çš„å®½åº¦ç¡®å®šå½“å‰èŠ‚ç‚¹çš„å®½åº¦
  */
 static int estimate_wx_by_upper(html_vnode_t *vnode)
 {
@@ -3146,8 +3146,8 @@ static int estimate_wx_by_upper(html_vnode_t *vnode)
 }
 
 /**
- * @brief ¼ÆËãÒ¶×Ó½ÚµãµÄ×î´ó¿í¶ÈºÍ×îĞ¡¿í¶È
- * @author xunwu
+ * @brief è®¡ç®—å¶å­èŠ‚ç‚¹çš„æœ€å¤§å®½åº¦å’Œæœ€å°å®½åº¦
+
  * @date 2011/06/27
  **/
 static void compute_leaf_wx_limit(html_vnode_t *vnode, int page_width)
@@ -3225,8 +3225,8 @@ static void compute_leaf_wx_limit(html_vnode_t *vnode, int page_width)
 }
 
 /**
- * @brief ÅĞ¶Ï×Ó½ÚµãÖĞÊÇ·ñº¬ÓĞTD»òÕßTH½Úµã
- * @author xunwu
+ * @brief åˆ¤æ–­å­èŠ‚ç‚¹ä¸­æ˜¯å¦å«æœ‰TDæˆ–è€…THèŠ‚ç‚¹
+
  * @date 2011/06/27
  **/
 static bool has_td(html_vnode_t *vnode)
@@ -3247,8 +3247,8 @@ static bool has_td(html_vnode_t *vnode)
 }
 
 /**
- * @brief ÅĞ¶ÏÊÇ·ñÎªTD±êÇ©ÁĞ±í
- * @author xunwu
+ * @brief åˆ¤æ–­æ˜¯å¦ä¸ºTDæ ‡ç­¾åˆ—è¡¨
+
  * @date 2011/06/27
  **/
 static bool is_table_cell_list(html_vnode_t *vnode)
@@ -3276,8 +3276,8 @@ static bool is_table_cell_list(html_vnode_t *vnode)
 }
 
 /**
- * @brief ÅĞ¶Ï½ÚµãÊÇ·ñÎª±í¸ñÖĞµÄTR
- * @author xunwu
+ * @brief åˆ¤æ–­èŠ‚ç‚¹æ˜¯å¦ä¸ºè¡¨æ ¼ä¸­çš„TR
+
  * @date 2011/06/27
  **/
 static bool is_table_row(html_vnode_t *vnode)
@@ -3299,15 +3299,15 @@ static bool is_table_row(html_vnode_t *vnode)
 }
 
 /**
- * @brief ¼ÆËã·ÇÒ¶×Ó½ÚµãµÄ×î´ó¿í¶ÈºÍ×îĞ¡¿í¶È
- * @author xunwu
+ * @brief è®¡ç®—éå¶å­èŠ‚ç‚¹çš„æœ€å¤§å®½åº¦å’Œæœ€å°å®½åº¦
+
  * @date 2011/06/27
  **/
 static void compute_wx_limit_by_child(html_vnode_t *vnode)
 {
 	if (vnode->wx > 0)
 	{
-		//ÒÑ¾­Ö¸¶¨ÁË½ÚµãµÄ¿í¶È£¬ÇÒoverflowÊôĞÔÎªhidden
+		//å·²ç»æŒ‡å®šäº†èŠ‚ç‚¹çš„å®½åº¦ï¼Œä¸”overflowå±æ€§ä¸ºhidden
 		char *overflow_value = get_css_attribute(vnode, CSS_PROP_OVERFLOW);
 		if (overflow_value && strstr(overflow_value, "hidden"))
 		{
@@ -3318,7 +3318,7 @@ static void compute_wx_limit_by_child(html_vnode_t *vnode)
 		}
 	}
 	int wrap_linewx = 0;
-	int nowrap_linewx = 0; //²»»»ĞĞµÄ¿í¶È
+	int nowrap_linewx = 0; //ä¸æ¢è¡Œçš„å®½åº¦
 	int line_nowx_img_num = 0;
 	int max_linewx = 0;
 	int max_line_nowx_img_num = 0;
@@ -3395,7 +3395,7 @@ static void compute_wx_limit_by_child(html_vnode_t *vnode)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static void special_width(html_vnode_t *vnode)
@@ -3414,15 +3414,15 @@ static void special_width(html_vnode_t *vnode)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static inline void trans_visit(html_vnode_t *vnode, int page_width)
 {
 	bool hasRectChild = false;
 	bool hasBlockChild = false;
-	html_vnode_t *first_valid = NULL; //µÚÒ»¸öÓĞĞ§×Ó½Úµã
-	html_vnode_t *last_valid = NULL; //×îºóÒ»¸öÓĞĞ§×Ó½Úµã
+	html_vnode_t *first_valid = NULL; //ç¬¬ä¸€ä¸ªæœ‰æ•ˆå­èŠ‚ç‚¹
+	html_vnode_t *last_valid = NULL; //æœ€åä¸€ä¸ªæœ‰æ•ˆå­èŠ‚ç‚¹
 	for (html_vnode_t *child = vnode->firstChild; child; child = child->nextNode)
 	{
 		if (child->isValid)
@@ -3474,14 +3474,14 @@ static inline void trans_visit(html_vnode_t *vnode, int page_width)
 		}
 		if (vnode->wx > 0 && vnode->hx < 0 && vnode->hp < 0)
 		{
-			//Èç¹ûÍ¼Æ¬µÄ¸ß¶ÈÎ´ÉèÖÃ£¬ÔòÊ¹ÓÃÆä¿í¶È×÷Îª¸ß¶È
+			//å¦‚æœå›¾ç‰‡çš„é«˜åº¦æœªè®¾ç½®ï¼Œåˆ™ä½¿ç”¨å…¶å®½åº¦ä½œä¸ºé«˜åº¦
 //			vnode->hx = vnode->wx;
 //			debuginfo(CALC_VTREE, "vnode(id=%d) set height to %d", vnode->id, vnode->hx);
 //			vnode->trust += 2;
 		}
 		else if (vnode->hx > 0 && vnode->wx < 0 && vnode->wp < 0)
 		{
-			//Èç¹ûÍ¼Æ¬µÄ¿í¶ÈÎ´ÉèÖÃ£¬ÔòÊ¹ÓÃÆä¸ß¶È×÷Îª¿í¶È
+			//å¦‚æœå›¾ç‰‡çš„å®½åº¦æœªè®¾ç½®ï¼Œåˆ™ä½¿ç”¨å…¶é«˜åº¦ä½œä¸ºå®½åº¦
 			vnode->wx = vnode->hx;
 			debuginfo(CALC_VTREE, "vnode(id=%d) set width to %d", vnode->id, vnode->wx);
 			vnode->trust += 3;
@@ -3492,22 +3492,22 @@ static inline void trans_visit(html_vnode_t *vnode, int page_width)
 		}
 	}
 
-	//¼ÆËãÒ¶×Ó½ÚµãµÄ×î´ó¿í¶ÈºÍ×îĞ¡¿í¶È
+	//è®¡ç®—å¶å­èŠ‚ç‚¹çš„æœ€å¤§å®½åº¦å’Œæœ€å°å®½åº¦
 	if (vnode->firstChild == NULL && vnode->wx < 0)
 	{
 		compute_leaf_wx_limit(vnode, page_width);
 		return;
 	}
 
-	//¼ÆËã·ÇÒ¶×Ó½ÚµãµÄ×î´ó¿í¶ÈºÍ×îĞ¡¿í¶È
+	//è®¡ç®—éå¶å­èŠ‚ç‚¹çš„æœ€å¤§å®½åº¦å’Œæœ€å°å®½åº¦
 	compute_wx_limit_by_child(vnode);
-	//·ÇÒ¶×Ó½ÚµãµÄ×î´ó¿íºÍ×îĞ¡¿í²»¸ù¾İ×Ó½Úµã¼ÆËãµÄ
+	//éå¶å­èŠ‚ç‚¹çš„æœ€å¤§å®½å’Œæœ€å°å®½ä¸æ ¹æ®å­èŠ‚ç‚¹è®¡ç®—çš„
 	special_width(vnode);
 
 	if (vnode->wx >= 0)
 	{
 		if (flex_bigger(vnode->min_wx, vnode->wx))
-		{ //×îĞ¡¿í±È¿í¶È´ó40%ÒÔÉÏ£¬»òÕß¿í¶ÈÎª0
+		{ //æœ€å°å®½æ¯”å®½åº¦å¤§40%ä»¥ä¸Šï¼Œæˆ–è€…å®½åº¦ä¸º0
 			if((vnode->whxy&8)==0){
 				vnode->wx = -1;
 			}
@@ -3557,8 +3557,8 @@ void trans_down_top(html_vnode_t *root, int page_width)
 }
 
 /**
- * @brief ÉèÖÃVÊ÷¸ù½ÚµãµÄ¿í¶È
- * @author xunwu
+ * @brief è®¾ç½®Væ ‘æ ¹èŠ‚ç‚¹çš„å®½åº¦
+
  * @date 2011/06/27
  **/
 void get_root_wx(html_vnode_t *root, int page_width)
@@ -3635,8 +3635,8 @@ struct css_context_t
 {
 	easou_css_pool_t *csspool;
 	nodepool_t *css_np;
-	short selectors_st[CSS_SELECTOR_MAX]; //ÓÃÀ´±£´æ¸÷¸öÑ¡Ôñ×ÓµÄ×´Ì¬
-	css_pre_status_t pre_st[CSS_PRE_STATUS_MAX]; //ÓÃÀ´±£´æ½ÚµãµÄcss×´Ì¬¸üĞÂÇé¿ö
+	short selectors_st[CSS_SELECTOR_MAX]; //ç”¨æ¥ä¿å­˜å„ä¸ªé€‰æ‹©å­çš„çŠ¶æ€
+	css_pre_status_t pre_st[CSS_PRE_STATUS_MAX]; //ç”¨æ¥ä¿å­˜èŠ‚ç‚¹çš„cssçŠ¶æ€æ›´æ–°æƒ…å†µ
 	int pre_st_avail;
 };
 
@@ -3680,7 +3680,7 @@ int get_prop_values(easou_css_property_set_t *prop_set, easou_css_property_t *pr
 }
 
 /**
- * @brief ÏòÏÂ±éÀúÊ÷Ê±£¬¸üĞÂ£¨½ø»¯£©cssÆ¥ÅäµÄ×´Ì¬£¬Èç¹ûÍê³ÉÆ¥ÅäÔò±£´æcss¹æÔò
+ * @brief å‘ä¸‹éå†æ ‘æ—¶ï¼Œæ›´æ–°ï¼ˆè¿›åŒ–ï¼‰cssåŒ¹é…çš„çŠ¶æ€ï¼Œå¦‚æœå®ŒæˆåŒ¹é…åˆ™ä¿å­˜cssè§„åˆ™
  * @author sue
  * @date 2013/04/12
  */
@@ -3741,7 +3741,7 @@ static int update_css_down_status(css_context_t *context, char* key, easou_css_p
 }
 
 /**
- * @brief ²éÑ¯Ä³¸ö½ÚµãµÄcssÊôĞÔ£¬¸Ã·½·¨ÓÃÓÚ±éÀúÊ÷µÄ¹ı³ÌÖĞ½øĞĞ²éÕÒ
+ * @brief æŸ¥è¯¢æŸä¸ªèŠ‚ç‚¹çš„csså±æ€§ï¼Œè¯¥æ–¹æ³•ç”¨äºéå†æ ‘çš„è¿‡ç¨‹ä¸­è¿›è¡ŒæŸ¥æ‰¾
  * @author sue
  * @date 2013/04/12
  */
@@ -3832,7 +3832,7 @@ static int get_css_props(css_context_t *context, easou_css_property_set_t* prop_
 }
 
 /**
- * @brief ÔÚÏòÉÏ±éÀúÊ÷Ê±£¬¸üĞÂ£¨ÍË»¯£©cssÆ¥ÅäµÄ×´Ì¬ĞÅÏ¢
+ * @brief åœ¨å‘ä¸Šéå†æ ‘æ—¶ï¼Œæ›´æ–°ï¼ˆé€€åŒ–ï¼‰cssåŒ¹é…çš„çŠ¶æ€ä¿¡æ¯
  * @authro sue
  * @date 2013/04/12
  */
@@ -3916,7 +3916,7 @@ static int finish_add_info_with_css(html_vnode_t *vnode, void *data)
 	}
 	html_tag_type_t tag_type = vnode->hpNode->html_tag.tag_type;
 	if (vnode->firstChild == NULL)
-	{ //Ò¶×Ó½Úµã
+	{ //å¶å­èŠ‚ç‚¹
 		if (interaction_tag_types[tag_type])
 		{
 			SET_INCLUDE_INTER(vnode->property);
@@ -3930,10 +3930,10 @@ static int finish_add_info_with_css(html_vnode_t *vnode, void *data)
 		if (child->isValid)
 		{
 			if (IS_INCLUDE_INTER(child->property))
-			{ //Èç¹û×Ó½Úµã¾ßÓĞ½»»¥ÊôĞÔ£¬Ôò´«µİµ½µ±Ç°½Úµã
+			{ //å¦‚æœå­èŠ‚ç‚¹å…·æœ‰äº¤äº’å±æ€§ï¼Œåˆ™ä¼ é€’åˆ°å½“å‰èŠ‚ç‚¹
 				SET_INCLUDE_INTER(vnode->property);
 			}
-			//ÕÒµÚÒ»¸öÓĞĞ§×Ó½ÚµãºÍ×îºóÒ»¸öÓĞĞ§×Ó½Úµã
+			//æ‰¾ç¬¬ä¸€ä¸ªæœ‰æ•ˆå­èŠ‚ç‚¹å’Œæœ€åä¸€ä¸ªæœ‰æ•ˆå­èŠ‚ç‚¹
 			if (firstValid == NULL)
 			{
 				firstValid = child;
@@ -3990,7 +3990,7 @@ static int finish_add_info_with_css2(html_vnode_t *vnode, void *data)
 {
 	html_tag_type_t tag_type = vnode->hpNode->html_tag.tag_type;
 	if (vnode->firstChild == NULL)
-	{ //Ò¶×Ó½Úµã
+	{ //å¶å­èŠ‚ç‚¹
 		if (interaction_tag_types[tag_type])
 		{
 			SET_INCLUDE_INTER(vnode->property);
@@ -4004,10 +4004,10 @@ static int finish_add_info_with_css2(html_vnode_t *vnode, void *data)
 		if (child->isValid)
 		{
 			if (IS_INCLUDE_INTER(child->property))
-			{ //Èç¹û×Ó½Úµã¾ßÓĞ½»»¥ÊôĞÔ£¬Ôò´«µİµ½µ±Ç°½Úµã
+			{ //å¦‚æœå­èŠ‚ç‚¹å…·æœ‰äº¤äº’å±æ€§ï¼Œåˆ™ä¼ é€’åˆ°å½“å‰èŠ‚ç‚¹
 				SET_INCLUDE_INTER(vnode->property);
 			}
-			//ÕÒµÚA1„1¤77¸öÓĞĞ§×Ó½ÚµãºÍ×îºóÒ»¸öÓĞĞ§×Ó½Úµã
+			//æ‰¾ç¬¬ä¸„1ï¿½7ä¸ªæœ‰æ•ˆå­èŠ‚ç‚¹å’Œæœ€åä¸€ä¸ªæœ‰æ•ˆå­èŠ‚ç‚¹
 			if (firstValid == NULL)
 			{
 				firstValid = child;
@@ -4190,7 +4190,7 @@ static int finish_for_html_property(html_vnode_t *vnode, void *data)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 void html_vtree_get_html_property(html_vtree_t *html_vtree)
@@ -4200,7 +4200,7 @@ void html_vtree_get_html_property(html_vtree_t *html_vtree)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 char *get_css_attribute(html_vnode_t *html_vnode, easou_css_prop_type_t type)
@@ -4281,7 +4281,7 @@ static int parse_color(const char *val)
 		if (l == 4)
 		{
 			/**
-			 * ½«#abcĞÎÊ½±äÎª#aabbccĞÎÊ½
+			 * å°†#abcå½¢å¼å˜ä¸º#aabbccå½¢å¼
 			 */
 			char st_val[32];
 			st_val[0] = '\0';
@@ -4324,7 +4324,7 @@ static int parse_color(const char *val)
 			{
 				p_val++;
 			} while (isdigit(*p_val));
-			p_val--; /**ÍËµ½×îºóÒ»¸öÊı×Ö£¬±ÜÃâÔ½½ç*/
+			p_val--; /**é€€åˆ°æœ€åä¸€ä¸ªæ•°å­—ï¼Œé¿å…è¶Šç•Œ*/
 		}
 
 		int color = (rgb_val[0] << 16) + (rgb_val[1] << 8) + rgb_val[2];
@@ -4426,8 +4426,8 @@ static void parse_font_weight(font_t *font, const char *value)
 	if (atoi(value) >= 600)
 	{
 		/**
-		 * ¸ù¾İ¶Ôä¯ÀÀÆ÷µÄÊµÑéµÃ³öµÄÖµ,font-weightÖµ´óÓÚ600
-		 * ¼´³öÏÖ´ÖÌå,Õâ¸öÖµ¸ü´óÊ±£¬×ÖÌå´ÖÏ¸ËÆºõÎŞÃ÷ÏÔ¸Ä±ä.
+		 * æ ¹æ®å¯¹æµè§ˆå™¨çš„å®éªŒå¾—å‡ºçš„å€¼,font-weightå€¼å¤§äº600
+		 * å³å‡ºç°ç²—ä½“,è¿™ä¸ªå€¼æ›´å¤§æ—¶ï¼Œå­—ä½“ç²—ç»†ä¼¼ä¹æ— æ˜æ˜¾æ”¹å˜.
 		 */
 		font->is_bold = 1;
 	}
@@ -4510,8 +4510,8 @@ static void parse_background(font_t *font, const char *val)
 {
 	enum
 	{
-		OUT_BRACKET = 0, /**< ²»ÔÚÀ¨ºÅÄÚ       */
-		IN_BRACKET = 1, /**< ÔÚÀ¨ºÅÄÚ       */
+		OUT_BRACKET = 0, /**< ä¸åœ¨æ‹¬å·å†…       */
+		IN_BRACKET = 1, /**< åœ¨æ‹¬å·å†…       */
 	};
 
 	char color_buf[32];
@@ -4521,8 +4521,8 @@ static void parse_background(font_t *font, const char *val)
 
 	const char *p_bufend = color_buf + sizeof(color_buf) - 1;
 
-	/**½Ø³öbackgroundÊôĞÔµÄµÚÒ»¸ö±»¿Õ¸ñ·Ö¿ªµÄ²¿·Ö£º±³¾°ÑÕÉ«
-	 * Ö»¿ÉÄÜÔÚÕâ¸ö²¿·Ö.
+	/**æˆªå‡ºbackgroundå±æ€§çš„ç¬¬ä¸€ä¸ªè¢«ç©ºæ ¼åˆ†å¼€çš„éƒ¨åˆ†ï¼šèƒŒæ™¯é¢œè‰²
+	 * åªå¯èƒ½åœ¨è¿™ä¸ªéƒ¨åˆ†.
 	 */
 	for (int stat = OUT_BRACKET; *p && q < p_bufend; p++)
 	{
@@ -4664,7 +4664,7 @@ void get_style_font_info(html_vnode_t *vnode, int base_size, bool &given_line_he
 	}
 
 	/**
-	 * line-height±ØĞëÔÚfont-sizeÖ®ºó½øĞĞ½âÎö.
+	 * line-heightå¿…é¡»åœ¨font-sizeä¹‹åè¿›è¡Œè§£æ.
 	 */
 	if (line_height_val != NULL)
 	{
@@ -4729,7 +4729,7 @@ void get_css_font_info(html_vnode_t *vnode, int base_size, bool &given_line_heig
 	}
 
 	/**
-	 * line-height±ØĞëÔÚfont-sizeÖ®ºó½øĞĞ½âÎö.
+	 * line-heightå¿…é¡»åœ¨font-sizeä¹‹åè¿›è¡Œè§£æ.
 	 */
 	if (line_height_val != NULL)
 	{
@@ -4746,14 +4746,14 @@ static int parse_font_tag_size(const char *size_str)
 {
 	int size_num = atoi(size_str);
 	/**
-	 * ¹æÒ»»¯×ÖÌå´óĞ¡µÄÁ½ÖÖ±íÊ¾:(-3µ½+4)±íÊ¾·¨->(1µ½7)±íÊ¾·¨.
+	 * è§„ä¸€åŒ–å­—ä½“å¤§å°çš„ä¸¤ç§è¡¨ç¤º:(-3åˆ°+4)è¡¨ç¤ºæ³•->(1åˆ°7)è¡¨ç¤ºæ³•.
 	 */
 	if ((size_num <= 0 && size_num >= -3) || size_str[0] == '+')
 	{
 		size_num += 3;
 	}
 	/*
-	 * Òì³£´¦Àí.
+	 * å¼‚å¸¸å¤„ç†.
 	 */
 	if (size_num < 1)
 		size_num = 1;
@@ -4761,7 +4761,7 @@ static int parse_font_tag_size(const char *size_str)
 		size_num = 7;
 
 	/**
-	 * font size×ª»¯ÎªÏñËØ´óĞ¡.
+	 * font sizeè½¬åŒ–ä¸ºåƒç´ å¤§å°.
 	 */
 	static const int SIZE_TO_PX[] =
 	{ 0, 10, 13, 16, 18, 24, 32, 48 };
@@ -4777,7 +4777,7 @@ static const unsigned int HEADER_FONT_LINE_HEIGHT[] =
 static void get_tag_font_info(html_vnode_t *vnode)
 {
 	/**
-	 * ¸ù¾İtagÀàĞÍÅĞ¶Ï
+	 * æ ¹æ®tagç±»å‹åˆ¤æ–­
 	 */
 	html_tag_t *html_tag = &(vnode->hpNode->html_tag);
 	switch (html_tag->tag_type)
@@ -4889,7 +4889,7 @@ static void get_tag_font_info(html_vnode_t *vnode)
 static bool is_link_tag(html_vnode_t *vnode)
 {
 	/**
-	 * µ±Ç°½ÚµãÊÇ·ñÁ´½Ó±êÇ©
+	 * å½“å‰èŠ‚ç‚¹æ˜¯å¦é“¾æ¥æ ‡ç­¾
 	 */
 	html_vnode_t *upper_node = vnode->upperNode;
 	if (upper_node && upper_node->inLink)
@@ -4918,8 +4918,8 @@ static void inherit_font(html_vnode_t *vnode)
 	if (is_link_tag(vnode))
 	{
 		/**
-		 * ¶ÔÓÚÁ´½Ó£¬ÆäÄ¬ÈÏÑÕÉ«ÎªÀ¶É«ÇÒÓĞÏÂ»®Ïß
-		 * ÇÒ´ËÌØÕ÷²»¼Ì³Ğ×Ô¸¸½Úµã¡£
+		 * å¯¹äºé“¾æ¥ï¼Œå…¶é»˜è®¤é¢œè‰²ä¸ºè“è‰²ä¸”æœ‰ä¸‹åˆ’çº¿
+		 * ä¸”æ­¤ç‰¹å¾ä¸ç»§æ‰¿è‡ªçˆ¶èŠ‚ç‚¹ã€‚
 		 */
 		vnode->font.in_link = 1;
 		vnode->font.color = DEFAULT_LINK_COLOR;
@@ -4930,7 +4930,7 @@ static void inherit_font(html_vnode_t *vnode)
 static void compu_line_height(html_vnode_t *vnode, bool given_line_height)
 {
 	/**
-	 * ÈôÖ¸¶¨ÁËline_height,Ôò²»ÄÜ¸ù¾İ±êÌâ×ÖÌåÀ´¼ÆËãline_height
+	 * è‹¥æŒ‡å®šäº†line_height,åˆ™ä¸èƒ½æ ¹æ®æ ‡é¢˜å­—ä½“æ¥è®¡ç®—line_height
 	 */
 	if (!given_line_height && vnode->font.header_size > 0)
 	{
@@ -4938,7 +4938,7 @@ static void compu_line_height(html_vnode_t *vnode, bool given_line_height)
 	}
 
 	/**
-	 * line-height±ØĞë´óÓÚµÈÓÚfont-size
+	 * line-heightå¿…é¡»å¤§äºç­‰äºfont-size
 	 */
 	if (vnode->font.line_height < vnode->font.size)
 	{
@@ -4959,7 +4959,7 @@ static int start_visit_for_font(html_vnode_t *vnode, void *data)
 	inherit_font(vnode);
 	int base_size = vnode->font.size;
 	bool given_line_height = false;
-	if (vnode->font.line_height > base_size) /**¼Ì³Ğ×Ô¸¸½ÚµãµÄline_height*/
+	if (vnode->font.line_height > base_size) /**ç»§æ‰¿è‡ªçˆ¶èŠ‚ç‚¹çš„line_height*/
 		given_line_height = true;
 	get_tag_font_info(vnode);
 	get_css_font_info(vnode, base_size, given_line_height);
@@ -4970,7 +4970,7 @@ static int start_visit_for_font(html_vnode_t *vnode, void *data)
 	compu_line_height(vnode, given_line_height);
 	if (vnode->hpNode->html_tag.tag_type == TAG_TABLE)
 	{
-		//¶ÔÓÚ±í¸ñ,Æä¶ÔÆëÊôĞÔ²»×÷ÓÃÓÚÎÄ±¾.
+		//å¯¹äºè¡¨æ ¼,å…¶å¯¹é½å±æ€§ä¸ä½œç”¨äºæ–‡æœ¬.
 		vnode->font.align = VHP_TEXT_ALIGN_LEFT;
 	}
 	return VISIT_NORMAL;
@@ -4995,28 +4995,28 @@ static int finish_visit_for_font(html_vnode_t *vnode, void *data)
 		if (child->subtree_textSize == vnode->subtree_textSize && child->subtree_textSize > 0)
 		{
 			/**
-			 * Èç¹ûÒ»¸ö½ÚµãµÄ×Ó½ÚµãËùÔÚ×ÓÊ÷°üº¬µÄÎÄ±¾¾ÍÊÇ
-			 * Õâ¸ö½ÚµãËùÔÚµÄ×ÓÊ÷°üº¬µÄÎÄ±¾£¬Ôò¸üĞÂÕâ¸ö½Ú
-			 * µãµÄ×ÖÌå´óĞ¡ÎªÆä×Ó½ÚµãµÄ×ÖÌå´óĞ¡£¬ÕâÑù×öÊÇ
-			 * ÎªÁË·½±ãµÃµ½Ò»¸öÇøÓò»òÕû¸öÒ³ÃæµÄ»ù±¾×ÖÌå´óĞ¡.
+			 * å¦‚æœä¸€ä¸ªèŠ‚ç‚¹çš„å­èŠ‚ç‚¹æ‰€åœ¨å­æ ‘åŒ…å«çš„æ–‡æœ¬å°±æ˜¯
+			 * è¿™ä¸ªèŠ‚ç‚¹æ‰€åœ¨çš„å­æ ‘åŒ…å«çš„æ–‡æœ¬ï¼Œåˆ™æ›´æ–°è¿™ä¸ªèŠ‚
+			 * ç‚¹çš„å­—ä½“å¤§å°ä¸ºå…¶å­èŠ‚ç‚¹çš„å­—ä½“å¤§å°ï¼Œè¿™æ ·åšæ˜¯
+			 * ä¸ºäº†æ–¹ä¾¿å¾—åˆ°ä¸€ä¸ªåŒºåŸŸæˆ–æ•´ä¸ªé¡µé¢çš„åŸºæœ¬å­—ä½“å¤§å°.
 			 */
 			vnode->font.size = child->font.size;
 		}
 	}
 	/**
-	 * Èç¹ûÒ»¸ö½ÚµãÖ»ÓĞÒ»¸öÓĞĞ§×Ó½Úµã£¬ÔòÆäÄ³Ğ©×ÖÌåÊôĞÔµÈÓÚÆä×ÓÔªËØ×ÖÌåÊôĞÔ.
+	 * å¦‚æœä¸€ä¸ªèŠ‚ç‚¹åªæœ‰ä¸€ä¸ªæœ‰æ•ˆå­èŠ‚ç‚¹ï¼Œåˆ™å…¶æŸäº›å­—ä½“å±æ€§ç­‰äºå…¶å­å…ƒç´ å­—ä½“å±æ€§.
 	 */
 	if (valid_child_num == 1)
 	{
 		vnode->font.bgcolor = valid_child->font.bgcolor;
 		/**
-		 * ¶ÔÓÚÁ´½ÓÀ´Ëµ£¬ÑÕÉ«²»ÄÜÏòÉÏ´«µİ
+		 * å¯¹äºé“¾æ¥æ¥è¯´ï¼Œé¢œè‰²ä¸èƒ½å‘ä¸Šä¼ é€’
 		 */
 		!is_link_tag(valid_child) && ((vnode->font.color = valid_child->font.color), 1);
 		vnode->font.line_height = valid_child->font.line_height;
 	}
 
-	//¼ÆËãvnode->subtree_max_font_size£¬×ÓÊ÷(°üÀ¨×Ô¼º)µÄ×î´ó×ÖÌå
+	//è®¡ç®—vnode->subtree_max_font_sizeï¼Œå­æ ‘(åŒ…æ‹¬è‡ªå·±)çš„æœ€å¤§å­—ä½“
 	if (vnode->firstChild == NULL)
 	{
 		vnode->subtree_max_font_size = vnode->font.size;
@@ -5053,7 +5053,7 @@ static int finish_visit_for_font(html_vnode_t *vnode, void *data)
 		}
 	}
 
-	//¼ÆËã×ÓÊ÷±ß¿ò¸öÊı£¬ÉèÖÃ½ÚµãµÄ±ß¿òÊôĞÔ
+	//è®¡ç®—å­æ ‘è¾¹æ¡†ä¸ªæ•°ï¼Œè®¾ç½®èŠ‚ç‚¹çš„è¾¹æ¡†å±æ€§
 	vnode->subtree_border_num += border_num;
 	if (!IS_BORDER(vnode->property))
 	{

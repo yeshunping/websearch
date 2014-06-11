@@ -1,6 +1,6 @@
 /**
  * easou_vhtml_tree.h
- * Description: VÊ÷½âÎö
+ * Description: Væ ‘è§£æ
  *  Created on: 2011-11-13
  * Last modify: 2012-10-26 sue_zhang@staff.easou.com shuangwei_zhang@staff.easou.com
  *      Author: xunwu_chen@staff.easoucom
@@ -13,101 +13,102 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "nodepool.h"
-#include "easou_html_tree.h"
-#include "easou_css_parser.h"
-#include "easou_css_utils.h"
-#include "easou_vhtml_basic.h"
-#include "easou_vhtml_parser.h"
-#include "easou_vstruct_profiler.h"
+
+#include "util/htmlparser/utils/nodepool.h"
+#include "util/htmlparser/htmlparser/html_tree.h"
+#include "util/htmlparser/cssparser/css_parser.h"
+#include "util/htmlparser/cssparser/css_utils.h"
+#include "util/htmlparser/vhtmlparser/vhtml_basic.h"
+#include "util/htmlparser/vhtmlparser/vhtml_parser.h"
+#include "util/htmlparser/vhtmlparser/vstruct_profiler.h"
 
 /**
- * @brief	´´½¨²¢³õÊ¼»¯VtreeÊäÈë½á¹¹.
- * @author xunwu
+ * @brief	åˆ›å»ºå¹¶åˆå§‹åŒ–Vtreeè¾“å…¥ç»“æ„.
+
  * @date 2011/06/27
  **/
 vtree_in_t *vtree_in_create(int max_css_page_size = DEFAULT_MAX_CSS_PAGE_SIZE, int css_num = DEFAULT_CSS_NUM_INPOOL);
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/07/12
  **/
 void vtree_in_destroy(vtree_in_t *vtree_in);
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 html_vtree_t *html_vtree_create_with_tree(html_tree_t *html_tree);
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 void html_vtree_clean(html_vtree_t *html_vtree);
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 void html_vtree_del(html_vtree_t *html_vtree);
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 void html_vtree_clean_with_tree(html_vtree_t *html_vtree);
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 void html_vtree_del_with_tree(html_vtree_t *html_vtree);
 
 /**
- * @brief ¼ÆËãVÊ÷½ÚµãµÄÎ»ÖÃºÍ³¤¿í£¬ÒÔ¼°Ò»Ğ©»ù±¾ĞÅÏ¢¡£»áÊ¹ÓÃµ½½âÎöºÃµÄcssĞÅÏ¢¡£
- * @author xunwu
+ * @brief è®¡ç®—Væ ‘èŠ‚ç‚¹çš„ä½ç½®å’Œé•¿å®½ï¼Œä»¥åŠä¸€äº›åŸºæœ¬ä¿¡æ¯ã€‚ä¼šä½¿ç”¨åˆ°è§£æå¥½çš„cssä¿¡æ¯ã€‚
+
  * @date 2011/06/27
  **/
 int html_vtree_parse_with_css(html_vtree_t *html_vtree, easou_css_pool_t* css_pool, int page_width = DEFAULT_PAGE_WX);
 
 /**
- * @brief ÔÚDOMÊ÷µÄ»ù´¡ÉÏ½âÎö³öVÊ÷
- * @param [in/out] html_vtree, ±£´æ½âÎö³öÀ´µÄVÊ÷
+ * @brief åœ¨DOMæ ‘çš„åŸºç¡€ä¸Šè§£æå‡ºVæ ‘
+ * @param [in/out] html_vtree, ä¿å­˜è§£æå‡ºæ¥çš„Væ ‘
  * @param [in/out] vtree_in, 
- * @param [in] page_width, Ò³ÃæÄ¬ÈÏ¿í¶È
- * @param [in] test_import, ÊÇ·ñ²âÊÔÍâ²¿cssÎÄ¼şÖĞimportµÄcssÎÄ¼ş
- * @param [in] useoutcss,true:Ê¹ÓÃÀ´×Ôcss·şÎñÆ÷µÄcss£»false£º²»Ê¹ÓÃÀ´×Ôcss·şÎñÆ÷µÄcss
- * @author xunwu
+ * @param [in] page_width, é¡µé¢é»˜è®¤å®½åº¦
+ * @param [in] test_import, æ˜¯å¦æµ‹è¯•å¤–éƒ¨cssæ–‡ä»¶ä¸­importçš„cssæ–‡ä»¶
+ * @param [in] useoutcss,true:ä½¿ç”¨æ¥è‡ªcssæœåŠ¡å™¨çš„cssï¼›falseï¼šä¸ä½¿ç”¨æ¥è‡ªcssæœåŠ¡å™¨çš„css
+
  * @date 2011/06/27
  * @last modify on 2012-10-26 sue_zhang@staff.easou.com
  **/
 int html_vtree_parse_with_tree(html_vtree_t *html_vtree, vtree_in_t *vtree_in, const char *url, int page_width = DEFAULT_PAGE_WX, bool test_import = false,bool useoutcss=true);
 
 /**
- * @brief ³õÊ¼»¯cssserver
+ * @brief åˆå§‹åŒ–cssserver
  * @author shuangwei
  * @date 2012/08/01
  * @param
- * 	config_path, [in], edbÅäÖÃÎÄ¼şÂ·¾¶
- * 	log_dir, [in], ÈÕÖ¾Êä³öÄ¿Â¼
- * 	timeout, [in], »ñÈ¡css³¬Ê±Ê±¼ä£¬Ä¬ÈÏ10ms
- * 	thread_num, [in], »ñÈ¡cssµÄÏß³Ì¸öÊı£¬Ä¬ÈÏ20
- * 	cache_size, [in], css»º´æÊıÁ¿£¬Ä¬ÈÏ5W
+ * 	config_path, [in], edbé…ç½®æ–‡ä»¶è·¯å¾„
+ * 	log_dir, [in], æ—¥å¿—è¾“å‡ºç›®å½•
+ * 	timeout, [in], è·å–cssè¶…æ—¶æ—¶é—´ï¼Œé»˜è®¤10ms
+ * 	thread_num, [in], è·å–cssçš„çº¿ç¨‹ä¸ªæ•°ï¼Œé»˜è®¤20
+ * 	cache_size, [in], cssç¼“å­˜æ•°é‡ï¼Œé»˜è®¤5W
  * @return
- * 	true£¬³õÊ¼»¯³É¹¦
- * 	false,³õÊ¼»¯Ê§°Ü
+ * 	trueï¼Œåˆå§‹åŒ–æˆåŠŸ
+ * 	false,åˆå§‹åŒ–å¤±è´¥
  */
 bool init_css_server(char *config_path, char *log_dir, int timeout = 10, int thread_num = 20, int cache_size = 35000);
 
 /**
- * @brief ÊÍ·Åcss serverÏà¹Ø×ÊÔ´¡£ÓÃÒ»¸öÈ«¾Ö±äÁ¿¼ÆÊı£¬Ã¿initÒ»´Î¼Ó1£¬Ã¿freeÒ»´Î¼õ1£¬µ±ÖµÎª0Ê±£¬²Å»áÈ¥ÕæÕıÊÍ·Å¡£
+ * @brief é‡Šæ”¾css serverç›¸å…³èµ„æºã€‚ç”¨ä¸€ä¸ªå…¨å±€å˜é‡è®¡æ•°ï¼Œæ¯initä¸€æ¬¡åŠ 1ï¼Œæ¯freeä¸€æ¬¡å‡1ï¼Œå½“å€¼ä¸º0æ—¶ï¼Œæ‰ä¼šå»çœŸæ­£é‡Šæ”¾ã€‚
  * @author sue
  * @date 2013/12/16
  */
@@ -115,26 +116,26 @@ void free_css_server();
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 int html_vnode_visit(html_vnode_t *html_vnode, int (*start_visit)(html_vnode_t *, void *), int (*finish_visit)(html_vnode_t *, void *), void *result);
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 int html_vtree_visit(html_vtree_t *html_vtree, int (*start_visit)(html_vnode_t *, void *), int (*finish_visit)(html_vnode_t *, void *), void *result);
 
 /**
- * ¸´Î»vtree_in_t½á¹¹
+ * å¤ä½vtree_in_tç»“æ„
  * @param [in] vtree_in:vtree_in_t *
  */
 void vtree_in_reset(vtree_in_t *vtree_in);
 
 /**
- *¸´Î»vhtmlÊ÷£¬»Ö¸´³õÊ¼×´Ì¬
+ *å¤ä½vhtmlæ ‘ï¼Œæ¢å¤åˆå§‹çŠ¶æ€
  */
 void html_vtree_reset(html_vtree_t *html_vtree);
 

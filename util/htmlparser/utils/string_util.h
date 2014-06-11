@@ -62,7 +62,7 @@ void trans2bj_lower(const char *in, char *out);
  * 		文本大小结合字体可以算出文本的宽度.
  * 		这个值与编码有关.
  * 	@param cn_num [in/out], 中文汉字个数
- * @author xunwu
+
  * @date 2011/06/27
  **/
 int getTextSize(const char *src, int &cn_num);
@@ -93,7 +93,7 @@ bool is_only_space_between(const char *begin, const char *end);
  * @return  const char* 从输入指针开始的第一个非空格字符指针.
  * @retval
  * @see
- * @author xunwu
+
  * @date 2011/06/20
  **/
 const char *easou_skip_space(const char *pstr);

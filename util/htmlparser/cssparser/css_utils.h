@@ -44,7 +44,7 @@ typedef struct _easou_cssinfo_keep_t
 /**
  * @brief 判断该节点以及该节点到子节点是否支持screen_media
  * @param [in]html_tag: html_tag_t *  节点的类型.
- * @author xunwu
+
  * @date 2011/06/20
  **/
 bool is_apply_for_screen_media(html_tag_t *html_tag);
@@ -54,14 +54,14 @@ bool is_apply_for_screen_media(html_tag_t *html_tag);
  * @param [in] max_css_page_size   : int 最大css
  * @param [in] css_num   : int	最多解析css的数量.
  * @return  css_env_t*	css解析环境.
- * @author xunwu
+
  * @date 2011/06/20
  **/
 easou_css_env_t *css_env_create(int max_css_page_size, int css_num);
 
 /**
  * @brief 销毁css解析环境.
- * @author xunwu
+
  * @date 2011/06/20
  **/
 void css_env_destroy(easou_css_env_t *env);
@@ -71,7 +71,7 @@ void css_env_destroy(easou_css_env_t *env);
  * @param [out] page_css   : page_css_t*	页面中的css信息
  * @param [in] html_tree   : const html_tree_t*	创建好的dom树
  * @param [in] url   : const char*	页面的url
- * @author xunwu
+
  * @date 2011/06/20
  **/
 void get_page_css_info(easou_page_css_t *page_css, const html_tree_t *html_tree, const char *url);
@@ -79,7 +79,7 @@ void get_page_css_info(easou_page_css_t *page_css, const html_tree_t *html_tree,
 /**
  * @brief 解析页面中的css
  * @param [in] test_import, 是否测试css文件中import的css
- * @author xunwu
+
  * @date 2011/06/20
  * @last modify on 2012-10-26 sue_zhang@staff.easou.com
  **/
@@ -91,7 +91,7 @@ void parse_internal_css(easou_css_env_t *css_env, easou_page_css_t *page_css, co
  * @param [in] html_tree   : html_tree_t*	解析过的html树.
  * @param [in] url   : const char*	页面URL.
  * @param [in] test_import, 是否测试css文件中import的css
- * @author xunwu
+
  * @date 2011/06/20
  * @last modify on 2012-10-26 sue_zhang@staff.easou.com
  **/

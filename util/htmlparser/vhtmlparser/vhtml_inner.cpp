@@ -1,6 +1,6 @@
 /**
  * @file easou_vhtml_com.cpp
- * @author xunwu
+
  * @date 2011/06/20
  * @brief 一些vTree解析基础函数的实现。
  *
@@ -10,13 +10,13 @@
  **/
 #include <ctype.h>
 #include <stdio.h>
-#include "chinese.h"
-#include "easou_string.h"
-#include "easou_vhtml_inner.h"
+#include "util/htmlparser/utils/chinese.h"
+#include "util/htmlparser/utils/string_util.h"
+#include "util/htmlparser/vhtmlparser/vhtml_inner.h"
 
 /**
  * @brief 解析一个style代码段
- * @author xunwu
+
  * @date 2011/06/20
  **/
 int parse_style_attr(const char *style_str, style_attr_t *style_attr, int max_style_attr)
@@ -95,7 +95,7 @@ int parse_style_attr(const char *style_str, style_attr_t *style_attr, int max_st
 
 /**
  * @brief 得到属性值
- * @author xunwu
+
  * @date 2011/06/20
  **/
 int get_style_attr_value(const char *name, char *value, int vsize, style_attr_t *style_attr, int style_num)
@@ -117,7 +117,7 @@ int get_style_attr_value(const char *name, char *value, int vsize, style_attr_t 
  * @param [in/out] val   : const char* 待判断的属性值.
  * @param [in/out] dest   : const char* 给定的值.
  * @param [in/out] dest_len   : size_t 给定值的长度.
- * @author xunwu
+
  * @date 2011/06/20
  **/
 bool is_attr_value(const char *val, const char *dest, size_t dest_len)
@@ -133,7 +133,7 @@ bool is_attr_value(const char *val, const char *dest, size_t dest_len)
 /**
  * @brief 字符串转化为分数.
  * 为消除浮点数影响，将字符串化为分数进行计算.
- * @author xunwu
+
  * @date 2011/06/20
  **/
 void atofract(fract_num_t *fract, const char *val)
@@ -187,7 +187,7 @@ void atofract(fract_num_t *fract, const char *val)
 /**
  * @brief 是否单字符的转义符
  * assert(src[0] == '&');
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static inline int check_single_reference_char(const char *src)

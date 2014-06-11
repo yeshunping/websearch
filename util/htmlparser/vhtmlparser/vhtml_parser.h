@@ -5,13 +5,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "nodepool.h"
-#include "easou_html_tree.h"
-#include "easou_css_parser.h"
-#include "easou_css_utils.h"
-#include "easou_vhtml_inner.h"
-#include "easou_vhtml_basic.h"
-#include "easou_vstruct_profiler.h"
+
+#include "util/htmlparser/utils/nodepool.h"
+#include "util/htmlparser/htmlparser/html_tree.h"
+#include "util/htmlparser/cssparser/css_parser.h"
+#include "util/htmlparser/cssparser/css_utils.h"
+#include "util/htmlparser/vhtmlparser/vhtml_inner.h"
+#include "util/htmlparser/vhtmlparser/vhtml_basic.h"
+#include "util/htmlparser/vhtmlparser/vstruct_profiler.h"
 
 #define DEFAULT_TABLE_COL_NUM	128		  /**<   */
 #define MAX_COLSPAN_NUM	128 /**<  */
@@ -48,34 +49,34 @@ typedef struct _table_col_t
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 int html_vtree_init();
 
 /**
- * @brief ´´½¨VÊ÷
- * @author xunwu
+ * @brief åˆ›å»ºVæ ‘
+
  * @date 2011/06/27
  **/
 html_vnode_t *construct_vtree(nodepool_t *np, html_node_t *node, int depth, int &id, html_vtree_t * vtree);
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 void html_vtree_get_html_property(html_vtree_t *html_vtree);
 
 /**
- * @brief Ê¹ÓÃcssäÖÈ¾vtree
- * @author xunwu
+ * @brief ä½¿ç”¨cssæ¸²æŸ“vtree
+
  * @date 2011/06/27
  **/
 void html_vtree_add_info_with_css(html_vtree_t *html_vtree, easou_css_pool_t *css_pool);
 
 /**
- * @brief Ê¹ÓÃcssäÖÈ¾vtree£¬¸Ã·½·¨Ê¹ÓÃcssµÄhashË÷Òý½øÐÐäÖÈ¾
+ * @brief ä½¿ç”¨cssæ¸²æŸ“vtreeï¼Œè¯¥æ–¹æ³•ä½¿ç”¨cssçš„hashç´¢å¼•è¿›è¡Œæ¸²æŸ“
  * @author sue
  * @date 2013/04/12
  */
@@ -83,64 +84,64 @@ void html_vtree_add_info_with_css2(html_vtree_t *html_vtree, easou_css_pool_t *c
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 void get_root_wx(html_vnode_t *root, int page_width);
 
 /**
- * @brief ¼ÆËãVÊ÷½ÚµãµÄ¿í¶È
- * @author xunwu
+ * @brief è®¡ç®—Væ ‘èŠ‚ç‚¹çš„å®½åº¦
+
  * @date 2011/06/27
  **/
 int html_vtree_compute_wx(html_vnode_t *vnode, table_col_t *default_col);
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 void layout_down_top(html_vnode_t *vnode, space_mgr_t *space_mgr, int depth = 0);
 
 /**
- * @brief ¼ÆËã¾ø¶ÔÎ»ÖÃ
- * @author xunwu
+ * @brief è®¡ç®—ç»å¯¹ä½ç½®
+
  * @date 2011/06/27
  **/
 void compute_absolute_pos(html_vnode_t *vnode);
 
 /**
- * @brief µ÷Õû¿í¶È
- * @author xunwu
+ * @brief è°ƒæ•´å®½åº¦
+
  * @date 2011/06/27
  **/
 void get_page_width(html_vnode_t *vnode);
 
 /**
- * @brief ½âÎö×ÖÌå¡£
- *	vtreeÓï·¨Ê÷ÒÑ½¨ºÃ£¬µ«¿ÉÒÔÉÐÎ´½øÐÐÎ»ÖÃºÍ´óÐ¡¼ÆËã.
- * @author xunwu
+ * @brief è§£æžå­—ä½“ã€‚
+ *	vtreeè¯­æ³•æ ‘å·²å»ºå¥½ï¼Œä½†å¯ä»¥å°šæœªè¿›è¡Œä½ç½®å’Œå¤§å°è®¡ç®—.
+
  * @date 2011/06/27
  **/
 int html_vtree_parse_font(html_vtree_t *html_vtree);
 
 /**
- * @brief ·ÇµÝ¹éµÄ£¬ºóÐò±éÀúVÊ÷
- * @author xunwu
+ * @brief éžé€’å½’çš„ï¼ŒåŽåºéåŽ†Væ ‘
+
  * @date 2011/06/27
  **/
 void trans_down_top(html_vnode_t *root, int page_width);
 
 /**
- * @brief »ñÈ¡½ÚµãµÄcssÊôÐÔÖµ
- * @author xunwu
+ * @brief èŽ·å–èŠ‚ç‚¹çš„csså±žæ€§å€¼
+
  * @date 2011/06/27
  **/
 char *get_css_attribute(html_vnode_t *html_vnode, easou_css_prop_type_t type);
 
 /**
- * @brief ÅÐ¶ÏvnodeµÄ×Ó½ÚµãÊÇ·ñÔÚÍ¬Ò»ÐÐÉÏ
- * @author xunwu
+ * @brief åˆ¤æ–­vnodeçš„å­èŠ‚ç‚¹æ˜¯å¦åœ¨åŒä¸€è¡Œä¸Š
+
  * @date 2011/06/27
  **/
 bool is_child_in_aline(html_vnode_t *vnode);

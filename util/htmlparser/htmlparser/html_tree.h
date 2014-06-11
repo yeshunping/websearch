@@ -49,7 +49,7 @@ int html_tree_is_script_parsing(html_tree_t *tree);
  * @param [in] page_len   : int	页面源代码的长度
  * @return  int
  * @retval  0:解析失败;1:解析成功.
- * @author xunwu
+
  * @date 2011/08/02
  **/
 int html_tree_parse(html_tree_t *html_tree, char *page, int page_len, bool ignore_space = true);

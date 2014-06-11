@@ -1,6 +1,6 @@
 /**
  * @file easou_html_tokenizer.h
- * @author xunwu
+
  * @date 2011/08/02
  * @version 1.0
  * @brief html源代码读取器

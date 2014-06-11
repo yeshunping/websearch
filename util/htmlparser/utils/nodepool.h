@@ -36,7 +36,7 @@ int nodepool_put(nodepool_t *pool, void *node);
 
 /**
  * @brief nodepool draw back as only the first mem-block used.
- * @author xunwu
+
  * @date 2011/06/27
  **/
 void nodepool_draw_back(nodepool_t *pool);

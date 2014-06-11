@@ -6,12 +6,13 @@
  *      Author: xunwu_chen@staff.easoucom
  *     Version: 1.2
  */
-#include "log.h"
-#include "id_map.h"
-#include "easou_html_attr.h"
-#include "easou_vhtml_inner.h"
-#include "easou_vhtml_parser.h"
-#include "easou_vstruct_profiler.h"
+#include "util/htmlparser/utils/log.h"
+#include "util/htmlparser/utils/id_map.h"
+#include "util/htmlparser/htmlparser/html_attr.h"
+#include "util/htmlparser/vhtmlparser/vhtml_inner.h"
+#include "util/htmlparser/vhtmlparser/vhtml_parser.h"
+#include "util/htmlparser/vhtmlparser/vstruct_profiler.h"
+
 #include <math.h>
 
 static const int MIN_REPEAT_VALUE = 65;
@@ -27,7 +28,7 @@ static int visit_clear_trace_info(html_vnode_t *vnode, void *data);
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static int get_interpolation_value(const int *value_table, int table_size, int interval, int index)
@@ -44,7 +45,7 @@ static int get_interpolation_value(const int *value_table, int table_size, int i
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static int get_align_percent_std_dev(int node_cnt)
@@ -80,7 +81,7 @@ static int get_align_percent_std_dev(int node_cnt)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static int get_align_percent_mean(int node_cnt)
@@ -122,7 +123,7 @@ static int get_align_percent_mean(int node_cnt)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 void vhtml_struct_prof_del(html_vtree_t * html_vtree)
@@ -136,7 +137,7 @@ void vhtml_struct_prof_del(html_vtree_t * html_vtree)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static int vhtml_struct_prof_init(html_vtree_t *html_vtree)
@@ -157,7 +158,7 @@ static int vhtml_struct_prof_init(html_vtree_t *html_vtree)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static void vhtml_struct_prof_reset(html_vtree_t *html_vtree)
@@ -167,7 +168,7 @@ static void vhtml_struct_prof_reset(html_vtree_t *html_vtree)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 inline html_vnode_t *next_valid(html_vnode_t *vnode)
@@ -184,7 +185,7 @@ inline html_vnode_t *next_valid(html_vnode_t *vnode)
 
 /**
  * @brief 获取vnode节点等宽等高的孩子节点
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static html_vnode_t *get_sub_avail_node(html_vnode_t *vnode)
@@ -211,7 +212,7 @@ static html_vnode_t *get_sub_avail_node(html_vnode_t *vnode)
 
 /**
  * @brief true：对齐，判断两个节点是否tag type是否相同
- * @author xunwu
+
  * @date 2011/06/27
  **/
 inline bool is_align_vnode(html_vnode_t *vnode, html_vnode_t *another_vnode)
@@ -268,7 +269,7 @@ inline bool is_align_vnode(html_vnode_t *vnode, html_vnode_t *another_vnode)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static bool downstairs_align_vnode(html_vnode_t * &down_node, html_vnode_t * to_align_vnode)
@@ -285,7 +286,7 @@ static bool downstairs_align_vnode(html_vnode_t * &down_node, html_vnode_t * to_
 
 /**
  * @brief 判断vnode与another_vnode的儿子是否对齐
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static int vertical_misplace_align_vnode(html_vnode_t * &vnode, html_vnode_t * &another_vnode)
@@ -309,7 +310,7 @@ static int vertical_misplace_align_vnode(html_vnode_t * &vnode, html_vnode_t * &
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static int visit_clear_trace_info(html_vnode_t *vnode, void *data)
@@ -332,7 +333,7 @@ static const max_common_tree_info_t MCT_INFO_INIT_VALUE =
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static max_common_tree_info_t misplace_align_node(html_vnode_t * &vnode, html_vnode_t * &another_vnode, bool is_trace)
@@ -396,7 +397,7 @@ static max_common_tree_info_t misplace_align_node(html_vnode_t * &vnode, html_vn
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static void record_align_info(html_vnode_t *vnode, html_vnode_t *align_vnode)
@@ -418,7 +419,7 @@ static void record_align_info(html_vnode_t *vnode, html_vnode_t *align_vnode)
 
 /**
  * @brief true：对齐，判断两个节点在深度差1范围内是否对齐
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static bool try_align_vnode(html_vnode_t * &vnode, html_vnode_t * & another_vnode)
@@ -441,7 +442,7 @@ static bool try_align_vnode(html_vnode_t * &vnode, html_vnode_t * & another_vnod
 
 /**
  * @brief vnode与another_vnode节点后裔中对齐节点个数
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static max_common_tree_info_t get_max_common_tree_info(html_vnode_t *vnode, html_vnode_t *another_vnode, bool is_trace)
@@ -538,7 +539,7 @@ static const similar_value_t SIMILAR_INIT_VALUE =
 
 /**
  * @brief 计算两个节点的相似度
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static similar_value_t get_html_tree_similarity(html_vnode_t *vnode, html_vnode_t *another_vnode)
@@ -574,7 +575,7 @@ static similar_value_t get_html_tree_similarity(html_vnode_t *vnode, html_vnode_
 
 /**
  * @brief 该节点为无效、空白节点、宽度或高度<0,忽略该节点，返回true
- * @author xunwu
+
  * @date 2011/06/27
  **/
 inline bool is_ignore_vnode(html_vnode_t *vnode)
@@ -644,7 +645,7 @@ static void similar_info_add(similar_info_t *sinfo_to_be_add, similar_info_t *si
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static similar_info_t *similar_info_table_merge(similar_info_table_t *sinfo_table, int sign, int next_sign)
@@ -673,7 +674,7 @@ static similar_info_t *similar_info_table_merge(similar_info_table_t *sinfo_tabl
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static void change_prev_node_sign(html_vnode_t *vnode, int dest_sign, int sign_to_change)
@@ -692,7 +693,7 @@ static void change_prev_node_sign(html_vnode_t *vnode, int dest_sign, int sign_t
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static void mark_sibling_similar(html_vnode_t *vnode, similar_info_t *sinfo, int index, int similar_value)
@@ -747,7 +748,7 @@ inline int min_similar_align_percent(int mean, int stddev)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static void get_next_best_similar_sibling(similar_info_t & best_similar_info, html_vnode_t * & best_align_vnode, html_vnode_t *vnode)
@@ -787,7 +788,7 @@ static void get_next_best_similar_sibling(similar_info_t & best_similar_info, ht
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static similar_info_t *request_new_similar_info(similar_info_table_t *sinfo_table)
@@ -810,7 +811,7 @@ static similar_info_t *request_new_similar_info(similar_info_table_t *sinfo_tabl
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static int collect_similar_info(similar_info_table_t *sinfo_table, html_vnode_t *similar_vnode, html_vnode_t *next_similar_vnode, similar_info_t *new_sinfo)
@@ -866,7 +867,7 @@ static int collect_similar_info(similar_info_table_t *sinfo_table, html_vnode_t 
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static int get_repeat_probability(int percent, int mean, int stddev)
@@ -920,7 +921,7 @@ static int get_repeat_probability(int percent, int mean, int stddev)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static int get_single_type_cumulate_similarity(similar_info_t *sinfo)
@@ -945,7 +946,7 @@ static int get_single_type_cumulate_similarity(similar_info_t *sinfo)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static int compute_cumulate_similarity(html_vnode_t *vnode, similar_info_table_t *sinfo_table)
@@ -1059,7 +1060,7 @@ static vstruct_info_t *struct_info_node_create(html_vtree_t *html_vtree)
 
 /**
  * @brief 计算vnode节点最大深度和有效后裔节点数量（包括自己）
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static int visit_for_prev_info(html_vnode_t *vnode, void *data)
@@ -1124,7 +1125,7 @@ static int visit_for_prev_info(html_vnode_t *vnode, void *data)
 
 /**
  * @brief 计算每个vnode节点最大深度和有效后裔节点数量（包括自己）
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static int vhtml_struct_add_normal_info(html_vtree_t *html_vtree)
@@ -1150,7 +1151,7 @@ static int vhtml_struct_add_normal_info(html_vtree_t *html_vtree)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static int vhtml_struct_add_repeat_struct_info(html_vtree_t *html_vtree)
@@ -1170,7 +1171,7 @@ static int vhtml_struct_add_repeat_struct_info(html_vtree_t *html_vtree)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/27
  **/
 int vhtml_struct_prof(html_vtree_t *html_vtree, unsigned int flag)
@@ -1197,7 +1198,7 @@ int vhtml_struct_prof(html_vtree_t *html_vtree, unsigned int flag)
 
 /**
  * @brief .
- * @author xunwu
+
  * @date 2011/06/27
  **/
 max_common_tree_info_t travel_max_common_tree(html_vnode_t *vnode, html_vnode_t *another_vnode, html_vtree_t *vtree, html_vtree_t *another_vtree, COMMON_TREE_TRAVEL_FUNC start_travel_common_tree, COMMON_TREE_TRAVEL_FUNC finish_travel_common_tree, void *data)

@@ -1,9 +1,9 @@
-#include "easou_html_attr.h"
-#include "easou_vhtml_tree.h"
-#include "easou_vhtml_utils.h"
-#include "easou_html_extractor.h"
-#include "easou_url.h"
-#include "easou_debug.h"
+#include "util/htmlparser/htmlparser/html_attr.h"
+#include "util/htmlparser/vhtmlparser/vhtml_tree.h"
+#include "util/htmlparser/vhtmlparser/vhtml_utils.h"
+#include "util/htmlparser/htmlparser/html_extractor.h"
+#include "util/htmlparser/utils/url.h"
+#include "util/htmlparser/utils/debug.h"
 
 int print_vnode_cssinfo(html_vnode_t *vnode, char *p, int bufLen, int space_len, int type)
 {
@@ -198,11 +198,11 @@ int print_vnode_info(html_vnode_t *vnode, char *p, int bufLen, int space_len, in
         }
         else if (type == 2)
         {
-                desp = "¸¸";
+                desp = "çˆ¶";
         }
         else if (type == 3)
         {
-                desp = "×Ó";
+                desp = "å­";
         }
 	bool inter_prop = false;
 	if (IS_INCLUDE_INTER(vnode->property))
@@ -229,12 +229,12 @@ int print_vnode_info(html_vnode_t *vnode, char *p, int bufLen, int space_len, in
 	{
 		p_prop += sprintf(p_prop, "%s=%s;", css_property_name_array[prop->type], prop->value);
 	}
-	pp += snprintf(pp, len, "[%svnode id=%d parent=%d level=%d pid=%d %s ÓÐÐ§=%d ºá×ø±ê=%d ×Ý×ø±ê=%d ¿ÉÐÅ=%d ¿í=%d ¸ß=%d ×îÐ¡¿í=%d ×î´ó¿í=%d "
-			"ÉÏ±ß¿ò=%d ÏÂ±ß¿ò=%d ×ó±ß¿ò=%d ÓÒ±ß¿ò=%d "
-			"ÉÏ±ß¾à=%d ÏÂ±ß¾à=%d ×ó±ß¾à=%d ÓÒ±ß¾à=%d "
-			"×ÖÌå´óÐ¡=%d ×ÓÊ÷×î´ó×ÖÌå=%d ×ÓÊ÷×ÖÌåÊý=%d ÎÄ±¾³¤¶È=%d ×ÓÊ÷ÎÄ±¾³¤¶È=%d ºº×ÖÊý=%d ×ÓÊ÷ºº×ÖÊý=%d ×ÓÊ÷borderÊý=%d Ò¶×Ó½ÚµãÊý=%d ×ÔÖØ¸´=%d ÐÖµÜÖØ¸´=%d ×ÔÖØ¸´¶È=%d ×ÔÖØ¸´±êÇ©ÀàÐÍ=%d ÐÖµÜÖØ¸´Êý=%d ½»»¥ÊôÐÔ=%d ±ß¿òÊôÐÔ=%d ÎÄ±¾ÊôÐÔ=%d "
-			"ºó»»ÐÐ=%d Ç°»»ÐÐ=%d "
-			"CSSÊôÐÔ=%s]\n",
+	pp += snprintf(pp, len, "[%svnode id=%d parent=%d level=%d pid=%d %s æœ‰æ•ˆ=%d æ¨ªåæ ‡=%d çºµåæ ‡=%d å¯ä¿¡=%d å®½=%d é«˜=%d æœ€å°å®½=%d æœ€å¤§å®½=%d "
+			"ä¸Šè¾¹æ¡†=%d ä¸‹è¾¹æ¡†=%d å·¦è¾¹æ¡†=%d å³è¾¹æ¡†=%d "
+			"ä¸Šè¾¹è·=%d ä¸‹è¾¹è·=%d å·¦è¾¹è·=%d å³è¾¹è·=%d "
+			"å­—ä½“å¤§å°=%d å­æ ‘æœ€å¤§å­—ä½“=%d å­æ ‘å­—ä½“æ•°=%d æ–‡æœ¬é•¿åº¦=%d å­æ ‘æ–‡æœ¬é•¿åº¦=%d æ±‰å­—æ•°=%d å­æ ‘æ±‰å­—æ•°=%d å­æ ‘borderæ•°=%d å¶å­èŠ‚ç‚¹æ•°=%d è‡ªé‡å¤=%d å…„å¼Ÿé‡å¤=%d è‡ªé‡å¤åº¦=%d è‡ªé‡å¤æ ‡ç­¾ç±»åž‹=%d å…„å¼Ÿé‡å¤æ•°=%d äº¤äº’å±žæ€§=%d è¾¹æ¡†å±žæ€§=%d æ–‡æœ¬å±žæ€§=%d "
+			"åŽæ¢è¡Œ=%d å‰æ¢è¡Œ=%d "
+			"CSSå±žæ€§=%s]\n",
 			desp, vnode->id, vnode->upperNode ? vnode->upperNode->id : -1, vnode->depth,parentid, vnode->hpNode->html_tag.tag_name == NULL ? "txt" : vnode->hpNode->html_tag.tag_name, vnode->isValid, vnode->xpos, vnode->ypos, vnode->trust, vnode->wx, vnode->hx, vnode->min_wx, vnode->max_wx,
 			vnode->border.top, vnode->border.bottom, vnode->border.left, vnode->border.right,
 			vnode->border.pad_top, vnode->border.pad_bottom, vnode->border.pad_left, vnode->border.pad_right, 

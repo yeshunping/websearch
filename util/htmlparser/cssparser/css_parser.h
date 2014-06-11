@@ -22,7 +22,7 @@
  * @param [in] max_css_text_size   : int CSS文本的最大长度,按此长度分配内存.
  * @return  css_t* 创建好的CSS结构指针.
  * @retval  若失败返回NULL.
- * @author xunwu
+
  * @date 2011/06/20
  **/
 easou_css_t *css_create(int max_css_text_size);
@@ -31,7 +31,7 @@ easou_css_t *css_create(int max_css_text_size);
  * @brief 用默认参数创建CSS结构.
  * @return  css_t* 创建的CSS结构.
  * @retval   失败返回NULL.
- * @author xunwu
+
  * @date 2011/06/20
  **/
 easou_css_t *css_create();
@@ -39,7 +39,7 @@ easou_css_t *css_create();
 /**
  * @brief 销毁CSS结构.
  * @param [in/out] css   : css_t*
- * @author xunwu
+
  * @date 2011/06/20
  **/
 void css_destroy(easou_css_t *css);
@@ -47,7 +47,7 @@ void css_destroy(easou_css_t *css);
 /**
  * @brief 清空css_t结构,回到未解析的状态.
  * @param [in/out] css   : css_t*
- * @author xunwu
+
  * @date 2011/06/20
  **/
 void css_clean(easou_css_t *css);
@@ -61,7 +61,7 @@ void css_clean(easou_css_t *css);
  * @param [in] test_import, 是否测试css文件中import的css
  * @return  int 
  * @retval  -1:解析失败;1:解析成功.
- * @author xunwu
+
  * @date 2011/06/20
  * @last modify on 2012-10-26 sue_zhang@staff.easou.com
  **/
@@ -76,7 +76,7 @@ int css_parse(easou_css_t *css, const char *css_text, const char *css_url, bool 
  * @param [in] test_import, 是否测试css文件中import的css
  * @return  int 
  * @retval  -1解析失败;1解析成功.
- * @author xunwu
+
  * @date 2011/06/20
  * @last modify on 2012-10-26 sue_zhang@staff.easou.com
  **/
@@ -84,7 +84,7 @@ int css_parse_no_index(easou_css_t *css, const char *css_text, const char *css_u
 
 /**
  * @brief 是否有用的CSS属性,目前只认为几何属性和字体属性有用.
- * @author xunwu
+
  * @date 2011/06/20
  **/
 bool is_useful_css_prop(easou_css_prop_type_t prop);
@@ -93,7 +93,7 @@ bool is_useful_css_prop(easou_css_prop_type_t prop);
  * @brief 根据属性名查找属性类型.
  * @param [in] name   : const char*	属性名称
  * @return  css_prop_type_t	属性类型
- * @author xunwu
+
  * @date 2011/06/20
  **/
 easou_css_prop_type_t css_seek_prop_type(const char *name);

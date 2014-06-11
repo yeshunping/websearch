@@ -1,32 +1,22 @@
-/*
- * easou_vhtml_basic.cpp
- *
- *  Created on: 2011-11-13
- *      Author: ddt
- */
 
 #include <assert.h>
 #include <ctype.h>
 #include <string.h>
-#include "easou_html_attr.h"
-#include "easou_vhtml_basic.h"
-#include "debuginfo.h"
-/**
- * @brief 两字体是否完全相同.
- *
- * @author xunwu
- * @date 2011/06/27
- **/
-bool is_same_font(font_t *a, font_t *b)
-{
-	if (a->align == b->align && a->header_size == b->header_size && a->is_bold == b->is_bold && a->is_strong == b->is_strong
-			&& a->is_big == b->is_big && a->is_small == b->is_small && a->is_italic == b->is_italic && a->is_underline == b->is_underline
-			&& a->size == b->size && a->line_height == b->line_height && a->bgcolor == b->bgcolor && a->color == b->color)
-	{
-		return true;
-	}
+#include "util/htmlparser/htmlparser/html_attr.h"
+#include "util/htmlparser/vhtmlparser/vhtml_basic.h"
+#include "util/htmlparser/utils/debuginfo.h"
 
-	return false;
+bool is_same_font(font_t *a, font_t *b) {
+  if (a->align == b->align && a->header_size == b->header_size
+      && a->is_bold == b->is_bold && a->is_strong == b->is_strong
+      && a->is_big == b->is_big && a->is_small == b->is_small
+      && a->is_italic == b->is_italic && a->is_underline == b->is_underline
+      && a->size == b->size && a->line_height == b->line_height
+      && a->bgcolor == b->bgcolor && a->color == b->color) {
+    return true;
+  }
+
+  return false;
 }
 
 /**
@@ -36,18 +26,17 @@ bool is_same_font(font_t *a, font_t *b)
  * @return  rgb_t
  * @retval
  * @see
- * @author xunwu
+
  * @date 2011/06/27
  **/
-rgb_t int2rgb(unsigned int color)
-{
-	rgb_t rgb;
+rgb_t int2rgb(unsigned int color) {
+  rgb_t rgb;
 
-	rgb.r = (color & (0xff0000)) >> 16;
-	rgb.g = (color & (0x00ff00)) >> 8;
-	rgb.b = color & (0x0000ff);
+  rgb.r = (color & (0xff0000)) >> 16;
+  rgb.g = (color & (0x00ff00)) >> 8;
+  rgb.b = color & (0x0000ff);
 
-	return rgb;
+  return rgb;
 }
 
 /**
@@ -57,20 +46,19 @@ rgb_t int2rgb(unsigned int color)
  * @return  bool
  * @retval
  * @see
- * @author xunwu
+
  * @date 2011/06/27
  **/
-bool is_gray_color(unsigned int color)
-{
-	if (color == 0x000000 || color == 0xffffff)
-		return false;
+bool is_gray_color(unsigned int color) {
+  if (color == 0x000000 || color == 0xffffff)
+    return false;
 
-	rgb_t rgb = int2rgb(color);
+  rgb_t rgb = int2rgb(color);
 
-	if (rgb.r == rgb.g && rgb.g == rgb.b)
-		return true;
+  if (rgb.r == rgb.g && rgb.g == rgb.b)
+    return true;
 
-	return false;
+  return false;
 }
 
 /**
@@ -79,81 +67,62 @@ bool is_gray_color(unsigned int color)
  * @param [in] base_size   : int 基准长度，比例单位长度需要
  * @param [out] _unit   : const char** 返回原长度单位
  * @return  int	返回解析出来的px长度；若没有单位，返回-1。
- * @author xunwu
+
  * @date 2011/06/20
  **/
-int parse_length(const char *value, int base_size, const char **_unit)
-{
-	const char *unit = value;
-	while (isdigit(*unit) || *unit == '.' || *unit == '+' || *unit == '-')
-	{
-		unit++;
-	}
-	*_unit = unit;
+int parse_length(const char *value, int base_size, const char **_unit) {
+  const char *unit = value;
+  while (isdigit(*unit) || *unit == '.' || *unit == '+' || *unit == '-') {
+    unit++;
+  }
+  *_unit = unit;
 
-	/**
-	 * CSS属性在解析时已转化为小写.
-	 */
-	if (is_attr_value(unit, "px", 2))
-	{
-		return atoi(value);
-	}
-	else if (is_attr_value(unit, "pt", 2))
-	{
-		return atoi(value) * 4 / 3;
-	}
-	else if (is_attr_value(unit, "in", 2))
-	{
-		/** 1 in = 96 px
-		 */
-		fract_num_t fract;
-		atofract(&fract, value);
-		return (fract.son * 96 / fract.mother);
-	}
-	else if (is_attr_value(unit, "cm", 2))
-	{
-		/** 1 cm = 37.77 px
-		 */
-		fract_num_t fract;
-		atofract(&fract, value);
-		return (fract.son * 3777 / 100 / fract.mother);
-	}
-	else if (is_attr_value(unit, "mm", 2))
-	{
-		/** 1 mm = 3.78 px
-		 */
-		fract_num_t fract;
-		atofract(&fract, value);
-		return (fract.son * 378 / 100 / fract.mother);
-	}
-	else if (is_attr_value(unit, "pc", 2))
-	{
-		/** 1 pc=16 pt
-		 */
-		fract_num_t fract;
-		atofract(&fract, value);
-		return (fract.son * 16 / fract.mother);
-	}
-	else if (is_attr_value(unit, "em", 2))
-	{
-		/**相对大小*/
-		fract_num_t fract;
-		atofract(&fract, value);
-		return (fract.son * base_size / fract.mother);
-	}
-	else if (is_attr_value(unit, "ex", 2))
-	{
-		/**相对大小*/
-		fract_num_t fract;
-		atofract(&fract, value);
-		return (fract.son * base_size / 2 / fract.mother);
-	}
-	else if (*unit == '%')
-	{
-		return (atoi(value) * base_size / 100);
-	}
+  /**
+   * CSS属性在解析时已转化为小写.
+   */
+  if (is_attr_value(unit, "px", 2)) {
+    return atoi(value);
+  } else if (is_attr_value(unit, "pt", 2)) {
+    return atoi(value) * 4 / 3;
+  } else if (is_attr_value(unit, "in", 2)) {
+    /** 1 in = 96 px
+     */
+    fract_num_t fract;
+    atofract(&fract, value);
+    return (fract.son * 96 / fract.mother);
+  } else if (is_attr_value(unit, "cm", 2)) {
+    /** 1 cm = 37.77 px
+     */
+    fract_num_t fract;
+    atofract(&fract, value);
+    return (fract.son * 3777 / 100 / fract.mother);
+  } else if (is_attr_value(unit, "mm", 2)) {
+    /** 1 mm = 3.78 px
+     */
+    fract_num_t fract;
+    atofract(&fract, value);
+    return (fract.son * 378 / 100 / fract.mother);
+  } else if (is_attr_value(unit, "pc", 2)) {
+    /** 1 pc=16 pt
+     */
+    fract_num_t fract;
+    atofract(&fract, value);
+    return (fract.son * 16 / fract.mother);
+  } else if (is_attr_value(unit, "em", 2)) {
+    /**相对大小*/
+    fract_num_t fract;
+    atofract(&fract, value);
+    return (fract.son * base_size / fract.mother);
+  } else if (is_attr_value(unit, "ex", 2)) {
+    /**相对大小*/
+    fract_num_t fract;
+    atofract(&fract, value);
+    return (fract.son * base_size / 2 / fract.mother);
+  } else if (*unit == '%') {
+    return (atoi(value) * base_size / 100);
+  }
 
-	return -1;
+  return -1;
 }
 
 /**
@@ -163,86 +132,76 @@ int parse_length(const char *value, int base_size, const char **_unit)
  * @return  int VISIT_NORMAL|VISIT_ERROR|VISIT_FINISH
  * @retval
  * @see
- * @author xunwu
+
  * @date 2011/06/20
  **/
-int html_vnode_visit_ex(html_vnode_t *html_vnode, int (*start_visit)(html_vnode_t *, void *), int (*finish_visit)(html_vnode_t *, void *),
-		void *result)
-{
-	int ret = VISIT_NORMAL;
-	html_vnode_t *vnode = html_vnode;
-	while (vnode)
-	{
-		int local_ret = VISIT_NORMAL;
-		if (start_visit != NULL)
-		{
-			local_ret = (*start_visit)(vnode, result);
-			if (local_ret == VISIT_ERROR || local_ret == VISIT_FINISH)
-			{
-				ret = local_ret;
-				goto FINISH;
-			}
-		}
-		if (vnode->firstChild && local_ret != VISIT_SKIP_CHILD)
-		{
-			vnode = vnode->firstChild;
-			continue;
-		}
-		/**
-		 * 如果该节点为叶节点或不访问其子节点，
-		 * 立即对其进行finish_visit()
-		 */
-		if (finish_visit != NULL)
-		{
-			local_ret = (*finish_visit)(vnode, result);
-			if (local_ret == VISIT_ERROR || local_ret == VISIT_FINISH)
-			{
-				ret = local_ret;
-				goto FINISH;
-			}
-			assert(local_ret == VISIT_NORMAL);
-		}
-		if (vnode == html_vnode)
-			goto FINISH;
-		/**向右
-		 */
-		if (vnode->nextNode)
-		{
-			vnode = vnode->nextNode;
-			continue;
-		}
+int html_vnode_visit_ex(html_vnode_t *html_vnode,
+                        int (*start_visit)(html_vnode_t *, void *),
+                        int (*finish_visit)(html_vnode_t *, void *),
+                        void *result) {
+  int ret = VISIT_NORMAL;
+  html_vnode_t *vnode = html_vnode;
+  while (vnode) {
+    int local_ret = VISIT_NORMAL;
+    if (start_visit != NULL) {
+      local_ret = (*start_visit)(vnode, result);
+      if (local_ret == VISIT_ERROR || local_ret == VISIT_FINISH) {
+        ret = local_ret;
+        goto FINISH;
+      }
+    }
+    if (vnode->firstChild && local_ret != VISIT_SKIP_CHILD) {
+      vnode = vnode->firstChild;
+      continue;
+    }
+    /**
+     * 如果该节点为叶节点或不访问其子节点，
+     * 立即对其进行finish_visit()
+     */
+    if (finish_visit != NULL) {
+      local_ret = (*finish_visit)(vnode, result);
+      if (local_ret == VISIT_ERROR || local_ret == VISIT_FINISH) {
+        ret = local_ret;
+        goto FINISH;
+      }
+      assert(local_ret == VISIT_NORMAL);
+    }
+    if (vnode == html_vnode)
+      goto FINISH;
+    /**向右
+     */
+    if (vnode->nextNode) {
+      vnode = vnode->nextNode;
+      continue;
+    }
 
-		/**向上
-		 */
-		while (1)
-		{
-			vnode = vnode->upperNode;
-			if (vnode == NULL)
-				break;
-			if (finish_visit != NULL)
-			{
-				local_ret = (*finish_visit)(vnode, result);
-				if (local_ret == VISIT_ERROR || local_ret == VISIT_FINISH)
-				{
-					ret = local_ret;
-					goto FINISH;
-				}
-				assert(local_ret == VISIT_NORMAL);
-			}
+    /**向上
+     */
+    while (1) {
+      vnode = vnode->upperNode;
+      if (vnode == NULL)
+        break;
+      if (finish_visit != NULL) {
+        local_ret = (*finish_visit)(vnode, result);
+        if (local_ret == VISIT_ERROR || local_ret == VISIT_FINISH) {
+          ret = local_ret;
+          goto FINISH;
+        }
+        assert(local_ret == VISIT_NORMAL);
+      }
 
-			if (vnode == html_vnode)
-				goto FINISH;
-			/**向右
-			 */
-			if (vnode->nextNode)
-			{
-				vnode = vnode->nextNode;
-				break;
-			}
-		}
-	}
+      if (vnode == html_vnode)
+        goto FINISH;
+      /**向右
+       */
+      if (vnode->nextNode) {
+        vnode = vnode->nextNode;
+        break;
+      }
+    }
+  }
 
-	FINISH: return ret;
+  FINISH: return ret;
 }
 
 /**
@@ -250,25 +209,26 @@ int html_vnode_visit_ex(html_vnode_t *html_vnode, int (*start_visit)(html_vnode_
  * @return  int
  * @retval
  * @see
- * @author xunwu
+
  * @date 2011/06/20
  **/
-int html_vtree_visit_ex(html_vtree_t *html_vtree, int (*start_visit)(html_vnode_t *, void *), int (*finish_visit)(html_vnode_t *, void *),
-		void *result)
-{
-	int ret;
-	ret = html_vnode_visit_ex(html_vtree->root, start_visit, finish_visit, result);
-	if (ret == VISIT_ERROR)
-		return 0;
+int html_vtree_visit_ex(html_vtree_t *html_vtree,
+                        int (*start_visit)(html_vnode_t *, void *),
+                        int (*finish_visit)(html_vnode_t *, void *),
+                        void *result) {
+  int ret;
+  ret = html_vnode_visit_ex(html_vtree->root, start_visit, finish_visit,
+                            result);
+  if (ret == VISIT_ERROR)
+    return 0;
 
-	return 1;
+  return 1;
 }
 
-void print_font(font_t *pfont)
-{
-	if (pfont)
-	{
-		myprintf("font info:is_bold=%d,is_strong=%d,is_big=%d,size=%d,color=%d\n",
-				pfont->is_bold, pfont->is_strong, pfont->is_big, pfont->size, pfont->color);
-	}
+void print_font(font_t *pfont) {
+  if (pfont) {
+    myprintf(
+        "font info:is_bold=%d,is_strong=%d,is_big=%d,size=%d,color=%d\n",
+        pfont->is_bold, pfont->is_strong, pfont->is_big, pfont->size, pfont->color);
+  }
 }

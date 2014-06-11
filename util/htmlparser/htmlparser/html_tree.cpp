@@ -162,7 +162,7 @@ int html_tree_is_script_parsing(html_tree_t *tree)
  * @param [in] ignore_space   : bool	是否忽略页面中的空格
  * @return  int
  * @retval  0:解析失败;1:解析成功.
- * @author xunwu
+
  * @date 2011/08/02
  **/
 int html_tree_parse(html_tree_t *tree, char *html, int size, bool ignore_space)

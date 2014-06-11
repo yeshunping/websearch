@@ -1,6 +1,6 @@
 /**
  * @file easou_html_attr.h
- * @author xunwu
+
  * @date 2011/08/02
  * @version 1.0
  * @brief 对属性的描述，包含easou自定义属怄1�7.

@@ -1,6 +1,6 @@
 /**
  * @file easou_ahtml_tree.h
- * @author xunwu
+
  * @date 2011/06/27
  * @version 1.0 
  * @brief 在vtree的基础上进行分块操作
@@ -10,7 +10,7 @@
 #ifndef  __EASOU_AHTML_TREE_H
 #define  __EASOU_AHTML_TREE_H
 
-#include "easou_ahtml_area.h"
+#include "util/htmlparser/ahtmlparser/ahtml_area.h"
 
 typedef struct _atree_baseinfo_t atree_baseinfo_t;
 
@@ -46,28 +46,28 @@ typedef struct _area_tree_t {
  * @brief	创建一棵分块树.
  * @param [in] cfg   : area_config_t*	用于配置分块树的分块粒度.可为NULL.
  * @return  easou_area_tree_t*	已分配空间的分块树.
- * @author xunwu
+
  * @date 2011/07/05
  **/
 area_tree_t *area_tree_create(area_config_t *cfg);
 
 /**
  * @brief 设置分块树的分块粒度.
- * @author xunwu
+
  * @date 2011/07/05
  **/
 void area_tree_setConfig(area_tree_t *atree,area_config_t *cfg);
 
 /**
  * @brief 删除分块树.
- * @author xunwu
+
  * @date 2011/07/05
  **/
 void area_tree_del(area_tree_t *atree);
 
 /**
  * @brief 清除一棵分块树上的分块信息.
- * @author xunwu
+
  * @date 2011/07/05
  **/
 void area_tree_clean(area_tree_t *atree);
@@ -79,7 +79,7 @@ void area_tree_clean(area_tree_t *atree);
  * @param [in] base_url : 网页原始url
  * @return  int 
  * @retval  -1:分块出错;1:成功.
- * @author xunwu
+
  * @date 2011/07/05
  **/
 int area_partition(area_tree_t *atree, html_vtree_t *vtree, const char *base_url);
@@ -92,7 +92,7 @@ int area_partition(area_tree_t *atree, html_vtree_t *vtree, const char *base_url
  * @param [in] depth   : unsigned int	待划分的分块的深度.`
  * @return  int 
  * @retval   -1:分块出错.1:成功.
- * @author xunwu
+
  * @date 2011/07/05
  **/
 int areaNode_divide(html_area_t *area,const area_config_t *cfg,nodepool_t *np, unsigned int depth);
@@ -115,7 +115,7 @@ typedef int (* FUNC_FINISH_T)(html_area_t * ,void * ) ;
  * @param [in/out] data   : void*
  * @return  bool 
  * @retval   成功 true ，失败false
- * @author xunwu
+
  * @date 2011/07/05
  **/
 bool areatree_visit(area_tree_t * atree, FUNC_START_T start,  FUNC_FINISH_T finish, void * data ) ;
@@ -128,7 +128,7 @@ bool areatree_visit(area_tree_t * atree, FUNC_START_T start,  FUNC_FINISH_T fini
  * @param [in/out] data   : void*
  * @return  int 
  * @retval   失败0 ，成功>0
- * @author xunwu
+
  * @date 2011/07/05
  **/
 int areatree_visit(html_area_t * arearoot, FUNC_START_T start,  FUNC_FINISH_T finish, void * data);

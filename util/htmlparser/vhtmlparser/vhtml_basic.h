@@ -1,10 +1,6 @@
 /**
  * easou_vhtml_basic.h
- * Description: vtree½âÎöÊ±ÒÔ¼°¶ÔÍâµÄÒ»Ğ©»ù±¾ÅĞ¶ÏºÍÉèÖÃ²Ù×÷,Êı¾İ½á¹¹µÄ¶¨Òå
- *  Created on: 2011-11-13
- * Last modify: 2012-11-10 sue_zhang@staff.easou.com shuangwei_zhang@staff.easou.com
- *      Author: xunwu_chen@staff.easoucom
- *     Version: 1.2
+ * Description: vtreeè§£ææ—¶ä»¥åŠå¯¹å¤–çš„ä¸€äº›åŸºæœ¬åˆ¤æ–­å’Œè®¾ç½®æ“ä½œ,æ•°æ®ç»“æ„çš„å®šä¹‰
  */
 
 #ifndef EASOU_VHTML_BASIC_H_
@@ -12,12 +8,12 @@
 
 #include <sys/types.h>
 #include <stdint.h>
-#include "nodepool.h"
-#include "easou_html_tree.h"
-#include "easou_css_parser.h"
-#include "easou_css_utils.h"
-#include "easou_vhtml_inner.h"
-#include "easou_vstruct_profiler.h"
+#include "util/htmlparser/utils/nodepool.h"
+#include "util/htmlparser/htmlparser/html_tree.h"
+#include "util/htmlparser/cssparser/css_parser.h"
+#include "util/htmlparser/cssparser/css_utils.h"
+#include "util/htmlparser/vhtmlparser/vhtml_inner.h"
+#include "util/htmlparser/vhtmlparser/vstruct_profiler.h"
 
 #define SET_LINE_BREAK(prop) (prop |= 0x1)
 #define IS_LINE_BREAK(prop) (prop & 0x1)
@@ -48,15 +44,15 @@
 #define IS_BLOCK_TAG(prop)	(prop & (0x1<<11))
 #define SET_BLOCK_TAG(prop)	(prop |= (0x1<<11))
 
-#define IS_EMBODY_NOWX_IMG(prop)	(prop & (0x1<<12))		  /**< ÊÇ·ñ°üº¬ÓĞÎŞ¿í¶ÈµÄÍ¼Æ¬       */
+#define IS_EMBODY_NOWX_IMG(prop)	(prop & (0x1<<12))		  /**< æ˜¯å¦åŒ…å«æœ‰æ— å®½åº¦çš„å›¾ç‰‡       */
 #define SET_EMBODY_NOWX_IMG(prop)	(prop |= (0x1<<12))
 #define CLEAR_EMBODY_NOWX_IMG(prop)	(prop &= ~(0x1<<12))
 
-#define IS_INCLUDE_INTER(prop)	(prop & (0x1<<17))		  /**< ÊÇ·ñ°üº¬ÓĞ½»»¥±êÇ©       */
+#define IS_INCLUDE_INTER(prop)	(prop & (0x1<<17))		  /**< æ˜¯å¦åŒ…å«æœ‰äº¤äº’æ ‡ç­¾       */
 #define SET_INCLUDE_INTER(prop)	(prop |= (0x1<<17))
 #define CLEAR_INCLUDE_INTER(prop)	(prop &= ~(0x1<<17))
 
-#define IS_BORDER(prop)	(prop & (0x1<<18))		  /**< ÊÇ·ñÓĞ±ß¿ò      */
+#define IS_BORDER(prop)	(prop & (0x1<<18))		  /**< æ˜¯å¦æœ‰è¾¹æ¡†      */
 #define SET_BORDER(prop)	(prop |= (0x1<<18))
 #define CLEAR_BORDER(prop)	(prop &= ~(0x1<<18))
 
@@ -65,10 +61,10 @@
 #define BOTTOM_BIT	(0x1<<30)
 #define RIGHT_BIT	(0x1<<31)
 
-#define IS_IN_STYLE(prop)	(prop & (0x1<<13) )		  /**< ÊÇ·ñÓĞÊôĞÔÔÚSTYLEÊôĞÔÖĞ */
-#define SET_IN_STYLE(prop)	(prop |= (0x1<<13) )		  /**< ÓĞÊôĞÔÔÚSTYLEÊôĞÔÖĞ */
-#define HAS_HTML_FONT_ATTR(prop)	(prop & (0x1<<14) )		  /**< ÊÇ·ñHTMLÊôĞÔÖĞÓĞ×ÖÌåĞÅÏ¢ */
-#define SET_HAS_HTML_FONT_ATTR(prop)	(prop |= (0x1<<14) )		  /**< ÉèÖÃHTMLÊôĞÔÖĞº¬ÓĞ×ÖÌåĞÅÏ¢ */
+#define IS_IN_STYLE(prop)	(prop & (0x1<<13) )		  /**< æ˜¯å¦æœ‰å±æ€§åœ¨STYLEå±æ€§ä¸­ */
+#define SET_IN_STYLE(prop)	(prop |= (0x1<<13) )		  /**< æœ‰å±æ€§åœ¨STYLEå±æ€§ä¸­ */
+#define HAS_HTML_FONT_ATTR(prop)	(prop & (0x1<<14) )		  /**< æ˜¯å¦HTMLå±æ€§ä¸­æœ‰å­—ä½“ä¿¡æ¯ */
+#define SET_HAS_HTML_FONT_ATTR(prop)	(prop |= (0x1<<14) )		  /**< è®¾ç½®HTMLå±æ€§ä¸­å«æœ‰å­—ä½“ä¿¡æ¯ */
 
 #define SET_REPEAT_STRUCT_PARENT(prop)	(prop |= (0x1<<15))
 #define IS_REPEAT_STRUCT_PARENT(prop)	(prop & (0x1<<15))
@@ -80,256 +76,222 @@
 #define	VTREE_NORMAL	1
 #define	VTREE_FETCH_CSS_FAIL	2
 
-#define DEFAULT_FONT_SIZE	16		  			/**< ÍøÒ³Ä¬ÈÏ×ÖÌå´óĞ¡Îª16px  */
-#define DEFAULT_BGCOLOR	(0xffffff)		  		/**< ÍøÒ³Ä¬ÈÏ±³¾°ÑÕÉ«£º°×É«  */
-#define DEFAULT_COLOR	(0x000000)		  		/**< ÍøÒ³Ä¬ÈÏÇ°¾°ÑÕÉ«£ººÚÉ«  */
-#define DEFAULT_LINK_COLOR	(0x0000ff)		    /**< Á´½ÓÄ¬ÈÏÇ°¾°ÑÕÉ«£ºÀ¶É«  */
+#define DEFAULT_FONT_SIZE	16		  			/**< ç½‘é¡µé»˜è®¤å­—ä½“å¤§å°ä¸º16px  */
+#define DEFAULT_BGCOLOR	(0xffffff)		  		/**< ç½‘é¡µé»˜è®¤èƒŒæ™¯é¢œè‰²ï¼šç™½è‰²  */
+#define DEFAULT_COLOR	(0x000000)		  		/**< ç½‘é¡µé»˜è®¤å‰æ™¯é¢œè‰²ï¼šé»‘è‰²  */
+#define DEFAULT_LINK_COLOR	(0x0000ff)		    /**< é“¾æ¥é»˜è®¤å‰æ™¯é¢œè‰²ï¼šè“è‰²  */
 
-#define DEFAULT_IMG_SIZE	15		  			/**< Ä¬ÈÏµÄÍ¼Æ¬´óĞ¡      */
-#define DEFAULT_PAGE_WX 1200		  			/**< Ä¬ÈÏµÄÒ³Ãæ¿í¶È  */
-#define MAX_TRUST_VALUE_FOR_VNODE	10		  	/**<  vnode->trustµÄ×î´óÖµ */
+#define DEFAULT_IMG_SIZE	15		  			/**< é»˜è®¤çš„å›¾ç‰‡å¤§å°      */
+#define DEFAULT_PAGE_WX 1200		  			/**< é»˜è®¤çš„é¡µé¢å®½åº¦  */
+#define MAX_TRUST_VALUE_FOR_VNODE	10		  	/**<  vnode->trustçš„æœ€å¤§å€¼ */
 
-#define COLOR_SIGN_MAX_COLLI_NUM	4		  /**< Ç©ÃûÏàÍ¬µÄ×î´óÑÕÉ«ÊıÁ¿  */
+#define COLOR_SIGN_MAX_COLLI_NUM	4		  /**< ç­¾åç›¸åŒçš„æœ€å¤§é¢œè‰²æ•°é‡  */
 #define MAX_FONT_SIZE	10000
 
-#define FONT_SIZE_TO_CHR_WX(px)	(px/2)		  /**< ¸ù¾İ×ÖÌå´óĞ¡¼ÆËãµ¥×Ö·ûµÄ¿í¶È  */
+#define FONT_SIZE_TO_CHR_WX(px)	(px/2)		  /**< æ ¹æ®å­—ä½“å¤§å°è®¡ç®—å•å­—ç¬¦çš„å®½åº¦  */
 #define CSS_PAGE_LEN 512000
 
 /**
- * @brief ÑÕÉ«µÄRGB±íÊ¾.
+ * @brief é¢œè‰²çš„RGBè¡¨ç¤º.
  */
-typedef struct _rgb_t
-{
-	unsigned int r :8;
-	unsigned int g :8;
-	unsigned int b :8;
+typedef struct _rgb_t {
+  unsigned int r :8;
+  unsigned int g :8;
+  unsigned int b :8;
 } rgb_t;
 
 /**
- * @brief ½ÚµãµÄCSSÊôĞÔ.
+ * @brief èŠ‚ç‚¹çš„CSSå±æ€§.
  */
-typedef struct _css_prop_node_t
-{
-	easou_css_prop_type_t type; /**< ÊôĞÔÀàĞÍ  */
-	int priority; /**< ÊôĞÔÈ¨Öµ  */
-	char *value; /**< ÊôĞÔÖµ  */
-	struct _css_prop_node_t *next;
+typedef struct _css_prop_node_t {
+  easou_css_prop_type_t type; /**< å±æ€§ç±»å‹  */
+  int priority; /**< å±æ€§æƒå€¼  */
+  char *value; /**< å±æ€§å€¼  */
+  struct _css_prop_node_t *next;
 } css_prop_node_t;
 
-typedef enum _text_align_t
-{
-	VHP_TEXT_ALIGN_LEFT = 0, /**< ×ó¶ÔÆë£¬Ä¬ÈÏ  */
-	VHP_TEXT_ALIGN_CENTER = 1, /**< ¾ÓÖĞ       */
-	VHP_TEXT_ALIGN_RIGHT = 2 /**< ÓÒ¶ÔÆë       */
+typedef enum _text_align_t {
+  VHP_TEXT_ALIGN_LEFT = 0, /**< å·¦å¯¹é½ï¼Œé»˜è®¤  */
+  VHP_TEXT_ALIGN_CENTER = 1, /**< å±…ä¸­       */
+  VHP_TEXT_ALIGN_RIGHT = 2 /**< å³å¯¹é½       */
 } text_align_t;
 
 /**
- * @brief vnodeµÄ½ÚµãÀàĞÍ
+ * @brief vnodeçš„èŠ‚ç‚¹ç±»å‹
  */
-typedef enum _vnode_type_t
-{
-	TYPE_UNKNOWN = 0, //Î´Öª
-	TYPE_INTERACTION = 1, //½»»¥½Úµã
+typedef enum _vnode_type_t {
+  TYPE_UNKNOWN = 0,  //æœªçŸ¥
+  TYPE_INTERACTION = 1,  //äº¤äº’èŠ‚ç‚¹
 } vnode_type_t;
 
 /**
- * @brief ¶Ô±ß¿òµÄÃèÊö
+ * @brief å¯¹è¾¹æ¡†çš„æè¿°
  * @author sue
  * @date 2013/05/21
  */
-struct border_t
-{
-	unsigned int top;	/**< ÉÏ±ß¿òµÄ¿í¶È */
-	unsigned int left;	/**< ×ó±ß¿òµÄ¿í¶È */
-	unsigned int right;	/**< ÓÒ±ß¿òµÄ¿í¶È */
-	unsigned int bottom;	/**< ÏÂ±ß¿òµÄ¿í¶È */
-	unsigned int pad_top;	/**< ÉÏ¼ä¾à */
-	unsigned int pad_left;	/**< ×ó¼ä¾à */
-	unsigned int pad_right;	/**< ÓÒ¼ä¾à */
-	unsigned int pad_bottom;/**< ÏÂ¼ä¾à */
+struct border_t {
+  unsigned int top; /**< ä¸Šè¾¹æ¡†çš„å®½åº¦ */
+  unsigned int left; /**< å·¦è¾¹æ¡†çš„å®½åº¦ */
+  unsigned int right; /**< å³è¾¹æ¡†çš„å®½åº¦ */
+  unsigned int bottom; /**< ä¸‹è¾¹æ¡†çš„å®½åº¦ */
+  unsigned int pad_top; /**< ä¸Šé—´è· */
+  unsigned int pad_left; /**< å·¦é—´è· */
+  unsigned int pad_right; /**< å³é—´è· */
+  unsigned int pad_bottom;/**< ä¸‹é—´è· */
 };
 
 /**
- * @brief ¶Ô×ÖÌåµÄÃèÊö
+ * @brief å¯¹å­—ä½“çš„æè¿°
  */
-typedef struct _font_t
-{
-	unsigned int in_link :1; /**< ÊÇ·ñ´¦ÔÚÁ´½ÓÖĞ£¬¼´ÊÇ·ñÊÇÁ´½Ó  */
-	unsigned int align :2; /**< ÎÄ±¾¶ÔÆëÊôĞÔ       */
-	unsigned int header_size :3; /**< ±êÌâ×ÖÌå£ºh1~h6,Æä¶ÔÓ¦header_sizeÎª1µ½6*/
-	unsigned int is_bold :1; /**< ´ÖÌå  */
-	unsigned int is_strong :1; /**< ÖØµãÇ¿µ÷	*/
-	unsigned int is_big :1; /**< ½Ï´ó×ÖÌå  */
-	unsigned int is_small :1; /**< ½ÏĞ¡×ÖÌå  */
-	unsigned int is_italic :1; /**< Ğ±Ìå  */
-	unsigned int is_underline :1; /**< ÏÂ»®Ïß   */
-	int size :20; /**< ×ÖÌå´óĞ¡£¬ÒÔpxÎªµ¥Î»£¬ä¯ÀÀÆ÷Ä¬ÈÏ×ÖÌå´óĞ¡Îª16px  */
-	int line_height :20; /**< ĞĞ¸ß£¬ÒÔpxÎªµ¥Î»£¬Ä¬ÈÏÖµÎªµ±Ç°×ÖÌå´óĞ¡  */
-	unsigned int bgcolor :24; /**< ±³¾°ÑÕÉ«£¬ÓÃRGB±íÊ¾£¬Èç#ffffff   */
-	unsigned int color :24; /**< ×ÖÌåÑÕÉ«(»òÇ°¾°ÑÕÉ«)£¬ÓÃRGB±íÊ¾£¬Èç#000000  */
+typedef struct _font_t {
+  unsigned int in_link :1; /**< æ˜¯å¦å¤„åœ¨é“¾æ¥ä¸­ï¼Œå³æ˜¯å¦æ˜¯é“¾æ¥  */
+  unsigned int align :2; /**< æ–‡æœ¬å¯¹é½å±æ€§       */
+  unsigned int header_size :3; /**< æ ‡é¢˜å­—ä½“ï¼šh1~h6,å…¶å¯¹åº”header_sizeä¸º1åˆ°6*/
+  unsigned int is_bold :1; /**< ç²—ä½“  */
+  unsigned int is_strong :1; /**< é‡ç‚¹å¼ºè°ƒ	*/
+  unsigned int is_big :1; /**< è¾ƒå¤§å­—ä½“  */
+  unsigned int is_small :1; /**< è¾ƒå°å­—ä½“  */
+  unsigned int is_italic :1; /**< æ–œä½“  */
+  unsigned int is_underline :1; /**< ä¸‹åˆ’çº¿   */
+  int size :20; /**< å­—ä½“å¤§å°ï¼Œä»¥pxä¸ºå•ä½ï¼Œæµè§ˆå™¨é»˜è®¤å­—ä½“å¤§å°ä¸º16px  */
+  int line_height :20; /**< è¡Œé«˜ï¼Œä»¥pxä¸ºå•ä½ï¼Œé»˜è®¤å€¼ä¸ºå½“å‰å­—ä½“å¤§å°  */
+  unsigned int bgcolor :24; /**< èƒŒæ™¯é¢œè‰²ï¼Œç”¨RGBè¡¨ç¤ºï¼Œå¦‚#ffffff   */
+  unsigned int color :24; /**< å­—ä½“é¢œè‰²(æˆ–å‰æ™¯é¢œè‰²)ï¼Œç”¨RGBè¡¨ç¤ºï¼Œå¦‚#000000  */
 } font_t;
 
 typedef struct _vhtml_struct_prof_t vhtml_struct_prof_t;
 typedef struct _html_area_t html_area_t;
 
 /**
- * @brief vtreeÉÏÒ»¸ö½ÚµãµÄÃèÊö.
+ * @brief vtreeä¸Šä¸€ä¸ªèŠ‚ç‚¹çš„æè¿°.
  */
-typedef struct _html_vnode_t
-{
-	html_node_t *hpNode; /**< ¸Ã½Úµã¶ÔÓ¦µÄhtml_treeÉÏµÄ½Úµã  */
-	unsigned int isValid :1; /**< ÊÇ·ñ²»	Õ¼¾İ¿Õ¼äµÄ½Úµã£¬¼´ÊÇ·ñ¿ÉÊÓ  */
-	unsigned int inLink :1; /**< ÊÇ·ñÔÚÁ´½ÓÄÚ   */
+typedef struct _html_vnode_t {
+  html_node_t *hpNode; /**< è¯¥èŠ‚ç‚¹å¯¹åº”çš„html_treeä¸Šçš„èŠ‚ç‚¹  */
+  unsigned int isValid :1; /**< æ˜¯å¦ä¸	å æ®ç©ºé—´çš„èŠ‚ç‚¹ï¼Œå³æ˜¯å¦å¯è§†  */
+  unsigned int inLink :1; /**< æ˜¯å¦åœ¨é“¾æ¥å†…   */
 
-	vnode_type_t type; //½ÚµãÀàĞÍ
-	font_t font; /**< ×ÖÌåĞÅÏ¢  */
-	border_t border; /**< ±ß¿òĞÅÏ¢ */
-	int subtree_diff_font; /**< ×ÓÊ÷ÓĞ¶àÉÙ²»Í¬µÄÖĞÎÄ×ÖÌå£¬°üÀ¨×Ô¼º£¨Ö»Í³¼Æ×ÖÌåĞ¡ÓÚ40µÄ£© */
-	int subtree_max_font_size; /**< ×ÓÊ÷µÄ×î´ó×ÖÌå£¬°üÀ¨×Ô¼º */
-	int subtree_border_num; /**< ×ÓÊ÷£¨°üÀ¨×Ô¼º£©¾ßÓĞborderÊôĞÔµÄ¸öÊı */
-	char fontSizes[40];
-	int wx; /**< ½ÚµãµÄ¿í¶È  */
-	int hx; /**< ½ÚµãµÄ¸ß¶È  */
-	int xpos, ypos; /**< ½Úµã×óÉÏ½ÇµÄX,Y×ø±ê,Ò³Ãæ×óÉÏ½Ç×ø±êÎª(0,0)   */
-	int textSize; /**< ÎÄ±¾½ÚµãµÄÎÄ±¾´óĞ¡  */
-	int cn_num; /**< ÎÄ±¾½ÚµãµÄºº×Ö¸öÊı */
-	int subtree_textSize; /**< ÒÔµ±Ç°½ÚµãÎª¸ù½ÚµãµÄ×ÓÊ÷µÄtextSize  */
-	int subtree_anchorSize; /**< ÒÔµ±Ç°½ÚµãÎª¸ù½ÚµãµÄ×ÓÊ÷µÄanchorSize  */
-	int subtree_cn_num; /**< ÒÔµ±Ç°½ÚµãÎª¸ù½ÚµãµÄ×ÓÊ÷¾ßÓĞµÄºº×Ö¸öÊı */
-	int depth; /**< ½ÚµãµÄÉî¶È, ¸ù½ÚµãÉî¶ÈÎª0 */
-	int id; /**< ½ÚµãµÄÎ¨Ò»ID, ´Ó0¿ªÊ¼+1µİÔö±àºÅ */
-	u_int property; /**< ½Úµã°´Î»ÉèÖÃµÄÊôĞÔ   */
-	vstruct_info_t *struct_info; /**<  µ±Ç°½Úµã¶ÔÓ¦µÄ×ÓÊ÷½á¹¹ĞÅÏ¢ */
-	css_prop_node_t *css_prop; /**< µ±Ç°½Úµã¶ÔÓ¦µÄCSSÊôĞÔÁ´±í  */
-	html_area_t *hp_area; /**< °üº¬¸Ã½ÚµãµÄ×îĞ¡·Ö¿é*/
-	struct _html_vnode_t * firstChild; /**< µÚÒ»¸öº¢×Ó  */
-	struct _html_vnode_t * prevNode; /**< Ç°Ò»¸öĞÖµÜ  */
-	struct _html_vnode_t * nextNode; /**< ºóÒ»¸öĞÖµÜ   */
-	struct _html_vnode_t * upperNode; /**< ¸¸Ç×½Úµã */
+  vnode_type_t type;  //èŠ‚ç‚¹ç±»å‹
+  font_t font; /**< å­—ä½“ä¿¡æ¯  */
+  border_t border; /**< è¾¹æ¡†ä¿¡æ¯ */
+  int subtree_diff_font; /**< å­æ ‘æœ‰å¤šå°‘ä¸åŒçš„ä¸­æ–‡å­—ä½“ï¼ŒåŒ…æ‹¬è‡ªå·±ï¼ˆåªç»Ÿè®¡å­—ä½“å°äº40çš„ï¼‰ */
+  int subtree_max_font_size; /**< å­æ ‘çš„æœ€å¤§å­—ä½“ï¼ŒåŒ…æ‹¬è‡ªå·± */
+  int subtree_border_num; /**< å­æ ‘ï¼ˆåŒ…æ‹¬è‡ªå·±ï¼‰å…·æœ‰borderå±æ€§çš„ä¸ªæ•° */
+  char fontSizes[40];
+  int wx; /**< èŠ‚ç‚¹çš„å®½åº¦  */
+  int hx; /**< èŠ‚ç‚¹çš„é«˜åº¦  */
+  int xpos, ypos; /**< èŠ‚ç‚¹å·¦ä¸Šè§’çš„X,Yåæ ‡,é¡µé¢å·¦ä¸Šè§’åæ ‡ä¸º(0,0)   */
+  int textSize; /**< æ–‡æœ¬èŠ‚ç‚¹çš„æ–‡æœ¬å¤§å°  */
+  int cn_num; /**< æ–‡æœ¬èŠ‚ç‚¹çš„æ±‰å­—ä¸ªæ•° */
+  int subtree_textSize; /**< ä»¥å½“å‰èŠ‚ç‚¹ä¸ºæ ¹èŠ‚ç‚¹çš„å­æ ‘çš„textSize  */
+  int subtree_anchorSize; /**< ä»¥å½“å‰èŠ‚ç‚¹ä¸ºæ ¹èŠ‚ç‚¹çš„å­æ ‘çš„anchorSize  */
+  int subtree_cn_num; /**< ä»¥å½“å‰èŠ‚ç‚¹ä¸ºæ ¹èŠ‚ç‚¹çš„å­æ ‘å…·æœ‰çš„æ±‰å­—ä¸ªæ•° */
+  int depth; /**< èŠ‚ç‚¹çš„æ·±åº¦, æ ¹èŠ‚ç‚¹æ·±åº¦ä¸º0 */
+  int id; /**< èŠ‚ç‚¹çš„å”¯ä¸€ID, ä»0å¼€å§‹+1é€’å¢ç¼–å· */
+  u_int property; /**< èŠ‚ç‚¹æŒ‰ä½è®¾ç½®çš„å±æ€§   */
+  vstruct_info_t *struct_info; /**<  å½“å‰èŠ‚ç‚¹å¯¹åº”çš„å­æ ‘ç»“æ„ä¿¡æ¯ */
+  css_prop_node_t *css_prop; /**< å½“å‰èŠ‚ç‚¹å¯¹åº”çš„CSSå±æ€§é“¾è¡¨  */
+  html_area_t *hp_area; /**< åŒ…å«è¯¥èŠ‚ç‚¹çš„æœ€å°åˆ†å—*/
+  struct _html_vnode_t * firstChild; /**< ç¬¬ä¸€ä¸ªå­©å­  */
+  struct _html_vnode_t * prevNode; /**< å‰ä¸€ä¸ªå…„å¼Ÿ  */
+  struct _html_vnode_t * nextNode; /**< åä¸€ä¸ªå…„å¼Ÿ   */
+  struct _html_vnode_t * upperNode; /**< çˆ¶äº²èŠ‚ç‚¹ */
 
-	short trust :5; /**< ´óĞ¡»òÎ»ÖÃµÄ¿ÉĞÅ¶È¡£
-	 ¶ÔÓÚÍ¼Æ¬½ÚµãÀ´Ëµ£¬trustÕâÑù¶¨Òå£º
-	 a)	ÏÈÁîtrust = 10;
-	 b)	Èô¿í¶ÈÎ´Öª£¬trust -= 3;
-	 c)	Èô¸ß¶ÈÎ´Öª, trust -= 2;
-	 d)	Èô¿í¶ÈÉèÎªÄ¬ÈÏÖµ£¨¼´Î´¹ÀËã£©£¬trust -= 3£»
-	 e)	Èô¸ß¶ÈÉèÎªÄ¬ÈÏÖµ£¨¼´Î´¹ÀËã£©£¬trust -= 2¡£
-	 ¼´£º
-	 ====================================================================
+  short trust :5; /**< å¤§å°æˆ–ä½ç½®çš„å¯ä¿¡åº¦ã€‚
+   å¯¹äºå›¾ç‰‡èŠ‚ç‚¹æ¥è¯´ï¼Œtrustè¿™æ ·å®šä¹‰ï¼š
+   a)	å…ˆä»¤trust = 10;
+   b)	è‹¥å®½åº¦æœªçŸ¥ï¼Œtrust -= 3;
+   c)	è‹¥é«˜åº¦æœªçŸ¥, trust -= 2;
+   d)	è‹¥å®½åº¦è®¾ä¸ºé»˜è®¤å€¼ï¼ˆå³æœªä¼°ç®—ï¼‰ï¼Œtrust -= 3ï¼›
+   e)	è‹¥é«˜åº¦è®¾ä¸ºé»˜è®¤å€¼ï¼ˆå³æœªä¼°ç®—ï¼‰ï¼Œtrust -= 2ã€‚
+   å³ï¼š
+   ====================================================================
 
-	 ¸ß¶ÈÒÑÖª	¸ß¶ÈÎ´ÖªÇÒ¹ÀËã	¸ß¶ÈÎ´ÖªÇÒÎªÄ¬ÈÏÖµ
-	 ¿í¶ÈÒÑÖª		10				8				6
-	 ¿í¶ÈÎ´ÖªÇÒ¹ÀËã		7				5				3
-	 ¿í¶ÈÎ´ÖªÇÒÎªÄ¬ÈÏÖµ		4				2				0
-	 ====================================================================
-	 */
-	// for inner use
-	short wp, hp; /**< ½ÚµãµÄ°Ù·Ö±È¿í¶ÈºÍ¸ß¶È  */
-	int min_wx; /**< ½Úµã×îĞ¡¿ÉÄÜ¿í¶È  */
-	int max_wx; /**< ½Úµã×î´óÄÜ³äÂúµÄ¿í¶È */
-	int colspan; /**< ±í¸ñµÄµ¥Ôª¸ñµÄÁĞ¿ç¶È  */
-	html_vtree_t *vtree; //½ÚµãËùÊôµÄvtree
-	void *user_ptr;//ÓÃ»§×Ô¶¨ÒåÖ¸Õë£¬¿ÉÒÔÖ¸Ïò×Ô¼ºĞèÒªµÄ½á¹¹
-	//int subnodetype;//±êÊ¾¸Ã½ÚµãµÄºóÒá½Úµã°üº¬µÄtype£¬×îºóÒ»Î»ÊÇ·ñº¬ÓĞP£¬ÓÒ±ß2ÊÇ·ñº¬ÓĞDIV£¬ÓÒ±ß3Î»ÊÇ·ñº¬ÓĞtable
-   int whxy; //css ÊÇ·ñÖ¸¶¨¿í¶È¡¢¸ß¶È¡¢xpos¡¢ypos
+   é«˜åº¦å·²çŸ¥	é«˜åº¦æœªçŸ¥ä¸”ä¼°ç®—	é«˜åº¦æœªçŸ¥ä¸”ä¸ºé»˜è®¤å€¼
+   å®½åº¦å·²çŸ¥		10				8				6
+   å®½åº¦æœªçŸ¥ä¸”ä¼°ç®—		7				5				3
+   å®½åº¦æœªçŸ¥ä¸”ä¸ºé»˜è®¤å€¼		4				2				0
+   ====================================================================
+   */
+  // for inner use
+  short wp, hp; /**< èŠ‚ç‚¹çš„ç™¾åˆ†æ¯”å®½åº¦å’Œé«˜åº¦  */
+  int min_wx; /**< èŠ‚ç‚¹æœ€å°å¯èƒ½å®½åº¦  */
+  int max_wx; /**< èŠ‚ç‚¹æœ€å¤§èƒ½å……æ»¡çš„å®½åº¦ */
+  int colspan; /**< è¡¨æ ¼çš„å•å…ƒæ ¼çš„åˆ—è·¨åº¦  */
+  html_vtree_t *vtree;  //èŠ‚ç‚¹æ‰€å±çš„vtree
+  void *user_ptr;  //ç”¨æˆ·è‡ªå®šä¹‰æŒ‡é’ˆï¼Œå¯ä»¥æŒ‡å‘è‡ªå·±éœ€è¦çš„ç»“æ„
+  //int subnodetype;//æ ‡ç¤ºè¯¥èŠ‚ç‚¹çš„åè£”èŠ‚ç‚¹åŒ…å«çš„typeï¼Œæœ€åä¸€ä½æ˜¯å¦å«æœ‰Pï¼Œå³è¾¹2æ˜¯å¦å«æœ‰DIVï¼Œå³è¾¹3ä½æ˜¯å¦å«æœ‰table
+  int whxy;  //css æ˜¯å¦æŒ‡å®šå®½åº¦ã€é«˜åº¦ã€xposã€ypos
 } html_vnode_t;
 
 /**
- * @brief VtreeÊ÷½á¹¹.
- *   Î¬»¤vtreeµÄÊ÷½á¹¹,ÄÚ´æ.
+ * @brief Vtreeæ ‘ç»“æ„.
+ *   ç»´æŠ¤vtreeçš„æ ‘ç»“æ„,å†…å­˜.
  */
-typedef struct _html_vtree_t
-{
-	html_tree_t *hpTree; /**<  vtree¶ÔÓ¦µÄhtml_tree  */
-	html_vnode_t *root; /**<  vtreeµÄ¸ù½Úµã  */
+typedef struct _html_vtree_t {
+  html_tree_t *hpTree; /**<  vtreeå¯¹åº”çš„html_tree  */
+  html_vnode_t *root; /**<  vtreeçš„æ ¹èŠ‚ç‚¹  */
 
-	/** Below for inner use only */
-	nodepool_t np; /**< html_vnodeµÄ½Úµã³Ø   */
-	nodepool_t css_np; /**<  css_prop_node_tµÄ½Úµã³Ø  */
-	nodepool_t struct_np; /**< Ò»°ã½á¹¹ĞÅÏ¢µÄ½Úµã³Ø */
-	unsigned int struct_np_inited :1; /**< ÊÇ·ñ·ÖÅäÁË½á¹¹ĞÅÏ¢µÄ´æ´¢¿Õ¼ä */
-	unsigned int normal_struct_info_added :1; /**< ÊÇ·ñÒÑ¼ÆËãÁËÒ»°ãµÄ½á¹¹ĞÅÏ¢ */
-	unsigned int repeat_struct_info_added :1; /**< ÊÇ·ñÒÑ¼ÆËãÁËÖØ¸´½á¹¹ĞÅÏ¢*/
-	html_vnode_t *body; /**<  vtreeµÄbody½Úµã  */
+  /** Below for inner use only */
+  nodepool_t np; /**< html_vnodeçš„èŠ‚ç‚¹æ±    */
+  nodepool_t css_np; /**<  css_prop_node_tçš„èŠ‚ç‚¹æ±   */
+  nodepool_t struct_np; /**< ä¸€èˆ¬ç»“æ„ä¿¡æ¯çš„èŠ‚ç‚¹æ±  */
+  unsigned int struct_np_inited :1; /**< æ˜¯å¦åˆ†é…äº†ç»“æ„ä¿¡æ¯çš„å­˜å‚¨ç©ºé—´ */
+  unsigned int normal_struct_info_added :1; /**< æ˜¯å¦å·²è®¡ç®—äº†ä¸€èˆ¬çš„ç»“æ„ä¿¡æ¯ */
+  unsigned int repeat_struct_info_added :1; /**< æ˜¯å¦å·²è®¡ç®—äº†é‡å¤ç»“æ„ä¿¡æ¯*/
+  html_vnode_t *body; /**<  vtreeçš„bodyèŠ‚ç‚¹  */
 } html_vtree_t;
 
 /**
- * @brief vtreeÊäÈë½á¹¹.ÓÃÓÚ°ü×°CSSÏà¹ØµÄÊäÈë..
- *	Ã¿¸öVTREE¶ÔÓ¦ÕâÑùÒ»¸ö½á¹¹.
+ * @brief vtreeè¾“å…¥ç»“æ„.ç”¨äºåŒ…è£…CSSç›¸å…³çš„è¾“å…¥..
+ *	æ¯ä¸ªVTREEå¯¹åº”è¿™æ ·ä¸€ä¸ªç»“æ„.
  */
-typedef struct _vtree_in_t
-{
-	easou_css_env_t *css_env; /**< CSS½âÎö»·¾³ */
-	char CSS_OUT_PAGE[CSS_PAGE_LEN];
-	unsigned long long url_num;
-	unsigned long long request_css_num;
-	unsigned long long missing_css_num;
+typedef struct _vtree_in_t {
+  easou_css_env_t *css_env; /**< CSSè§£æç¯å¢ƒ */
+  char CSS_OUT_PAGE[CSS_PAGE_LEN];
+  unsigned long long url_num;
+  unsigned long long request_css_num;
+  unsigned long long missing_css_num;
 } vtree_in_t;
 
 /**
- * @brief ½«ÑÕÉ«µÄÊıÖµ±íÊ¾×ª»¯ÎªRGB±íÊ¾.
+ * @brief å°†é¢œè‰²çš„æ•°å€¼è¡¨ç¤ºè½¬åŒ–ä¸ºRGBè¡¨ç¤º.
  *
- * @param [in] color   : unsigned int ÑÕÉ«µÄÊıÖµ±íÊ¾£¬Èç0xffffff
+ * @param [in] color   : unsigned int é¢œè‰²çš„æ•°å€¼è¡¨ç¤ºï¼Œå¦‚0xffffff
  * @return  rgb_t
- * @retval
- * @see
- * @author xunwu
- * @date 2011/06/27
  **/
 rgb_t int2rgb(unsigned int color);
 
-/**
- * @brief Á½×ÖÌåÊÇ·ñÍêÈ«ÏàÍ¬.
- *
- * @author xunwu
- * @date 2011/06/27
- **/
 bool is_same_font(font_t *a, font_t *b);
 
 /**
- * @brief ÊÇ·ñ»ÒÉ«¡£
- * R,G,BÖµÏàÍ¬£¬µ«ÓÖ²»ÎªºÚ»ò°×£¬ÔòÎª»ÒÉ«.
+ * @brief æ˜¯å¦ç°è‰²ã€‚
+ * R,G,Bå€¼ç›¸åŒï¼Œä½†åˆä¸ä¸ºé»‘æˆ–ç™½ï¼Œåˆ™ä¸ºç°è‰².
  * @param [in/out] color   : unsigned int
  * @return  bool
  * @retval
- * @see
- * @author xunwu
- * @date 2011/06/27
  **/
 bool is_gray_color(unsigned int color);
 
 /**
- * @brief	½âÎö¸÷ÖÖµ¥Î»µÄ³¤¶È£¬Í³Ò»Êä³öÎªpxÎªµ¥Î»µÄ³¤¶È¡£
- * @param [in] value   : const char*	³¤¶È×Ö·û´®
- * @param [in] base_size   : int »ù×¼³¤¶È£¬±ÈÀıµ¥Î»³¤¶ÈĞèÒª
- * @param [out] _unit   : const char** ·µ»ØÔ­³¤¶Èµ¥Î»
- * @return  int	·µ»Ø½âÎö³öÀ´µÄpx³¤¶È£»ÈôÃ»ÓĞµ¥Î»£¬·µ»Ø-1¡£
- * @author xunwu
- * @date 2011/06/20
+ * @brief	è§£æå„ç§å•ä½çš„é•¿åº¦ï¼Œç»Ÿä¸€è¾“å‡ºä¸ºpxä¸ºå•ä½çš„é•¿åº¦ã€‚
+ * @param [in] value   : const char*	é•¿åº¦å­—ç¬¦ä¸²
+ * @param [in] base_size   : int åŸºå‡†é•¿åº¦ï¼Œæ¯”ä¾‹å•ä½é•¿åº¦éœ€è¦
+ * @param [out] _unit   : const char** è¿”å›åŸé•¿åº¦å•ä½
+ * @return  int	è¿”å›è§£æå‡ºæ¥çš„pxé•¿åº¦ï¼›è‹¥æ²¡æœ‰å•ä½ï¼Œè¿”å›-1ã€‚
  **/
 int parse_length(const char *value, int base_size, const char **_unit);
 
-/**
- * @brief »ñÈ¡´¿ÎÄ±¾µÄ³¤¶È
- * @author sue
- * @date 2013/05/21
- */
 int get_text_length(int font_size, int cn_num, int chr_num);
 
-/**
- * @brief
- * @author xunwu
- * @date 2011/06/27
- **/
-int html_vnode_visit_ex(html_vnode_t *html_vnode, int (*start_visit)(html_vnode_t *, void *), int (*finish_visit)(html_vnode_t *, void *),
-		void *result);
+int html_vnode_visit_ex(html_vnode_t *html_vnode,
+                        int (*start_visit)(html_vnode_t *, void *),
+                        int (*finish_visit)(html_vnode_t *, void *),
+                        void *result);
 
-/**
- * @brief
- * @author xunwu
- * @date 2011/06/27
- **/
-int html_vtree_visit_ex(html_vtree_t *html_vtree, int (*start_visit)(html_vnode_t *, void *), int (*finish_visit)(html_vnode_t *, void *), void *result);
+int html_vtree_visit_ex(html_vtree_t *html_vtree,
+                        int (*start_visit)(html_vnode_t *, void *),
+                        int (*finish_visit)(html_vnode_t *, void *),
+                        void *result);
 
 void print_font(font_t *pfont);
 

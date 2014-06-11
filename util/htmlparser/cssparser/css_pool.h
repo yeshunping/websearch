@@ -1,6 +1,6 @@
 /**
  * @file css_pool.h
- * @author xunwu
+
  * @date 2011/06/20
  * @version 1.0(create)
  * @brief css_pool用于:分配多个CSS结构的空间,存放多个解析好的CSS结构.
@@ -26,21 +26,21 @@ typedef struct _easou_css_pool_t
 
 /**
  * @brief 清空css_pool,使CSS结构回到未解析的状态.
- * @author xunwu
+
  * @date 2011/06/21
  **/
 void css_pool_clean(easou_css_pool_t *css_pool);
 
 /**
  * @brief	获取css_pool中CSS数组的数量.
- * @author xunwu
+
  * @date 2011/06/21
  **/
 int get_css_pool_array_size(easou_css_pool_t *css_pool);
 
 /**
  * @brief	销毁css_pool,回收已分配的空间.
- * @author xunwu
+
  * @date 2011/06/20
  **/
 void css_pool_destroy(easou_css_pool_t *css_pool);
@@ -52,14 +52,14 @@ void css_pool_destroy(easou_css_pool_t *css_pool);
  * @param [in/out] css_num   : int	分配空间的CSS结构数量.
  * @return  int
  * @retval  -1:失败;1:成功.
- * @author xunwu
+
  * @date 2011/06/20
  **/
 int css_pool_init(easou_css_pool_t *css_pool, int max_css_page_size, int css_num);
 
 /**
  * @brief 将csspool中的CSS按order值从小到大排序.order值越大,优先级越高.
- * @author xunwu
+
  * @date 2011/06/20
  **/
 void css_pool_sort(easou_css_pool_t *css_pool);

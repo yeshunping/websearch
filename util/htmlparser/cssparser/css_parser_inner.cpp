@@ -24,7 +24,7 @@ using namespace EA_COMMON;
  * @param [in/out] css   : easou_css_t*
  * @param [in/out] len   : size_t
  * @return  int
- * @author xunwu
+
  * @date 2011/06/20
  **/
 int adjust_str_heap(easou_css_t *css, size_t len)
@@ -51,7 +51,7 @@ int adjust_str_heap(easou_css_t *css, size_t len)
  * @param [in/out] css   : easou_css_t*
  * @param [in/out] len   : size_t
  * @return  int
- * @author xunwu
+
  * @date 2011/06/20
  **/
 static inline bool is_css_space(char chr)
@@ -64,7 +64,7 @@ static inline bool is_css_space(char chr)
  *  assert(*pstr == '/' && *(pstr+1) == '*');
  * @param [in] pstr   : const char* 起始点
  * @return  const char* 截止点
- * @author xunwu
+
  * @date 2011/06/20
  **/
 static const char *skip_comment(const char *pstr)
@@ -86,7 +86,7 @@ static const char *skip_comment(const char *pstr)
 /**
  * @brief css中的跳过commemt.
  * @return  const char* 截止点
- * @author xunwu
+
  * @date 2011/06/20
  **/
 const char *css_skip_comment(const char *pstr)
@@ -102,7 +102,7 @@ const char *css_skip_comment(const char *pstr)
 /**
  * @brief css中的跳过一块{}包含着的.
  * @return  const char* 截止点
- * @author xunwu
+
  * @date 2011/06/20
  **/
 const char *skip_block(const char *pstr)
@@ -134,7 +134,7 @@ const char *skip_block(const char *pstr)
  * @return  const char*
  * @retval
  * @see
- * @author xunwu
+
  * @date 2011/06/20
  **/
 static const char *skip_at_rule(const char *pstr)
@@ -161,7 +161,7 @@ static const char *skip_at_rule(const char *pstr)
  * 	if not at-rule, return the input pointer.
  * @param [in] pstr   : const char*
  * @return  const char*
- * @author xunwu
+
  * @date 2011/06/20
  **/
 const char *css_skip_at_rule(const char *pstr)
@@ -178,7 +178,7 @@ const char *css_skip_at_rule(const char *pstr)
  * @brief 跳过当前属性
  * @param [in/out] pstr   : const char*
  * @return  const char*
- * @author xunwu
+
  * @date 2011/06/20
  **/
 const char* skip_current_prop(const char *pstr)
@@ -195,7 +195,7 @@ const char* skip_current_prop(const char *pstr)
 
 /**
  * @brief 跳过当前的选择子.
- * @author xunwu
+
  * @date 2011/06/20
  **/
 const char *skip_current_selector(const char *pstr)
@@ -217,7 +217,7 @@ const char *skip_current_selector(const char *pstr)
  * @return  void
  * @retval
  * @see
- * @author xunwu
+
  * @date 2011/06/20
  **/
 void scan_string(easou_css_scan_t *css_scan, easou_css_str_heap_t *str_heap)
@@ -294,7 +294,7 @@ static const int css_prop_value_sep_chr_map[256] =
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/20
  **/
 bool is_css_sep_chr_state(easou_css_state_t state, char chr)
@@ -321,7 +321,7 @@ bool is_css_sep_chr_state(easou_css_state_t state, char chr)
 
 /**
  * @brief	扫描属性
- * @author xunwu
+
  * @date 2011/06/20
  **/
 void scan_attr(easou_css_scan_t *css_scan, easou_css_str_heap_t *str_heap)
@@ -341,7 +341,7 @@ void scan_attr(easou_css_scan_t *css_scan, easou_css_str_heap_t *str_heap)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/20
  **/
 inline void scan_a_step(easou_css_scan_t *css_scan, easou_css_str_heap_t *str_heap)
@@ -358,7 +358,7 @@ inline void scan_a_step(easou_css_scan_t *css_scan, easou_css_str_heap_t *str_he
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/20
  **/
 void scan_normal(easou_css_scan_t *css_scan, easou_css_str_heap_t *str_heap)
@@ -378,7 +378,7 @@ void scan_normal(easou_css_scan_t *css_scan, easou_css_str_heap_t *str_heap)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/20
  **/
 void scan_url(easou_css_scan_t *css_scan, easou_css_str_heap_t *str_heap)

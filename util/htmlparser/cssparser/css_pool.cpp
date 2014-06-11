@@ -1,6 +1,6 @@
 /**
  * @file easou_css_pool.cpp
- * @author xunwu
+
  * @date 2011/07/15
  * @brief css_pool用于:分配多个CSS结构的空间,存放多个解析好的CSS结构.
  *  
@@ -62,7 +62,7 @@ void css_pool_destroy(easou_css_pool_t *css_pool)
  * @param [in/out] css_num   : int	分配空间的CSS结构数量.
  * @return  int 
  * @retval  -1:失败;1:成功.
- * @author xunwu
+
  * @date 2011/06/21
  **/
 int css_pool_init(easou_css_pool_t *css_pool, int max_css_page_size, int css_num)

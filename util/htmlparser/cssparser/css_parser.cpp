@@ -29,7 +29,7 @@ using namespace EA_COMMON;
  * @brief 清除css信息
  * @param [in/out] css   : easou_css_t*
  * @return  void 
- * @author xunwu
+
  * @date 2011/06/20
  **/
 void css_clean(easou_css_t *css)
@@ -46,7 +46,7 @@ void css_clean(easou_css_t *css)
  * @brief 创建一个css解析结构
  * @param [in] max_css_text_size
  * @return  easou_css_t*
- * @author xunwu
+
  * @date 2011/06/21
  **/
 easou_css_t *css_create(int max_css_text_size)
@@ -103,7 +103,7 @@ easou_css_t *css_create(int max_css_text_size)
 /**
  * @brief 销毁css
  * @param [in/out] css   : easou_css_t*
- * @author xunwu
+
  * @date 2011/06/20
  **/
 void css_destroy(easou_css_t *css)
@@ -126,7 +126,7 @@ void css_destroy(easou_css_t *css)
  * @brief 创建一个css解析结构
  * @param [in] max_css_text_size
  * @return  easou_css_t*
- * @author xunwu
+
  * @date 2011/06/21
  **/
 easou_css_t *css_create()
@@ -200,7 +200,7 @@ int get_new_token(easou_css_scan_t *css_scan, easou_css_str_heap_t *str_heap, ea
  * @return  char*
  * @retval   
  * @see 
- * @author xunwu
+
  * @date 2011/06/20
  **/
 static char* parse_attr_selector(easou_css_simple_selector_t *simple_selector, char *pstr, easou_css_t *css)
@@ -262,7 +262,7 @@ static char* parse_attr_selector(easou_css_simple_selector_t *simple_selector, c
 /**
  * @brief	分析普通选择子
  *	simple_selector : element_name? [ HASH | class | attrib | pseudo ]* S*
- * @author xunwu
+
  * @date 2011/06/20
  **/
 static void parse_simple_selector(easou_css_simple_selector_t *simple_selector, easou_css_t *css)
@@ -372,7 +372,7 @@ static void parse_simple_selector(easou_css_simple_selector_t *simple_selector, 
 
 /**
  * @brief	清空选择子
- * @author xunwu
+
  * @date 2011/06/20
  **/
 static void selector_clean(easou_css_selector_t *selector)
@@ -391,7 +391,7 @@ static void selector_clean(easou_css_selector_t *selector)
  * @return  bool 
  * @retval   
  * @see 
- * @author xunwu
+
  * @date 2011/06/20
  **/
 static bool is_illegal_simple_selector(const easou_css_simple_selector_t *sslt)
@@ -420,7 +420,7 @@ static bool is_illegal_simple_selector(const easou_css_simple_selector_t *sslt)
  * @param [in/out] css_scan   : css_scan_t*
  * @param [in/out] css   : easou_css_t*
  * @return  css_selector_t* 
- * @author xunwu
+
  * @date 2011/06/20
  **/
 easou_css_selector_t *make_selector(easou_css_scan_t *css_scan, easou_css_t *css)
@@ -501,7 +501,7 @@ easou_css_selector_t *make_selector(easou_css_scan_t *css_scan, easou_css_t *css
  * @return  css_prop_type_t 
  * @retval   
  * @see 
- * @author xunwu
+
  * @date 2011/06/20
  **/
 easou_css_prop_type_t css_seek_prop_type(const char *name)
@@ -529,7 +529,7 @@ easou_css_prop_type_t css_seek_prop_type(const char *name)
 
 /**
  * @brief
- * @author xunwu
+
  * @date 2011/06/20
  **/
 bool is_useful_css_prop(easou_css_prop_type_t prop)
@@ -547,7 +547,7 @@ bool is_useful_css_prop(easou_css_prop_type_t prop)
 
 /**
  * @brief 得到属性的值
- * @author xunwu
+
  * @date 2011/06/20
  **/
 static char *get_prop_value(easou_css_scan_t *css_scan, easou_css_str_heap_t *str_heap, easou_css_t *css)
@@ -573,7 +573,7 @@ static char *get_prop_value(easou_css_scan_t *css_scan, easou_css_str_heap_t *st
 
 /**
  * @brief	得到属性的name
- * @author xunwu
+
  * @date 2011/06/20
  **/
 static char *get_prop_name(easou_css_scan_t *css_scan, easou_css_str_heap_t *str_heap, easou_css_t *css)
@@ -591,7 +591,7 @@ static char *get_prop_name(easou_css_scan_t *css_scan, easou_css_str_heap_t *str
 
 /**
  * @brief	新建属性
- * @author xunwu
+
  * @date 2011/06/20
  **/
 static easou_css_property_t *create_new_prop(easou_css_nodepool_t *pool, char *prop_name, easou_css_prop_type_t prop_type, char *prop_value)
@@ -610,7 +610,7 @@ static easou_css_property_t *create_new_prop(easou_css_nodepool_t *pool, char *p
 
 /**
  * @brief	创建属性列表
- * @author xunwu
+
  * @date 2011/06/20
  **/
 static easou_css_property_t *make_property_list(easou_css_scan_t *css_scan, easou_css_t *css)
@@ -667,7 +667,7 @@ static easou_css_property_t *make_property_list(easou_css_scan_t *css_scan, easo
 
 /**
  * @brief	打印选择子
- * @author xunwu
+
  * @date 2011/06/20
  **/
 static void print_selector(easou_css_selector_t *selector, FILE *fout, int *combine_num, easou_css_ruleset_t *ruleset)
@@ -788,7 +788,7 @@ static void print_selector(easou_css_selector_t *selector, FILE *fout, int *comb
 
 /**
  * @brief	打印属性列表
- * @author xunwu
+
  * @date 2011/06/20
  **/
 static void print_prop_list(easou_css_property_t *prop_list, FILE *fout)
@@ -812,7 +812,7 @@ static void print_prop_list(easou_css_property_t *prop_list, FILE *fout)
 
 /**
  * @brief	以选择子为主键创建规则列表
- * @author xunwu
+
  * @date 2011/06/20
  **/
 static easou_css_ruleset_t *make_ruleset_list_only_with_selector(easou_css_scan_t *css_scan, easou_css_t *css)
@@ -861,7 +861,7 @@ static easou_css_ruleset_t *make_ruleset_list_only_with_selector(easou_css_scan_
 
 /**
  * @brief	打印CSS.
- * @author xunwu
+
  * @date 2011/06/20
  **/
 void print_css(easou_css_t *css, FILE *fout)
@@ -895,7 +895,7 @@ void print_css(easou_css_t *css, FILE *fout)
 
 /**
  * @brief	判断是否是font属性
- * @author xunwu
+
  * @date 2011/06/20
  **/
 // FIXME:这个可以改成inline
@@ -909,7 +909,7 @@ bool is_font_property(easou_css_property_t *prop)
 
 /**
  * @brief	判断是否是geo属性
- * @author xunwu
+
  * @date 2011/06/20
  **/
 // FIXME:这个可以改成inline
@@ -925,7 +925,7 @@ bool is_geo_property(easou_css_property_t *prop)
  * @brief	规则中添加属性
  * @param [in/out] ruleset   : css_ruleset_t*
  * @param [in/out] prop_list   : css_property_t*
- * @author xunwu
+
  * @date 2011/06/20
  **/
 static void ruleset_add_props(easou_css_ruleset_t *ruleset, easou_css_property_t *prop_list)
@@ -997,7 +997,7 @@ static void ruleset_add_props(easou_css_ruleset_t *ruleset, easou_css_property_t
 
 /**
  * @brief	拷贝属性
- * @author xunwu
+
  * @date 2011/06/20
  **/
 static void ruleset_prop_copy(easou_css_ruleset_t *des_ruleset, easou_css_ruleset_t *src_ruleset)

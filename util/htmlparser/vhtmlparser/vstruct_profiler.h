@@ -1,6 +1,6 @@
 /**
  * @file easou_vstruct_profiler.h
- * @author xunwu
+
  * @date 2011/06/27
  * @version 1.0 
  * @brief for analyze sub-tree structure
@@ -10,7 +10,7 @@
 #ifndef  __EASOU_VSTRUCT_PROFILER_H_
 #define  __EASOU_VSTRUCT_PROFILER_H_
 
-#include "easou_vhtml_dtd.h"
+#include "util/htmlparser/vhtmlparser/vhtml_dtd.h"
 
 typedef struct _html_vnode_t html_vnode_t;
 typedef struct _html_vtree_t html_vtree_t;
@@ -59,7 +59,7 @@ enum
  * @param [in&out] html_vtree   : html_vtree_t* 已解析完成的VTREE.
  * @param [in] flag   : unsigned int 用于控制功能的开关.
  * @return  int -1:出错; 1:成功.
- * @author xunwu
+
  * @date 2011/06/27
  **/
 int vhtml_struct_prof(html_vtree_t *html_vtree, unsigned int flag = ADD_ALL_STRUCT_INFO);
@@ -83,7 +83,7 @@ typedef struct
  * 			VISIT_SKIP_CHILD: 当前节点的子树不再遍历.
  * 			VISIT_ERROR: 访问出错.
  * 			VISIT_FINISH: 访问中止.
- * @author xunwu
+
  * @date 2011/06/27
  **/
 typedef int (*COMMON_TREE_TRAVEL_FUNC)(html_vnode_t *vnode, html_vnode_t *align_vnode, void *data);
@@ -98,7 +98,7 @@ typedef int (*COMMON_TREE_TRAVEL_FUNC)(html_vnode_t *vnode, html_vnode_t *align_
  * @param [in] finish_travel_common_tree   : COMMON_TREE_TRAVEL_FUNC 后序遍历公共子树函数.
  * @param [in & out] data   : void* 用户自定义数据.
  * @return  max_common_tree_info_t 两子树的最大公共子树的对齐信息.
- * @author xunwu
+
  * @date 2011/06/27
  **/
 max_common_tree_info_t travel_max_common_tree(html_vnode_t *vnode, html_vnode_t *another_vnode, html_vtree_t *vtree,
@@ -109,7 +109,7 @@ max_common_tree_info_t travel_max_common_tree(html_vnode_t *vnode, html_vnode_t 
 
 /**
  * @brief 删除为结构信息分配的内存.
- * @author xunwu
+
  * @date 2011/06/27
  **/
 void vhtml_struct_prof_del(html_vtree_t * html_vtree);

@@ -3,36 +3,36 @@
 
 /**
  * @brief print vtree
- * @return Ğ´Èëµ½bufµÄ³¤¶È
+ * @return å†™å…¥åˆ°bufçš„é•¿åº¦
  */
 int print_vtree_html(html_vtree_t *html_vtree, char* buf, int size, const char* base);
 
 /**
- * @brief µİ¹é´òÓ¡µ±Ç°×ÓÊ÷µÄ½ÚµãĞÅÏ¢
- * @return Ğ´Èëµ½bufµÄ³¤¶È
+ * @brief é€’å½’æ‰“å°å½“å‰å­æ ‘çš„èŠ‚ç‚¹ä¿¡æ¯
+ * @return å†™å…¥åˆ°bufçš„é•¿åº¦
  */
 int print_vnode_html(html_vnode_t *html_vnode, char* buf, int size, int& avail, const char* base);
 
 /**
  * @brief print vtree
- * @return Ğ´Èëµ½bufµÄ³¤¶È
+ * @return å†™å…¥åˆ°bufçš„é•¿åº¦
  */
 int print_vtree(html_vtree_t *html_vtree, char* buf, int size);
 
 /**
- * @brief µİ¹é´òÓ¡µ±Ç°×ÓÊ÷µÄ½ÚµãĞÅÏ¢
- * @return Ğ´Èëµ½bufµÄ³¤¶È
+ * @brief é€’å½’æ‰“å°å½“å‰å­æ ‘çš„èŠ‚ç‚¹ä¿¡æ¯
+ * @return å†™å…¥åˆ°bufçš„é•¿åº¦
  */
 int print_vnode(html_vnode_t *html_vnode, char* buf, int size, int& avail);
 
 /**
- * @brief ´òÓ¡µ¥¸öVÊ÷½ÚµãĞÅÏ¢
+ * @brief æ‰“å°å•ä¸ªVæ ‘èŠ‚ç‚¹ä¿¡æ¯
  * @param [in] vnode,
- * @param [in/out] p, »º´æ
- * @param [in] bufLen, pµÄ³¤¶È
- * @param [in] space_len, ´òÓ¡¿Õ¸ñÊı
- * @param [in] type, 2£¬¸¸£»3£¬×Ó
- * @return Ğ´Èëµ½pµÄ³¤¶È
+ * @param [in/out] p, ç¼“å­˜
+ * @param [in] bufLen, pçš„é•¿åº¦
+ * @param [in] space_len, æ‰“å°ç©ºæ ¼æ•°
+ * @param [in] type, 2ï¼Œçˆ¶ï¼›3ï¼Œå­
+ * @return å†™å…¥åˆ°pçš„é•¿åº¦
  */
 int print_vnode_info(html_vnode_t *vnode, char *p, int bufLen, int space_len, int type);
 

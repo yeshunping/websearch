@@ -1,6 +1,6 @@
 /**
  * @file easou_html_attr.cpp
- * @author xunwu
+
  * @date 2011/08/02
  * @version 1.0
  * @brief 处理easou自定义属性.

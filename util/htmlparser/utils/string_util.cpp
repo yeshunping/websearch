@@ -140,7 +140,7 @@ void trans2bj_lower(const char *in, char *out)
 /**
  * @brief 是否单字符的转义符
  * assert(src[0] == '&');
- * @author xunwu
+
  * @date 2011/06/27
  **/
 static inline int check_single_reference_char(const char *src)

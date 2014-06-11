@@ -1,6 +1,6 @@
 /**
  * @file easou_css_nodepool.cpp
- * @author xunwu
+
  * @date 2011/06/21
  * @version 1.0
  * @brief	CSS节点分配管理.
@@ -18,7 +18,7 @@ using namespace EA_COMMON;
  * @param [in] size   : size_t	新内存块大小.
  * @return  css_mem_node_t*	新的内存管理节点.
  * @retval	失败返回NULL.
- * @author xunwu
+
  * @date 2011/06/20
  **/
 static easou_css_mem_node_t *css_new_mem_node(size_t size)
@@ -60,7 +60,7 @@ static easou_css_mem_node_t *css_new_mem_node(size_t size)
  * @param [in] size   : size_t	新内存大小.
  * @return  int
  * @retval  -1:失败;1:成功.
- * @author xunwu
+
  * @date 2011/06/20
  **/
 static int css_nodepool_request(easou_css_nodepool_t *pool, size_t size)
@@ -83,7 +83,7 @@ static int css_nodepool_request(easou_css_nodepool_t *pool, size_t size)
 /**
  * @brief	init nodepool
  * @retval   success: return 1; fail: return -1.
- * @author xunwu
+
  * @date 2011/11/10
  **/
 int css_nodepool_init(easou_css_nodepool_t *pool, size_t size)
@@ -94,7 +94,7 @@ int css_nodepool_init(easou_css_nodepool_t *pool, size_t size)
 
 /**
  * @brief reset the nodepool to have only one memery node and reset the pool as never used
- * @author xunwu
+
  * @date 2011/06/21
  **/
 void css_nodepool_reset(easou_css_nodepool_t *pool)
@@ -125,7 +125,7 @@ void css_nodepool_reset(easou_css_nodepool_t *pool)
 
 /**
  * @brief destroy the nodepool
- * @author xunwu
+
  * @date 2011/11/10
  **/
 void css_nodepool_destroy(easou_css_nodepool_t *pool)
@@ -151,7 +151,7 @@ void css_nodepool_destroy(easou_css_nodepool_t *pool)
 /**
  * @brief	从nodepool获取size大小的内存.
  * @retval   成功返回内存地址,失败返回NULL.
- * @author xunwu
+
  * @date 2011/11/10
  **/
 void *css_get_from_nodepool(easou_css_nodepool_t *pool, size_t size)

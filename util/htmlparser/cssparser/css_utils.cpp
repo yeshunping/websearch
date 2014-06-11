@@ -24,7 +24,7 @@ using namespace EA_COMMON;
 
 /**
  * @brief 销毁css环境
- * @author xunwu
+
  * @date 2011/06/20
  **/
 void css_env_destroy(easou_css_env_t *cc)
@@ -41,7 +41,7 @@ void css_env_destroy(easou_css_env_t *cc)
  * @param [in] max_css_page_size   : int 最大css
  * @param [in] css_num   : int	最多解析css的数量.
  * @return  css_env_t*	css解析环境.
- * @author xunwu
+
  * @date 2011/06/20
  **/
 easou_css_env_t *css_env_create(int max_css_page_size, int css_num)
@@ -112,7 +112,7 @@ bool is_apply_for_screen_media_list(const char *pvalue)
 
 /**
  * @brief 判断该节点是否会影响screen
- * @author xunwu
+
  * @date 2011/06/20
  **/
 bool is_apply_for_screen_media(html_tag_t *html_tag)
@@ -124,7 +124,7 @@ bool is_apply_for_screen_media(html_tag_t *html_tag)
 
 /**
  * @brief 判断标签是否是css link
- * @author xunwu
+
  * @date 2011/06/20
  **/
 bool is_css_link_tag(html_tag_t *html_tag)
@@ -178,7 +178,7 @@ static int start_visit_for_cssinfo(html_tag_t *html_tag, void *result, int flag)
 /**
  * @brief 获取页面中的css.
  * @see
- * @author xunwu
+
  * @date 2011/06/20
  **/
 static void get_cssinfo(easou_cssinfo_keep_t *css_keep, const html_tree_t *html_tree, const char *url)
@@ -192,7 +192,7 @@ static void get_cssinfo(easou_cssinfo_keep_t *css_keep, const html_tree_t *html_
  * @param [out] page_css   : page_css_t*	页面中的css信息
  * @param [in] html_tree   : const html_tree_t*	创建好的dom树
  * @param [in] url   : const char*	页面的url
- * @author xunwu
+
  * @date 2011/06/20
  **/
 void get_page_css_info(easou_page_css_t *page_css, const html_tree_t *html_tree, const char *url)
@@ -205,7 +205,7 @@ void get_page_css_info(easou_page_css_t *page_css, const html_tree_t *html_tree,
 
 /**
  * @brief 解析页面中的css
- * @author xunwu
+
  * @date 2011/06/20
  **/
 void parse_internal_css(easou_css_env_t *css_env, easou_page_css_t *page_css, const char *page_url, bool test_import)
@@ -255,7 +255,7 @@ void parse_internal_css(easou_css_env_t *css_env, easou_page_css_t *page_css, co
  * @param [out] css_env   : easou_css_env_t*	css解析环境.
  * @param [in] html_tree   : html_tree_t*	解析过的html树.
  * @param [in] url   : const char*	页面URL.
- * @author xunwu
+
  * @date 2011/06/20
  **/
 int get_parse_css_inpage(easou_css_env_t *css_env, const html_tree_t *html_tree, const char *url, bool test_import)

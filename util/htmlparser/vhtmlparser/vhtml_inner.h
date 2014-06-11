@@ -1,6 +1,6 @@
 /**
  * @file vhtml_com.h
- * @author xunwu
+
  * @date 2011/06/20
  * @version 1.0(create)
  * @brief  内部使用的vtree分析工具:
@@ -11,9 +11,10 @@
 
 #ifndef  __EASOU_VHTML_COM_H_
 #define  __EASOU_VHTML_COM_H_
+
 #include <ctype.h>
 #include <string.h>
-#include "chinese.h"
+#include "util/htmlparser/utils/chinese.h"
 
 #define DEFAULT_MAX_CSS_PAGE_SIZE	(256*1024)		  /**< 默认的CSS文本最大字节数  */
 #define DEFAULT_CSS_NUM_INPOOL	8		  			/**< 默认分配的CSS结构数量  */
@@ -55,14 +56,14 @@ typedef struct _style_attr_t
 
 /**
  * @brief 解析一个style代码段
- * @author xunwu
+
  * @date 2011/06/20
  **/
 int parse_style_attr(const char *style_str, style_attr_t *style_attr, int max_style_attr);
 
 /**
  * @brief 得到属性值
- * @author xunwu
+
  * @date 2011/06/20
  **/
 int get_style_attr_value(const char *name, char *value, int vsize, style_attr_t *style_attr, int style_num);
@@ -78,7 +79,7 @@ bool is_attr_value(const char *val, const char *dest, size_t dest_len);
 /**
  * @brief 字符串转化为分数.
  * 为消除浮点数影响，将字符串化为分数进行计算.
- * @author xunwu
+
  * @date 2011/06/20
  **/
 void atofract(fract_num_t *fract, const char *val);

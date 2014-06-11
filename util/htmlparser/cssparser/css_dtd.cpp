@@ -1,6 +1,6 @@
 /**
  * @file easou_css_dtd.cpp
- * @author xunwu
+
  * @date 2011/06/20
  * @version 1.0(create)
  * @brief	CSS类型定义

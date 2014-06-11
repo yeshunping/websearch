@@ -68,7 +68,7 @@ void nodepool_reset(nodepool_t *pool)
 
 /**
  * @brief nodepool draw back as only the first mem-block used.
- * @author xunwu
+
  * @date 2011/06/27
  **/
 void nodepool_draw_back(nodepool_t *pool)

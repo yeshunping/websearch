@@ -1,6 +1,6 @@
 /**
  * @file mem-mgr/id_map.cpp
- * @author xunwu
+
  * @date 2011/06/27
  * @version 1.0 
  * @brief 对每个或大多数id值都要存取信息的情况下所使用的id map.
@@ -15,7 +15,7 @@ using namespace EA_COMMON;
 
 /**
  * @brief 释放内存块链表.
- * @author xunwu
+
  * @date 2011/06/27
 **/
 static void map_unit_list_free(map_unit_t *list)
@@ -29,7 +29,7 @@ static void map_unit_list_free(map_unit_t *list)
 
 /**
  * @brief 重置内存管理结构.
- * @author xunwu
+
  * @date 2011/06/27
 **/
 void idmap_reset(idmap_t *idmap)
@@ -45,7 +45,7 @@ void idmap_reset(idmap_t *idmap)
 /**
  * @brief 分配新的内存并挂在链表上.
  * @retval  -1:出错;1:成功.
- * @author xunwu
+
  * @date 2011/06/27
 **/
 static int idmap_alloc(idmap_t *idmap)
@@ -68,7 +68,7 @@ ERR:
 
 /**
  * @brief 销毁属性存取内存管理结构.
- * @author xunwu
+
  * @date 2011/06/27
 **/
 void idmap_destroy(idmap_t *idmap)
@@ -82,7 +82,7 @@ void idmap_destroy(idmap_t *idmap)
 
 /**
  * @brief 将最初分配并长期保持的idmap的指针与nodepool中的节点对应起来，它们的初始数量必须相同。
- * @author xunwu
+
  * @date 2011/07/12
 **/
 static void idmap_set_initial_nodes(idmap_t *idmap)
@@ -98,7 +98,7 @@ static void idmap_set_initial_nodes(idmap_t *idmap)
  * @param [in] node_size   : int	需要存取的节点的大小.
  * @param [in] init_node_num   : int	预先分配的节点数量.
  * @return  idmap_t*	失败返回NULL,否则返回创建的结构.
- * @author xunwu
+
  * @date 2011/06/27
 **/
 idmap_t *idmap_create(int node_size, int init_node_num)
@@ -126,7 +126,7 @@ ERR:
  * @param [in] idmap   : idmap_t*	节点存取结构.
  * @param [in] id   : int	想要获取的id值.
  * @return  void*	失败返回NULL,否则返回对应的节点.
- * @author xunwu
+
  * @date 2011/06/27
 **/
 void *idmap_get_node(idmap_t *idmap, int id)
@@ -163,7 +163,7 @@ ERR:
 
 /**
  * @brief 类型相关属性存取内存管理结构销毁.
- * @author xunwu
+
  * @date 2011/06/27
 **/
 void id_spec_map_destroy(id_spec_map_t *ism)
@@ -181,7 +181,7 @@ void id_spec_map_destroy(id_spec_map_t *ism)
  * @param [in] init_node_num   : int	预先分配的节点数量
  * @param [in] bucket_size   : int	HASH桶大小
  * @return  id_spec_map_t*
- * @author xunwu
+
  * @date 2011/06/27
 **/
 id_spec_map_t *id_spec_map_create(int node_size, int init_node_num, int bucket_size)
@@ -204,7 +204,7 @@ ERR:
 
 /**
  * @brief 类型相关属性存取结构重置.
- * @author xunwu
+
  * @date 2011/06/27
 **/
 void id_spec_map_clean(id_spec_map_t *ism)
@@ -223,7 +223,7 @@ void id_spec_map_clean(id_spec_map_t *ism)
 /**
  * @brief 向类型相关属性存取结构中添加一个键值==id的节点.
  * @return  void* 	返回插入的节点指针,失败返回NULL.
- * @author xunwu
+
  * @date 2011/06/27
 **/
 void *id_spec_map_add_node(id_spec_map_t *ism, int id)
@@ -252,7 +252,7 @@ ERR:
 
 /**
  * @brief 删除一个键值==id的节点.
- * @author xunwu
+
  * @date 2011/06/27
 **/
 void id_spec_map_free_node(id_spec_map_t *ism, int id)
@@ -274,7 +274,7 @@ void id_spec_map_free_node(id_spec_map_t *ism, int id)
 /**
  * @brief 根据id值获取对应的节点.
  * @return  void*	若该节点存在返回该节点指针,否则返回NULL.
- * @author xunwu
+
  * @date 2011/06/27
 **/
 void *id_spec_map_get_node(id_spec_map_t *ism, int id)
@@ -291,7 +291,7 @@ void *id_spec_map_get_node(id_spec_map_t *ism, int id)
 
 /**
  * @brief 获取当前的节点数量.
- * @author xunwu
+
  * @date 2011/06/27
 **/
 int id_spec_map_get_node_num(id_spec_map_t *ism)

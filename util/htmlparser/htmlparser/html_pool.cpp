@@ -1,6 +1,6 @@
 /**
  * @file pool.cpp
- * @author xunwu
+
  * @date 2011/08/03
  * @version 1.0
  * @brief Memory pool implementation
