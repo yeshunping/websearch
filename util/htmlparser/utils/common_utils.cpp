@@ -18,40 +18,28 @@
 #include <errno.h>
 
 #include "log.h"
-#include "easou_string.h"
-#include "easou_url.h"
-#include "easou_common_utils.h"
+#include "string_util.h"
+#include "url.h"
+#include "common_utils.h"
 
 using namespace EA_COMMON;
 
-int check_path(const char * dirpath)
-{
-        struct stat buf;
-        int result = stat(dirpath, &buf);
-        if (result != 0)
-        {
-                if (errno == ENOENT)
-                {
-                        return 1;
-                }
-                else
-                {
-                        return -1;
-                }
-        }
-        else
-        {
-                if (buf.st_mode & S_IFDIR)
-                {
-                        return 0;
-                }
-                else if (buf.st_mode & S_IFREG)
-                {
-                        return 2;
-                }
-                else
-                {
-                        return -1;
-                }
-        }
+int check_path(const char * dirpath) {
+  struct stat buf;
+  int result = stat(dirpath, &buf);
+  if (result != 0) {
+    if (errno == ENOENT) {
+      return 1;
+    } else {
+      return -1;
+    }
+  } else {
+    if (buf.st_mode & S_IFDIR) {
+      return 0;
+    } else if (buf.st_mode & S_IFREG) {
+      return 2;
+    } else {
+      return -1;
+    }
+  }
 }

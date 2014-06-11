@@ -16,13 +16,13 @@
 #include <arpa/inet.h>
 
 #include "log.h"
-#include "easou_string.h"
-#include "easou_url.h"
+#include "string_util.h"
+#include "url.h"
 
 using namespace EA_COMMON;
 
 /*
- * @breif ÊÇ·ñÊÇ¾ø¶Ôurl
+ * @breif æ˜¯å¦æ˜¯ç»å¯¹url
  */
 int easou_is_url(const char *url)
 {
@@ -143,7 +143,7 @@ typedef struct _url_protocol_t
 static const url_protocol_t url_pro= {"http://" ,7 } ;
 
 /**
- * @brief ÅĞ¶ÏhrefµÄÀàĞÍ£ºÕ¾ÄÚ£¬Õ¾Íâ£¬js£¨ERR£©
+ * @brief åˆ¤æ–­hrefçš„ç±»å‹ï¼šç«™å†…ï¼Œç«™å¤–ï¼Œjsï¼ˆERRï¼‰
  **/
 int get_href_type(const char *phref, const char *base_url)
 {
@@ -287,7 +287,7 @@ static char EASOU_LFCR[256] = {
 
 
 /**
- * @brief ÒÆ³ı\r¡¢\n
+ * @brief ç§»é™¤\rã€\n
  **/
 static int easou_delete_inter(char * str)
 {
@@ -1906,12 +1906,12 @@ int easou_normalize_site(char *site)
 
 int easou_normalize_site_special_for_ps_20101026(char *site)
 {
-	//¼ÓÈëÕâ¸öº¯ÊıÊÇÒ»¸öºÜ³¶µ­µÄÔ­Òò
-	//ÒòÎªÔÚeasou_dictÀïÃæµÄcreate_url_signµÄ»°ÒÀÀµÁËeasou_normalize_url_ex2
-	//¶øÔÚnormalize_url_ex2ÀïÃæÒÀÀµĞŞ¸ÄÕâ¸öº¯ÊıµÄĞĞÎª
-	//ËùÒÔÎÒÃÇĞèÒªÔö¼ÓÕâ¸ö½Ó¿Úº¯Êı.
-	//Ïà¶ÔÓÚurl_normalize_site²¿·ÖµÄ±ä¶¯»áÊ¹ÓÃ(MODIFY)±ê¼Ç.
-	//ÒªÇó¼ÓÈëÕâ¸ö¹¦ÄÜµÄ½Ó¿ÚÈËÊÇÁõ³É³Ç[PSSearcher]
+	//åŠ å…¥è¿™ä¸ªå‡½æ•°æ˜¯ä¸€ä¸ªå¾ˆæ‰¯æ·¡çš„åŸå› 
+	//å› ä¸ºåœ¨easou_dicté‡Œé¢çš„create_url_signçš„è¯ä¾èµ–äº†easou_normalize_url_ex2
+	//è€Œåœ¨normalize_url_ex2é‡Œé¢ä¾èµ–ä¿®æ”¹è¿™ä¸ªå‡½æ•°çš„è¡Œä¸º
+	//æ‰€ä»¥æˆ‘ä»¬éœ€è¦å¢åŠ è¿™ä¸ªæ¥å£å‡½æ•°.
+	//ç›¸å¯¹äºurl_normalize_siteéƒ¨åˆ†çš„å˜åŠ¨ä¼šä½¿ç”¨(MODIFY)æ ‡è®°.
+	//è¦æ±‚åŠ å…¥è¿™ä¸ªåŠŸèƒ½çš„æ¥å£äººæ˜¯åˆ˜æˆåŸ[PSSearcher]
 	int dotcount = 0;
 	char *pin = site;
 	char *pout = site;
@@ -1959,7 +1959,7 @@ int easou_normalize_site_special_for_ps_20101026(char *site)
 
 	pin--;
 
-	//MODIFY.ÏÖÔÚÔÊĞí×îºó³öÏÖ-
+	//MODIFY.ç°åœ¨å…è®¸æœ€åå‡ºç°-
 	//if(!URL_LET_DIGIT[(unsigned char)*pin++]) //[0-9a-zA-Z]
 	//return 0; //not end with "-"
 	if (!URL_LET_DIG_HY[(unsigned char) *pin++])
@@ -2008,7 +2008,7 @@ int easou_normalize_site_special_for_ps_20101026(char *site)
 			*pout++ = *pin++;
 		}
 		pin--;
-		//MODIFY.ÏÖÔÚÔÊĞí×îºó³öÏÖ-
+		//MODIFY.ç°åœ¨å…è®¸æœ€åå‡ºç°-
 		//if(!URL_LET_DIGIT[(unsigned char)*pin++])
 		//return 0;
 		if (!URL_LET_DIG_HY[(unsigned char) *pin++])
@@ -2070,11 +2070,11 @@ int easou_normalize_url(const char* url, char* buf)
 		return 0;
 	if (easou_normalize_port(port) == 0)
 		return 0;
-	//ÕâÀïµ÷ÓÃeasou_single_path_nointer¶ø²»µ÷ÓÃeasou_single_path
-	//easou_single_path_nointerÀïÃ»ÓĞeasou_delete_inter²Ù×÷,ÔÚeasou_parse_url
-	//ÀïÃæÒÑ¾­×÷¹ıÒ»´Îeasou_parse_urlÕâÀïÃ»±ØÒªÔÙ×÷Ò»´Î
-	//easou_single_pathÎªÁËÖ§³ÖÍâ²¿³ÌĞòÖĞÖ±½Óµ÷ÓÃeasou_single_path¶ÔÎ´¾­¹ıeasou_parse_url
-	//´¦ÀíµÄpath½øĞĞ´¦Àí£¬¼ÓÉÏÁËeasou_delete_inter
+	//è¿™é‡Œè°ƒç”¨easou_single_path_nointerè€Œä¸è°ƒç”¨easou_single_path
+	//easou_single_path_nointeré‡Œæ²¡æœ‰easou_delete_interæ“ä½œ,åœ¨easou_parse_url
+	//é‡Œé¢å·²ç»ä½œè¿‡ä¸€æ¬¡easou_parse_urlè¿™é‡Œæ²¡å¿…è¦å†ä½œä¸€æ¬¡
+	//easou_single_pathä¸ºäº†æ”¯æŒå¤–éƒ¨ç¨‹åºä¸­ç›´æ¥è°ƒç”¨easou_single_pathå¯¹æœªç»è¿‡easou_parse_url
+	//å¤„ç†çš„pathè¿›è¡Œå¤„ç†ï¼ŒåŠ ä¸Šäº†easou_delete_inter
 	if (easou_single_path_nointer(path) == 0)
 		return 0;
 	easou_normalize_path(path);
@@ -2272,11 +2272,11 @@ int easou_normalize_url_ex(const char* url, char* buf, size_t buf_size)
 		return 0;
 	if (easou_normalize_port(port) == 0)
 		return 0;
-	//ÕâÀïµ÷ÓÃeasou_single_path_ex_nointer¶ø²»µ÷ÓÃeasou_single_path_ex
-	//easou_single_path_ex_nointerÀïÃ»ÓĞeasou_delete_inter²Ù×÷,ÔÚeasou_parse_url_ex
-	//ÀïÃæÒÑ¾­×÷¹ıÒ»´Îeasou_parse_url_exÕâÀïÃ»±ØÒªÔÙ×÷Ò»´Î
-	//easou_single_path_exÎªÁËÖ§³ÖÍâ²¿³ÌĞòÖĞÖ±½Óµ÷ÓÃeasou_single_path_ex¶ÔÎ´¾­¹ıeasou_parse_url_ex
-	//´¦ÀíµÄpath½øĞĞ´¦Àí£¬¼ÓÉÏÁËeasou_delete_inter
+	//è¿™é‡Œè°ƒç”¨easou_single_path_ex_nointerè€Œä¸è°ƒç”¨easou_single_path_ex
+	//easou_single_path_ex_nointeré‡Œæ²¡æœ‰easou_delete_interæ“ä½œ,åœ¨easou_parse_url_ex
+	//é‡Œé¢å·²ç»ä½œè¿‡ä¸€æ¬¡easou_parse_url_exè¿™é‡Œæ²¡å¿…è¦å†ä½œä¸€æ¬¡
+	//easou_single_path_exä¸ºäº†æ”¯æŒå¤–éƒ¨ç¨‹åºä¸­ç›´æ¥è°ƒç”¨easou_single_path_exå¯¹æœªç»è¿‡easou_parse_url_ex
+	//å¤„ç†çš„pathè¿›è¡Œå¤„ç†ï¼ŒåŠ ä¸Šäº†easou_delete_inter
 	if (easou_single_path_ex_nointer(path, MAX_PATH_LEN) == 0)
 		return 0;
 	easou_normalize_path_ex(path);
@@ -3178,8 +3178,8 @@ static int easou_single_path_ex2_nointer(char *path, int len)
 }
 
 
-//¼ÓÈëÕâ¸öº¯ÊıµÄÔ­ÒòÊÇÒòÎª.
-//psÏë²»Ê¡È¥fragmentÀ´½øĞĞ¹éÒ»»¯.
+//åŠ å…¥è¿™ä¸ªå‡½æ•°çš„åŸå› æ˜¯å› ä¸º.
+//psæƒ³ä¸çœå»fragmentæ¥è¿›è¡Œå½’ä¸€åŒ–.
 static int easou_single_path_ex2_nointer_special_for_ps_20110221(char *path, int len)
 {
 	char *pin;
@@ -3351,14 +3351,14 @@ static int easou_single_path_ex2_nointer_special_for_ps_20110221(char *path, int
 	//if(*pin != 0)
 	if (*pin != 0 && *pin != '#')
 		return 0;
-	//²¹Æë×îºóÃæµÄfragment.
+	//è¡¥é½æœ€åé¢çš„fragment.
 	while (*pin && pout < len)
 	{
 		path[pout] = *pin;
 		pin++;
 		pout++;
 	}
-	//³¤¶È¹ı´óµÄ»°.
+	//é•¿åº¦è¿‡å¤§çš„è¯.
 	if (pout >= len)
 	{
 		return 0;
@@ -3388,11 +3388,11 @@ int easou_normalize_url_ex2(const char* url, char* buf, size_t buf_size)
 		return 0;
 	if (easou_normalize_port(port) == 0)
 		return 0;
-	//ÕâÀïµ÷ÓÃeasou_single_path_ex2_nointer¶ø²»µ÷ÓÃeasou_single_path_ex2
-	//easou_single_path_ex2_nointerÀïÃ»ÓĞeasou_delete_inter²Ù×÷,ÔÚeasou_parse_url_ex2
-	//ÀïÃæÒÑ¾­×÷¹ıÒ»´Îeasou_parse_url_ex2ÕâÀïÃ»±ØÒªÔÙ×÷Ò»´Î
-	//easou_single_path_ex2ÎªÁËÖ§³ÖÍâ²¿³ÌĞòÖĞÖ±½Óµ÷ÓÃeasou_single_path_ex2¶ÔÎ´¾­¹ıeasou_parse_url_ex2
-	//´¦ÀíµÄpath½øĞĞ´¦Àí£¬¼ÓÉÏÁËeasou_delete_inter
+	//è¿™é‡Œè°ƒç”¨easou_single_path_ex2_nointerè€Œä¸è°ƒç”¨easou_single_path_ex2
+	//easou_single_path_ex2_nointeré‡Œæ²¡æœ‰easou_delete_interæ“ä½œ,åœ¨easou_parse_url_ex2
+	//é‡Œé¢å·²ç»ä½œè¿‡ä¸€æ¬¡easou_parse_url_ex2è¿™é‡Œæ²¡å¿…è¦å†ä½œä¸€æ¬¡
+	//easou_single_path_ex2ä¸ºäº†æ”¯æŒå¤–éƒ¨ç¨‹åºä¸­ç›´æ¥è°ƒç”¨easou_single_path_ex2å¯¹æœªç»è¿‡easou_parse_url_ex2
+	//å¤„ç†çš„pathè¿›è¡Œå¤„ç†ï¼ŒåŠ ä¸Šäº†easou_delete_inter
 	if (easou_single_path_ex2_nointer(path, MAX_PATH_LEN) == 0)
 		return 0;
 	easou_normalize_path_ex2(path);
@@ -3410,8 +3410,8 @@ int easou_normalize_url_ex2(const char* url, char* buf, size_t buf_size)
 
 int easou_normalize_url_ex2_special_for_ps_20110221(const char* url, char* buf, size_t buf_size)
 {
-	//¼ÓÈëÕâ¸öº¯ÊıµÄÔ­Òò
-	//¿ÉÒÔ²Î¿´ easou_normalize_url_ex2_special_for_ps_20101026 Õâ¸öº¯Êı.
+	//åŠ å…¥è¿™ä¸ªå‡½æ•°çš„åŸå› 
+	//å¯ä»¥å‚çœ‹ easou_normalize_url_ex2_special_for_ps_20101026 è¿™ä¸ªå‡½æ•°.
 	char site[MAX_SITE_LEN];
 	char port[MAX_PORT_LEN];
 	char path[MAX_PATH_LEN];
@@ -3423,12 +3423,12 @@ int easou_normalize_url_ex2_special_for_ps_20110221(const char* url, char* buf, 
 		return 0;
 	if (easou_normalize_port(port) == 0)
 		return 0;
-	//ÕâÀïµ÷ÓÃeasou_single_path_ex2_nointer¶ø²»µ÷ÓÃeasou_single_path_ex2
-	//easou_single_path_ex2_nointerÀïÃ»ÓĞeasou_delete_inter²Ù×÷,ÔÚeasou_parse_url_ex2
-	//ÀïÃæÒÑ¾­×÷¹ıÒ»´Îeasou_parse_url_ex2ÕâÀïÃ»±ØÒªÔÙ×÷Ò»´Î
-	//easou_single_path_ex2ÎªÁËÖ§³ÖÍâ²¿³ÌĞòÖĞÖ±½Óµ÷ÓÃeasou_single_path_ex2¶ÔÎ´¾­¹ıeasou_parse_url_ex2
-	//´¦ÀíµÄpath½øĞĞ´¦Àí£¬¼ÓÉÏÁËeasou_delete_inter
-	//ÕâÀïĞèÒª°ÑfragmentÒ²×÷Îª¹éÒ»»¯µÄÄÚÈİÀïÃæÈ¥.
+	//è¿™é‡Œè°ƒç”¨easou_single_path_ex2_nointerè€Œä¸è°ƒç”¨easou_single_path_ex2
+	//easou_single_path_ex2_nointeré‡Œæ²¡æœ‰easou_delete_interæ“ä½œ,åœ¨easou_parse_url_ex2
+	//é‡Œé¢å·²ç»ä½œè¿‡ä¸€æ¬¡easou_parse_url_ex2è¿™é‡Œæ²¡å¿…è¦å†ä½œä¸€æ¬¡
+	//easou_single_path_ex2ä¸ºäº†æ”¯æŒå¤–éƒ¨ç¨‹åºä¸­ç›´æ¥è°ƒç”¨easou_single_path_ex2å¯¹æœªç»è¿‡easou_parse_url_ex2
+	//å¤„ç†çš„pathè¿›è¡Œå¤„ç†ï¼ŒåŠ ä¸Šäº†easou_delete_inter
+	//è¿™é‡Œéœ€è¦æŠŠfragmentä¹Ÿä½œä¸ºå½’ä¸€åŒ–çš„å†…å®¹é‡Œé¢å».
 	if (easou_single_path_ex2_nointer_special_for_ps_20110221(path, MAX_PATH_LEN) == 0)
 		return 0;
 	easou_normalize_path_ex2(path);
@@ -3895,7 +3895,7 @@ int easou_check_url_ex2(char *url)
 }
 
 
-/*»ñµÃurlÉî¶È*/
+/*è·å¾—urlæ·±åº¦*/
 int get_url_depth(const char * url )
 {
 	const char c = '/';
@@ -3917,7 +3917,7 @@ int get_url_depth(const char * url )
 		}
 		looper++;
 	}
-	//×îºóÒ»¸ö'/'²»¼ÆËãÔÚÄÚ
+	//æœ€åä¸€ä¸ª'/'ä¸è®¡ç®—åœ¨å†…
 	if (num > 0 && *(looper - 1) == c)
 	{
 		num--;
@@ -3980,7 +3980,7 @@ static int to_char_inner(char hex[2])
 
 
 /**
- * url¹éÒ»»¯
+ * urlå½’ä¸€åŒ–
  */
 int easou_single_path_inner(char *path)
 {
@@ -4300,7 +4300,7 @@ void remove_path_file_name(char *path)
 	*(p + 1) = '\0';
 }
 
-/*Ò³ÃæÄÚµÄÏà¶ÔURLÆ´³ÉÒ»¸ö¾ø¶ÔURL*/
+/*é¡µé¢å†…çš„ç›¸å¯¹URLæ‹¼æˆä¸€ä¸ªç»å¯¹URL*/
 int easou_combine_url (char *result_url, const char *base_url, const char *relative_url)
 {
 	char domain[MAX_SITE_LEN], base_domain[MAX_SITE_LEN];
@@ -4398,7 +4398,7 @@ int easou_combine_url (char *result_url, const char *base_url, const char *relat
 }
 
 /**
- * @brief ÊÇ²»ÊÇÀàËÆÊ×Ò³µÄurl
+ * @brief æ˜¯ä¸æ˜¯ç±»ä¼¼é¦–é¡µçš„url
 **/
 int is_like_top_url(const char *url)
 {
@@ -4767,7 +4767,7 @@ bool is_home_page(const char* url, const int urlLen)
 
 
 /**
- * @brief ÅĞ¶ÏurlÊÇ·ñÊÇÄ¿Â¼£»1£ºÄ¿Â¼£»0£º·ÇÄ¿Â¼
+ * @brief åˆ¤æ–­urlæ˜¯å¦æ˜¯ç›®å½•ï¼›1ï¼šç›®å½•ï¼›0ï¼šéç›®å½•
  */
 int is_dir_url(const char *url)
 {

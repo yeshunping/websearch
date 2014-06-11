@@ -8,15 +8,15 @@
 #ifndef EASOU_URL_H_
 #define EASOU_URL_H_
 
-#include "easou_string.h"
+#include "string_util.h"
 
 /**
- * @brief hrefÊôĞÔµÄÀàĞÍ
+ * @brief hrefå±æ€§çš„ç±»å‹
  **/
-#define IS_LINK_INNER 1 /**Õ¾ÄÚurl*/
-#define IS_LINK_OUT 2	/**Õ¾Íâurl*/
-#define IS_LINK_ANCHOR 3	/**Õ¾Íâurl*/
-#define IS_LINK_ERR (-1)/**ÆäËû£¬Ò»°ãÖ¸js*/
+#define IS_LINK_INNER 1 /**ç«™å†…url*/
+#define IS_LINK_OUT 2	/**ç«™å¤–url*/
+#define IS_LINK_ANCHOR 3	/**ç«™å¤–url*/
+#define IS_LINK_ERR (-1)/**å…¶ä»–ï¼Œä¸€èˆ¬æŒ‡js*/
 
 #define MAX_URL_LEN			2048
 #define MAX_SITE_LEN		256
@@ -25,61 +25,61 @@
 #define MAX_ANCHOR_LEN		256
 
 /*
- * @breif ÊÇ·ñÊÇ¾ø¶Ôurl
+ * @breif æ˜¯å¦æ˜¯ç»å¯¹url
  */
 int easou_is_url(const char *url);
 
 /**
- * @brief »ñÈ¡Ö÷ÓòÃû£¬²»°üÀ¨×îºóµÄcom
+ * @brief è·å–ä¸»åŸŸåï¼Œä¸åŒ…æ‹¬æœ€åçš„com
  */
 const char * fetch_maindomain_from_url(const char * url, char * domain, int size);
 
 /**
- * @brief »ñÈ¡Ö÷ÓòÃû£¬°üÀ¨×îºóµÄcom
+ * @brief è·å–ä¸»åŸŸåï¼ŒåŒ…æ‹¬æœ€åçš„com
  */
 const char * fetch_domain_l_from_url(const char * url, char * domain, int size);
 
 /**
- * @brief ÅĞ¶ÏhrefµÄÀàĞÍ£ºÕ¾ÄÚ£¬Õ¾Íâ£¬js£¨ERR£©
+ * @brief åˆ¤æ–­hrefçš„ç±»å‹ï¼šç«™å†…ï¼Œç«™å¤–ï¼Œjsï¼ˆERRï¼‰
  **/
 int get_href_type(const char *phref, const char *base_url);
 
 /**
- * @brief ¸ù¾İurl½âÎö³öÆäÖĞµÄ¸÷¸ö²¿·Ö
- * @param input ÊäÈëµÄurl
- * @param[out] site Õ¾µãÃû»º³åÇø
- * @param[out] port ¶Ë¿Ú
- * @param[out] path Â·¾¶
- * @return 1Õı³££¬0ÎŞĞ§url¸ñÊ½
+ * @brief æ ¹æ®urlè§£æå‡ºå…¶ä¸­çš„å„ä¸ªéƒ¨åˆ†
+ * @param input è¾“å…¥çš„url
+ * @param[out] site ç«™ç‚¹åç¼“å†²åŒº
+ * @param[out] port ç«¯å£
+ * @param[out] path è·¯å¾„
+ * @return 1æ­£å¸¸ï¼Œ0æ— æ•ˆurlæ ¼å¼
  */
 int easou_parse_url(const char *input, char *site, char *port, char *path);
 
 /**
- * @brief ¹éÒ»»¯URLÂ·¾¶
- * @param[in,out] path Â·¾¶
- * @return 1Õı³££¬0ÎŞĞ§url¸ñÊ½
+ * @brief å½’ä¸€åŒ–URLè·¯å¾„
+ * @param[in,out] path è·¯å¾„
+ * @return 1æ­£å¸¸ï¼Œ0æ— æ•ˆurlæ ¼å¼
  */
 int easou_single_path(char *path);
 
 /**
- * @brief ¸ù¾İurl½âÎö³öÆäÖĞµÄÂ·¾¶²¿·Ö
- * @param url ÊäÈëµÄurl
- * @param[out] path Â·¾¶
- * @return NULLÊ§°Ü£¬·ñÔòÎªÖ¸ÏòpathµÄÖ¸Õë
+ * @brief æ ¹æ®urlè§£æå‡ºå…¶ä¸­çš„è·¯å¾„éƒ¨åˆ†
+ * @param url è¾“å…¥çš„url
+ * @param[out] path è·¯å¾„
+ * @return NULLå¤±è´¥ï¼Œå¦åˆ™ä¸ºæŒ‡å‘pathçš„æŒ‡é’ˆ
  */
 char *easou_get_path(const char *url, char *path);
 
 /**
- * @brief ¸ù¾İurl½âÎö³öÆäÖĞµÄÕ¾µãÃû²¿·Ö
- * @param url ÊäÈëµÄurl
- * @param[out] site Õ¾µãÃû( be sure it is enough,larger than UL_MAX_SITE_LEN)
- * @return NULLÊ§°Ü£¬·ñÔòÎªÖ¸ÏòsiteµÄÖ¸Õë
+ * @brief æ ¹æ®urlè§£æå‡ºå…¶ä¸­çš„ç«™ç‚¹åéƒ¨åˆ†
+ * @param url è¾“å…¥çš„url
+ * @param[out] site ç«™ç‚¹å( be sure it is enough,larger than UL_MAX_SITE_LEN)
+ * @return NULLå¤±è´¥ï¼Œå¦åˆ™ä¸ºæŒ‡å‘siteçš„æŒ‡é’ˆ
  */
 char *easou_get_site(const char *url, char *site);
 
 /**
- * @brief ¹æ·¶»¯Â·¾¶µÄĞÎÊ½,¶Ô'\\', './', '/.', '../', '/..', '//'µÈĞÎÊ½½øĞĞ¹æ·¶»¯
- * @param[in,out] path ´ı×ª»¯µÄÂ·¾¶
+ * @brief è§„èŒƒåŒ–è·¯å¾„çš„å½¢å¼,å¯¹'\\', './', '/.', '../', '/..', '//'ç­‰å½¢å¼è¿›è¡Œè§„èŒƒåŒ–
+ * @param[in,out] path å¾…è½¬åŒ–çš„è·¯å¾„
  */
 void easou_normalize_path(char *path);
 
@@ -89,17 +89,17 @@ void easou_normalize_path(char *path);
 void remove_path_file_name(char *path);
 
 /**
- * @brief ´ÓurlÖĞ»ñÈ¡¶Ë¿ÚĞÅÏ¢
- * @param url ÊäÈëµÄurl
- * @param[out] pport ¶Ë¿Ú
- * @return 1³É¹¦£¬0Ê§°Ü
+ * @brief ä»urlä¸­è·å–ç«¯å£ä¿¡æ¯
+ * @param url è¾“å…¥çš„url
+ * @param[out] pport ç«¯å£
+ * @return 1æˆåŠŸï¼Œ0å¤±è´¥
  */
 int easou_get_port(const char* url, int* pport);
 
 /**
- * @brief ´ÓurlÖĞ»ñÈ¡¾²Ì¬µÄ²¿·Ö£¨?»òÕß;Ö®Ç°µÄ²¿·Ö£©
- * @param url ÊäÈëµÄurl
- * @param[out] staticurl ¾²Ì¬²¿·Ö»º³åÇø
+ * @brief ä»urlä¸­è·å–é™æ€çš„éƒ¨åˆ†ï¼ˆ?æˆ–è€…;ä¹‹å‰çš„éƒ¨åˆ†ï¼‰
+ * @param url è¾“å…¥çš„url
+ * @param[out] staticurl é™æ€éƒ¨åˆ†ç¼“å†²åŒº
  */
 void easou_get_static_part(const char *url, char *staticurl);
 
@@ -110,344 +110,344 @@ void easou_get_static_part(const char *url, char *staticurl);
 //void easou_get_static_part(char *url, char *staticurl);
 
 /**
- * @brief ÅĞ¶ÏurlÊÇ·ñÊÇ¶¯Ì¬url
- * @returnu 0²»ÊÇ¶¯Ì¬url£¬·Ç0£¬ÊÇ¶¯Ì¬url
+ * @brief åˆ¤æ–­urlæ˜¯å¦æ˜¯åŠ¨æ€url
+ * @returnu 0ä¸æ˜¯åŠ¨æ€urlï¼Œé0ï¼Œæ˜¯åŠ¨æ€url
  */
 int easou_isdyn(const char* str);
 
 /**
- * @brief ÅĞ¶ÏurlÊÇ·ñºÏ·¨£¬Õâ¸ö·½·¨ÔÚÄ³ÖÖÇé¿öÏÂ»áĞŞ¸ÄurlÊäÈë£¬µ÷ÓÃÊ±ĞèÒª×¢Òâ¡£
- * @param url ÊäÈëurl
- * @returnu 1ºÏ·¨£¬0²»ºÏ·¨
+ * @brief åˆ¤æ–­urlæ˜¯å¦åˆæ³•ï¼Œè¿™ä¸ªæ–¹æ³•åœ¨æŸç§æƒ…å†µä¸‹ä¼šä¿®æ”¹urlè¾“å…¥ï¼Œè°ƒç”¨æ—¶éœ€è¦æ³¨æ„ã€‚
+ * @param url è¾“å…¥url
+ * @returnu 1åˆæ³•ï¼Œ0ä¸åˆæ³•
  */
 int easou_check_url(char* url);
 
 /**
- * @brief ´ÓÕ¾µãÃûÖĞ»ñÈ¡Ö÷¸É²¿·Ö, ±ÈÈç"www.easou.com"½«»ñµÃ"easou"
- * @param site Õ¾µãÃû
- * @param[out] trunk ´æ·ÅÖ÷¸É²¿·ÖµÄ»º³åÇø
- * @param size »º³åÇø´óĞ¡
- * @return 1³É¹¦£¬-1Î´Öª´íÎó£¬-2Õ¾µãÃ»ÓĞÖ÷¸É²¿·Ö£¬-3Õ¾µã²»°üº¬'.'
+ * @brief ä»ç«™ç‚¹åä¸­è·å–ä¸»å¹²éƒ¨åˆ†, æ¯”å¦‚"www.easou.com"å°†è·å¾—"easou"
+ * @param site ç«™ç‚¹å
+ * @param[out] trunk å­˜æ”¾ä¸»å¹²éƒ¨åˆ†çš„ç¼“å†²åŒº
+ * @param size ç¼“å†²åŒºå¤§å°
+ * @return 1æˆåŠŸï¼Œ-1æœªçŸ¥é”™è¯¯ï¼Œ-2ç«™ç‚¹æ²¡æœ‰ä¸»å¹²éƒ¨åˆ†ï¼Œ-3ç«™ç‚¹ä¸åŒ…å«'.'
  */
 int easou_fetch_trunk(const char* site, char *trunk, int size);
 
 /**
- * @brief ¼ì²éÕ¾µãÃûÊÇ·ñÊÇIPµØÖ·
- * @param sitename Õ¾µãÃû
- * @return 0²»ÊÇ£¬·Ç0ÊÇ
+ * @brief æ£€æŸ¥ç«™ç‚¹åæ˜¯å¦æ˜¯IPåœ°å€
+ * @param sitename ç«™ç‚¹å
+ * @return 0ä¸æ˜¯ï¼Œé0æ˜¯
  */
 int easou_is_dotip(const char *sitename);
 
 /**
- * @brief ´ÓÕ¾µãÃûÖĞ»ñÈ¡Ö÷¸É²¿·Ö£¬¹¦ÄÜÀàÍ¬@ref easou_fetch_trunk()
- * @param site Õ¾µãÃû
- * @param[out] domain ´æ·ÅÖ÷¸É²¿·ÖµÄ»º³åÇø
- * @param size »º³åÇø´óĞ¡
- * @return NULLÊ§°Ü£¬·ñÔòÎªÖ¸ÏòsiteÖ÷¸É²¿·ÖµÄÖ¸Õë
+ * @brief ä»ç«™ç‚¹åä¸­è·å–ä¸»å¹²éƒ¨åˆ†ï¼ŒåŠŸèƒ½ç±»åŒ@ref easou_fetch_trunk()
+ * @param site ç«™ç‚¹å
+ * @param[out] domain å­˜æ”¾ä¸»å¹²éƒ¨åˆ†çš„ç¼“å†²åŒº
+ * @param size ç¼“å†²åŒºå¤§å°
+ * @return NULLå¤±è´¥ï¼Œå¦åˆ™ä¸ºæŒ‡å‘siteä¸»å¹²éƒ¨åˆ†çš„æŒ‡é’ˆ
  */
 const char* easou_fetch_maindomain(const char* site, char *domain, int size);
 
 /**
- * @brief ¼ì²éurlÊÇ·ñ¹æ·¶»¯
- * @param url ¼ì²éµÄurl
- * @return 1ÊÇ£¬0²»ÊÇ
+ * @brief æ£€æŸ¥urlæ˜¯å¦è§„èŒƒåŒ–
+ * @param url æ£€æŸ¥çš„url
+ * @return 1æ˜¯ï¼Œ0ä¸æ˜¯
  */
 int easou_isnormalized_url(const char *url);
 
 /**
- * @brief ½«url×ª»¯ÎªÍ³Ò»µÄĞÎÊ½\n
- * Ö´ĞĞ@ref easou_normalize_site, @ref easou_normalize_port, @ref easou_single_path, @ref easou_normalize_path
- * @param url ´ı×ª»¯µÄurl
- * @param[out] buf ×ª»¯ºóµÄurl»º³åÇø
- * @return 1³É¹¦£¬0ÎŞĞ§url
+ * @brief å°†urlè½¬åŒ–ä¸ºç»Ÿä¸€çš„å½¢å¼\n
+ * æ‰§è¡Œ@ref easou_normalize_site, @ref easou_normalize_port, @ref easou_single_path, @ref easou_normalize_path
+ * @param url å¾…è½¬åŒ–çš„url
+ * @param[out] buf è½¬åŒ–åçš„urlç¼“å†²åŒº
+ * @return 1æˆåŠŸï¼Œ0æ— æ•ˆurl
  * @note you can use easou_normalize_url(buf, buf) to save an extra buffer.
  */
 int easou_normalize_url(const char* url, char* buf);
 
 /**
- * @brief ½«Õ¾µãÃû½øĞĞ¹æ·¶»¯£¨´óĞ´×ªÎªĞ¡Ğ´£©
- * @param site Õ¾µãÃû
- * @return 1³É¹¦£¬0Ê§°Ü
+ * @brief å°†ç«™ç‚¹åè¿›è¡Œè§„èŒƒåŒ–ï¼ˆå¤§å†™è½¬ä¸ºå°å†™ï¼‰
+ * @param site ç«™ç‚¹å
+ * @return 1æˆåŠŸï¼Œ0å¤±è´¥
  */
 int easou_normalize_site(char *site);
 
 /**
- * ½«¶Ë¿Ú×Ö·û´®½øĞĞ¹æ·¶»¯£¨¼ì²é¶Ë¿Ú·¶Î§ºÏ·¨ĞÔ£¬²¢È¥µô80¶Ë¿ÚµÄ×Ö·û´®£©
- * @param port Ö¸ÏòµÄ¶Ë¿ÚµÄÖ¸Õë
- * @return 1³É¹¦£¬0Ê§°Ü
+ * å°†ç«¯å£å­—ç¬¦ä¸²è¿›è¡Œè§„èŒƒåŒ–ï¼ˆæ£€æŸ¥ç«¯å£èŒƒå›´åˆæ³•æ€§ï¼Œå¹¶å»æ‰80ç«¯å£çš„å­—ç¬¦ä¸²ï¼‰
+ * @param port æŒ‡å‘çš„ç«¯å£çš„æŒ‡é’ˆ
+ * @return 1æˆåŠŸï¼Œ0å¤±è´¥
  */
 int easou_normalize_port(char *port);
 
 /**
- *  ¸ù¾İurl½âÎö³öÆäÖĞµÄ¸÷¸ö²¿·Ö,Ö§³Ö¼Ó³¤µÄurl£¬×î¸ß¿ÉÖ§³Öµ½1024£¬path×î³¤¿Éµ½800£¬site×î³¤¿Éµ½128
+ *  æ ¹æ®urlè§£æå‡ºå…¶ä¸­çš„å„ä¸ªéƒ¨åˆ†,æ”¯æŒåŠ é•¿çš„urlï¼Œæœ€é«˜å¯æ”¯æŒåˆ°1024ï¼Œpathæœ€é•¿å¯åˆ°800ï¼Œsiteæœ€é•¿å¯åˆ°128
  *
- *  @param[in]  input          ÊäÈëµÄurl
- *  @param[in]  site           site×Ö¶ÎµÄ´æ´¢bufÖ¸Õë
- *  @param[in]  site_size      site»º³åÇøµÄ´óĞ¡£¬¿É¸ù¾İ´Ë×Ö¶ÎÉèÖÃºÏÀíµÄsite³¤¶È,Ä¬ÈÏÎª128,Ê¹ÓÃÊ±¿ÉÊÊµ±µ÷Ğ¡.
- *  @param[in]  port           port×Ö¶ÎµÄ´æ´¢bufÖ¸Õë
- *  @param[in]  port_size      port×Ö¶ÎµÄ´óĞ¡
- *  @param[in]  path           path×Ö¶ÎµÄ´æ´¢bufÖ¸Õë
- *  @param[in]  max_path_size  path×Ö¶ÎµÄ´óĞ¡,¿É¸ù¾İ´Ë×Ö¶ÎÉèÖÃºÏÀíµÄpath³¤¶È,Ä¬ÈÏÎª800,Ê¹ÓÃÊ±¿ÉÊÊµ±µ÷Ğ¡.
- *  @param[out] site           siteÖµ
- *  @param[out] port           portÖµ
- *  @param[out] path           pathÂ·¾¶
- *  @return º¯Êı²Ù×÷½á¹û
- *  - 1   ±íÊ¾Õı³£
- *  - 0  ÎŞĞ§url¸ñÊ½
- *  - @note Îª±£Ö¤³ÌĞò°²È«,´«ÈëµÄbufÇëĞ¡ÓÚÄ¬ÈÏ×î´óÖµ
+ *  @param[in]  input          è¾“å…¥çš„url
+ *  @param[in]  site           siteå­—æ®µçš„å­˜å‚¨bufæŒ‡é’ˆ
+ *  @param[in]  site_size      siteç¼“å†²åŒºçš„å¤§å°ï¼Œå¯æ ¹æ®æ­¤å­—æ®µè®¾ç½®åˆç†çš„siteé•¿åº¦,é»˜è®¤ä¸º128,ä½¿ç”¨æ—¶å¯é€‚å½“è°ƒå°.
+ *  @param[in]  port           portå­—æ®µçš„å­˜å‚¨bufæŒ‡é’ˆ
+ *  @param[in]  port_size      portå­—æ®µçš„å¤§å°
+ *  @param[in]  path           pathå­—æ®µçš„å­˜å‚¨bufæŒ‡é’ˆ
+ *  @param[in]  max_path_size  pathå­—æ®µçš„å¤§å°,å¯æ ¹æ®æ­¤å­—æ®µè®¾ç½®åˆç†çš„pathé•¿åº¦,é»˜è®¤ä¸º800,ä½¿ç”¨æ—¶å¯é€‚å½“è°ƒå°.
+ *  @param[out] site           siteå€¼
+ *  @param[out] port           portå€¼
+ *  @param[out] path           pathè·¯å¾„
+ *  @return å‡½æ•°æ“ä½œç»“æœ
+ *  - 1   è¡¨ç¤ºæ­£å¸¸
+ *  - 0  æ— æ•ˆurlæ ¼å¼
+ *  - @note ä¸ºä¿è¯ç¨‹åºå®‰å…¨,ä¼ å…¥çš„bufè¯·å°äºé»˜è®¤æœ€å¤§å€¼
  */
 int easou_parse_url_ex(const char *input, char *site, size_t site_size, char *port, size_t port_size, char *path, size_t max_path_size);
 
 /**
- *  ¸ù¾İurl½âÎö³öÆäÖĞµÄÂ·¾¶²¿·Ö,Ö§³Ö¼Ó³¤µÄurl£¬×î¸ß¿ÉÖ§³Öµ½1024£¬path×î³¤¿Éµ½800£¬site×î³¤¿Éµ½128
+ *  æ ¹æ®urlè§£æå‡ºå…¶ä¸­çš„è·¯å¾„éƒ¨åˆ†,æ”¯æŒåŠ é•¿çš„urlï¼Œæœ€é«˜å¯æ”¯æŒåˆ°1024ï¼Œpathæœ€é•¿å¯åˆ°800ï¼Œsiteæœ€é•¿å¯åˆ°128
  *
- *  @param[in]  url          ÊäÈëµÄurl
- *  @param[in]  path         site×Ö¶ÎµÄ´æ´¢bufÖ¸Õë
- *  @param[in]  path_size    path×Ö¶ÎµÄ´óĞ¡,¿É¸ù¾İ´Ë×Ö¶ÎÉèÖÃºÏÀíµÄpath³¤¶È,Ä¬ÈÏÎª800,Ê¹ÓÃÊ±¿ÉÊÊµ±µ÷Ğ¡.
- *  @param[out] path         pathÂ·¾¶
- *  @return º¯Êı²Ù×÷½á¹û
- *  - ·ÇNULL   Ö¸ÏòÂ·¾¶µÄÖ¸Õë
- *  - NULL     ±íÊ¾Ê§°Ü
- *  - @note Îª±£Ö¤³ÌĞò°²È«,´«ÈëµÄpath_sizeÇëĞ¡ÓÚÄ¬ÈÏ×î´óÖµ
+ *  @param[in]  url          è¾“å…¥çš„url
+ *  @param[in]  path         siteå­—æ®µçš„å­˜å‚¨bufæŒ‡é’ˆ
+ *  @param[in]  path_size    pathå­—æ®µçš„å¤§å°,å¯æ ¹æ®æ­¤å­—æ®µè®¾ç½®åˆç†çš„pathé•¿åº¦,é»˜è®¤ä¸º800,ä½¿ç”¨æ—¶å¯é€‚å½“è°ƒå°.
+ *  @param[out] path         pathè·¯å¾„
+ *  @return å‡½æ•°æ“ä½œç»“æœ
+ *  - éNULL   æŒ‡å‘è·¯å¾„çš„æŒ‡é’ˆ
+ *  - NULL     è¡¨ç¤ºå¤±è´¥
+ *  - @note ä¸ºä¿è¯ç¨‹åºå®‰å…¨,ä¼ å…¥çš„path_sizeè¯·å°äºé»˜è®¤æœ€å¤§å€¼
  */
 char *easou_get_path_ex(const char *url, char *path, size_t path_size);
 
 /**
- *  ¸ù¾İurl½âÎö³öÆäÖĞµÄÕ¾µãÃû²¿·Ö,Ö§³Ö¼Ó³¤µÄurl£¬×î¸ß¿ÉÖ§³Öµ½1024£¬path×î³¤¿Éµ½800£¬site×î³¤¿Éµ½128
+ *  æ ¹æ®urlè§£æå‡ºå…¶ä¸­çš„ç«™ç‚¹åéƒ¨åˆ†,æ”¯æŒåŠ é•¿çš„urlï¼Œæœ€é«˜å¯æ”¯æŒåˆ°1024ï¼Œpathæœ€é•¿å¯åˆ°800ï¼Œsiteæœ€é•¿å¯åˆ°128
  *
- *  @param[in]  url            ÊäÈëµÄurl
- *  @param[in]  site           site×Ö¶ÎµÄ´æ´¢bufÖ¸Õë
- *  @param[in]  site_size      site»º³åÇøµÄ´óĞ¡£¬¿É¸ù¾İ´Ë×Ö¶ÎÉèÖÃºÏÀíµÄsite³¤¶È,Ä¬ÈÏÎª128,Ê¹ÓÃÊ±¿ÉÊÊµ±µ÷Ğ¡.
- *  @param[out] site           siteÖµ
- *  @return º¯Êı²Ù×÷½á¹û
- *  - ·ÇNULL   Ö¸ÏòsiteµÄÖ¸Õë
- *  - NULL     ±íÊ¾Ê§°Ü
- *  - @note Îª±£Ö¤³ÌĞò°²È«,´«ÈëµÄsite_sizeÇëĞ¡ÓÚÄ¬ÈÏ×î´óÖµ
+ *  @param[in]  url            è¾“å…¥çš„url
+ *  @param[in]  site           siteå­—æ®µçš„å­˜å‚¨bufæŒ‡é’ˆ
+ *  @param[in]  site_size      siteç¼“å†²åŒºçš„å¤§å°ï¼Œå¯æ ¹æ®æ­¤å­—æ®µè®¾ç½®åˆç†çš„siteé•¿åº¦,é»˜è®¤ä¸º128,ä½¿ç”¨æ—¶å¯é€‚å½“è°ƒå°.
+ *  @param[out] site           siteå€¼
+ *  @return å‡½æ•°æ“ä½œç»“æœ
+ *  - éNULL   æŒ‡å‘siteçš„æŒ‡é’ˆ
+ *  - NULL     è¡¨ç¤ºå¤±è´¥
+ *  - @note ä¸ºä¿è¯ç¨‹åºå®‰å…¨,ä¼ å…¥çš„site_sizeè¯·å°äºé»˜è®¤æœ€å¤§å€¼
  */
 char *easou_get_site_ex(const char *url, char *site, size_t site_size);
 
 /**
- *  ´ÓurlÖĞ»ñÈ¡¶Ë¿ÚĞÅÏ¢,Ö§³Ö¼Ó³¤µÄurl£¬×î¸ß¿ÉÖ§³Öµ½1024£¬path×î³¤¿Éµ½800£¬site×î³¤¿Éµ½128
+ *  ä»urlä¸­è·å–ç«¯å£ä¿¡æ¯,æ”¯æŒåŠ é•¿çš„urlï¼Œæœ€é«˜å¯æ”¯æŒåˆ°1024ï¼Œpathæœ€é•¿å¯åˆ°800ï¼Œsiteæœ€é•¿å¯åˆ°128
  *
- *  @param[in]  input          ÊäÈëµÄurl
- *  @param[in]  pport          port×Ö¶ÎµÄ´æ´¢bufÖ¸Õë
- *  @param[out] pport          portÖµ
- *  @return º¯Êı²Ù×÷½á¹û
- *  - 1   ±íÊ¾³É¹¦
- *  - 0   ±íÊ¾Ê§°Ü
+ *  @param[in]  input          è¾“å…¥çš„url
+ *  @param[in]  pport          portå­—æ®µçš„å­˜å‚¨bufæŒ‡é’ˆ
+ *  @param[out] pport          portå€¼
+ *  @return å‡½æ•°æ“ä½œç»“æœ
+ *  - 1   è¡¨ç¤ºæˆåŠŸ
+ *  - 0   è¡¨ç¤ºå¤±è´¥
  */
 int easou_get_port_ex(const char* url, int* pport);
 
 /**
- *  ½«url×ª»¯ÎªÍ³Ò»µÄĞÎÊ½\n,Ö§³Ö¼Ó³¤µÄurl£¬×î¸ß¿ÉÖ§³Öµ½1024£¬path×î³¤¿Éµ½800£¬site×î³¤¿Éµ½128
- *  Ö´ĞĞ@ref easou_normalize_site, @ref easou_normalize_port, @ref easou_single_path, @ref easou_normalize_path
+ *  å°†urlè½¬åŒ–ä¸ºç»Ÿä¸€çš„å½¢å¼\n,æ”¯æŒåŠ é•¿çš„urlï¼Œæœ€é«˜å¯æ”¯æŒåˆ°1024ï¼Œpathæœ€é•¿å¯åˆ°800ï¼Œsiteæœ€é•¿å¯åˆ°128
+ *  æ‰§è¡Œ@ref easou_normalize_site, @ref easou_normalize_port, @ref easou_single_path, @ref easou_normalize_path
  *
- *  @param[in]  url           ´ı×ª»¯µÄurl
- *  @param[in]  buf           ×ª»¯ºóµÄurl»º³åÇø
- *  @param[in]  buf_size      bufµÄ´óĞ¡
- *  @param[out] buf           ×ª»¯ºóµÄurl
- *  @return º¯Êı²Ù×÷½á¹û
- *  - 1   ³É¹¦
- *  - 0   ÎŞĞ§url
- *  - @note Îª±£Ö¤³ÌĞò°²È«,´«ÈëµÄsite_sizeÇëĞ¡ÓÚÄ¬ÈÏ×î´óÖµ
+ *  @param[in]  url           å¾…è½¬åŒ–çš„url
+ *  @param[in]  buf           è½¬åŒ–åçš„urlç¼“å†²åŒº
+ *  @param[in]  buf_size      bufçš„å¤§å°
+ *  @param[out] buf           è½¬åŒ–åçš„url
+ *  @return å‡½æ•°æ“ä½œç»“æœ
+ *  - 1   æˆåŠŸ
+ *  - 0   æ— æ•ˆurl
+ *  - @note ä¸ºä¿è¯ç¨‹åºå®‰å…¨,ä¼ å…¥çš„site_sizeè¯·å°äºé»˜è®¤æœ€å¤§å€¼
  */
 int easou_normalize_url_ex(const char* url, char* buf, size_t buf_size);
 
 /**
- *  ´ÓurlÖĞ»ñÈ¡¾²Ì¬µÄ²¿·Ö£¨?»òÕß;Ö®Ç°µÄ²¿·Ö£©,Ö§³Ö¼Ó³¤µÄurl£¬×î¸ß¿ÉÖ§³Öµ½1024£¬path×î³¤¿Éµ½800£¬site×î³¤¿Éµ½128
+ *  ä»urlä¸­è·å–é™æ€çš„éƒ¨åˆ†ï¼ˆ?æˆ–è€…;ä¹‹å‰çš„éƒ¨åˆ†ï¼‰,æ”¯æŒåŠ é•¿çš„urlï¼Œæœ€é«˜å¯æ”¯æŒåˆ°1024ï¼Œpathæœ€é•¿å¯åˆ°800ï¼Œsiteæœ€é•¿å¯åˆ°128
  *
- *  @param[in]  url                 ÊäÈëµÄurl
- *  @param[in]  staticurl           ¾²Ì¬²¿·Ö»º³åÇø
- *  @param[in]  staticurl_size      bufµÄ´óĞ¡
- *  @param[out] staticurl           ¾²Ì¬²¿·Ö
- *  @return ÎŞ
+ *  @param[in]  url                 è¾“å…¥çš„url
+ *  @param[in]  staticurl           é™æ€éƒ¨åˆ†ç¼“å†²åŒº
+ *  @param[in]  staticurl_size      bufçš„å¤§å°
+ *  @param[out] staticurl           é™æ€éƒ¨åˆ†
+ *  @return æ— 
  */
 void easou_get_static_part_ex(const char *url, char *staticurl, size_t staticurl_size);
 
 /**
- *  ¼ì²éurlÊÇ·ñ¹æ·¶»¯,Ö§³Ö¼Ó³¤µÄurl£¬×î¸ß¿ÉÖ§³Öµ½1024£¬path×î³¤¿Éµ½800£¬site×î³¤¿Éµ½128
+ *  æ£€æŸ¥urlæ˜¯å¦è§„èŒƒåŒ–,æ”¯æŒåŠ é•¿çš„urlï¼Œæœ€é«˜å¯æ”¯æŒåˆ°1024ï¼Œpathæœ€é•¿å¯åˆ°800ï¼Œsiteæœ€é•¿å¯åˆ°128
  *
- *  @param[in]  url                 ¼ì²éµÄurl
- *  @param[out] ÎŞ
- *  @return ·µ»ØÅĞ¶Ï½á¹û
- *  - 1   ÊÇ
- *  - 0   ²»ÊÇ
+ *  @param[in]  url                 æ£€æŸ¥çš„url
+ *  @param[out] æ— 
+ *  @return è¿”å›åˆ¤æ–­ç»“æœ
+ *  - 1   æ˜¯
+ *  - 0   ä¸æ˜¯
  */
 int easou_isnormalized_url_ex(const char *url);
 
 /**
- *  ¹æ·¶»¯Â·¾¶µÄĞÎÊ½\n,Ö§³Ö¼Ó³¤µÄurl£¬×î¸ß¿ÉÖ§³Öµ½1024£¬path×î³¤¿Éµ½800£¬site×î³¤¿Éµ½128
- * ¶Ô'\\', './', '/.', '../', '/..', '//'µÈĞÎÊ½½øĞĞ¹æ·¶»¯
+ *  è§„èŒƒåŒ–è·¯å¾„çš„å½¢å¼\n,æ”¯æŒåŠ é•¿çš„urlï¼Œæœ€é«˜å¯æ”¯æŒåˆ°1024ï¼Œpathæœ€é•¿å¯åˆ°800ï¼Œsiteæœ€é•¿å¯åˆ°128
+ * å¯¹'\\', './', '/.', '../', '/..', '//'ç­‰å½¢å¼è¿›è¡Œè§„èŒƒåŒ–
  *
- *  @param[in]  path           ´ı×ª»¯µÄÂ·¾¶
- *  @param[out] path           ×ª»¯ºóµÄÂ·¾¶
- *  @return ÎŞ
+ *  @param[in]  path           å¾…è½¬åŒ–çš„è·¯å¾„
+ *  @param[out] path           è½¬åŒ–åçš„è·¯å¾„
+ *  @return æ— 
  */
 void easou_normalize_path_ex(char *path);
 
 /**
- *  ¹éÒ»»¯URLÂ·¾¶,Ö§³Ö¼Ó³¤µÄurl£¬×î¸ß¿ÉÖ§³Öµ½1024£¬path×î³¤¿Éµ½800£¬site×î³¤¿Éµ½128
+ *  å½’ä¸€åŒ–URLè·¯å¾„,æ”¯æŒåŠ é•¿çš„urlï¼Œæœ€é«˜å¯æ”¯æŒåˆ°1024ï¼Œpathæœ€é•¿å¯åˆ°800ï¼Œsiteæœ€é•¿å¯åˆ°128
  *
- *  @param[in]  path         pathÂ·¾¶
- *  @param[out] path         ¹éÒ»»¯¹ıµÄÂ·¾¶
- *  @return ·µ»Ø¹éÒ»»¯½á¹û
- *  - 1   Õı³£
- *  - 0   ÎŞĞ§url¸ñÊ½Â·¾¶
+ *  @param[in]  path         pathè·¯å¾„
+ *  @param[out] path         å½’ä¸€åŒ–è¿‡çš„è·¯å¾„
+ *  @return è¿”å›å½’ä¸€åŒ–ç»“æœ
+ *  - 1   æ­£å¸¸
+ *  - 0   æ— æ•ˆurlæ ¼å¼è·¯å¾„
  */
 int easou_single_path_ex(char *path);
 
 /**
- *  ÅĞ¶ÏurlÊÇ·ñºÏ·¨,Ö§³Ö¼Ó³¤µÄurl£¬×î¸ß¿ÉÖ§³Öµ½1024£¬path×î³¤¿Éµ½800£¬site×î³¤¿Éµ½128
+ *  åˆ¤æ–­urlæ˜¯å¦åˆæ³•,æ”¯æŒåŠ é•¿çš„urlï¼Œæœ€é«˜å¯æ”¯æŒåˆ°1024ï¼Œpathæœ€é•¿å¯åˆ°800ï¼Œsiteæœ€é•¿å¯åˆ°128
  *
- *  @param[in]  url           ´ı×ª»¯µÄurl
- *  @param[out] ÎŞ
- *  @return º¯Êı²Ù×÷½á¹û
- *  - 1   ºÏ·¨
- *  - 0   ²»ºÏ·¨
+ *  @param[in]  url           å¾…è½¬åŒ–çš„url
+ *  @param[out] æ— 
+ *  @return å‡½æ•°æ“ä½œç»“æœ
+ *  - 1   åˆæ³•
+ *  - 0   ä¸åˆæ³•
  */
 int easou_check_url_ex(char *url);
 
 /**
- *  ¸ù¾İurl½âÎö³öÆäÖĞµÄ¸÷¸ö²¿·Ö,Ö§³Ö¼Ó³¤µÄurl£¬×î¸ß¿ÉÖ§³Öµ½2048£¬path×î³¤¿Éµ½1600£¬site×î³¤¿Éµ½256
+ *  æ ¹æ®urlè§£æå‡ºå…¶ä¸­çš„å„ä¸ªéƒ¨åˆ†,æ”¯æŒåŠ é•¿çš„urlï¼Œæœ€é«˜å¯æ”¯æŒåˆ°2048ï¼Œpathæœ€é•¿å¯åˆ°1600ï¼Œsiteæœ€é•¿å¯åˆ°256
  *
- *  @param[in]  input          ÊäÈëµÄurl
- *  @param[in]  site           site×Ö¶ÎµÄ´æ´¢bufÖ¸Õë
- *  @param[in]  site_size      site»º³åÇøµÄ´óĞ¡£¬¿É¸ù¾İ´Ë×Ö¶ÎÉèÖÃºÏÀíµÄsite³¤¶È,Ä¬ÈÏÎª256,Ê¹ÓÃÊ±¿ÉÊÊµ±µ÷Ğ¡.
- *  @param[in]  port           port×Ö¶ÎµÄ´æ´¢bufÖ¸Õë
- *  @param[in]  port_size      port×Ö¶ÎµÄ´óĞ¡
- *  @param[in]  path           path×Ö¶ÎµÄ´æ´¢bufÖ¸Õë
- *  @param[in]  max_path_size  path×Ö¶ÎµÄ´óĞ¡,¿É¸ù¾İ´Ë×Ö¶ÎÉèÖÃºÏÀíµÄpath³¤¶È,Ä¬ÈÏÎª1600,Ê¹ÓÃÊ±¿ÉÊÊµ±µ÷Ğ¡.
- *  @param[out] site           siteÖµ
- *  @param[out] port           portÖµ
- *  @param[out] path           pathÂ·¾¶
- *  @return º¯Êı²Ù×÷½á¹û
- *  - 1   ±íÊ¾Õı³£
- *  - 0  ÎŞĞ§url¸ñÊ½
- *  - @note Îª±£Ö¤³ÌĞò°²È«,´«ÈëµÄbufÇëĞ¡ÓÚÄ¬ÈÏ×î´óÖµ
+ *  @param[in]  input          è¾“å…¥çš„url
+ *  @param[in]  site           siteå­—æ®µçš„å­˜å‚¨bufæŒ‡é’ˆ
+ *  @param[in]  site_size      siteç¼“å†²åŒºçš„å¤§å°ï¼Œå¯æ ¹æ®æ­¤å­—æ®µè®¾ç½®åˆç†çš„siteé•¿åº¦,é»˜è®¤ä¸º256,ä½¿ç”¨æ—¶å¯é€‚å½“è°ƒå°.
+ *  @param[in]  port           portå­—æ®µçš„å­˜å‚¨bufæŒ‡é’ˆ
+ *  @param[in]  port_size      portå­—æ®µçš„å¤§å°
+ *  @param[in]  path           pathå­—æ®µçš„å­˜å‚¨bufæŒ‡é’ˆ
+ *  @param[in]  max_path_size  pathå­—æ®µçš„å¤§å°,å¯æ ¹æ®æ­¤å­—æ®µè®¾ç½®åˆç†çš„pathé•¿åº¦,é»˜è®¤ä¸º1600,ä½¿ç”¨æ—¶å¯é€‚å½“è°ƒå°.
+ *  @param[out] site           siteå€¼
+ *  @param[out] port           portå€¼
+ *  @param[out] path           pathè·¯å¾„
+ *  @return å‡½æ•°æ“ä½œç»“æœ
+ *  - 1   è¡¨ç¤ºæ­£å¸¸
+ *  - 0  æ— æ•ˆurlæ ¼å¼
+ *  - @note ä¸ºä¿è¯ç¨‹åºå®‰å…¨,ä¼ å…¥çš„bufè¯·å°äºé»˜è®¤æœ€å¤§å€¼
  */
 int easou_parse_url_ex2(const char *input, char *site, size_t site_size, char *port, size_t port_size, char *path, size_t max_path_size);
 /**
- *  ¸ù¾İurl½âÎö³öÆäÖĞµÄÂ·¾¶²¿·Ö,Ö§³Ö¼Ó³¤µÄurl£¬×î¸ß¿ÉÖ§³Öµ½2048£¬path×î³¤¿Éµ½1600£¬site×î³¤¿Éµ½256
+ *  æ ¹æ®urlè§£æå‡ºå…¶ä¸­çš„è·¯å¾„éƒ¨åˆ†,æ”¯æŒåŠ é•¿çš„urlï¼Œæœ€é«˜å¯æ”¯æŒåˆ°2048ï¼Œpathæœ€é•¿å¯åˆ°1600ï¼Œsiteæœ€é•¿å¯åˆ°256
  *
- *  @param[in]  url          ÊäÈëµÄurl
- *  @param[in]  path         site×Ö¶ÎµÄ´æ´¢bufÖ¸Õë
- *  @param[in]  path_size    path×Ö¶ÎµÄ´óĞ¡,¿É¸ù¾İ´Ë×Ö¶ÎÉèÖÃºÏÀíµÄpath³¤¶È,Ä¬ÈÏÎª1600,Ê¹ÓÃÊ±¿ÉÊÊµ±µ÷Ğ¡.
- *  @param[out] path         pathÂ·¾¶
- *  @return º¯Êı²Ù×÷½á¹û
- *  - ·ÇNULL   Ö¸ÏòÂ·¾¶µÄÖ¸Õë
- *  - NULL     ±íÊ¾Ê§°Ü
- *  - @note Îª±£Ö¤³ÌĞò°²È«,´«ÈëµÄpath_sizeÇëĞ¡ÓÚÄ¬ÈÏ×î´óÖµ
+ *  @param[in]  url          è¾“å…¥çš„url
+ *  @param[in]  path         siteå­—æ®µçš„å­˜å‚¨bufæŒ‡é’ˆ
+ *  @param[in]  path_size    pathå­—æ®µçš„å¤§å°,å¯æ ¹æ®æ­¤å­—æ®µè®¾ç½®åˆç†çš„pathé•¿åº¦,é»˜è®¤ä¸º1600,ä½¿ç”¨æ—¶å¯é€‚å½“è°ƒå°.
+ *  @param[out] path         pathè·¯å¾„
+ *  @return å‡½æ•°æ“ä½œç»“æœ
+ *  - éNULL   æŒ‡å‘è·¯å¾„çš„æŒ‡é’ˆ
+ *  - NULL     è¡¨ç¤ºå¤±è´¥
+ *  - @note ä¸ºä¿è¯ç¨‹åºå®‰å…¨,ä¼ å…¥çš„path_sizeè¯·å°äºé»˜è®¤æœ€å¤§å€¼
  */
 char *easou_get_path_ex2(const char *url, char *path, size_t path_size);
 
 /**
- *  ¸ù¾İurl½âÎö³öÆäÖĞµÄÕ¾µãÃû²¿·Ö,Ö§³Ö¼Ó³¤µÄurl£¬×î¸ß¿ÉÖ§³Öµ½2048£¬path×î³¤¿Éµ½1600£¬site×î³¤¿Éµ½256
+ *  æ ¹æ®urlè§£æå‡ºå…¶ä¸­çš„ç«™ç‚¹åéƒ¨åˆ†,æ”¯æŒåŠ é•¿çš„urlï¼Œæœ€é«˜å¯æ”¯æŒåˆ°2048ï¼Œpathæœ€é•¿å¯åˆ°1600ï¼Œsiteæœ€é•¿å¯åˆ°256
  *
- *  @param[in]  url            ÊäÈëµÄurl
- *  @param[in]  site           site×Ö¶ÎµÄ´æ´¢bufÖ¸Õë
- *  @param[in]  site_size      site»º³åÇøµÄ´óĞ¡£¬¿É¸ù¾İ´Ë×Ö¶ÎÉèÖÃºÏÀíµÄsite³¤¶È,Ä¬ÈÏÎª256,Ê¹ÓÃÊ±¿ÉÊÊµ±µ÷Ğ¡.
- *  @param[out] site           siteÖµ
- *  @return º¯Êı²Ù×÷½á¹û
- *  - ·ÇNULL   Ö¸ÏòsiteµÄÖ¸Õë
- *  - NULL     ±íÊ¾Ê§°Ü
- *  - @note Îª±£Ö¤³ÌĞò°²È«,´«ÈëµÄsite_sizeÇëĞ¡ÓÚÄ¬ÈÏ×î´óÖµ
+ *  @param[in]  url            è¾“å…¥çš„url
+ *  @param[in]  site           siteå­—æ®µçš„å­˜å‚¨bufæŒ‡é’ˆ
+ *  @param[in]  site_size      siteç¼“å†²åŒºçš„å¤§å°ï¼Œå¯æ ¹æ®æ­¤å­—æ®µè®¾ç½®åˆç†çš„siteé•¿åº¦,é»˜è®¤ä¸º256,ä½¿ç”¨æ—¶å¯é€‚å½“è°ƒå°.
+ *  @param[out] site           siteå€¼
+ *  @return å‡½æ•°æ“ä½œç»“æœ
+ *  - éNULL   æŒ‡å‘siteçš„æŒ‡é’ˆ
+ *  - NULL     è¡¨ç¤ºå¤±è´¥
+ *  - @note ä¸ºä¿è¯ç¨‹åºå®‰å…¨,ä¼ å…¥çš„site_sizeè¯·å°äºé»˜è®¤æœ€å¤§å€¼
  */
 char *easou_get_site_ex2(const char *url, char *site, size_t site_size);
 
 /**
- *  ´ÓurlÖĞ»ñÈ¡¶Ë¿ÚĞÅÏ¢,Ö§³Ö¼Ó³¤µÄurl£¬×î¸ß¿ÉÖ§³Öµ½2048£¬path×î³¤¿Éµ½1600£¬site×î³¤¿Éµ½256
+ *  ä»urlä¸­è·å–ç«¯å£ä¿¡æ¯,æ”¯æŒåŠ é•¿çš„urlï¼Œæœ€é«˜å¯æ”¯æŒåˆ°2048ï¼Œpathæœ€é•¿å¯åˆ°1600ï¼Œsiteæœ€é•¿å¯åˆ°256
  *
- *  @param[in]  input          ÊäÈëµÄurl
- *  @param[in]  pport          port×Ö¶ÎµÄ´æ´¢bufÖ¸Õë
- *  @param[out] pport          portÖµ
- *  @return º¯Êı²Ù×÷½á¹û
- *  - 1   ±íÊ¾³É¹¦
- *  - 0   ±íÊ¾Ê§°Ü
+ *  @param[in]  input          è¾“å…¥çš„url
+ *  @param[in]  pport          portå­—æ®µçš„å­˜å‚¨bufæŒ‡é’ˆ
+ *  @param[out] pport          portå€¼
+ *  @return å‡½æ•°æ“ä½œç»“æœ
+ *  - 1   è¡¨ç¤ºæˆåŠŸ
+ *  - 0   è¡¨ç¤ºå¤±è´¥
  */
 int easou_get_port_ex2(const char* url, int* pport);
 
 /**
- *  ½«url×ª»¯ÎªÍ³Ò»µÄĞÎÊ½\n,Ö§³Ö¼Ó³¤µÄurl£¬×î¸ß¿ÉÖ§³Öµ½2048£¬path×î³¤¿Éµ½1600£¬site×î³¤¿Éµ½256
- *  Ö´ĞĞ@ref easou_normalize_site, @ref easou_normalize_port, @ref easou_single_path, @ref easou_normalize_path
+ *  å°†urlè½¬åŒ–ä¸ºç»Ÿä¸€çš„å½¢å¼\n,æ”¯æŒåŠ é•¿çš„urlï¼Œæœ€é«˜å¯æ”¯æŒåˆ°2048ï¼Œpathæœ€é•¿å¯åˆ°1600ï¼Œsiteæœ€é•¿å¯åˆ°256
+ *  æ‰§è¡Œ@ref easou_normalize_site, @ref easou_normalize_port, @ref easou_single_path, @ref easou_normalize_path
  *
- *  @param[in]  url           ´ı×ª»¯µÄurl
- *  @param[in]  buf           ×ª»¯ºóµÄurl»º³åÇø
- *  @param[in]  buf_size      bufµÄ´óĞ¡
- *  @param[out] buf           ×ª»¯ºóµÄurl
- *  @return º¯Êı²Ù×÷½á¹û
- *  - 1   ³É¹¦
- *  - 0   ÎŞĞ§url
- *  - @note Îª±£Ö¤³ÌĞò°²È«,´«ÈëµÄsite_sizeÇëĞ¡ÓÚÄ¬ÈÏ×î´óÖµ
+ *  @param[in]  url           å¾…è½¬åŒ–çš„url
+ *  @param[in]  buf           è½¬åŒ–åçš„urlç¼“å†²åŒº
+ *  @param[in]  buf_size      bufçš„å¤§å°
+ *  @param[out] buf           è½¬åŒ–åçš„url
+ *  @return å‡½æ•°æ“ä½œç»“æœ
+ *  - 1   æˆåŠŸ
+ *  - 0   æ— æ•ˆurl
+ *  - @note ä¸ºä¿è¯ç¨‹åºå®‰å…¨,ä¼ å…¥çš„site_sizeè¯·å°äºé»˜è®¤æœ€å¤§å€¼
  */
 int easou_normalize_url_ex2(const char* url, char* buf, size_t buf_size);
 
 /**
- *  ´ÓurlÖĞ»ñÈ¡¾²Ì¬µÄ²¿·Ö£¨?»òÕß;Ö®Ç°µÄ²¿·Ö£©,Ö§³Ö¼Ó³¤µÄurl£¬×î¸ß¿ÉÖ§³Öµ½2048£¬path×î³¤¿Éµ½1600£¬site×î³¤¿Éµ½256
+ *  ä»urlä¸­è·å–é™æ€çš„éƒ¨åˆ†ï¼ˆ?æˆ–è€…;ä¹‹å‰çš„éƒ¨åˆ†ï¼‰,æ”¯æŒåŠ é•¿çš„urlï¼Œæœ€é«˜å¯æ”¯æŒåˆ°2048ï¼Œpathæœ€é•¿å¯åˆ°1600ï¼Œsiteæœ€é•¿å¯åˆ°256
  *
- *  @param[in]  url                 ÊäÈëµÄurl
- *  @param[in]  staticurl           ¾²Ì¬²¿·Ö»º³åÇø
- *  @param[in]  staticurl_size      bufµÄ´óĞ¡
- *  @param[out] staticurl           ¾²Ì¬²¿·Ö
- *  @return ÎŞ
+ *  @param[in]  url                 è¾“å…¥çš„url
+ *  @param[in]  staticurl           é™æ€éƒ¨åˆ†ç¼“å†²åŒº
+ *  @param[in]  staticurl_size      bufçš„å¤§å°
+ *  @param[out] staticurl           é™æ€éƒ¨åˆ†
+ *  @return æ— 
  */
 void easou_get_static_part_ex2(const char *url, char *staticurl, size_t staticurl_size);
 
 /**
- *  ¼ì²éurlÊÇ·ñ¹æ·¶»¯,Ö§³Ö¼Ó³¤µÄurl£¬×î¸ß¿ÉÖ§³Öµ½2048£¬path×î³¤¿Éµ½1600£¬site×î³¤¿Éµ½256
+ *  æ£€æŸ¥urlæ˜¯å¦è§„èŒƒåŒ–,æ”¯æŒåŠ é•¿çš„urlï¼Œæœ€é«˜å¯æ”¯æŒåˆ°2048ï¼Œpathæœ€é•¿å¯åˆ°1600ï¼Œsiteæœ€é•¿å¯åˆ°256
  *
- *  @param[in]  url                 ¼ì²éµÄurl
- *  @param[out] ÎŞ
- *  @return ·µ»ØÅĞ¶Ï½á¹û
- *  - 1   ÊÇ
- *  - 0   ²»ÊÇ
+ *  @param[in]  url                 æ£€æŸ¥çš„url
+ *  @param[out] æ— 
+ *  @return è¿”å›åˆ¤æ–­ç»“æœ
+ *  - 1   æ˜¯
+ *  - 0   ä¸æ˜¯
  */
 int easou_isnormalized_url_ex2(const char *url);
 
 /**
- *  ¹æ·¶»¯Â·¾¶µÄĞÎÊ½\n,Ö§³Ö¼Ó³¤µÄurl£¬×î¸ß¿ÉÖ§³Öµ½2048£¬path×î³¤¿Éµ½1600£¬site×î³¤¿Éµ½256
- * ¶Ô'\\', './', '/.', '../', '/..', '//'µÈĞÎÊ½½øĞĞ¹æ·¶»¯
+ *  è§„èŒƒåŒ–è·¯å¾„çš„å½¢å¼\n,æ”¯æŒåŠ é•¿çš„urlï¼Œæœ€é«˜å¯æ”¯æŒåˆ°2048ï¼Œpathæœ€é•¿å¯åˆ°1600ï¼Œsiteæœ€é•¿å¯åˆ°256
+ * å¯¹'\\', './', '/.', '../', '/..', '//'ç­‰å½¢å¼è¿›è¡Œè§„èŒƒåŒ–
  *
- *  @param[in]  path           ´ı×ª»¯µÄÂ·¾¶
- *  @param[out] path           ×ª»¯ºóµÄÂ·¾¶
- *  @return ÎŞ
+ *  @param[in]  path           å¾…è½¬åŒ–çš„è·¯å¾„
+ *  @param[out] path           è½¬åŒ–åçš„è·¯å¾„
+ *  @return æ— 
  */
 void easou_normalize_path_ex2(char *path);
 
 /**
- *  ¹éÒ»»¯URLÂ·¾¶,Ö§³Ö¼Ó³¤µÄurl£¬×î¸ß¿ÉÖ§³Öµ½2048£¬path×î³¤¿Éµ½1600£¬site×î³¤¿Éµ½256
+ *  å½’ä¸€åŒ–URLè·¯å¾„,æ”¯æŒåŠ é•¿çš„urlï¼Œæœ€é«˜å¯æ”¯æŒåˆ°2048ï¼Œpathæœ€é•¿å¯åˆ°1600ï¼Œsiteæœ€é•¿å¯åˆ°256
  *
- *  @param[in]  path         pathÂ·¾¶
- *  @param[out] path         ¹éÒ»»¯¹ıµÄÂ·¾¶
- *  @return ·µ»Ø¹éÒ»»¯½á¹û
- *  - 1   Õı³£
- *  - 0   ÎŞĞ§url¸ñÊ½Â·¾¶
+ *  @param[in]  path         pathè·¯å¾„
+ *  @param[out] path         å½’ä¸€åŒ–è¿‡çš„è·¯å¾„
+ *  @return è¿”å›å½’ä¸€åŒ–ç»“æœ
+ *  - 1   æ­£å¸¸
+ *  - 0   æ— æ•ˆurlæ ¼å¼è·¯å¾„
  */
 int easou_single_path_ex2(char *path);
 
 /**
- *  ÅĞ¶ÏurlÊÇ·ñºÏ·¨,Ö§³Ö¼Ó³¤µÄurl£¬×î¸ß¿ÉÖ§³Öµ½2048£¬path×î³¤¿Éµ½1600£¬site×î³¤¿Éµ½256
+ *  åˆ¤æ–­urlæ˜¯å¦åˆæ³•,æ”¯æŒåŠ é•¿çš„urlï¼Œæœ€é«˜å¯æ”¯æŒåˆ°2048ï¼Œpathæœ€é•¿å¯åˆ°1600ï¼Œsiteæœ€é•¿å¯åˆ°256
  *
- *  @param[in]  url           ´ı×ª»¯µÄurl
- *  @param[out] ÎŞ
- *  @return º¯Êı²Ù×÷½á¹û
- *  - 1   ºÏ·¨
- *  - 0   ²»ºÏ·¨
+ *  @param[in]  url           å¾…è½¬åŒ–çš„url
+ *  @param[out] æ— 
+ *  @return å‡½æ•°æ“ä½œç»“æœ
+ *  - 1   åˆæ³•
+ *  - 0   ä¸åˆæ³•
  */
 int easou_check_url_ex2(char *url);
 
 /**
- * @brief »ñµÃurlÉî¶È
+ * @brief è·å¾—urlæ·±åº¦
  */
 int get_url_depth(const char * url);
 
 /**
- * @brief Ò³ÃæÄÚµÄÏà¶ÔURLÆ´³ÉÒ»¸ö¾ø¶ÔURL
+ * @brief é¡µé¢å†…çš„ç›¸å¯¹URLæ‹¼æˆä¸€ä¸ªç»å¯¹URL
  */
 int easou_combine_url(char *result_url, const char *base_url, const char *relative_url);
 void easou_combine_url_inner(char *url, char *domain, char *port, char *path);
 
 /**
- * @brief ÊÇ²»ÊÇÀàËÆÊ×Ò³µÄurl
+ * @brief æ˜¯ä¸æ˜¯ç±»ä¼¼é¦–é¡µçš„url
  **/
 int is_like_top_url(const char *url);
 
@@ -522,26 +522,26 @@ const char *parse_url_inner(url_t *url, const char *url_buffer, int length);
 int easou_single_path_inner(char *path);
 
 /**
- * @brief ÅĞ¶ÏÊÇ·ñÊ×Ò³
+ * @brief åˆ¤æ–­æ˜¯å¦é¦–é¡µ
  */
 bool is_home_page(const char* url, const int urlLen);
 
 /**
- * @brief ÅĞ¶ÏurlÊÇ·ñÊÇÄ¿Â¼
+ * @brief åˆ¤æ–­urlæ˜¯å¦æ˜¯ç›®å½•
  * @return int
- * @retval 1, Ä¿Â¼
- * @retval 0, ·ÇÄ¿Â¼
+ * @retval 1, ç›®å½•
+ * @retval 0, éç›®å½•
  */
 int is_dir_url(const char *url);
 
 /**
- * @brief urlÖĞÊÇ·ñ´æÔÚ·Çascii ×Ö·û
+ * @brief urlä¸­æ˜¯å¦å­˜åœ¨éascii å­—ç¬¦
  */
 bool has_not_ascii_char(const unsigned char* url);
 
 /**
- * @brief °Ñurl×ª»»³ÉÕıÔò×Ö·û´®
- * @return 0, ³É¹¦; -1, Ê§°Ü
+ * @brief æŠŠurlè½¬æ¢æˆæ­£åˆ™å­—ç¬¦ä¸²
+ * @return 0, æˆåŠŸ; -1, å¤±è´¥
  */
 int urlstr_to_regexstr(const char *url, int url_len, char *buf, int buf_len);
 

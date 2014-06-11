@@ -12,8 +12,9 @@
 #include <limits.h>
 #include <ctype.h>
 #include <iconv.h>
+
 #include "chinese.h"
-#include "easou_string.h"
+#include "string_util.h"
 #include "html_text_utils.h"
 
 static unsigned int ASC_MARK[256]=

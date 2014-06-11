@@ -100,40 +100,4 @@ extern int g_debugbuflen;
 		}\
    }
 
-/*
-#define printlines(info){\
-		{\
-		 printf("---------------%s----------------\r\n",info);\
-		}\
-   }
-
-#define easouprintf(info){\
-	  if(g_EASOU_DEBUG==DEBUG_MEMERY&&info!=NULL){\
-		printf("easou print:%s at %s(%d)-%s\r\n",info,__FILE__,__LINE__,__FUNCTION__);\
-	  }\
-  }
-
-#define marktreeprintfs(type,info,...){\
-	  if(g_EASOU_DEBUG==type&&info!=NULL){\
-		  printf(info,##__VA_ARGS__);\
-	  }\
-  }
-
-#define marktreeprintftofile(type,info,...){\
-	  if(g_EASOU_DEBUG==type&&info!=NULL&&g_logfile!=NULL){\
-		  fprintf(g_logfile,info,##__VA_ARGS__);\
-	  }\
-  }
-
-#define myprintf(info,...){\
-	  if(info!=NULL){\
-		 printf(info,##__VA_ARGS__);\
-	  }\
-  }
-#define printline(){\
-	{\
-	   int len= printf("-------------------------------\r\n");\
-	}\
-  }
-  */
 #endif /* DEBUGINFO_H_ */

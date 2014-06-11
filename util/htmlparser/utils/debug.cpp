@@ -1,4 +1,4 @@
-#include "easou_debug.h"
+#include "debug.h"
 
 #ifdef DEBUG_INFO
 std::map<std::string, debug_item_t*> g_debug_item_map;
