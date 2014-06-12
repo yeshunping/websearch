@@ -42,6 +42,8 @@ cc_library(name = 'sofa',
         'sofa/pbrpc/timeout_manager_impl.cc'
     ],
     incs = ['.', '../../protobuf/include/'],
+    export_incs = ['.'],
+    deps = ['#z', '//thirdparty/snappy:snappy'],
 #    deps = [':rpc_meta_proto', ':rpc_option_proto'],
 )
 

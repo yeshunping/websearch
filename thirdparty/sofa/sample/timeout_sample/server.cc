@@ -13,7 +13,7 @@
 #include <signal.h>
 #include <unistd.h>
 #include <sofa/pbrpc/pbrpc.h>
-#include "sleep_service.pb.h"
+#include "thirdparty/sofa/sample/timeout_sample/sleep_service.pb.h"
 
 class SleepServerImpl : public sofa::pbrpc::test::SleepServer
 {

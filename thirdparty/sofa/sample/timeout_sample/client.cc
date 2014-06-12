@@ -10,7 +10,7 @@
  **************************************************************************/
 
 #include <sofa/pbrpc/pbrpc.h>
-#include "sleep_service.pb.h"
+#include "thirdparty/sofa/sample/timeout_sample/sleep_service.pb.h"
 
 int main(int /*argc*/, char** /*argv*/)
 {

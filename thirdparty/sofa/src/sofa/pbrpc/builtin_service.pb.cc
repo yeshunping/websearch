@@ -2,7 +2,7 @@
 // source: thirdparty/sofa/src/sofa/pbrpc/pb_builtin_service.proto
 
 #define INTERNAL_SUPPRESS_PROTOBUF_FIELD_DEPRECATION
-#include "thirdparty/sofa/src/sofa/pbrpc/pb_builtin_service.pb.h"
+#include "thirdparty/sofa/src/sofa/pbrpc/builtin_service.pb.h"
 
 #include <algorithm>
 

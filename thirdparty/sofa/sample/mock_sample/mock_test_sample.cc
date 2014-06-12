@@ -13,7 +13,7 @@
 #include <sofa/pbrpc/mock_test_helper.h>
 #include <gtest/gtest.h>
 #include <unistd.h>
-#include "echo_service.pb.h"
+#include "thirdparty/sofa/sample/mock_sample/echo_service.pb.h"
 
 using namespace ::sofa::pbrpc;
 using namespace ::sofa::pbrpc::test;

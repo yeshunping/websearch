@@ -11,7 +11,7 @@
 
 #include <unistd.h>
 #include <sofa/pbrpc/pbrpc.h>
-#include "echo_service.pb.h"
+#include "thirdparty/sofa/sample/echo/echo_service.pb.h"
 
 void EchoCallback(sofa::pbrpc::RpcController* cntl,
         sofa::pbrpc::test::EchoRequest* request,

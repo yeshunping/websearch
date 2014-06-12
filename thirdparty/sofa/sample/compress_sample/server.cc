@@ -12,7 +12,7 @@
 #include <signal.h>
 #include <unistd.h>
 #include <sofa/pbrpc/pbrpc.h>
-#include "echo_service.pb.h"
+#include "thirdparty/sofa/sample/compress_sample/echo_service.pb.h"
 
 class EchoServerImpl : public sofa::pbrpc::test::EchoServer
 {

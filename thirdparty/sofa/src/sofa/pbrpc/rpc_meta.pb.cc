@@ -2,7 +2,7 @@
 // source: thirdparty/sofa/src/sofa/pbrpc/rpc_metadata.proto
 
 #define INTERNAL_SUPPRESS_PROTOBUF_FIELD_DEPRECATION
-#include "thirdparty/sofa/src/sofa/pbrpc/rpc_metadata.pb.h"
+#include "thirdparty/sofa/src/sofa/pbrpc/rpc_meta.pb.h"
 
 #include <algorithm>
 

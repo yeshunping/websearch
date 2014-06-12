@@ -1,5 +1,5 @@
 cc_config(
-    extra_incs='thirdparty/',
+    extra_incs=['thirdparty/', 'thirdparty/boost',],
     warnings = [
         '-Wall',
         '-Wextra',

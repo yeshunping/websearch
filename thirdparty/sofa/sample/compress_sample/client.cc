@@ -9,8 +9,8 @@
  * 
  **************************************************************************/
 
-#include <sofa/pbrpc/pbrpc.h>
-#include "echo_service.pb.h"
+#include <thirdparty/sofa/src/sofa/pbrpc/pbrpc.h>
+#include "thirdparty/sofa/sample/compress_sample/echo_service.pb.h"
 
 int main(int /*argc*/, char** /*argv*/)
 {

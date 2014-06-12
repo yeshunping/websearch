@@ -10,7 +10,7 @@
  **************************************************************************/
 
 #include <sofa/pbrpc/pbrpc.h>
-#include "echo_service.pb.h"
+#include "thirdparty/sofa/sample/echo/echo_service.pb.h"
 
 int main()
 {

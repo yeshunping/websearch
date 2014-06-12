@@ -1,4 +1,4 @@
-import "sofa/pbrpc/rpc_option.proto";
+import "thirdparty/sofa/src/sofa/pbrpc/rpc_option.proto";
 
 package sofa.pbrpc.test;
 
