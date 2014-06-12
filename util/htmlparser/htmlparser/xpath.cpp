@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+
+#include "base/logging.h"
 #include "html_attr.h"
 #include "html_dtd.h"
 
@@ -509,6 +511,7 @@ int is_node_for_single_xpath(const xpathnode * xpath, html_node_t *node)
 					{ 0 };
 					char value[1024] =
 					{ 0 };
+					LOG(INFO) << pattr << ", name:" << pattr->name << ", len:" << pattr->namelength;
 					memcpy(name, pattr->name, pattr->namelength);
 					html_attribute_t *attr = html_node_get_attribute_by_name(node, (const char *) name);
 					if (!attr)
