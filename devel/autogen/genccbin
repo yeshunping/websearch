@@ -1,8 +1,0 @@
-#!/bin/bash --norc
-
-echo "cc_binary(name = '')"
-echo "          srcs = ["
-echo "                 ],"
-echo "          deps = ["
-echo "                 ],"
-echo "          )"
